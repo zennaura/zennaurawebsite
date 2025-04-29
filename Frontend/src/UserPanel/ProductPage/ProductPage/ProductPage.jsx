@@ -6,7 +6,7 @@ import StoneUsed from '../StoneUsed/StoneUsed'
 import ProductTabs from '../ProductTabs/ProductTabs'
 import ImageContainer from '../../ProductCategory/ImageContainer/ImageContainer'
 import ProductIcon from '../ProductIcon/ProductIcon';
-import AllSoLike from '../AllsoLike/AllsoLike';
+import AllsoLike from '../AllsoLike/AllsoLike';
 import ShippingTab from '../ShippingTab/ShippingTab';
 
 const ProductPage = () => {
@@ -24,7 +24,7 @@ const ProductPage = () => {
         specifications={product.specifications}
         healingImage={product.healingImage}
       />
-      <AllSoLike/>
+      <AllsoLike/>
       {/* benefits */}
       <ImageContainer Image={product.benefits} />
       {/* whychoose */}
