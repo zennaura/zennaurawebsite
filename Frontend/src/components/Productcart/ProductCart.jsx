@@ -4,7 +4,7 @@ import axios from "axios";
 import { useUser } from '../../components/AuthContext/AuthContext';
 import "./productCard.css";
 
-const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isFeatured, rating, onBuyNowClick }) => {
+const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isFeatured, rating, onBuyNowClick ,isBestSeller }) => {
   const [liked, setLiked] = React.useState(false); // State to track if the product is liked
   const { user } = useUser(); // Get user from context
 
@@ -92,7 +92,7 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
 
   return (
     <div className="product-card-container">
-      {isBest && (
+      {isBest || isBestSeller && (
         <>
           <div className="product-card-best-icon">
             <div className="product-card-icon">

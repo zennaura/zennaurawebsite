@@ -136,7 +136,7 @@ const ProductListingPage = () => {
             originalPrice={variant.data.costPrice}
             rating={variant.data.rating}
             isFeatured={variant.data.featureProduct}
-            isBest={variant.data.bestSeller  }
+            isBestSeller={variant.data.bestSeller  }
             onBuyNowClick={() => handleClick(variant)}
           />
         ))}
