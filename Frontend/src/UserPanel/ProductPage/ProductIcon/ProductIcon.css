@@ -1,0 +1,13 @@
+.ProductIcon-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background-color: #F2F1EF;
+
+}
+.ProductIcon-Icons{
+    width: 150px;
+    height: 150px;
+    background-color: yellowgreen;
+}

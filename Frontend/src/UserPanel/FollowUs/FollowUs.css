@@ -1,0 +1,111 @@
+/* Container for the entire component */
+.follow-us-container {
+  font-family: 'Andada Pro';
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  height: 60vh; /* Full viewport height */
+}
+
+/* Background Image */
+.background-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content Overlay */
+.content-overlay {
+  padding: 50px 20px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 100%;
+}
+
+/* Heading */
+.function-heading {
+  font-family: "Inria Serif", serif;
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+  margin-bottom: 30px;
+}
+
+/* Social Media Icons */
+.function-social-icons {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem); /* Responsive gap */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+.function-icon {
+  font-size: clamp(3rem, 8vw, 5rem); /* Responsive icon size */
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.function-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .follow-us-container {
+    height: 50vh; /* Slightly shorter on tablets */
+  }
+  
+  .content-overlay {
+    padding: 40px 20px;
+    gap: 1.5rem;
+  }
+  
+  .function-heading {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .follow-us-container {
+    height: 45vh; /* Adjust height for small tablets */
+  }
+  
+  .content-overlay {
+    padding: 30px 15px;
+    gap: 1rem;
+  }
+  
+  .function-social-icons {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .follow-us-container {
+    height: 40vh; /* Compact view for mobile */
+  }
+  
+  .content-overlay {
+    padding: 20px 10px;
+  }
+  
+  .function-heading {
+    margin-bottom: 15px;
+  }
+  
+  .function-icon {
+    font-size: 2.5rem; /* Slightly smaller icons */
+  }
+}

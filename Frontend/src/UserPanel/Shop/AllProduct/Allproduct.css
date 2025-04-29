@@ -1,0 +1,125 @@
+
+  .header {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fff;
+    font-family: 'Poppins';
+  }
+  
+  .breadcrumb {
+    font-size: 16px;
+    color: #666;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .sorting-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .sorting-option-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .sorting-options select {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #390611;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .ViewList-option {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 20px;
+  }
+  
+  .ViewList-option span {
+    width: 7px;
+    height: 7px;
+    background-color: #390611;
+  }
+  
+  .ViewGrid-option {
+    display: flex;
+    gap: 3px;
+  }
+  
+  .ViewGrid-option span {
+    width: 7px;
+    height: 100%;
+    background-color: #390611;
+  }
+  
+  .view-options {
+    display: flex;
+  }
+  
+  .view-options button {
+    padding: 5px 10px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+  }
+  
+  .pagination-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .pagination-box:hover {
+    background-color: #4a2b2b;
+    color: #fff;
+  }
+  
+  .pagination-box.active {
+    background-color: #4a2b2b;
+    color: #fff;
+  }
+  
+  .pagination-next {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .product-listing-page{
+    padding: 20px;
+    width: 75%;
+  }

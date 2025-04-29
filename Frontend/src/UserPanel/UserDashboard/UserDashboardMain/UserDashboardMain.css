@@ -1,0 +1,21 @@
+.userdashboard-logout {
+    background-color: #390611;
+    display: flex;
+    justify-content: flex-end;
+    padding: .5rem;
+  }
+  
+  .userdashboard-logout-button {
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+  }
+ .UserDashboardMain-container{
+  display: flex;
+  overflow: hidden;
+
+ }

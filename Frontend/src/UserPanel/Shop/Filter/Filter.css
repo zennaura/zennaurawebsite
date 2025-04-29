@@ -1,0 +1,179 @@
+/* Global Styles */
+.filter-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  width: 25%;
+  font-family: 'Poppins', sans-serif;
+  color: #390611;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  border-radius: 10px; /* Rounded corners for smooth edges */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+
+
+.filter-heading {
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: 600; /* Stronger emphasis on heading */
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-price {
+  margin-bottom: 20px;
+}
+
+.price-range {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 15px; /* Add margin to avoid crowding */
+}
+
+.price-range input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: white;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+.price-range input[type="range"]:focus {
+  background: #fff;
+}
+
+.price-range input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  background: white;
+  border-radius: 5px;
+}
+
+.price-range input[type="range"]::-webkit-slider-runnable-track {
+  background: #390611;
+}
+
+.price-range input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #dad4d5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease; /* Smooth thumb transition */
+}
+
+.price-range input[type="range"]::-webkit-slider-thumb:hover {
+  background: #593039; /* Change thumb color on hover */
+}
+
+.price-range input[type="range"]::-moz-range-track {
+  height: 10px;
+  background: white;
+}
+
+.price-range input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #390611;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.price-range input[type="range"]::-moz-range-thumb:hover {
+  background: #593039;
+}
+
+.price-range input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #390611 0%, #390611 ${props => (props.value / 1000) * 100}%, white ${props => (props.value / 1000) * 100}%, white 100%);
+}
+
+.price-range input[type="range"]::-moz-range-track {
+  background: linear-gradient(to right, #390611 0%, #390611 ${props => (props.value / 1000) * 100}%, white ${props => (props.value / 1000) * 100}%, white 100%);
+}
+
+.price-range span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.filter-product-categories,
+.filter-concern,
+.filter-intent {
+  margin-bottom: 20px;
+}
+
+.filter-product-categories h2,
+.filter-concern h2,
+.filter-intent h2,
+.filter-rating h2 {
+  font-size: 18px;
+  font-weight: 550;
+}
+
+.filter-option-group {
+  margin-top: 10px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.filter-option input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.filter-rating {
+  margin-bottom: 20px;
+}
+
+.filter-rating select {
+  background-color: #D9D9D9;
+  height: 40px;
+  font-family: 'Poppins', sans-serif;
+  color: #390611;
+  width: 80%;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 8px;
+
+}
+
+.filter-rating select:hover {
+  background-color: #c3bfbf; /* Slight color change on hover */
+}
+
+.filter-btn {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px; /* Add some space above buttons */
+}
+
+.filter-button,
+.clear-button {
+  padding: 10px 43px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #593039;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover,
+.clear-button:hover {
+  background-color: #390611; /* Hover effect for buttons */
+}

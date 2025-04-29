@@ -1,0 +1,152 @@
+.selfCare-container {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  color:#390611;
+}
+.selfCare-overlay {
+  width: 50%;
+  height: 100%;
+}
+.selfCare-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* background-color: aliceblue; */
+}
+.selfCare-content {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* color: white; */
+}
+.selfCare-content h2{
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+}
+.selfCare-heading{
+    margin-bottom: -37px;
+}
+.selfCare-heading-lower{
+    margin-top: -37px;
+}
+.selfCare-quote-box {
+  width: 250px;
+  height: 300px;
+  background-color: #F9EBE3B5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+  margin-top: 60px;
+  border-radius: 143px 142px 10px 10px;
+  border:1px solid gold;
+  position: relative;
+  padding: 10px; /* Adjust as needed */
+}
+
+.selfCare-quote {
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+  color: rgba(57, 6, 17, 1);
+}
+
+.selfCare-crystal {
+  position: relative;
+  width: 60px;
+}
+.selfCare-crystalTop {
+  top: 38px;
+  left: -26px;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.selfCare-crystalBottom {
+  top: -63px;
+  left: 20%;
+  transform: translateX(-50%);
+}
+@media screen and (max-width: 1024px) {
+  .selfCare-content h2 {
+    font-size: 2.8rem;
+  }
+  .selfCare-quote-box {
+    width: 220px;
+    height: 280px;
+  }
+  .selfCare-quote {
+    font-size: 18px;
+  }
+  .selfCare-crystal {
+    width: 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .selfCare-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .selfCare-overlay {
+    width: 100%;
+  }
+  .selfCare-content {
+    width: 100%;
+    padding: 20px;
+  }
+  .selfCare-content h2 {
+    font-size: 2.5rem;
+  }
+  .selfCare-quote-box {
+    width: 200px;
+    height: 260px;
+  }
+  .selfCare-quote {
+    font-size: 16px;
+  }
+  .selfCare-crystal {
+    width: 45px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .selfCare-content h2 {
+    font-size: 2rem;
+  }
+  .selfCare-quote-box {
+    width: 180px;
+    height: 240px;
+    border-radius: 120px 120px 8px 8px;
+  }
+  .selfCare-quote {
+    font-size: 14px;
+    padding: 15px;
+  }
+  .selfCare-crystal {
+    width: 40px;
+  }
+  .selfCare-crystalTop {
+    top: 30px;
+    left: -20px;
+  }
+  .selfCare-crystalBottom {
+    top: -50px;
+    left: 22%;
+  }
+  .selfCare-overlay{
+    position: absolute;
+  }
+  .selfCare-content h2{
+    z-index: 99;
+    font-size: 1.9319rem;
+  }
+}

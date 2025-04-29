@@ -1,0 +1,12 @@
+.ImageContainer-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+}
+
+.ImageContainer-img img {
+    width: 100%;
+    object-fit: contain;
+    cursor: pointer;
+}

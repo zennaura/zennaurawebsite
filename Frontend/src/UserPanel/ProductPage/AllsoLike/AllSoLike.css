@@ -1,0 +1,30 @@
+
+.AllSoLike-heading{
+    font-family: 'Inria Serif';
+    padding-bottom: 40px;
+    font-size: 3rem;
+  }
+  .AllSoLike-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 2rem; */
+    justify-content: space-between;
+    padding: 2rem;
+    background: #F2F1EF;
+    color: #3a0e0e;
+    overflow: hidden;
+  }
+  .AllSoLike-cards{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 2rem;
+  }
+  .AllSoLike-card{
+    margin-top: 2rem;
+    
+  }
+  .featured-card-center{
+    margin-top: 0rem;
+  }

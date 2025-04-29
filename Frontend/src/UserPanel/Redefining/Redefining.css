@@ -1,0 +1,201 @@
+/* Base Styles */
+.redefining-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 70vh;
+  background-color: #ffffff;
+  color: #390611;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
+}
+
+/* Content Section */
+.redefining-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.redefining-words-span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.word {
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  transition: transform 0.3s ease;
+}
+
+.word:hover {
+  transform: scale(1.05);
+}
+
+/* Icon Styles */
+.redefining-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.redefining-ball1 {
+  width: 16px;
+  height: 16px;
+  background-color: #390611;
+  border-radius: 50%;
+}
+
+.redefining-ball2 {
+  width: 10px;
+  height: 10px;
+  background-color: #390611;
+  border-radius: 50%;
+}
+
+.redefining-ball3 {
+  width: 6px;
+  height: 6px;
+  background-color: #390611;
+  border-radius: 50%;
+}
+
+/* Image Containers */
+.redefining-image-right,
+.redefining-image-left {
+  position: relative;
+  width: 35%;
+  height: 100%;
+  min-height: 500px;
+}
+
+.img-box {
+  position: absolute;
+  border-radius: 143px 142px 10px 10px;
+  background-color: #ddbfa4;
+  overflow: hidden;
+  border: 2px solid goldenrod;
+}
+
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.img-box:hover img {
+  transform: scale(1.03);
+}
+
+/* Left Image Boxes */
+.redifining-img-box1 {
+  width: 300px;
+  height: 400px;
+  top: 5%;
+  left: 10%;
+  z-index: 2;
+}
+
+.redifining-img-box2 {
+  width: 200px;
+  height: 250px;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+}
+
+/* Right Image Boxes */
+.redifining-img-box3 {
+  width: 250px;
+  height: 300px;
+  left: 10%;
+  top: 5%;
+  z-index: 1;
+}
+
+.redifining-img-box4 {
+  width: 180px;
+  height: 250px;
+  left: 30%;
+  bottom: 25%;
+  z-index: 2;
+}
+
+.redifining-img-box5 {
+  width: 180px;
+  height: 250px;
+  left: 5%;
+  top: 55%;
+  z-index: 3;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .redefining-container {
+    min-height: 60vh;
+  }
+
+  .word {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .redefining-container {
+    height: 40vh;
+    padding: 1rem 0;
+  }
+  .word{
+    font-size: 1rem;
+  }
+  .redifining-img-box1 {
+    width: 100px;
+    height: 150px;
+    top: 20%;
+    left: 10%;
+  }
+  .redifining-img-box2 {
+    width: 80px;
+    height: 120px;
+    top: 40%;
+    left: 35%;
+  }
+  .redifining-img-box3 {
+    width: 100px;
+    height: 150px;
+    left: -3%;
+    top: 20%;
+  }
+  
+  .redifining-img-box4 {
+    width: 80px;
+    height: 120px;
+    left: 30%;
+    bottom: 40%;
+  }
+  
+  .redifining-img-box5 {
+    width: 80px;
+    height: 120px;
+    left: -15%;
+    top: 55%;
+  
+  }
+  
+}

@@ -1,0 +1,117 @@
+.gen-info-container {
+    text-align: left;
+    color: #390611;
+    margin: 0 auto;
+}
+
+.gen-info-oddcontent, 
+.gen-info-evencontent {
+    padding: 30px 30px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gen-info-oddcontent ul, 
+.gen-info-evencontent ul {
+    list-style-type: disc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #390611;
+    padding-left: 45px;
+}
+
+.gen-info-oddcontent ul li, 
+.gen-info-evencontent ul li {
+    margin-bottom: 5px;
+}
+
+.gen-info-oddcontent {
+    background-color: #F2F1EF;
+    padding-left: 89px;
+}
+
+.gen-info-evencontent {
+    padding-left: 89px;
+}
+
+.gen-info-title {
+    font-family: 'Inria Serif', serif;
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #390611;
+}
+
+.gen-info-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    font-weight: 300;
+    color: #390611;
+    padding-bottom: 7px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .gen-info-title {
+        font-size: 42px;
+        margin-bottom: 60px;
+    }
+    .gen-info-text {
+        font-size: 28px;
+    }
+    .gen-info-oddcontent,
+    .gen-info-evencontent {
+        padding: 40px;
+    }
+    .gen-info-oddcontent {
+        padding-left: 50px;
+    }
+    .gen-info-evencontent {
+        padding-left: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gen-info-title {
+        font-size: 36px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+    .gen-info-text {
+        font-size: 24px;
+    }
+    .gen-info-oddcontent,
+    .gen-info-evencontent {
+        padding: 30px;
+    }
+    .gen-info-oddcontent {
+        padding-left: 30px;
+    }
+    .gen-info-evencontent {
+        padding-left: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gen-info-title {
+        font-size: 28px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    .gen-info-text {
+        font-size: 20px;
+    }
+    .gen-info-oddcontent,
+    .gen-info-evencontent {
+        padding: 20px;
+    }
+    .gen-info-oddcontent {
+        padding-left: 20px;
+    }
+    .gen-info-evencontent {
+        padding-left: 20px;
+    }
+}

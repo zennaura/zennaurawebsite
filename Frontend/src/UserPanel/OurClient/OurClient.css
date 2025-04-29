@@ -1,0 +1,251 @@
+/* Container & Slider layout */
+.ourclient-container {
+  padding: 2rem 1rem;
+  background: #39061126;
+  text-align: center;
+  font-family: 'Inria Serif';
+  overflow: hidden;
+  color: #390611;
+}
+
+.ourclient-heading {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+
+/* Slider Container */
+.ourclient-slider {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Slide Items */
+.ourclient-slide {
+  padding: 3rem 15px 2rem; /* Added horizontal padding */
+  transition: all 0.3s ease;
+}
+
+/* Center Slide Highlight */
+.slick-center .ourclient-figure {
+  transform: scale(1.05);
+  background-color: #fff;
+  border: 2px solid goldenrod;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Testimonial Card */
+.ourclient-figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  height: 390px;
+  position: relative;
+  background-color: #fff;
+  border: 2px solid #390611;
+  border-radius: 143px 142px 10px 10px;
+  font-family: "Inria Serif";
+  padding: 1rem;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.ourclient-figure img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: -40px;
+}
+
+.ourclient-figcaption {
+  padding: 13% 10% 12%;
+  position: relative;
+}
+
+.ourclient-name {
+  margin-top: 30px;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.ourclient-company {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ourclient-rating {
+  margin-bottom: 20px;
+}
+
+/* Slick Slider Overrides */
+.slick-slider {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.slick-list {
+  padding: 20px 0 !important;
+  margin: 0 -15px; /* Negative margin to compensate for slide padding */
+}
+
+.slick-track {
+  display: flex;
+  align-items: center;
+}
+
+.slick-slide {
+  padding: 0 10px; /* Creates gap between slides */
+}
+
+/* Tablet Styles (992px and below) */
+@media (max-width: 992px) {
+  .ourclient-heading {
+    font-size: 3rem;
+  }
+  
+  .ourclient-figure {
+    height: 360px;
+    max-width: 280px;
+  }
+  
+  .ourclient-name {
+    font-size: 22px;
+  }
+  
+  blockquote {
+    font-size: 15px;
+  }
+  
+  .slick-slide {
+    padding: 0 8px;
+  }
+}
+
+/* Small Tablet Styles (768px and below) */
+@media (max-width: 768px) {
+  .ourclient-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .ourclient-heading {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .ourclient-figure {
+    height: 340px;
+    max-width: 260px;
+    border-radius: 120px 120px 10px 10px;
+  }
+  
+  .ourclient-figure img {
+    width: 60px;
+    height: 60px;
+    top: -40px;
+  }
+  
+  .ourclient-name {
+    font-size: 20px;
+    margin-top: 25px;
+  }
+  
+  .ourclient-company, blockquote {
+    font-size: 12px;
+  }
+  
+  .slick-slide {
+    padding: 0 6px;
+  }
+}
+
+/* Mobile Styles (576px and below) */
+@media (max-width: 576px) {
+  .ourclient-container {
+    height: 77vh;
+  }
+  .ourclient-heading {
+    font-size: 2rem;
+  }
+  
+  .ourclient-figure {
+    height: 320px;
+    max-width: 240px;
+    border-radius: 100px 100px 10px 10px;
+  }
+  
+  .ourclient-slide {
+    padding: 2rem 0;
+  }
+  
+  .slick-center .ourclient-figure {
+    transform: scale(1.03);
+  }
+  
+  .ourclient-figcaption {
+    padding: 10% 8%;
+  }
+  
+  .ourclient-name {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  .ourclient-company {
+    margin-bottom: 8px;
+  }
+  
+  .ourclient-rating {
+    margin-bottom: 15px;
+  }
+  
+  .slick-slide {
+    padding: 0 4px;
+  }
+}
+
+/* Small Mobile Styles (400px and below) */
+@media (max-width: 400px) {
+  .ourclient-heading {
+    font-size: 1.6rem;
+  }
+  
+  .ourclient-figure {
+    height: 250px;
+    max-width: 185px;
+    border-radius: 80px 80px 10px 10px;
+  }
+  
+  .ourclient-figure img {
+    width: 50px;
+    height: 50px;
+    top: -35px;
+  }
+  
+  .ourclient-name {
+    font-size: 16px;
+  }
+  
+  blockquote {
+    font-size: 9px; /* Increased from 8px for better readability */
+    line-height: 1.4;
+  }
+  
+  .slick-track {
+    padding: 0.5rem;
+  }
+  
+  .slick-slide {
+    padding: 0 3px;
+  }
+}

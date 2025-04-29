@@ -1,0 +1,313 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Andada+Pro&display=swap');
+/* Main Card Container */
+.product-card-container {
+    width: 300px;
+    background-color: #593039;
+    color: white;
+    border-radius: 2rem 2rem 2rem 2rem;
+    border: 2px solid goldenrod;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    font-family: 'poppins';
+  }
+  /* Best product Icon */
+  .product-card-best-icon{
+    position: absolute;
+    top: 0.5rem;
+    left: 2.5rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+  }
+  .product-card-best-icon .product-card-icon{
+    width: 1.56rem;
+    height: 1.56rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 2px;
+    background-color: white;
+    font-size: 6px;
+    font-family: 'Inria Serif';
+    font-weight: bold;
+    color: green;
+  }
+  .product-card-sale-icon{
+    position: absolute;
+    top: 0.5rem;
+    left: 4.5rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+  }
+  .product-card-sale-icon .product-card-icon{
+    width: 1.56rem;
+    height: 1.56rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 2px;
+    background-color: white;
+    font-size: 8px;
+    font-family: 'Inria Serif';
+    font-weight: bold;
+    color: orangered;
+  }
+  .product-card-featured-icon{
+    position: absolute;
+    top: 1.2rem;
+    left: -0.9rem;
+    font-size: 1.125rem;
+    cursor: pointer; 
+    overflow: hidden;
+    transform: rotate(-45deg);
+  }
+  .product-card-featured-icon .product-card-icon{
+    width: 4.5rem;
+    height: 0.56rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    background-color: yellow;
+    font-size: 8px;
+    font-family: 'Inria Serif';
+    font-weight: bold;
+    color: #593039;
+  }
+
+  /* Wishlist Icon */
+  .product-card-wishlist {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+  }
+  
+  .product-card-wishlist-liked {
+    color: #ef4444;
+  }
+  
+  .product-card-wishlist-default {
+    color: #9ca3af;
+  }
+  
+  /* Image Section */
+  .product-card-image-container {
+    overflow: hidden;
+  }
+  
+  .product-card-image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 2rem 2rem 0rem 0rem ;
+  }
+  
+  /* Content Section */
+  .product-card-content {
+    padding: 1rem 0rem 0rem;
+  }
+  
+  /* Title and Subtitle */
+  .product-card-title {
+    font-size: 1.25rem;
+    font-family: 'Andada Pro';
+  }
+  
+  .product-card-subtitle {
+    font-size: 0.875rem;
+    color: #d1d5db;
+    font-family: 'Andada Pro';
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Price Section */
+  .product-card-price-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .product-card-price {
+    font-size: 1.125rem;
+    font-weight: 700;
+    /* color: #e94560; */
+  }
+  
+  .product-card-original-price {
+    font-size: 1.125rem;
+    text-decoration: line-through;
+  }
+  
+  /* Rating Section */
+  .product-card-rating {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+  
+  .product-card-star-filled {
+    color: #fbbf24;
+    font-size: 0.875rem;
+    margin: 0 0.125rem;
+  }
+  
+  .product-card-star-empty {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin: 0 0.125rem;
+  }
+  
+  /* Action Buttons */
+  .product-card-actions {
+    display: flex;
+    border-top: 2px solid goldenrod;
+    margin-top: 1rem;
+    font-family: 'poppins';
+  }
+  
+  .product-card-add-to-cart {
+    flex: 1;
+    padding: 0.5rem;
+    color: white;
+    border-radius: 0rem 0rem 0rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+ 
+  .product-card-buy-now {
+    flex: 1;
+    padding: 0.5rem;
+    color: white;
+    border-left: 2px solid goldenrod;
+    border-radius: 0rem 0rem 2rem 0rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+ /* Loading spinner for wishlist */
+.wishlist-loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #ff6b6b;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .product-card-container {
+    width: 280px; /* Slightly smaller */
+    border-radius: 1.5rem;
+  }
+
+  .product-card-image {
+    height: 240px; /* Reduce image height */
+  }
+
+  .product-card-title {
+    font-size: 1.1rem;
+  }
+
+  .product-card-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .product-card-price,
+  .product-card-original-price {
+    font-size: 1rem;
+  }
+
+  .product-card-best-icon,
+  .product-card-sale-icon {
+    left: 1.5rem; /* Adjust icon positions */
+  }
+
+  .product-card-sale-icon {
+    left: 3.5rem;
+  }
+
+  .product-card-featured-icon {
+    left: -0.7rem;
+    top: 1rem;
+  }
+}
+
+/* Mobile (576px and below) */
+@media (max-width: 576px) {
+  .product-card-container {
+    width: 100%; /* Full width on small screens */
+    max-width: 250px; /* But not wider than original */
+    border-radius: 1.2rem;
+  }
+
+  .product-card-image {
+    width: 100%;
+    height: 150px; /* Even smaller image */
+    border-radius: 1.2rem 1.2rem 0 0;
+  }
+
+  .product-card-content {
+    padding: 0.8rem 0 0;
+  }
+
+  .product-card-title {
+    font-size: 1rem;
+  }
+
+  .product-card-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .product-card-price-container {
+    gap: 0.5rem;
+  }
+
+  .product-card-best-icon,
+  .product-card-sale-icon {
+    left: 1rem;
+    font-size: 1rem;
+  }
+
+  .product-card-sale-icon {
+    left: 2.8rem;
+  }
+
+  .product-card-featured-icon {
+    left: -0.6rem;
+    top: 0.8rem;
+  }
+
+  .product-card-featured-icon .product-card-icon {
+    width: 4rem;
+    font-size: 7px;
+  }
+
+  .product-card-actions {
+    margin-top: 0.8rem;
+  }
+
+  .product-card-add-to-cart,
+  .product-card-buy-now {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    border-radius: 0 0 0 1.2rem; /* Match container */
+  }
+
+  .product-card-buy-now {
+    border-radius: 0 0 1.2rem 0;
+  }
+}

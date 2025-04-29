@@ -1,0 +1,128 @@
+/* MakeDifferent.css */
+.MakeDifferent-container {
+  background-color: #FFFFFF;
+  color: #390611;
+  padding: 40px 60px;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.MakeDifferent-header h1 {
+  font-family: 'Inria Serif' ;
+  font-size: 42px;
+  text-align: center;
+  margin-bottom: 60px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+.MakeDifferent-body {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.MakeDifferent-contentdiv1,
+.MakeDifferent-contentdiv2,
+.MakeDifferent-contentdiv3 {
+  /* flex: 1; */
+  font-family: 'Poppins';
+  display: flex;
+  color: #390611;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: #d9d9d9;
+  width: 300px;
+  height: 425px;
+}
+
+.MakeDifferent-contentdiv1 {
+  border-radius: 0px 70px 0px 0px;
+}
+.MakeDifferent-contentdiv2 {
+  border-radius: 0px 0px 70px 0px;
+}
+.MakeDifferent-contentdiv3 {
+  border-radius: 70px 0px 0px 0px;
+}
+
+.MakeDifferent-divheading {
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.MakeDifferent-divbtn {
+  font-family: 'Poppins';
+  background-color: transparent;
+  color: #390611;
+  border: 3px solid #390611;
+  padding: 8px 25px;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .MakeDifferent-container {
+    padding: 60px 40px;
+  }
+
+  .MakeDifferent-header h1 {
+    font-size: 36px;
+  }
+
+  .MakeDifferent-body {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .MakeDifferent-body {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .MakeDifferent-contentdiv1,
+  .MakeDifferent-contentdiv2,
+  .MakeDifferent-contentdiv3 {
+    width: 80%;
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .MakeDifferent-container {
+    padding: 50px 20px;
+  }
+
+  .MakeDifferent-header h1 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .MakeDifferent-contentdiv1,
+  .MakeDifferent-contentdiv2,
+  .MakeDifferent-contentdiv3 {
+    width: 100%;
+    padding: 30px;
+  }
+
+  .MakeDifferent-divheading {
+    font-size: 24px;
+  }
+}

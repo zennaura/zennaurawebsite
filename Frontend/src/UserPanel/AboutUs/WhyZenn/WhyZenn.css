@@ -1,0 +1,124 @@
+/* WhyZenn.css */
+.WhyZenn-container {
+    font-family: 'Poppins', sans-serif;
+    background-color: #F2F1EF;
+    color: #390611;
+    padding: 40px 60px;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.WhyZenn-heading {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.WhyZenn-heading h1 {
+    font-size: 42px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.WhyZenn-heading h4 {
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.WhyZenn-divider-short {
+    width: 1px;
+    height: 62px;
+    margin: 0 13%;
+    background-color: #EAD9D7;
+    opacity: 0.3;
+}
+
+.WhyZenn-logoimg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -33px 0;
+}
+
+.WhyZenn-zennlogoimg img {
+    width: 368px;
+    height: auto;
+}
+
+.WhyZenn-leftarrowimg img {
+    width: 115.61px;
+    height: 118.79px;
+    margin-right: -30px;
+    margin-top: 120px;
+    transform: rotate(16deg);
+}
+
+.WhyZenn-rightarrowimg img {
+    width: 115.61px;
+    height: 118.79px;
+    margin-left: -30px;
+    margin-top: 170px;
+    transform: rotate(-8deg);
+}
+
+.WhyZenn-content {
+    display: flex
+    ;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        max-width: 1200px;
+        margin: 0px auto;
+        text-align: center;
+}
+
+.WhyZenn-definition {
+    width: 40%;
+    margin: 20px 0;
+}
+
+.WhyZenn-definition h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.WhyZenn-definition p {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-transform: capitalize;
+}
+
+.WhyZenn-footer {
+    max-width: 800px;
+    margin: 30px auto 0;
+    text-align: center;
+}
+
+.WhyZenn-footer p {
+    font-size: 20px;
+    line-height: 1.6;
+    font-style: italic;
+    text-transform: capitalize;
+}
+
+/* Responsive Design - Keep your existing breakpoints */
+@media (max-width: 768px) {
+    .WhyZenn-content {
+        flex-direction: column;
+    }
+    .WhyZenn-definition {
+        width: 100%;
+    }
+    .WhyZenn-divider-short {
+        width: 50%;
+        height: 1px;
+        margin: 20px auto;
+    }
+}

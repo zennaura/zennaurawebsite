@@ -1,0 +1,130 @@
+.UserDashboard-container {
+  /* padding: 2rem; */
+  width: 75%;
+  font-family: "poppins";
+}
+.UserDashboard-box {
+  padding: 20px;
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.UserDashboard-userDetails {
+  background-color: #48091a;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 40%;
+}
+.UserDashboard-userDetails-upper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.UserDashboard-avatarBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  align-items: center;
+  background-color: #d9d9d9;
+}
+
+.UserDashboard-avatarIcon {
+  font-size: 40px;
+  background-color: #fff;
+  color: #48091a;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.UserDashboard-username {
+  font-size: 25px;
+  /* font-weight: 600; */
+  margin-bottom: 5px;
+}
+
+.UserDashboard-points {
+  background-color: #fff;
+  color: #48091a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  /* font-weight: bold; */
+}
+.userDashboard-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.UserDashboard-icon {
+  color: #48091a;
+}
+.UserDashboard-infoList {
+  border-top: 2px solid #fff;
+  display: flex;
+  padding: 1rem 0rem 0rem 0rem;
+  flex-direction: column;
+  gap: 10px;
+}
+.UserDashboard-infoList p {
+  display: flex;
+  gap: 1rem;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.UserDashboard-otherdetials {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  width: 50%;
+  /* flex-wrap: wrap; */
+}
+
+.UserDashboard-accountdetails,
+.UserDashboard-shippingAddress {
+  background-color: #48091a;
+  min-width: 300px;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.UserDashboard-accountdetails h4,
+.UserDashboard-shippingAddress h4 {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.UserDashboard-accountdetails h4 span,
+.UserDashboard-shippingAddress h4 span{
+  border-bottom: 2px solid #fff;
+
+}
+.UserDashboard-accountdetails p,
+.UserDashboard-shippingAddress p {
+  padding: 10px;
+  /* margin: 6px 0; */
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}

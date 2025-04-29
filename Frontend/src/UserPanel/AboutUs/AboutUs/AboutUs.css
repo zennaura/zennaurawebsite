@@ -1,0 +1,44 @@
+/* .aboutus-container {
+  font-family: 'Poppins', sans-serif;
+  background-image: url('../../../assests/background.png');
+  background-color: #3D0D14;
+  color: #EAD9D7;
+  padding: 40px;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.aboutus-title {
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.aboutus-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(61, 13, 20, 0.6);
+  z-index: 0;
+}
+
+.aboutus-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  padding: 40px;
+} */

@@ -1,0 +1,135 @@
+.shipping-tabs-container {
+  font-family: "poppins", sans-serif;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-button {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-content {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.shipping-tab-content h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.shipping-tab-content h4 {
+  color: #2c3e50;
+  margin: 1.5rem 0 1rem;
+  font-size: 1.2rem;
+}
+
+.shipping-tab-content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.shipping-providers {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.shipping-providers li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.shipping-providers li::before {
+  content: "•";
+  color: #3498db;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .tabs-header {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: none;
+  }
+}
+
+.shipping-costs-container {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.shipping-costs-row {
+  display: flex;
+}
+
+.shipping-costs-row:last-child {
+  border-bottom: none;
+}
+
+.shipping-costs-row-header {
+    display: flex;
+  flex-direction: row;
+}
+
+
+.shipping-costs-heading {
+  flex: 1;
+  padding:1rem 1rem 0rem 1rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.shipping-costs-cell {
+  flex: 1;
+  padding: 1rem 1rem 0rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.shipping-costs-cell p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .shipping-costs-row {
+    flex-direction: column;
+  }
+
+  .shipping-costs-cell {
+    padding: 8px 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .shipping-costs-cell:last-child {
+    border-bottom: none;
+  }
+}

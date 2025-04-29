@@ -1,0 +1,73 @@
+/* OurPhilosophy.css */
+.ourphilosophy-container {
+  font-family: "Poppins";
+  background-color: #F2F1EF;
+  color: #390611;
+  padding: 1rem;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  padding-left: 89px;
+}
+
+/* .ourphilosophy-left-content {
+    width: 50%;
+    margin-left: 50px;
+} */
+.philosophy-left-content-upper {
+ margin-top: 50px;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.ourphilosophy-right-content {
+  width: 50%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.ourphilosophy-text {
+  width: 90%;
+  line-height: 1.5;
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.ourphilosophy-title {
+  font-family: 'Inria Serif';
+  font-size: 50px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.ourphilosophy-list {
+  list-style-type: none;
+  font-size: 28px;
+  padding-left: 0;
+}
+
+.ourphilosophy-list li {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  /* margin-bottom: 10px; */
+}
+
+.ourphilosophy-bullet {
+  margin-right: 30px;
+  font-size: 30px;
+}
+
+.ourphilosophy-circle {
+  width: 80vh;
+  height: 80vh;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  position: absolute;
+  top: 10%;
+  right: -10%;
+}

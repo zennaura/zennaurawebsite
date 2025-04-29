@@ -1,0 +1,283 @@
+/* Admin Orders Show Container */
+.main-container{
+  display: flex;
+}
+.left-container{
+  width: 250px;
+}
+.right-container{
+  width: 90%;
+}
+.admin-ordershow.app-content {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f5f7fa;
+  }
+  
+  /* Header Styles */
+  .admin-ordershow .app-content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .admin-ordershow .app-content-headerText {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .admin-ordershow .mode-switch {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Search and Filter Section */
+  .admin-ordershow .app-content-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .admin-ordershow .search-bar {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    font-size: 14px;
+  }
+  
+  .admin-ordershow .app-content-actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Filter Button */
+  .admin-ordershow .filter-button-wrapper {
+    position: relative;
+  }
+  
+  .admin-ordershow .action-button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+  }
+  
+  .admin-ordershow .action-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .admin-ordershow .filter-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: none;
+  }
+  
+  .admin-ordershow .filter-button-wrapper:hover .filter-menu {
+    display: block;
+  }
+  
+  .admin-ordershow .filter-menu label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .admin-ordershow .filter-menu select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+  
+  .admin-ordershow .filter-menu-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .admin-ordershow .filter-button {
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  
+  .admin-ordershow .filter-button.reset {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+  }
+  
+  .admin-ordershow .filter-button.apply {
+    background: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  /* Orders Table Styles */
+  .admin-ordershow .orders-area-wrapper {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .admin-ordershow .orders-header {
+    display: flex;
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .admin-ordershow .orders-row {
+    display: flex;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+    align-items: center;
+  }
+  
+  .admin-ordershow .orders-row:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .admin-ordershow .order-cell {
+    flex: 1;
+    padding: 0 10px;
+    min-width: 0;
+    font-size: 14px;
+  }
+  
+  .admin-ordershow .order-cell.order-id {
+    flex: 0.8;
+    font-weight: 500;
+  }
+  
+  .admin-ordershow .order-cell.customer {
+    flex: 1.2;
+  }
+  
+  .admin-ordershow .order-cell.items {
+    flex: 1.5;
+  }
+  
+  .admin-ordershow .order-cell.actions {
+    flex: 0.6;
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Customer Info */
+  .admin-ordershow .customer-name {
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  
+  .admin-ordershow .customer-email {
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
+  
+  /* Items List */
+  .admin-ordershow .items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .admin-ordershow .item {
+    font-size: 0.9rem;
+  }
+  
+  /* Status Badges */
+  .admin-ordershow .order-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .admin-ordershow .order-status.processing {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .admin-ordershow .order-status.shipped {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  
+  .admin-ordershow .order-status.delivered {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  /* Payment Status */
+  .admin-ordershow .payment-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 3px;
+  }
+  
+  .admin-ordershow .payment-status.paid {
+    color: #28a745;
+  }
+  
+  .admin-ordershow .payment-status.pending {
+    color: #ffc107;
+  }
+  
+  /* Buttons */
+  .admin-ordershow .view-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+  }
+  
+  .admin-ordershow .view-button:hover {
+    background-color: #0069d9;
+  }
+  
+  .admin-ordershow .action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s;
+  }
+  
+  .admin-ordershow .action-button:hover {
+    color: #495057;
+  }

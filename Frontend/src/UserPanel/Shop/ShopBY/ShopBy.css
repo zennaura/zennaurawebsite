@@ -1,0 +1,36 @@
+/* Import Poppins and Smooch from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Smooch&display=swap');
+
+.Shopby-container {
+  display: flex;
+  justify-content: space-evenly;
+  font-family: "Poppins", sans-serif; /* Fallback to sans-serif */
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.shopby-text-box {
+  width: 400px;
+  height: 200px;
+  padding: 1rem;
+  background-color: #D9D9D9;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.shop-text-h1 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.shopby-span {
+  margin-left: 10px;
+  font-family: 'Smooch', cursive; /* Use Smooch with a fallback */
+}

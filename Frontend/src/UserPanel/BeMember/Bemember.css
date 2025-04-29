@@ -1,0 +1,266 @@
+/* Container */
+.bemember-container {
+  font-family: 'Poppins';
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.bemember-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assests/bemember.png");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.bemember-container > * {
+  z-index: 1;
+}
+
+/* Header */
+.bemember-heading {
+  font-family: 'Poppins';
+  font-size: 4rem;
+  color: #390611;
+  font-weight: bolder;
+}
+
+.bemember-title {
+  font-family: 'Poppins';
+  font-size: 24px;
+  color: #390611;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.bemember-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  color: #5a3a2e;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+/* Benefits Cards */
+.bemember-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.bemember-card {
+  background: rgba(255, 255, 255, 0.142);
+  backdrop-filter: blur(10px);
+  height: 350px;
+  width: 100%;
+  max-width: 250px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border-radius: 143px 142px 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.bemember-card-icon {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.bemember-card-icon img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.bemember-card-title {
+  font-family: "Inria Serif", serif;
+  font-size: 20px;
+  color: #5a3a2e;
+}
+
+.bemember-card-title-box {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  height: 30%;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.142);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer */
+.bemember-footer-heading {
+  font-family: "Inria Serif", serif;
+  font-size: 28px;
+  color: #5a3a2e;
+  margin: 40px 0 20px;
+}
+
+.bemember-btn {
+  background-color: #5a3a2e;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-family: "Inria Serif", serif;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bemember-btn:hover {
+  background-color: #c49a6c;
+}
+
+/* Tablet Styles (992px and below) */
+@media (max-width: 992px) {
+  .bemember-heading {
+    font-size: 3rem;
+  }
+  
+  .bemember-title {
+    font-size: 20px;
+  }
+  
+  .bemember-text {
+    font-size: 16px;
+  }
+  
+  .bemember-cards {
+    gap: 3rem;
+  }
+  
+  .bemember-card {
+    height: 320px;
+  }
+  
+  .bemember-card-icon img {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* Small Tablet Styles (768px and below) */
+@media (max-width: 768px) {
+  .bemember-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 2rem;
+  }
+  
+  .bemember-heading {
+    font-size: 2.5rem;
+  }
+  
+  .bemember-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  
+  .bemember-footer-heading {
+    font-size: 24px;
+  }
+  .bemember-text {
+    font-size: 16px;
+  }
+  
+  .bemember-btn {
+    padding: 12px 25px;
+    font-size: 15px;
+  }
+}
+
+/* Mobile Styles (576px and below) */
+@media (max-width: 576px) {
+  .bemember-container {
+    padding: 30px 15px;
+    text-align: center;
+  }
+  
+  .bemember-heading {
+    font-family: 'Inria Serif', serif;
+    font-size: 2rem;
+  }
+  
+  .bemember-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+  
+  .bemember-card {
+    height: 280px;
+    max-width: 100%;
+  }
+  
+  .bemember-card-icon {
+    padding: 1.5rem;
+  }
+  
+  .bemember-card-icon img {
+    width: 110px;
+    height: 110px;
+  }
+  .bemember-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  .bemember-text {
+    font-size: 12px;
+  }
+  .bemember-card-title{
+    font-size: 15px;
+  }
+    
+  .bemember-footer-heading {
+    font-size: 20px;
+    margin: 30px 0 15px;
+  }
+}
+
+/* Small Mobile Styles (400px and below) */
+@media (max-width: 400px) {
+  .bemember-heading {
+    font-size: 1.8rem;
+  }
+  
+  .bemember-cards {
+    gap: 1.5rem 1rem;
+  }
+  
+  .bemember-card {
+    height: 230px;
+  }
+  
+  .bemember-card-icon img {
+    width: 90px;
+    height: 90px;
+  }
+  
+ 
+}

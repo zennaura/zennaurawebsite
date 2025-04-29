@@ -1,0 +1,19 @@
+.nourishbody-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-family: 'Poppins';
+    color: #390611;
+}
+
+.nourishbody-header{
+    margin-bottom: 10px;
+    padding: 30px;
+}
+.nourishbody-content{
+    width: 100%;
+    min-height: 500px;
+    background-color: #D9D9D9;  
+}   

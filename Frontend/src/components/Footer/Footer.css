@@ -1,0 +1,134 @@
+.footer-container {
+  background-color: #390611;
+  color: #FBEBE3;
+  padding: 60px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+/* Footer Grid */
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+/* Footer Sections */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.footer-follow-title {
+  font-size: 18px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+/* Footer List */
+.footer-list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-list li {
+  font-size: 15px;
+  font-weight: 200;
+  cursor: pointer;
+  padding-bottom: 6px;
+  display: flex;
+  width: fit-content;
+  position: relative;
+}
+
+/* Underline Hover Effect */
+.footer-list li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #FBEBE3;
+  transition: width 0.3s ease-in-out;
+}
+
+.footer-list li:hover::after {
+  width: 100%;
+}
+
+/* Footer Icons */
+.footer-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.footer-icons a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer-icons svg {
+  font-size: 22px;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-icons svg:hover {
+  color: #f0c14b;
+}
+
+/* Copyright */
+.footer-copyright {
+  /* text-align: center; */
+  font-size: 14px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 🔹 Responsive Design 🔹 */
+@media (max-width: 1024px) {
+  .footer-content {
+      grid-template-columns: repeat(2, 1fr);
+      text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+  }
+
+  .footer-section {
+      align-items: flex-start;
+  }
+
+  .footer-icons {
+      gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+      grid-template-columns: repeat(1, 1fr);
+      text-align: center;
+  }
+
+  .footer-section {
+      align-items: center;
+  }
+
+  .footer-icons {
+      justify-content: center;
+  }
+}

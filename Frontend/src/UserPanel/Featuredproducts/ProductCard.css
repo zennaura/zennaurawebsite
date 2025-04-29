@@ -1,0 +1,70 @@
+.Featuredproducts-heading {
+  font-family: "Inria Serif";
+  padding-bottom: 40px;
+  font-size: 3rem;
+}
+.Featuredproducts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 2rem; */
+  justify-content: space-between;
+  padding: 2rem;
+  background: #f2f1ef;
+  color: #3a0e0e;
+  overflow: hidden;
+}
+.Featuredproducts-cards {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  gap: 2rem;
+}
+.Featuredproducts-card {
+  margin-top: 2rem;
+}
+.featured-card-center {
+  margin-top: 0rem;
+}
+.featured-slider{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .Featuredproducts-heading {
+    font-size: 2rem;
+  }
+  .Featuredproducts-cards {
+    align-items: center;
+    gap: 1rem;
+  }
+  .Featuredproducts-card {
+    margin-top: 0rem;
+  }
+
+}
+@media screen and (max-width: 480px) {
+  .Featuredproducts-heading {
+    font-size: 1.5rem;
+  }
+  .Featuredproducts-cards {
+    align-items: center;
+    gap: 1rem;
+  }
+  .Featuredproducts-card {
+   width: 200px;
+    height: 100%;
+    margin-top: 0rem;
+  }
+  .pagination-dots .dot{
+    width: 20px;
+  }
+  .pagination-dots{
+    display: flex;
+    justify-content: space-evenly; 
+  }
+  
+}

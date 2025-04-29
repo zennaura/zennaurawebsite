@@ -1,0 +1,109 @@
+.user-dashboard-wishlist {
+  padding: 20px;
+  width: 75%;
+  margin: 0 auto;
+}
+
+
+.wishlist-count {
+  display: flex;
+  font-size: 1.2rem;
+  justify-content: flex-end;
+  flex-direction: column;
+  color: #390611;
+
+}
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.wishlist-item-container {
+  position: relative;
+}
+
+/* Updated Heart Button */
+.remove-from-wishlist-btn {
+  position: absolute;
+  top: 6px;
+  right: 52px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 5px;
+  transition: transform 0.2s;
+}
+
+.remove-from-wishlist-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Heart icon inside button */
+.remove-from-wishlist-btn svg {
+  color: red;
+  width: 22px;
+  height: 22px;
+}
+
+/* Loading, Error, Empty States */
+.wishlist-loading,
+.wishlist-error{
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+.wishlist-empty{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  height: 100%;
+  font-size: 1.5rem;
+}
+
+.wishlist-empty h3,.wishlist-empty p {
+  color: #000;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.wishlist-h3-empty{
+  margin-top: 5rem;
+
+}
+.ShopNow-btn{
+  font-size: 1.5rem;
+}
+
+.wishlist-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+  /* padding: 3px; */
+  text-align: center;
+  border-bottom: 2px solid #390611;
+  color: #390611;
+}
+.wishlist-h3 {
+  font-size: 3rem;
+}
+/* Responsiveness */
+@media (max-width: 992px) {
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-dashboard-wishlist {
+    width: 90%;
+  }
+}

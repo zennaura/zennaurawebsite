@@ -1,0 +1,164 @@
+    /* General Styling */
+.UptoDate-container {
+    background-color: #fff; /* Light background for the form section */
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .heading-uptodate {
+    font-family: "Inria Serif", serif;
+    font-size: 48px;
+    color: #390611; /* Dark brown color for heading */
+    margin-bottom: 20px;
+  }
+  
+  .para-uptodate {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    color: #390611; /* Dark brown color for paragraph */
+    line-height: 1.6;
+    max-width: 600px; /* Limit width for better readability */
+    margin: 0 auto;
+  }
+  
+  /* Input Container */
+  .input-uptodate-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .input-uptodate {
+    width: 400px; /* Adjust width as needed */
+    height: 50px;
+    border: none;
+    border-radius: 15px 0px 0px 15px; /* Rounded corners */
+    padding: 0 20px;
+    font-size: 16px;
+    color: #390611; /* Dark brown color for text */
+    background-color: #A67C5275; /* Light beige background */
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .input-uptodate:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow on focus */
+  }
+  
+  .btn-uptodate {
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 15px; /* Rounded corners */
+    background-color: #A67C52; /* Warm brown color */
+    color: #fff; /* White text */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: -10px;
+  }
+  
+  .btn-uptodate:hover {
+    background-color: #b3875e; /* Slightly darker hover color */
+  }
+  
+  /* Permission Section */
+  .upto-date-premission {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  input[type="checkbox"] {
+    accent-color: #c49a6c; /* Match the warm brown color */
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .upto-date-permission-para {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #390611; /* Dark brown color */
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 768px) {
+    .UptoDate-container {
+      padding: 20px 10px; /* Adjust padding for smaller screens */
+    }
+  
+    .heading-uptodate {
+      font-size: 36px; /* Smaller heading for mobile */
+    }
+  
+    .para-uptodate {
+      font-size: 16px; /* Smaller paragraph text */
+      max-width: 90%; /* Full width on mobile */
+    }
+  
+    .input-uptodate-container {
+      align-items: stretch;
+    }
+  
+    .input-uptodate {
+      margin-bottom: 10px; /* Space between input and button */
+    }
+  
+    .btn-uptodate {
+      width: 100%; /* Full width on mobile */
+    }
+    
+  }
+
+  @media screen and (max-width: 500px) {
+    .heading-uptodate {
+      font-size: 28px; /* Smaller heading for very small screens */
+    }
+  
+    .para-uptodate {
+      font-size: 13px; /* Smaller paragraph text */
+    }
+  
+    .input-uptodate {
+      width: 100%; /* Full width on very small screens */
+    }
+  
+    .btn-uptodate {
+      width: 100%; /* Full width on very small screens */
+    }
+   .upto-date-permission-para {
+      font-size: 9.6px; /* Smaller text for very small screens */
+    }
+    
+  }
+  @media screen and (max-width: 400px) {
+    .heading-uptodate {
+      font-size: 24px; /* Smaller heading for very small screens */
+    }
+  
+    .para-uptodate {
+      font-size: 12px; /* Smaller paragraph text */
+    }
+  
+    .input-uptodate {
+      width: 200px;
+      height: 35px; 
+      border-radius: 8px 0px 0px 8px; /* Rounded corners */
+    }
+  
+    .btn-uptodate {
+      width: 100px; /* Full width on very small screens */
+      height: 35px; 
+      border-radius: 8px;
+    }
+  
+    
+  }

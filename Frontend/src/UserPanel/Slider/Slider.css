@@ -1,0 +1,128 @@
+.slider-container {
+  font-family: 'Poppins';
+  display: flex;
+  width: 100%;
+  height: 90vh;
+  background-color: #E8D1C5;
+  color: #390611;
+}
+.slider-big-image {
+  width: 50%;
+  object-fit: cover;
+}
+.slider-big-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slider-small-image {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.slider-image {
+  display: flex;
+  align-items: center;
+  margin-top: 110px;
+  flex-direction: column;
+    width: 100%;
+    height: 80%;
+}
+.slider-image img {
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 143px 142px 10px 10px;
+}
+.slider-image-title{
+    margin-top: 1rem;
+    font-size: 20px;
+}
+.slider-arrow{
+    /* background-color: black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    height: 10%;
+    margin-bottom: 70px;
+}
+.slider-arrow-left, .slider-arrow-right{
+    width: 100px;
+    height: 3px;
+    background-color: #390611;
+    font-size: 2rem;
+    cursor: pointer;
+}
+/* For tablets and smaller screens */
+@media (max-width: 1024px) {
+  .slider-container {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+
+  .slider-big-image {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .slider-small-image {
+    width: 100%;
+  }
+
+  .slider-image {
+    height: auto;
+    margin-top: 50px;
+  }
+
+  .slider-arrow {
+    margin-bottom: 30px;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 768px) {
+
+
+  .slider-image img {
+    width: 200px;
+    height: 280px;
+  }
+
+  .slider-arrow {
+    gap: 2rem;
+  }
+
+  .slider-arrow-left, .slider-arrow-right {
+    width: 60px;
+    font-size: 1.5rem;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .slider-big-image{
+    position: absolute;
+    /* height: 50%; */
+  }
+  .slider-small-image{
+    position: relative;
+    top: 9rem;
+    height: 80vh;
+  }
+  .slider-image img {
+    width: 150px;
+    height: 220px;
+  }
+
+  .slider-arrow {
+    gap: 1rem;
+  }
+
+  .slider-arrow-left, .slider-arrow-right {
+    width: 40px;
+    font-size: 1.2rem;
+  }
+}

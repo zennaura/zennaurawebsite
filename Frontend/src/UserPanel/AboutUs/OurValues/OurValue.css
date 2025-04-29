@@ -1,0 +1,123 @@
+/* OurValue.css */
+.OurValue-wrapper {
+  background-color: #F2F1EF;
+  min-height: 100vh;
+  padding: 30px 0;
+  color: #390611;
+}
+
+.OurValue-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.OurValue-title {
+  font-family: 'Inria Serif';
+  font-size: clamp(32px, 4vw, 42px); /* Responsive font size */
+  color: #390611;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 60px;
+  font-weight: 600;
+}
+
+.OurValue-row {
+  display: flex;
+  flex-direction: row; /* Default desktop layout */
+  align-items: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.OurValue-text {
+  width: 45%;
+  padding: 30px;
+}
+
+.OurValue-left {
+  text-align: left;
+  margin-right: auto;
+}
+
+.OurValue-right {
+  text-align: right;
+  margin-left: auto;
+}
+
+.OurValue-divider {
+  width: 45%;
+  height: 250px;
+  background-color: #39061135;
+  margin: 0 2.5%;
+  flex-shrink: 0;
+}
+
+.OurValue-value-title {
+  font-family: 'Inria Serif';
+  font-size: clamp(20px, 2.5vw, 24px); /* Responsive font size */
+  color: #390611;
+  margin-bottom: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.OurValue-value-detail {
+  font-family: 'Poppins';
+  font-size: clamp(12px, 2vw, 18px); /* Responsive font size */
+  color: #390611;
+  line-height: 1.8;
+}
+
+/* Mobile Layout (below 768px) */
+@media (max-width: 500px) {
+  .OurValue-container {
+    padding: 0 20px;
+  }
+
+  .OurValue-row {
+    flex-direction: column; /* Stack vertically */
+    margin-bottom: 40px;
+  }
+
+  .OurValue-text {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .OurValue-divider {
+    width: 100%;
+    height: 150px; /* Reduced height for mobile */
+    margin: 20px 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  /* Reset alignment for mobile */
+  .OurValue-left,
+  .OurValue-right {
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    position: relative;
+    z-index: 2; /* Ensure text is above the divider */
+  }
+  .OurValue-value-title{
+    margin-top: 20px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .OurValue-title {
+    margin-bottom: 40px;
+  }
+
+  .OurValue-divider {
+    height: 200px;
+  }
+
+  .OurValue-row {
+    margin-bottom: 30px;
+  }
+}

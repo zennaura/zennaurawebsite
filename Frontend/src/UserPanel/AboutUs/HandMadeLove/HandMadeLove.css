@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap");
+
+/* HandMadeLove.css */
+.Handmadelove-container {
+  font-family: "Inria Serif";
+  background-color: #ffffff;
+  color: #390611;
+  padding: 35px 60px;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 55px;
+}
+
+.Handmadelove-title {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+.Handmadelove-content {
+  display: flex;
+  /* flex-direction: row; */
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.Handmadelove-textdiv {
+  background-color: #d9d9d9;
+  box-shadow: 0 2px 8px rgba(57, 6, 17, 0.1);
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.Handmadelove-textdiv h1 {
+  /* font-family: 'Poppins', sans-serif; */
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 50px;
+  color: #390611;
+}
+
+.Handmadelove-textdiv p {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #390611;
+}
+@media screen and (max-width: 768px) {
+  .Handmadelove-container {
+    padding: 0;
+  }
+  .Handmadelove-div{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+  }
+  .Handmadelove-textdiv{
+    width: 90%;
+    height: 360px;
+  }
+  .Handmadelove-textdiv h1 {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .Handmadelove-container {
+    padding: 0;
+  }
+
+  .Handmadelove-title {
+    font-size: 36px;
+  }
+
+  .Handmadelove-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .Handmadelove-div {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+  }
+  .Handmadelove-div-left {
+    justify-content: flex-start;
+  }
+  .Handmadelove-div-right {
+    justify-content: flex-end;
+  }
+
+  .Handmadelove-textdiv {
+    /* width: 100%; */
+    height: 160px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .Handmadelove-textdiv h1 {
+    font-size: 18px;
+    text-align: right;
+    margin-bottom: 0px;
+  }
+  .Handmadelove-div-right h1 {
+    text-align: left;
+  }
+
+  .Handmadelove-textdiv p {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .Handmadelove-textdiv{
+    width: 75%;
+  }
+  .Handmadelove-textdiv h1 {
+    font-size: 15px;
+  }
+}

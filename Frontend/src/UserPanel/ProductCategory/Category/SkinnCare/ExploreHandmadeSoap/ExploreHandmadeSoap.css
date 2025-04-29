@@ -1,0 +1,102 @@
+.ExploreHandmadeSoap-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-image: url("../../../../../assests/ExploreHandmadeSoapbgimg.png");
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    text-align: center;
+    color: #3a0e0e;
+    font-family: 'Inria Serif';
+}
+
+.ExploreHandmadeSoap-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20rem;
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+.ExploreHandmadeSoap-img-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    
+}
+
+.ExploreHandmadeSoap-img-div img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.ExploreHandmadeSoap-img-description {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #3a0e0e;
+}
+
+.ExploreHandmadeSoap-content {
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.ExploreHandmadeSoap-title {
+    margin-top: 35px;
+    font-size: 25px;
+    margin-bottom: 80px;
+    line-height: 1.2;
+    font-family: 'Poppins';
+    font-weight: 200;
+}
+
+.ExploreHandmadeSoap-description {
+    font-size: 24px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+   
+}
+
+.ExploreHandmadeSoap-button {
+    background-color: #3a0e0e;
+    color: white;
+    border: none;
+    padding: 20px 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    width: 50%;
+    font-size: 23px;
+}
+
+.ExploreHandmadeSoap-button:hover {
+    background-color: #5a2e2e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .ExploreHandmadeSoap-img-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .ExploreHandmadeSoap-title {
+        font-size: 32px;
+    }
+    
+    .ExploreHandmadeSoap-description {
+        font-size: 16px;
+    }
+}

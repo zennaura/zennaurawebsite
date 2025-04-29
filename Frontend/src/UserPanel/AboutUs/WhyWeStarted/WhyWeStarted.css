@@ -1,0 +1,65 @@
+/* WhyWeStarted.css */
+.whywestart-container {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFFFFF;
+    color: #390611;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.whywestart-content {
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(57, 6, 17, 0.12);
+}
+
+.whywestart-title {
+    font-family: 'Poppins';
+    font-size: clamp(28px, 4vw, 42px); /* Responsive font size */
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Video Styling */
+.whywestart-video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9; /* Maintain aspect ratio */
+    display: block;
+    border: none;
+    outline: none;
+}
+
+/* Responsive Adjustments */
+
+@media (max-width: 768px) {
+    .whywestart-container {
+        min-height: 50vh;
+    }
+    
+    .whywestart-content {
+        margin: 30px 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+   
+    
+    .whywestart-title {
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+    }
+    
+    .whywestart-content {
+        margin: 20px 0 0;
+        border-radius: 8px;
+    }
+}

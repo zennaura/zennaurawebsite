@@ -1,0 +1,155 @@
+.BestSeller-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background: #F2F1EF;
+    color: #3a0e0e;
+    overflow: hidden;
+}
+
+.BestSeller-heading {
+    font-family: 'Inria Serif';
+    padding: 2rem;
+    font-size: 3rem;
+}
+
+.BestSeller-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.BestSeller-card {
+    margin-top: 2rem;
+}
+
+.featured-card-center {
+    margin-top: 0rem;
+}
+
+.product-card {
+    width: 280px;
+    background: #593039;
+    color: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 215, 0, 0.7);
+    position: relative;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.wishlist-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.liked {
+    color: red;
+}
+
+.unliked {
+    color: gray;
+}
+
+.product-image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product-description {
+    font-size: 14px;
+    color: lightgray;
+}
+
+.price-section {
+    margin-top: 5px;
+}
+
+.current-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: gold;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: gray;
+    margin-left: 8px;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.star {
+    font-size: 16px;
+    margin: 2px;
+}
+
+.filled {
+    color: yellow;
+}
+
+.empty {
+    color: gray;
+}
+
+.button-section {
+    margin-top: 10px;
+    display: flex;
+}
+
+.add-to-cart,
+.buy-now {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-to-cart {
+    border-radius: 0px 0px 0px 5px;
+    background: transparent;
+    color: #FFFFFF;
+    border: 1px solid gold;
+}
+
+.buy-now {
+    border-radius: 0px 0px 5px 0px;
+    background: transparent;
+    color: #FFFFFF;
+    border: 1px solid gold;
+}
+
+@media (max-width: 768px) {
+    .BestSeller-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .BestSeller-card, .featured-card-center {
+        margin-top: 1rem;
+    }
+    
+    .BestSeller-heading {
+        font-size: 2rem;
+        padding: 1rem;
+    }
+}

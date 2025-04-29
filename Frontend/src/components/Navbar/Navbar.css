@@ -1,0 +1,164 @@
+/* Navbar Styles */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* background: rgba(0, 0, 0, 0.7); */
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: #fff;
+  font-family: 'Poppins';
+  
+}
+
+/* Logo */
+.logo img {
+  width: 200px;
+}
+
+/* Navigation Bar Top */
+.nav_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.4rem 2rem;
+
+}
+
+/* Navigation Links */
+.nav-links {
+  padding: 10px;
+  background: linear-gradient(to bottom, #39061124, #a58f8f23);
+  width: 100%;
+  display: flex;
+  /* justify-content: space-a; */
+  justify-content: center;
+  list-style: none;
+  gap: 5.2rem;
+  transition: max-height 0.3s ease-in-out;
+  padding: 0.4rem 2rem;
+
+}
+
+/* Navbar Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+/* Icons */
+.icon {
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.icon:hover {
+  color: gold;
+}
+
+/* Hamburger Button */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+li a{
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  /* Hamburger Menu */
+  .menu-btn {
+      display: block;
+  }
+
+  /* Hide Nav Links Initially */
+  .nav-links {
+      flex-direction: column;
+      text-align: center;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      max-height: 0;
+      overflow: hidden;
+  }
+
+  /* Show Menu when Open */
+  .nav-links.open {
+      max-height: 520px;
+      padding: 1rem 0;
+  }
+
+  /* Menu Items */
+  .nav-item {
+      padding: 0.75rem;
+      cursor: pointer;
+      color: white;
+      transition: color 0.3s ease-in-out;
+  }
+
+  .nav-item:hover {
+      color: gold;
+  }
+}
+
+
+/* Cart Icon with Badge */
+.cart-icon-container {
+  position: relative;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Navbar Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .nav-icons {
+      gap: 10px;
+  }
+  
+  .cart-badge {
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+  }
+}

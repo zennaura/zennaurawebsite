@@ -1,0 +1,167 @@
+.Journey-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Poppins';
+  background-image: url("../../assests/ajourneyimg.png");
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: cover; 
+}
+
+.Journey-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(231, 219, 204, 0.593);
+  z-index: 0;
+}
+.Journey-container > * {
+  z-index: 1;
+}
+
+/* Content */
+.Journey-content {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Journey-textBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.Journey-subHeading {
+  font-family: 'Poppins';
+  font-size: 2.0rem;
+  font-weight: 500;
+  /* color: #333; */
+  /* margin-bottom: 10px; */
+}
+
+.Journey-heading {
+  font-family: 'Inria Serif';
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: black;
+  padding: 20px;
+  /* margin-bottom: 15px; */
+  background-color: rgba(174, 152, 149, 0.5); /* 0.5 = 50% transparency */
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.Journey-description {
+  font-size: 20px;
+  /* color: #555; */
+  /* margin-bottom: 15px; */
+  width: 55%;
+  padding: 10px;
+}
+
+.Journey-products {
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+  background-color: #C6B7BA;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+
+.journey-button button{
+  font-family: 'Poppins';
+  background-color: #390611;
+  color: #FFFFFF;
+  font-size: 20px;
+  border: none;
+  margin-bottom: 4rem;
+  padding: 15px 30px;
+  border-radius: 10px;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .Journey-subHeading {
+    font-size: 2.2rem;
+  }
+  .Journey-heading {
+    font-size: 2.5rem;
+    padding: 15px;
+  }
+  .Journey-description {
+    font-size: 18px;
+    width: 70%;
+  }
+  .Journey-products {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Journey-container {
+    height: auto;
+    padding: 2rem;
+  }
+  .Journey-content {
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .Journey-subHeading {
+    font-size: 2rem;
+  }
+  .Journey-heading {
+    font-size: 2.2rem;
+  }
+  .Journey-description {
+    font-size: 16px;
+    width: 80%;
+  }
+  .Journey-products {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Journey-container {
+    padding: 1.5rem;
+    display: none;
+  }
+  .Journey-content {
+    width: 100%;
+    /* padding: 15px; */
+  }
+  .Journey-subHeading {
+    font-size: 1.8rem;
+  }
+  .Journey-heading {
+    font-size: 2rem;
+    padding: 10px;
+  }
+  .Journey-description {
+    font-size: 14px;
+    width: 90%;
+    padding: 10px;
+  }
+  .Journey-products {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
