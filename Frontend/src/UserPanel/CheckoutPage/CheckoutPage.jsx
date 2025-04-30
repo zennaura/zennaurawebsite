@@ -128,7 +128,7 @@ const CheckoutPage = () => {
       };
   
       const response = await axios.post(
-        "http://localhost:5000/api/userorder/placeorder",
+        `${process.env.REACT_APP_BACKEND_LINK}/api/userorder/placeorder`,
         orderData,
         {
           headers: {

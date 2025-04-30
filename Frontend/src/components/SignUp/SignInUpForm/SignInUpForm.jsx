@@ -46,7 +46,7 @@ const handleLogin = async (e) => {
     }
 
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/login", loginData);
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/api/auth/login`, loginData);
         toast.success(`✅ ${response.data.message}`);
 
         const userData = response.data.userData;
@@ -73,7 +73,7 @@ const handleRegister = async (e) => {
     }
 
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/register", formData);
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/api/auth/register`, formData);
         toast.success(`✅ ${response.data.message}`);
         setIsSignUp(false);
     } catch (error) {

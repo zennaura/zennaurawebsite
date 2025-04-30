@@ -72,7 +72,7 @@ function App() {
               <Policies />
             </ProtectedRoute>
           }
-        />
+        />gi
         <Route
           path="/shop"
           element={

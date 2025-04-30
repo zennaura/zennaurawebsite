@@ -150,7 +150,7 @@ const UpdateProduct = () => {
     if (!url) return;
     
     try {
-      const response = await fetch("http://localhost:5000/api/cloudnaryimg/delete-img", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_LINK}/api/cloudnaryimg/delete-img`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -412,7 +412,7 @@ const UpdateProduct = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${productData._id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_LINK}/api/products/${productData._id}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",

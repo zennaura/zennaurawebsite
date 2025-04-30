@@ -19,7 +19,7 @@ const AllSoLike = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/products');
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_LINK}/api/products`);
         const productsData = await res.json();
 
         const flattened = productsData.flatMap((product) =>

@@ -11,7 +11,7 @@ const ViewAllOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/order/getAllOrders');
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/api/order/getAllOrders`);
         setOrders(res.data.data);
       } catch (err) {
         console.error('Error fetching orders:', err);

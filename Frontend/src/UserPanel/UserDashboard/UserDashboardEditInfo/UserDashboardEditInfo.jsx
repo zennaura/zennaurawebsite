@@ -32,7 +32,7 @@ const UserDashboardEditInfo = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/userdashboard/${user._id}`,
+        `${process.env.REACT_APP_BACKEND_LINK}/api/userdashboard/${user._id}`,
         {
           ...formData,
           // Format dates properly for backend

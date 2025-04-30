@@ -18,7 +18,7 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
       if (!user) return;
 
       try {
-        const response = await axios.get(`http://localhost:5000/api/wishlist/${user._id}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/api/wishlist/${user._id}`);
        
         const isInWishlist = response.data.items.some(
           (item) =>
@@ -43,7 +43,7 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/wishlist/toggle", {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/api/wishlist/toggle`, {
         userId: user._id,
         productId,
         variantId,
@@ -75,7 +75,7 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
       }
 
       const response = await axios.post(
-        'http://localhost:5000/api/cart/add',
+        `${process.env.REACT_APP_BACKEND_LINK}/api/cart/add`,
         {
           productId: id, // Full ID like "67f96b7992d4b635fe174cab-0"
           variantId: id.split('-')[1], // Just the "0" part
