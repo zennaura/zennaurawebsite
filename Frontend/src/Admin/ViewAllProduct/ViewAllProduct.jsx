@@ -17,7 +17,7 @@ const ProductsManagement = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/api/products`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -28,7 +28,7 @@ const ProductsManagement = () => {
   const handleDeleteProduct = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`${process.env.REACT_APP_BACKEND_LINK}/api/products/${id}`);
+        await axios.delete(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${id}`);
         setProducts(products.filter(product => product._id !== id));
         toast.success('Product deleted successfully');
       } catch (error) {

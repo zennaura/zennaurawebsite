@@ -25,7 +25,7 @@ const Navbar = () => {
 
     const fetchCartCount = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/api/cart/fetchCartItems?userId=${user._id}`);
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/fetchCartItems?userId=${user._id}`);
             const count = response.data.items.reduce((total, item) => total + item.quantity, 0);
             setCartItemCount(count);
         } catch (error) {

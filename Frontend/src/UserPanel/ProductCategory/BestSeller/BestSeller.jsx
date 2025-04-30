@@ -24,7 +24,7 @@ const BestSeller = () => {
   useEffect(() => {
     const fetchBestSellerProducts = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_LINK}/api/products`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
         const productsData = await res.json();
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({

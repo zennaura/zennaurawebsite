@@ -17,7 +17,7 @@ const UserDashboardWishlist = () => {
 
       try {
         setLoading(true);
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/api/wishlist/${user._id}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/wishlist/${user._id}`);
         console.log('Fetched wishlist:', response.data);
 
         const wishlistData = response.data.items || [];
@@ -48,7 +48,7 @@ const UserDashboardWishlist = () => {
 
   const handleRemoveFromWishlist = async (productId, variantId) => {
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/api/wishlist/toggle`, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/wishlist/toggle`, {
         userId: user._id,
         productId,
         variantId,

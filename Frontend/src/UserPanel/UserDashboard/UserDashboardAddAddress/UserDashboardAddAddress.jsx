@@ -53,7 +53,7 @@ const UserDashboardAddAddress = () => {
   
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_LINK}/api/userdashboard/${user._id}/address`,
+        `${import.meta.env.VITE_BACKEND_LINK}/api/userdashboard/${user._id}/address`,
         {
           address: {
             firstName: formData.firstName,

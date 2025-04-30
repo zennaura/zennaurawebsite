@@ -51,7 +51,7 @@ const UserDashboardChangePass = () => {
         
         try {
             const response = await axios.put(
-                `${process.env.REACT_APP_BACKEND_LINK}/api/userdashboard/${user._id}/password`,
+                `${import.meta.env.VITE_BACKEND_LINK}/api/userdashboard/${user._id}/password`,
                 {
                     currentPassword: formData.currentPassword,
                     newPassword: formData.newPassword

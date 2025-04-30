@@ -25,7 +25,7 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_LINK}/register`, formData);
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/register`, formData);
             toast.success(`✅ ${response.data.message}`);
         } catch (error) {
             toast.error(`❌ ${error.response.data.message}`);

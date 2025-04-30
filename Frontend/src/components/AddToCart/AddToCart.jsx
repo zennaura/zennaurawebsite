@@ -23,7 +23,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
   const fetchCartItems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_LINK}/api/cart/fetchCartItems?userId=${user._id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/fetchCartItems?userId=${user._id}`);
       setCartItems(response.data.items);
       updateCartCount(response.data.items.reduce((total, item) => total + item.quantity, 0));
 
@@ -44,7 +44,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
     if (newQuantity < 1) return;
 
     try {
-      await axios.put(`${process.env.REACT_APP_BACKEND_LINK}/api/cart/updateQuantity`, {
+      await axios.put(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/updateQuantity`, {
         userId: user._id,
         productId,
         variantId,
@@ -58,7 +58,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
 
   const removeItem = async (productId, variantId) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_LINK}/api/cart/removeItem`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/removeItem`, {
         data: {
           userId: user._id,
           productId,

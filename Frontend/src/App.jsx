@@ -60,19 +60,15 @@ function App() {
         <Route
           path="/aboutus"
           element={
-            <ProtectedRoute>
               <AboutUs />
-            </ProtectedRoute>
           }
         />
         <Route
           path="/policies"
           element={
-            <ProtectedRoute>
               <Policies />
-            </ProtectedRoute>
           }
-        />gi
+        />
         <Route
           path="/shop"
           element={

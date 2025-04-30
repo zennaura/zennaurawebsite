@@ -9,7 +9,7 @@ const AllProduct = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_LINK}/api/products`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
         const products = await res.json();
 
         const flattened = products.flatMap((product) =>

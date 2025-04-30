@@ -128,7 +128,7 @@ const CheckoutPage = () => {
       };
   
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_LINK}/api/userorder/placeorder`,
+        `${import.meta.env.VITE_BACKEND_LINK}/api/userorder/placeorder`,
         orderData,
         {
           headers: {
