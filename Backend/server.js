@@ -21,7 +21,22 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: "https://zennaurawebsite.vercel.app", credentials: true }));
+const allowedOrigins = [
+  "https://zennaurawebsite.vercel.app",
+  "http://localhost:5173"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+app.use(express.json()); // To parse application/json
 app.use(bodyParser.json()); // To parse application/json
 app.use(bodyParser.urlencoded({ extended: true })); // To parse application/x-www-form-urlencoded
 
