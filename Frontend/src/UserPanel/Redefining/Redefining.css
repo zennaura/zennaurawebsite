@@ -199,3 +199,11 @@
   }
   
 }
+.img-box img {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.img-box img.fade-out {
+  opacity: 0;
+}
