@@ -8,6 +8,7 @@ const ProductListingPage = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("default");
+  const [viewMode, setViewMode] = useState('grid-3');
   const productsPerPage = 12;
   const navigate = useNavigate();
 
@@ -103,28 +104,35 @@ const ProductListingPage = () => {
               <option value="price-high-low">Price: High to Low</option>
             </select>
             <div className="view-options">
-              <button className="ViewList-option">
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-                <span className="ViewList"></span>
-              </button>
-              <button className="ViewGrid-option">
-                <span></span>
-                <span></span>
-              </button>
-            </div>
+  <button 
+    className={`ViewList-option ${viewMode === 'grid-3' ? 'active' : ''}`}
+    onClick={() => setViewMode('grid-3')}
+  >
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+    <span className="ViewList"></span>
+  </button>
+  <button 
+    className={`ViewGrid-option ${viewMode === 'grid-2' ? 'active' : ''}`}
+    onClick={() => setViewMode('grid-2')}
+  >
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
           </div>
         </div>
       </header>
 
       {/* Product Grid */}
-      <div className="product-grid">
+      <div className={`product-grid ${viewMode}`}>
         {currentProducts.map((variant) => (
           <ProductCard
             key={variant.id}

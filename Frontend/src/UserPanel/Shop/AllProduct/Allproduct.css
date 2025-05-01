@@ -123,3 +123,35 @@
     padding: 20px;
     width: 75%;
   }
+
+  /* Product Grid Views */
+.product-grid {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-grid.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.product-grid.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Active view buttons */
+.view-options button.active {
+  background-color: #f0f0f0;
+  border: 1px solid #390611;
+}
+
+@media screen and (max-width: 500px) {
+  .product-grid ,.product-grid.grid-3,.product-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .product-listing-page{
+    width: 100%;
+    padding: 0;
+  }
+  
+}
