@@ -8,7 +8,6 @@ import Homepage from './UserPanel/Homepage/Homepage';
 import Registration from './components/Registration/Registration';
 import Login from './components/SignUp/WelcomeToZennAura/WelcomeToZennAura';
 import AboutUs from './UserPanel/AboutUs/AboutUs/AboutUs';
-import SignInUpForm from './components/SignUp/SignInUpForm/SignInUpForm';
 import Policies from './UserPanel/Policiess/Policies/Policies';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import TermsAndConditions from './UserPanel/Termsandcondition/Termsandcondition/Termsandcondition';
@@ -47,7 +46,6 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/signinup" element={<SignInUpForm />} />
         <Route path="/manageproducts" element={<ManageProducts />} />
 
         {/* Protected Routes */}

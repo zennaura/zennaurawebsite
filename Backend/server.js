@@ -4,13 +4,12 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
-
 // Routes
 const RegisterLogin = require("./routes/registrationlogin");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutesadmin = require("./routes/Orderroutes-admin");
 const orderRoutesuser = require("./routes/order-routes-user");
-const cloudnaryimgRoutes = require("./routes/Cloudnaryimg")
+const cloudnaryimgRoutes = require("./routes/Cloudnaryimg");
 const cartRoutes = require("./routes/Cart-routes");
 const wishlistRoute = require("./routes/Wishlist-routes");
 const userDashboardRoutes = require("./routes/UserDashboard");
@@ -20,12 +19,14 @@ dotenv.config();
 // Initialize Express App
 const app = express();
 
-// Middleware
+// Allowed origins for CORS
 const allowedOrigins = [
   "https://zennaurawebsite.vercel.app",
-  "http://localhost:5173"
+  "http://localhost:5173",
+  "https://www.zennaura.in"
 ];
 
+// CORS Middleware
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -36,9 +37,11 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json()); // To parse application/json
-app.use(bodyParser.json()); // To parse application/json
-app.use(bodyParser.urlencoded({ extended: true })); // To parse application/x-www-form-urlencoded
+
+// Body Parsers
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB Connection
 mongoose
