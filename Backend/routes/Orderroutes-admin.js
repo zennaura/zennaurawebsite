@@ -5,14 +5,14 @@ const Order = require("../model/Order");
 // Get all orders
 router.get("/getAllOrders", async (req, res) => {
   try {
-    const orders = await Order.find({}); 
+    const orders = await Order.find({}).sort({ createdAt: -1 }); // Sort in descending order
 
     if (!orders.length) {
       return res.status(404).json({
         success: false,
         message: "No orders found!",
       });
-    } 
+    }
 
     res.status(200).json({
       success: true,
@@ -26,6 +26,7 @@ router.get("/getAllOrders", async (req, res) => {
     });
   }
 });
+
 
 // Get order details by ID for admin
 router.get("/getOrderDetailsForAdmin/:id", async (req, res) => {
