@@ -34,30 +34,36 @@ const SignInUpForm = () => {
 
     // Only show essential updates. No need to repeat unchanged parts.
 
-const handleLogin = async (e) => {
-    e.preventDefault();
-    const loginData = {
-        email: formData.email,
-        password: formData.password,
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const loginData = {
+            email: formData.email,
+            password: formData.password,
+        };
+    
+        if (!loginData.email || !loginData.password) {
+            toast.error("❌ Please fill all fields!");
+            return;
+        }
+    
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/login`, loginData);
+            toast.success(`✅ ${response.data.message}`);
+    
+            const userData = response.data.userData;
+            setUser(userData);
+    
+            if (userData.userRole === "admin") {
+                navigate("/admin-homepage", { state: userData });
+            } else {
+                navigate("/", { state: userData });
+            }
+    
+        } catch (error) {
+            toast.error(`❌ ${error.response?.data?.message || "Login failed"}`);
+        }
     };
-
-    if (!loginData.email || !loginData.password) {
-        toast.error("❌ Please fill all fields!");
-        return;
-    }
-
-    try {
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/login`, loginData);
-        toast.success(`✅ ${response.data.message}`);
-
-        const userData = response.data.userData;
-        setUser(userData);
-        navigate("/", { state: userData });
-
-    } catch (error) {
-        toast.error(`❌ ${error.response?.data?.message || "Login failed"}`);
-    }
-};
+    
 
 const handleRegister = async (e) => {
     e.preventDefault();
