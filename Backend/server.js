@@ -13,6 +13,8 @@ const cloudnaryimgRoutes = require("./routes/Cloudnaryimg");
 const cartRoutes = require("./routes/Cart-routes");
 const wishlistRoute = require("./routes/Wishlist-routes");
 const userDashboardRoutes = require("./routes/UserDashboard");
+const sendEmailRoute = require('./routes/EmailRoute');
+
 
 dotenv.config();
 
@@ -58,6 +60,8 @@ app.use("/api/cloudnaryimg", cloudnaryimgRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoute);
 app.use("/api/userdashboard", userDashboardRoutes);
+app.use('/api/email', sendEmailRoute);
+
 
 // Start Server
 const PORT = process.env.PORT || 5000;
