@@ -64,9 +64,9 @@ const Slider = () => {
     };
 
     return (
-        <div 
-            className="slider-container" 
-            onMouseEnter={handleMouseEnter} 
+        <div
+            className="slider-container"
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             {/* Large Image */}
@@ -77,11 +77,15 @@ const Slider = () => {
             {/* Small Image and Controls */}
             <div className="slider-small-image">
                 <div className="slider-image">
-                    <img
-                        src={images[(currentIndex + 1) % images.length].src}
-                        alt={images[(currentIndex + 1) % images.length].title}
-                    />
-                    <h3 className="slider-image-title">{images[(currentIndex + 1) % images.length].title}</h3>
+                    <div className="slider-small-arrow-left" onClick={handleLeftClick}> &lt;</div>
+                    <div className="slider-image-title-box">
+                        <img
+                            src={images[(currentIndex + 1) % images.length].src}
+                            alt={images[(currentIndex + 1) % images.length].title}
+                        />
+                        <h3 className="slider-image-title">{images[(currentIndex + 1) % images.length].title}</h3>
+                    </div>
+                    <div className="slider-small-arrow-right" onClick={handleRightClick}>&gt;</div>
                 </div>
 
                 {/* Arrows and Image Index */}

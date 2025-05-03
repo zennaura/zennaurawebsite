@@ -64,7 +64,7 @@
 /* Story Card Styling */
 .story-card {
   width: 100%;
-  min-height: 400px;
+  height: 450px;
   display: none;
   align-items: center;
   justify-content: center;
@@ -75,6 +75,9 @@
   padding: 2rem;
   border-radius: 20px;
   overflow: hidden;
+}
+.storycard-content{
+  height: 90%;
 }
 
 .story-card.active {

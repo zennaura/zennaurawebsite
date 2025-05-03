@@ -1,14 +1,14 @@
 /* Base Styles */
 .redefining-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  min-height: 70vh;
+  min-height: 90vh;
   background-color: #ffffff;
   color: #390611;
   overflow: hidden;
-  position: relative;
+  /* position: relative; */
   padding: 2rem 0;
 }
 
@@ -18,9 +18,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  /* width: 20%; */
   height: 100%;
-  padding: 2rem;
+  /* padding: 2rem; */
   z-index: 2;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .word {
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 500;
   letter-spacing: 0.1rem;
   font-family: "Poppins", sans-serif;
@@ -79,14 +79,14 @@
 .redefining-image-right,
 .redefining-image-left {
   position: relative;
-  width: 35%;
+  width: 50%;
   height: 100%;
   min-height: 500px;
 }
 
 .img-box {
   position: absolute;
-  border-radius: 143px 142px 10px 10px;
+  border-radius: 143px 142px 0px 0px;
   background-color: #ddbfa4;
   overflow: hidden;
   border: 2px solid goldenrod;
@@ -108,7 +108,7 @@
   width: 300px;
   height: 400px;
   top: 5%;
-  left: 10%;
+  left: 20%;
   z-index: 2;
 }
 
@@ -132,16 +132,16 @@
 .redifining-img-box4 {
   width: 180px;
   height: 250px;
-  left: 30%;
-  bottom: 25%;
+  left: 48%;
+  bottom: 15%;
   z-index: 2;
 }
 
 .redifining-img-box5 {
   width: 180px;
   height: 250px;
-  left: 5%;
-  top: 55%;
+  left: 20%;
+  top: 50%;
   z-index: 3;
 }
 
@@ -158,44 +158,52 @@
 
 @media (max-width: 480px) {
   .redefining-container {
-    height: 40vh;
+    min-height: 30vh;
+    /* border: 5px solid #390611; */
     padding: 1rem 0;
   }
   .word{
     font-size: 1rem;
   }
+  .redefining-words-span {
+    gap: 1rem;
+  }
   .redifining-img-box1 {
     width: 100px;
     height: 150px;
-    top: 20%;
-    left: 10%;
+    top: 25%;
+    left: 15%;
   }
   .redifining-img-box2 {
-    width: 80px;
-    height: 120px;
-    top: 40%;
-    left: 35%;
+    width: 70px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
   }
   .redifining-img-box3 {
     width: 100px;
-    height: 150px;
-    left: -3%;
-    top: 20%;
+    height: 120px;
+    left: 5%;
+    top: 25%;
   }
   
   .redifining-img-box4 {
-    width: 80px;
-    height: 120px;
-    left: 30%;
-    bottom: 40%;
+    width: 75px;
+    height: 100px;
+    left: 40%;
+    bottom: 15%;
   }
   
   .redifining-img-box5 {
-    width: 80px;
-    height: 120px;
-    left: -15%;
-    top: 55%;
+    width: 75px;
+    height: 90px;
+    left: 15%;
+    top: 60%;
   
+  }
+  .redefining-image-right,
+  .redefining-image-left {
+    min-height: 30vh; /* Reduced from 500px */
   }
   
 }

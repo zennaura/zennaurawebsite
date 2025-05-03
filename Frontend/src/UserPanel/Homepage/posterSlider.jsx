@@ -1,39 +1,38 @@
+// HomepageSlider.jsx
 import React, { useState, useEffect } from 'react';
-import './Slider.css'
+import './Slider.css';
 
 const HomepageSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  
-  // Sample product slides
+
   const slides = [
     {
       id: 1,
-      title: "Summer Collection 2023",
-      description: "Discover our new arrivals with up to 30% discount",
-      image: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      cta: "Shop Now",
-      ctaLink: "/summer-collection"
+      title: "Healing Crystals",
+      description: "Balance your energy with our handpicked healing stones.",
+      image: "https://static.wixstatic.com/media/e741ea_dd1ffc14fed246278c15261555f636e1~mv2_d_1999_1333_s_2.jpg/v1/fill/w_1999,h_1333,al_c/e741ea_dd1ffc14fed246278c15261555f636e1~mv2_d_1999_1333_s_2.jpgz",
+      cta: "Shop Crystals",
+      ctaLink: "/crystals"
     },
     {
       id: 2,
-      title: "Premium Watches",
-      description: "Elegant timepieces for every occasion",
-      image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80",
-      cta: "View Collection",
-      ctaLink: "/watches"
+      title: "Scented Candles",
+      description: "Create a calming space with our aromatherapy candle range.",
+      image: "https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTEyL3Jhd3BpeGVsX29mZmljZV80MV9waG90b19vZl9hX2lyaWRlc2NlbnRfY3J5c3RhbF9vbl93YXRlcl9iYWNrZ19iMTc2MGUzYi00MTI0LTRkOTEtYjMwMi0zODc4YWQyZWVmNTNfMS5qcGc.jpg",
+      cta: "Browse Candles",
+      ctaLink: "/candles"
     },
     {
       id: 3,
-      title: "New Arrivals",
-      description: "Fresh styles just landed in our store",
-      image: "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+      title: "Spiritual Essentials",
+      description: "Smudging kits, incense, and more for mindful living.",
+      image: "https://th.bing.com/th/id/OIP.DQujBzfKMu964y3PQK7F2wHaFj?rs=1&pid=ImgDetMain",
       cta: "Explore Now",
-      ctaLink: "/new-arrivals"
+      ctaLink: "/spiritual-essentials"
     }
   ];
 
-  // Auto-play functionality
   useEffect(() => {
     let interval;
     if (isAutoPlaying) {
@@ -64,13 +63,13 @@ const HomepageSlider = () => {
 
   return (
     <div className="homepageslider-container">
-      <div 
+      <div
         className="homepageslider"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
-        {slides.map((slide, index) => (
-          <div 
-            key={slide.id} 
+        {slides.map((slide) => (
+          <div
+            key={slide.id}
             className="homepageslider-slide"
             style={{ backgroundImage: `url(${slide.image})` }}
           >
@@ -83,7 +82,6 @@ const HomepageSlider = () => {
         ))}
       </div>
 
-      {/* Navigation arrows */}
       <button className="homepageslider-arrow homepageslider-prev" onClick={goToPrevSlide}>
         &lt;
       </button>
@@ -91,7 +89,6 @@ const HomepageSlider = () => {
         &gt;
       </button>
 
-      {/* Dots indicator */}
       <div className="homepageslider-dots">
         {slides.map((_, index) => (
           <button

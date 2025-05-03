@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Andada+Pro&display=swap');
 /* Main Card Container */
 .product-card-container {
+  overflow: hidden;
     width: 300px;
     background-color: #593039;
     color: white;
@@ -121,6 +122,7 @@
   .product-card-subtitle {
     font-size: 0.875rem;
     color: #d1d5db;
+    height: 42px;
     font-family: 'Andada Pro';
     margin-bottom: 0.5rem;
   }

@@ -22,15 +22,12 @@ const LuxuryPage = () => {
 
                 {/* Features Section */}
                 <div className="luxuryPage-features-section">
-                    <p className="luxuryPage-subtext">
-                        We believe true luxury doesn’t compromise—it nurtures. Zenn Aura is:
-                    </p>
                     <div className="luxuryPage-features">
                         {features.map((feature, index) => (
                             <div key={index} className="luxuryPage-feature-box">
                                 {/* Icon */}
                                 <div className="luxuryPage-feature-icon-wrapper">
-                                <img className="luxuryPage-feature-icon" src={feature.icon} alt="img" />
+                                    <img className="luxuryPage-feature-icon" src={feature.icon} alt="img" />
                                 </div>
                                 {/* text */}
                                 <h3 className="luxuryPage-feature-title">{feature.title}</h3>
@@ -39,8 +36,8 @@ const LuxuryPage = () => {
                         ))}
                     </div>
                     <h2 className="luxuryPage-footer-text">
-                    When you choose Zenn Aura,<br />
-                    you choose a brand that values authenticity, beauty, and the planet
+                        When you choose Zenn Aura,<br />
+                        you choose a brand that values authenticity, beauty, and the planet
                     </h2>
                 </div>
             </div>

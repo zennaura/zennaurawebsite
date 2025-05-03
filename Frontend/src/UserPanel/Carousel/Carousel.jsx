@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import "./Carousel.css"; 
+import "./Carousel.css";
 import Carouselimg1 from "../../assests/Carouselimg1.png"
 import Carouselimg2 from "../../assests/Carouselimg2.png"
 import Carouselimg3 from "../../assests/Carouselimg3.png"
@@ -60,7 +60,7 @@ const Carousel = () => {
 
   // Update the mobile state based on window size
   const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
+    setIsMobile(window.innerWidth <= 500);
   };
 
   useEffect(() => {
@@ -132,11 +132,16 @@ const Carousel = () => {
               translateX = distance === 3 ? 800 : -800;
             } else if (distance === 4 || distance === slides.length - 4) {
               scale = 0.7;
+              opacity = 0.2;
+              zIndex = 1;
+              translateX = distance === 4 ? 1000 : -1000;
+            } else if (distance === 5 || distance === slides.length - 5) {
+              scale = 0.5;
               opacity = 0;
               zIndex = 1;
               translateX = distance === 4 ? 1200 : -1200;
             } else {
-              scale = 0.5;
+              scale = 0.3;
               opacity = 0;
               zIndex = 0;
               translateX = distance < slides.length / 2 ? 1200 : -1200;

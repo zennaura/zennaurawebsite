@@ -1,6 +1,6 @@
 .selfCare-container {
   width: 100%;
-  height: 85vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,22 +39,22 @@
     margin-top: -37px;
 }
 .selfCare-quote-box {
-  width: 250px;
-  height: 300px;
+  width: 300px;
+  height: 380px;
   background-color: #F9EBE3B5;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 60px;
   margin-top: 60px;
-  border-radius: 143px 142px 10px 10px;
-  border:1px solid gold;
+  border-radius: 143px 142px 0px 0px;
+  border:1px solid goldenrod;
   position: relative;
   padding: 10px; /* Adjust as needed */
 }
 
 .selfCare-quote {
-  font-size: 20px;
+  font-size: 26px;
   text-align: center;
   padding: 20px;
   color: rgba(57, 6, 17, 1);
@@ -118,35 +118,20 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  .selfCare-content h2 {
-    font-size: 2rem;
-  }
-  .selfCare-quote-box {
-    width: 180px;
-    height: 240px;
-    border-radius: 120px 120px 8px 8px;
-  }
-  .selfCare-quote {
-    font-size: 14px;
-    padding: 15px;
-  }
-  .selfCare-crystal {
-    width: 40px;
-  }
-  .selfCare-crystalTop {
-    top: 30px;
-    left: -20px;
-  }
-  .selfCare-crystalBottom {
-    top: -50px;
-    left: 22%;
+@media  screen and (max-width: 480px) {
+  .selfCare-container {
+    height: auto;
   }
   .selfCare-overlay{
-    position: absolute;
+    display: none;
   }
-  .selfCare-content h2{
-    z-index: 99;
-    font-size: 1.9319rem;
+  .selfCare-content{
+    width: 100%;
+    padding: 10px;
+    background-image: url(../../assests/selfcareimg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
+  
 }

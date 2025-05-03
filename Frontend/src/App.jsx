@@ -38,7 +38,7 @@ function App() {
 
   return (
     <Router>
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
 
       {(!user || user.userRole === 'user') && <Navbar />}
       

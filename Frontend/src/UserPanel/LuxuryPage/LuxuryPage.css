@@ -22,10 +22,11 @@
   background-size: cover;
   position: relative;
   padding: 20px;
-  background-color: rgba(57, 24, 6, 0.06);
+  /* background-color: rgba(57, 24, 6, 0.06); */
 }
 .luxuryPage-title {
   font-size: 60px;
+  font-family: 'Inria Serif';
   /* font-weight: bold; */
 }
 
@@ -38,41 +39,34 @@
   background-color: rgba(57, 24, 6, 0.06);  
   overflow: hidden;
   display: flex;
+  height: 280px;
   justify-content: center;
   align-items: center;
 }
 
 .luxuryPage-image-container img {
-  margin: 50px;
-  width: 20%;
-  height: 60%;
-  object-fit: cover; /* This ensures the image covers the container while maintaining aspect ratio */
-}
-
-
-.luxuryPage-luxury-image {
-  background-color: rgba(57, 24, 6, 0.06);
   width: 100%;
   height: 100%;
-  border-radius: 10px;
   object-fit: contain;
+  object-position: center;
+  padding: 1rem;
 }
+
+
 
 
 .luxuryPage-features-section {
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 50px 20px;
+  padding: 20px 0px 50px 0px;
   text-align: center;
-  background-color: rgba(57, 24, 6, 0.06);
+  /* background-color: rgba(57, 24, 6, 0.06); */
 }
 
 
 .luxuryPage-subtext {
   font-family: 'Poppins';
   font-size: 22px;
-
-  margin-bottom: 30px;
 }
 
 .luxuryPage-features {
@@ -83,10 +77,14 @@
 }
 
 .luxuryPage-feature-box {
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 12px;
   width: 250px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .luxuryPage-feature-icon-wrapper {
@@ -95,7 +93,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 280px;
+  width: 250px;
   border-radius: 20px;
   margin-bottom: 15px;
   color: white;
@@ -115,8 +114,9 @@
 }
 
 .luxuryPage-feature-description {
-  /* width: 70%; */
+  width: 70%;
   font-size: 14px;
+  text-align: center;
   /* line-height: 1.4; */
   font-weight: 500;
   font-family: 'Poppins';
@@ -180,6 +180,7 @@
 
   .luxuryPage-feature-icon-wrapper {
     height: 100px;
+    width:fit-content;
     margin-bottom: 0;
   }
   .luxuryPage-feature-title{
@@ -194,8 +195,11 @@
     padding: 0 0 0 0;
   }
   .luxuryPage-container {
-    min-height: 69vh;
+    min-height: 40vh;
     display: block;
-    background-color: rgba(57, 24, 6, 0.06);
+    /* background-color: rgba(57, 24, 6, 0.06); */
+}
+.luxuryPage-features{
+  height: 100%;
 }
 }

@@ -65,9 +65,12 @@ const OurStory = () => {
               key={index}
               className={`story-card ${index === currentSlide ? "active" : ""}`}
             >
-              <h3>{slide.title}</h3>
-              <p>{slide.content}</p>
-              {slide.quote && <p className="quote">{slide.quote}</p>}
+              <div className="storycard-content">
+                <h3>{slide.title}</h3>
+                <p>{slide.content}</p>
+                {slide.quote && <p className="quote">{slide.quote}</p>}
+
+              </div>
               <button className="know-more">KNOW MORE</button>
             </div>
           ))}
