@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from 'axios';
 import './VerificationCodeInput.css';
 
-const VerificationCodeInput = () => {
+const VerificationCodeforgotpassword = () => {
   const [code, setCode] = useState(new Array(6).fill(""));
   const [actualCode, setActualCode] = useState("");
   const [message, setMessage] = useState("");
@@ -14,7 +13,6 @@ const VerificationCodeInput = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userEmail = location.state?.userEmail || "";
-  const formData = location.state?.formData || {};
 
   const emailSentRef = useRef(false);
 
@@ -26,20 +24,19 @@ const VerificationCodeInput = () => {
     }
 
     if (!emailSentRef.current) {
-      emailSentRef.current = true; // ✅ Set before calling generateCode
+      emailSentRef.current = true; 
       generateCode();
     }
   }, [userEmail, navigate]);
 
   const generateCode = () => {
-    // console.log("Generating code and sending email...");
     const newCode = Array(6)
       .fill()
       .map(() => Math.random().toString(36).charAt(2).toUpperCase())
       .join('');
     setActualCode(newCode);
 
-    const newMessage = `Hello,\n\nYour ZennAura verification code is: ${newCode}\n\nPlease enter this code in the verification screen to continue.\n\nIf you did not request this code, please ignore this email.\n\nThank you,\nThe ZennAura Team`;
+    const newMessage = `Hello,\n\nWe received a request to reset your ZennAura account password.\nYour verification code is: ${newCode}\n\nPlease enter this code on the password reset screen to proceed.\n\nIf you did not request a password reset, please ignore this email.\n\nThank you,\nThe ZennAura Team`;
     setMessage(newMessage);
     sendCodeToBackend(newMessage);
   };
@@ -84,23 +81,7 @@ const VerificationCodeInput = () => {
   const handleContinue = async () => {
     const enteredCode = code.join("");
     if (enteredCode === actualCode) {
-      try {
-        // console.log("Sending formData to backend:", formData);
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/register`, formData);
-        if (response.data.success) {
-          toast.success(response.data.message);
-          navigate('/login');
-        } else {
-          toast.error(response.data.message || "Registration failed. Please try again.");
-        }
-      } catch (err) {
-        console.error("Registration failed:", err.response?.data || err.message);
-        toast.error(err.response?.data?.message || "Registration failed. Please try again.");
-        setError(err.response?.data?.message || "Registration failed. Please try again.");
-      }
-    } else {
-      toast.error("Incorrect code. Please try again.");
-      setError("Incorrect code. Please try again.");
+      navigate("/resetpassword", { state: { userEmail ,verified: true } });
     }
   };
 
@@ -147,4 +128,4 @@ const VerificationCodeInput = () => {
   );
 };
 
-export default VerificationCodeInput;
+export default VerificationCodeforgotpassword;

@@ -30,6 +30,9 @@ import ManageProducts from './Admin/ProductManage/ManageProducts';
 import CheckoutPage from './UserPanel/CheckoutPage/CheckoutPage';
 import Thankyoupage from './UserPanel/Thankyoupage/Thankyoupage';
 import VerificationCodeInput from './components/VerificationCodeInput/VerificationCodeInput';
+import SetNewPassword from './components/SetNewPassword/SetNewPassword';
+import VerificationCodeforgotpassword from './components/VerificationCodeInput/VerificationCodeforgotpassword';
+import ForgotPasswordEmail from './components/ForgotPasswordEmail/ForgotPasswordEmail';
 
 function App() {
   const { user } = useUser();
@@ -38,7 +41,7 @@ function App() {
   return (
     <>
       {/* ScrollToTop can be added here if needed */}
-      {(!user || user.userRole === 'user') && location.pathname !== '/verification' && <Navbar />}
+      {(!user || user.userRole === 'user') && location.pathname !== '/verification' && location.pathname !== '/emailforforgotpassword' && location.pathname !== '/resetpasswordvarification' && location.pathname !== '/resetpassword' && <Navbar />}
 
       <Routes>
         {/* Public Routes */}
@@ -66,9 +69,12 @@ function App() {
         <Route path="/checkout-page" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
         <Route path="/thankyou-page" element={<ProtectedRoute><Thankyoupage /></ProtectedRoute>} />
         <Route path="/verification" element={<VerificationCodeInput />} />
+        <Route path="/emailforforgotpassword" element={<ForgotPasswordEmail />} />
+        <Route path="/resetpasswordvarification" element={<VerificationCodeforgotpassword />} />
+        <Route path="/resetpassword" element={<SetNewPassword />} />
       </Routes>
 
-      {location.pathname !== '/verification' && <Footer />}
+      {location.pathname !== '/verification' && location.pathname !== '/emailforforgotpassword' && location.pathname !== '/resetpasswordvarification' && location.pathname !== '/resetpassword' && <Footer />}
     </>
   );
 }

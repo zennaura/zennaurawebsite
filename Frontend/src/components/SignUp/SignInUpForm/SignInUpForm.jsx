@@ -4,6 +4,8 @@ import { useUser } from '../../AuthContext/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 import "./SignInUpForm.css"; 
 import {
     FaFacebookF,
@@ -91,6 +93,10 @@ const handleRegister = async (e) => {
     }
 };
 
+    const handleforgotpassword =  () => {
+        navigate('/emailforforgotpassword')
+    }
+
     
 
     return (
@@ -132,7 +138,7 @@ const handleRegister = async (e) => {
                         <span>or use your account</span>
                         <input type="email" name="email" placeholder="Email" onChange={handleChange} />
                         <input type="password" name="password" placeholder="Password" onChange={handleChange} />
-                        <a href="#">Forgot your password?</a>
+                        <a href="#" onClick={handleforgotpassword}>Forgot your password?</a>
                         <button type="submit">Sign In</button>
                     </form>
                 </div>
