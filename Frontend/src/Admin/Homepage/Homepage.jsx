@@ -101,7 +101,7 @@ const Home = () => {
           </div>
         </div>
         
-        <div className="admin-home-sales-chart">
+        {/* <div className="admin-home-sales-chart">
           <div className="admin-home-section-header">
             <h2>Sales Overview</h2>
             <select className="admin-home-time-select">
@@ -120,7 +120,7 @@ const Home = () => {
               </svg>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       
       {/* Bottom Row */}

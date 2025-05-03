@@ -28,6 +28,7 @@ const SignInUpForm = () => {
     });
 
 
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -64,6 +65,7 @@ const SignInUpForm = () => {
         }
     };
     
+    
 
 const handleRegister = async (e) => {
     e.preventDefault();
@@ -80,8 +82,8 @@ const handleRegister = async (e) => {
     }
 
     try {
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/register`, formData);
-        toast.success(`✅ ${response.data.message}`);
+        const email = formData.email; 
+        navigate('/verification', { state: { userEmail: email , formData } });
         setIsSignUp(false);
     } catch (error) {
         const errorMsg = error.response?.data?.message || "Registration failed";

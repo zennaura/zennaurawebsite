@@ -1,6 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React from 'react';
-
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useUser } from './components/AuthContext/AuthContext';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -21,7 +20,6 @@ import SacreDrituals from './UserPanel/ProductCategory/Category/SacredRituals/Sa
 import ProductDetails from './UserPanel/ProductPage/ProductPage/ProductPage';
 import UserDashboard from './UserPanel/UserDashboard/UserDashboardMain/UserDashboardMain';
 
-// Admin Panel
 import AdminDashboard from './Admin/Dashboard/Dashboard';
 import AddProduct from './Admin/AddProduct/AddProduct';
 import AllProduct from './Admin/AllProduct/AllProduct';
@@ -30,177 +28,48 @@ import ViewAllProduct from './Admin/ViewAllProduct/ViewAllProduct';
 import UpdateProduct from './Admin/UpdateProduct/UpdateProduct';
 import ManageProducts from './Admin/ProductManage/ManageProducts';
 import CheckoutPage from './UserPanel/CheckoutPage/CheckoutPage';
-import Thankyoupage from './UserPanel/Thankyoupage/Thankyoupage'
+import Thankyoupage from './UserPanel/Thankyoupage/Thankyoupage';
+import VerificationCodeInput from './components/VerificationCodeInput/VerificationCodeInput';
 
 function App() {
-
-  const {user} = useUser();
+  const { user } = useUser();
+  const location = useLocation();
 
   return (
-    <Router>
-      {/* <ScrollToTop /> */}
+    <>
+      {/* ScrollToTop can be added here if needed */}
+      {(!user || user.userRole === 'user') && location.pathname !== '/verification' && <Navbar />}
 
-      {(!user || user.userRole === 'user') && <Navbar />}
-      
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/manageproducts" element={<ManageProducts />} />
 
-        {/* Protected Routes */}
-        <Route
-          path="/"
-          element={
-              <Homepage />
-          }
-        />
-        <Route
-          path="/aboutus"
-          element={
-              <AboutUs />
-          }
-        />
-        <Route
-          path="/policies"
-          element={
-              <Policies />
-          }
-        />
-        <Route
-          path="/shop"
-          element={
-            <ProtectedRoute>
-              <Shop />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/termsandconditions"
-          element={
-            <ProtectedRoute>
-              <TermsAndConditions />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/skincare"
-          element={
-            <ProtectedRoute>
-              <Skinncare />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/aurajewels"
-          element={
-            <ProtectedRoute>
-              <AuraJewels />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/divinecrystals"
-          element={
-            <ProtectedRoute>
-              <DivineCrystal />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/sacredrituals"
-          element={
-            <ProtectedRoute>
-              <SacreDrituals />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/productdetails/:id"
-          element={
-            <ProtectedRoute>
-              <ProductDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/userdashboard"
-          element={
-            <ProtectedRoute>
-              <UserDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Admin Routes - also protected */}
-        <Route
-          path="/addproduct"
-          element={
-            <ProtectedRoute>
-              <AddProduct />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/allproduct"
-          element={
-            <ProtectedRoute>
-              <AllProduct />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin-homepage"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin-view-orders"
-          element={
-            <ProtectedRoute>
-              <ViewAllorder />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin-view-products"
-          element={
-            <ProtectedRoute>
-              <ViewAllProduct />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin-update-product-form"
-          element={
-            <ProtectedRoute>
-              <UpdateProduct />
-            </ProtectedRoute>
-          }
-        />
-
-      <Route
-          path="/checkout-page"
-          element={
-            <ProtectedRoute>
-              <CheckoutPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/thankyou-page"
-          element={
-            <ProtectedRoute>
-              <Thankyoupage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<Homepage />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/policies" element={<Policies />} />
+        <Route path="/termsandconditions" element={<TermsAndConditions />} />
+        <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
+        <Route path="/skincare" element={<ProtectedRoute><Skinncare /></ProtectedRoute>} />
+        <Route path="/aurajewels" element={<ProtectedRoute><AuraJewels /></ProtectedRoute>} />
+        <Route path="/divinecrystals" element={<ProtectedRoute><DivineCrystal /></ProtectedRoute>} />
+        <Route path="/sacredrituals" element={<ProtectedRoute><SacreDrituals /></ProtectedRoute>} />
+        <Route path="/productdetails/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+        <Route path="/userdashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+        <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+        <Route path="/allproduct" element={<ProtectedRoute><AllProduct /></ProtectedRoute>} />
+        <Route path="/admin-homepage" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin-view-orders" element={<ProtectedRoute><ViewAllorder /></ProtectedRoute>} />
+        <Route path="/admin-view-products" element={<ProtectedRoute><ViewAllProduct /></ProtectedRoute>} />
+        <Route path="/admin-update-product-form" element={<ProtectedRoute><UpdateProduct /></ProtectedRoute>} />
+        <Route path="/checkout-page" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+        <Route path="/thankyou-page" element={<ProtectedRoute><Thankyoupage /></ProtectedRoute>} />
+        <Route path="/verification" element={<VerificationCodeInput />} />
       </Routes>
-      <Footer />
-    </Router>
+
+      {location.pathname !== '/verification' && <Footer />}
+    </>
   );
 }
 

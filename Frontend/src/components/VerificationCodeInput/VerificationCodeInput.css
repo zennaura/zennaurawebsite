@@ -1,0 +1,86 @@
+.VerificationCodeInput-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontally center all child items */
+  justify-content: center; /* Vertically center */
+  text-align: center;
+  padding: 40px;
+  background: #f4f3f1;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.VerificationCodeInput-icon {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.VerificationCodeInput-message {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  color: #3c1e2e;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.VerificationCodeInput-box-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.VerificationCodeInput-box {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #e1e1e1;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.VerificationCodeInput-box:focus {
+  border: 2px solid #3c1e2e;
+  background-color: #fff;
+}
+
+.VerificationCodeInput-continue {
+  padding: 12px 36px;
+  font-size: 20px;
+  background-color: #fff;
+  border: none;
+  border-radius: 40px;
+  color: #3c1e2e;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  align-self: center;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.VerificationCodeInput-continue:hover {
+  background-color: #f0e9e9;
+  transform: scale(1.03);
+}
+
+.VerificationCodeInput-resend-text {
+  font-size: 16px;
+  color: #3c1e2e;
+}
+
+.VerificationCodeInput-resend-link {
+  color: #3c1e2e;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.VerificationCodeInput-error {
+  color: red;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
