@@ -82,5 +82,45 @@ Router.post("/login", async (req, res) => {
     }
 });
 
+Router.post("/resetpassword", async (req, res) => {
+    try {
+        const { email, newPassword, confirmPassword } = req.body;
+
+        // Validate input (same validation pattern as register route)
+        if (!email || !newPassword || !confirmPassword) {
+            return res.status(400).json({ message: "All fields are required!" });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({ message: "Passwords don't match!" });
+        }
+
+        // Find user (same pattern as login route)
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        // Hash new password (same bcrypt pattern as register route)
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update user password
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({ 
+            success: true, 
+            message: "Password reset successfully!" 
+        });
+
+    } catch (error) {
+        console.error("❌ Password Reset Error:", error);
+        res.status(500).json({ 
+            message: "Internal server error during password reset", 
+            error: error.message 
+        });
+    }
+});
+
 
 module.exports = Router;
