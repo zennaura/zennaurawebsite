@@ -73,11 +73,11 @@ const HomepageSlider = () => {
             className="homepageslider-slide"
             style={{ backgroundImage: `url(${slide.image})` }}
           >
-            <div className="homepageslider-content">
+            {/* <div className="homepageslider-content">
               <h2>{slide.title}</h2>
               <p>{slide.description}</p>
               <a href={slide.ctaLink} className="homepageslider-cta">{slide.cta}</a>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

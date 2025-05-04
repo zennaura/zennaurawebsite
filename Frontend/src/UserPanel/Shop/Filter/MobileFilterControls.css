@@ -1,9 +1,7 @@
+
 .mobile-filter-controls {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
+  display: none;
+}
   .mobile-filter-button {
     background: transparent;
     border: none;

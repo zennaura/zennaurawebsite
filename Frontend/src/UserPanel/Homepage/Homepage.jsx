@@ -14,7 +14,7 @@ import FollowUs from '../FollowUs/FollowUs';
 import Bemember from '../BeMember/Bemember';
 import ImageContainer from "../ProductCategory/ImageContainer/ImageContainer";
 import Homepageposter from '../../assests/Homepagepos.png';
-import OurClient from '../OurClient/OurClient';
+import OurClient2 from '../OurClient/OurClient2.jsx';
 import { useUser } from '../../components/AuthContext/AuthContext';
 import PosterSlider from './posterSlider'
 
@@ -30,9 +30,9 @@ const Homepage = () => {
         <>
             {/* Main Homepage Section */}
 
-            <PosterSlider/>
+            <PosterSlider />
             <Carousel />
-            <ImageContainer Image= {Homepageposter} />
+            <ImageContainer Image={Homepageposter} />
             <LuxuryPage />
             <SelfCare />
             <Journey />
@@ -41,9 +41,9 @@ const Homepage = () => {
             <ProductCard />
             <OurCertifications />
             <OurStory />
+            <OurClient2 />
             <Bemember />
-            <OurClient/>
-            <FollowUs />    
+            <FollowUs />
             <UptoDate />
         </>
 
