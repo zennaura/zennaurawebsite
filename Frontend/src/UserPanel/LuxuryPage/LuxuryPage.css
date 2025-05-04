@@ -36,7 +36,7 @@
 }
 
 .luxuryPage-image-container {
-  background-color: rgba(57, 24, 6, 0.06);  
+  background-color: transparent;  
   overflow: hidden;
   display: flex;
   height: 280px;
