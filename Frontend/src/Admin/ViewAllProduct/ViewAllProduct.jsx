@@ -73,8 +73,7 @@ const ProductsManagement = () => {
               </div>
               <button
                 className="admin-products-add-btn"
-                onClick={() => window.location.href = '/addproduct'}
-
+                onClick={() => navigate('/addproduct')}
               >
                 Add New Product
               </button>
