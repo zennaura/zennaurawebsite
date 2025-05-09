@@ -59,3 +59,14 @@
     color: #fff;
   }
   
+@media (max-width: 768px) {
+  .UserDashboardNavbar-name{
+    font-size: 1.62rem;
+  }
+  .UserDashboardNavbar-links li{
+    font-size: 1.2rem;
+  }
+  .UserDashboardNavbar-container{
+    padding: 1rem;
+  }
+}

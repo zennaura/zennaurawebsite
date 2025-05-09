@@ -41,6 +41,7 @@ function App() {
   return (
     <>
       {/* ScrollToTop can be added here if needed */}
+      <ScrollToTop />
       {(!user || user.userRole === 'user') && location.pathname !== '/verification' && location.pathname !== '/emailforforgotpassword' && location.pathname !== '/resetpasswordvarification' && location.pathname !== '/resetpassword' && <Navbar />}
 
       <Routes>
@@ -53,11 +54,11 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/policies" element={<Policies />} />
         <Route path="/termsandconditions" element={<TermsAndConditions />} />
-        <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
-        <Route path="/skincare" element={<ProtectedRoute><Skinncare /></ProtectedRoute>} />
-        <Route path="/aurajewels" element={<ProtectedRoute><AuraJewels /></ProtectedRoute>} />
-        <Route path="/divinecrystals" element={<ProtectedRoute><DivineCrystal /></ProtectedRoute>} />
-        <Route path="/sacredrituals" element={<ProtectedRoute><SacreDrituals /></ProtectedRoute>} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/skincare" element={<Skinncare />} />
+        <Route path="/aurajewels" element={<AuraJewels />} />
+        <Route path="/divinecrystals" element={<DivineCrystal />} />
+        <Route path="/sacredrituals" element={<SacreDrituals />} />
         <Route path="/productdetails/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
         <Route path="/userdashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
         <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />

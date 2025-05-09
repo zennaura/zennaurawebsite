@@ -3,6 +3,8 @@ import './UserDashboardAddAddress.css';
 import axios from 'axios';
 import { useUser } from '../../../components/AuthContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserDashboardAddAddress = () => {
   const { user, setUser } = useUser();
@@ -46,6 +48,7 @@ const UserDashboardAddAddress = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -59,8 +62,8 @@ const UserDashboardAddAddress = () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             phone: formData.phone,
-            addressLine1: formData.addressLine1, // Ensure this matches backend
-            addressLine2: formData.addressLine2, // Ensure this matches backend
+            addressLine1: formData.addressLine1,
+            addressLine2: formData.addressLine2,
             city: formData.city,
             state: formData.state,
             zipCode: formData.zipCode,
@@ -77,18 +80,40 @@ const UserDashboardAddAddress = () => {
       );
   
       setUser(response.data.user);
-      navigate('/userdashboard');
+      toast.success('Address added successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      
+      // Navigate after a short delay to allow the toast to be seen
+      setTimeout(() => {
+        navigate('/userdashboard');
+      }, 1000);
     } catch (error) {
       console.error('Error adding address:', error);
+      toast.error('Failed to add address. Please try again.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       if (error.response) {
         console.log('Backend response:', error.response.data);
       }
-      alert('Failed to add address. Please try again.');
     }
   };
 
   return (
     <div className="UserDashboardAddAddress-container">
+      <ToastContainer />
       <h2 className="UserDashboardAddAddress-title">Add New Address</h2>
 
       <form className="UserDashboardAddAddress-form" onSubmit={handleSubmit}>

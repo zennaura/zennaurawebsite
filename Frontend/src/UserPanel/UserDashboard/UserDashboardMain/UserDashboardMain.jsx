@@ -8,13 +8,15 @@ import UserDashboardWishlist from '../UserDashboardWishlist/UserDashboardWishlis
 import UserDashboardPrivacy from '../UserDashboardChangePass/UserDashboardChangePass.jsx';
 import UserDashboardTribe from '../UserDashboardTribe/UserDashboardTribe.jsx';
 import ImageHead from '../../../components/ImageHead/ImageHead';
-import './UserDashboardMain.css';
 import { useUser } from '../../../components/AuthContext/AuthContext.jsx';
+import './UserDashboardMain.css';
 
 const UserDashboardMain = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const {user , setUser} = useUser();
+  const [showMenu, setShowMenu] = useState(false);
+  const { user, setUser } = useUser();
 
+  // Render the selected dashboard tab
   const renderComponent = () => {
     switch (activeTab) {
       case 'dashboard':
@@ -35,24 +37,46 @@ const UserDashboardMain = () => {
         return <UserDashboard />;
     }
   };
+
+  // Handle logout
   const handleLogout = () => {
-    setUser(null); // Clear user from context
-    localStorage.removeItem('user'); // Remove user from localStorage
+    setUser(null);
+    localStorage.removeItem('user');
   };
 
-  const username = "Welcome " +user.firstName;
+  // Handle sidebar navigation
+  const handleNavigation = (tab) => {
+    setActiveTab(tab);
+    setShowMenu(false); // Close menu on mobile after clicking
+  };
+
+  const username = "Welcome " + user.firstName;
 
   return (
     <div>
-      <ImageHead Title={username}/>
+      <ImageHead Title={username} />
+      
       <div className="userdashboard-logout">
-        <button className="userdashboard-logout-button" onClick={handleLogout} >Logout</button>
+        {/* Hamburger icon for small screens */}
+        <div className="hamburger" onClick={() => setShowMenu(!showMenu)}>
+          ☰
+        </div>
+
+        {/* Logout button */}
+        <button className="userdashboard-logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
+
       <div className="UserDashboardMain-container">
-        <UserDashboardNavbar 
-          onNavigate={setActiveTab} 
-          activeTab={activeTab} 
+        {/* Sidebar navigation */}
+        <UserDashboardNavbar
+          className={`dashboard-navbar ${showMenu ? 'show' : ''}`}
+          onNavigate={handleNavigation}
+          activeTab={activeTab}
         />
+
+        {/* Main content */}
         {renderComponent()}
       </div>
     </div>

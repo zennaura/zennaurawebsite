@@ -1,67 +1,84 @@
 .UserDashboardChangePass-container {
-    padding: 40px;
-    background-color: #fdfdfd;
-    height: 100%;
-    width: 75%;
+  padding: 40px;
+  background-color: #fdfdfd;
+  height: 100%;
+  width: 75%;
+}
+
+.UserDashboardChangePass-title {
+  font-size: 2.3rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid #48091a;
+  padding-bottom: 10px;
+  color: #1d1d1d;
+}
+
+.UserDashboardChangePass-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 400px;
+}
+
+.UserDashboardChangePass-field label {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.UserDashboardChangePass-field input {
+  padding: 12px;
+  font-size: 1.5rem;
+  border: 1.5px solid #aaa;
+  border-radius: 6px;
+  width: 120%;
+  transition: border-color 0.3s ease;
+}
+
+.UserDashboardChangePass-field input:focus {
+  border-color: #48091a;
+}
+
+.UserDashboardChangePass-buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.UserDashboardChangePass-button {
+  background-color: #48091a;
+  color: #fff;
+  border: none;
+  padding: 12px 0;
+  font-size: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 150px;
+  transition: background-color 0.3s ease;
+}
+
+.UserDashboardChangePass-button:hover {
+  background-color: #3a1313;
+}
+
+@media screen and (max-width: 768px) {
+  .UserDashboardChangePass-container {
+    width: 100%;
+    padding: 20px;
   }
-  
+
   .UserDashboardChangePass-title {
-    font-size: 2.3rem;
-    margin-bottom: 20px;
-    font-weight: 600;
-    border-bottom: 1px solid #48091a;
-    padding-bottom: 10px;
-    color: #1d1d1d;
+    font-size: 1.8rem;
   }
-  
-  
-  
-  .UserDashboardChangePass-form {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    max-width: 400px;
-  }
-  
-  .UserDashboardChangePass-field label {
-    font-size: 1.5rem;
-    margin-bottom: 6px;
-    color: #333;
-  }
-  
+
   .UserDashboardChangePass-field input {
-    padding: 12px;
-    font-size: 1.5rem;
-    border: 1.5px solid #aaa;
-    border-radius: 6px;
-    width: 120%;
-    transition: border-color 0.3s ease;
+    width: 100%;
+    font-size: 1.2rem;
   }
-  
-  .UserDashboardChangePass-field input:focus {
-    border-color: #48091a;
-  }
-  
-  .UserDashboardChangePass-buttonWrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-  }
-  
   .UserDashboardChangePass-button {
-    background-color: #48091a;
-    color: #fff;
-    border: none;
-    padding: 12px 0;
-    font-size: 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 150px;
-    transition: background-color 0.3s ease;
+    padding: 10px;
+    font-size: 1.2rem;
+    width: 100%;
   }
-  
-  
-  .UserDashboardChangePass-button:hover {
-    background-color: #3a1313;
-  }
-  
+}
