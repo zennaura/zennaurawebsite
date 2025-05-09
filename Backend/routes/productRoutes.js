@@ -362,7 +362,66 @@ router.put("/products/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update product." });
   }
 });
+// Search products
+router.get('/search', async (req, res) => {
+  try {
+    const query = req.query.query?.trim();
+    
+    if (!query || query.length < 2) {  // Minimum search length
+      return res.status(400).json({ 
+        message: 'Search query must be at least 2 characters long' 
+      });
+    }
 
+    // Escape regex special characters to prevent errors
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: escapedQuery, $options: 'i' } },
+        { title: { $regex: escapedQuery, $options: 'i' } },
+        { description: { $regex: escapedQuery, $options: 'i' } },
+        { sku: { $regex: escapedQuery, $options: 'i' } },
+        { tags: { $in: [new RegExp(escapedQuery, 'i')] } },
+        { 'variants.name': { $regex: escapedQuery, $options: 'i' } },
+        { 'variants.sku': { $regex: escapedQuery, $options: 'i' } },
+      ]
+    })
+    .populate('variants')
+    .limit(50);  // Add limit to prevent too many results
 
+    if (products.length === 0) {
+      return res.status(404).json({ 
+        message: 'No products found matching your search',
+        suggestions: await getSearchSuggestions(query) 
+      });
+    }
+
+    res.json(products);
+  } catch (error) {
+    console.error('Search error:', error);
+    res.status(500).json({ 
+      message: 'Server error during search',
+      error: error.message 
+    });
+  }
+});
+
+// Helper function for search suggestions
+async function getSearchSuggestions(query) {
+  try {
+    return await Product.aggregate([
+      {
+        $match: {
+          $text: { $search: query }
+        }
+      },
+      { $limit: 5 },
+      { $project: { name: 1, _id: 0 } }
+    ]);
+  } catch (e) {
+    return [];
+  }
+}
 
   module.exports = router;
