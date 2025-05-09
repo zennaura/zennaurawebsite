@@ -16,6 +16,10 @@
 }
 
 /* Logo */
+.logo {
+    width: 100%;
+  max-width: 250px;
+}
 .logo img {
   width: 200px;
 }
@@ -47,8 +51,11 @@
 .nav-icons {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 1rem;
   color: white;
+    width: 100%;
+  max-width: 250px;
 }
 
 /* Icons */
@@ -269,4 +276,60 @@ li a {
   .dropdown-container {
     display: none;
   }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  /* position: relative; */
+  width: 100%;
+  max-width: 250px;
+}
+
+.search-container.open {
+  position: relative;
+  /* left: 60px; */
+  /* right: 60px; */
+  /* background-color: #f8f8f8; */
+  z-index: 1000;
+}
+
+.search-form {
+  display: flex;
+  width: 100%;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  width: 100%;
+  
+}
+.search-form button {
+  padding: 8px 15px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  color: goldenrod; /* Add this line */
+}
+
+.search-form button:hover {
+  background: #ddd;
+  color: darkgoldenrod; /* Optional: darker shade on hover */
+}
+
+.search-icon {
+  color: goldenrod;
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+.search-icon:hover {
+  color: darkgoldenrod; /* Optional: darker shade on hover */
 }

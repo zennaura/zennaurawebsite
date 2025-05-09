@@ -14,13 +14,17 @@ import image from "../../assests/logo.png";
 import CartSidebar from "../AddToCart/AddToCart";
 import { useUser } from "../AuthContext/AuthContext";
 
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(0);
   const [hoveredMenu, setHoveredMenu] = useState(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useUser();
+  
 
   useEffect(() => {
     if (user) {
@@ -45,6 +49,30 @@ const Navbar = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  // Add this useEffect hook to your component
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    const searchContainer = document.querySelector('.search-container');
+    if (isSearchOpen && searchContainer && !searchContainer.contains(event.target)) {
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [isSearchOpen]);
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/aboutus", label: "About Us" },
@@ -67,7 +95,28 @@ const Navbar = () => {
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
 
-          <FaSearch className="icon" size={20} />
+          <div className={`search-container ${isSearchOpen ? "open" : ""}`}>
+            {isSearchOpen ? (
+              <form onSubmit={handleSearch} className="search-form">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+                <button type="submit">
+                  <FaSearch className="icon" size={20} />
+                </button>
+              </form>
+            ) : (
+              <FaSearch
+                className="icon search-icon"
+                size={20}
+                onClick={() => setIsSearchOpen(true)}
+              />
+            )}
+          </div>
 
           <div className="logo">
             <img src={image} alt="Logo" />
@@ -91,7 +140,7 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
-
+{/* botton part of navbar */}
         <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
           {navLinks.map((item) => (
             <li
@@ -107,6 +156,8 @@ const Navbar = () => {
         </ul>
       </nav>
 
+      {/* ... rest of your existing code ... */}
+      
       {hoveredMenu && (
         <div
           className="dropdown-container"
