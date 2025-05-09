@@ -14,7 +14,6 @@ import image from "../../assests/logo.png";
 import CartSidebar from "../AddToCart/AddToCart";
 import { useUser } from "../AuthContext/AuthContext";
 
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,8 +22,9 @@ const Navbar = () => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
-  
 
   useEffect(() => {
     if (user) {
@@ -49,30 +49,57 @@ const Navbar = () => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
-      setIsSearchOpen(false);
-      setSearchQuery("");
+    if (!searchQuery.trim()) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/products/search?query=${encodeURIComponent(searchQuery)}`
+      );
+      
+      const flattenedResults = response.data.flatMap((product) =>
+        product.variants.map((variant, index) => ({
+          id: `${product._id}-${index}`,
+          productId: product._id,
+          name: product.name,
+          title: product.title,
+          description: product.description,
+          image: product.frontImage,
+          price: variant.salePrice,
+          originalPrice: variant.costPrice,
+          variantName: variant.name,
+          variantId: variant._id,
+          sku: variant.sku,
+          category: product.category,
+        }))
+      );
+      
+      setSearchResults(flattenedResults);
+    } catch (error) {
+      console.error("Search error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Add this useEffect hook to your component
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    const searchContainer = document.querySelector('.search-container');
-    if (isSearchOpen && searchContainer && !searchContainer.contains(event.target)) {
-      setIsSearchOpen(false);
-      setSearchQuery("");
-    }
-  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const searchContainer = document.querySelector('.search-container');
+      if (isSearchOpen && searchContainer && !searchContainer.contains(event.target)) {
+        setIsSearchOpen(false);
+        setSearchQuery("");
+        setSearchResults([]);
+      }
+    };
 
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, [isSearchOpen]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSearchOpen]);
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/aboutus", label: "About Us" },
@@ -106,8 +133,55 @@ useEffect(() => {
                   autoFocus
                 />
                 <button type="submit">
-                  <FaSearch className="icon" size={20} />
+                  {isLoading ? (
+                    <div className="search-spinner"></div>
+                  ) : (
+                    <FaSearch className="icon" size={20} />
+                  )}
                 </button>
+                
+                {searchResults.length > 0 && (
+                  <div className="search-results-dropdown">
+                    {searchResults.slice(0, 5).map((result) => (
+                      <Link 
+                        key={`${result.productId}-${result.variantId}`}
+                        to={`/productdetails/${result.id}`}
+                        state={result}
+                        className="search-result-item"
+                        onClick={() => {
+                          setIsSearchOpen(false);
+                          setSearchQuery("");
+                          setSearchResults([]);
+                        }}
+                      >
+                        <img src={result.image} alt={result.name} className="search-result-image" />
+                        <div className="search-result-info">
+                          <h4>{result.name}</h4>
+                          <p>{result.title}</p>
+                          <div className="search-result-price">
+                            <span>₹{result.price}</span>
+                            {result.originalPrice && (
+                              <span className="original-price">₹{result.originalPrice}</span>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                    {searchResults.length > 5 && (
+                      <Link 
+                        to={`/search?query=${encodeURIComponent(searchQuery)}`}
+                        className="view-all-results"
+                        onClick={() => {
+                          setIsSearchOpen(false);
+                          setSearchQuery("");
+                          setSearchResults([]);
+                        }}
+                      >
+                        View all {searchResults.length} results
+                      </Link>
+                    )}
+                  </div>
+                )}
               </form>
             ) : (
               <FaSearch
@@ -119,7 +193,7 @@ useEffect(() => {
           </div>
 
           <div className="logo">
-            <img src={image} alt="Logo" />
+            <img src={image} alt="Logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />
           </div>
 
           <div className="nav-icons">
@@ -140,7 +214,7 @@ useEffect(() => {
             </Link>
           </div>
         </div>
-{/* botton part of navbar */}
+
         <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
           {navLinks.map((item) => (
             <li
@@ -156,8 +230,6 @@ useEffect(() => {
         </ul>
       </nav>
 
-      {/* ... rest of your existing code ... */}
-      
       {hoveredMenu && (
         <div
           className="dropdown-container"
@@ -166,9 +238,9 @@ useEffect(() => {
         >
           {hoveredMenu === "skincare" && (
             <div className="dropdown-content skincare-dropdown">
-              <div class="dropdown-layout">
-                <div class="left-section">
-                  <div class="aurajewels-category">
+              <div className="dropdown-layout">
+                <div className="left-section">
+                  <div className="aurajewels-category">
                     <h3>Shop by category</h3>
                     <ul>
                       <li>Body Soap</li>
@@ -182,27 +254,26 @@ useEffect(() => {
                         <li>Therapeutic Soap</li>
                         <li>Fruit Soap</li>
                       </ul>
-
                     </ul>
                   </div>
-                  <div class="aurajewels-intent">
+                  <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                   </div>
                 </div>
 
-                <div class="right-section">
-                  <div class="promo promo1">Crystal Bracelets</div>
-                  <div class="promo promo2">Crystal Wearables</div>
-                  <div class="promo promo3">Check Out Our Wide Range of Crystal Bracelets!!</div>
+                <div className="right-section">
+                  <div className="promo promo1">Crystal Bracelets</div>
+                  <div className="promo promo2">Crystal Wearables</div>
+                  <div className="promo promo3">Check Out Our Wide Range of Crystal Bracelets!!</div>
                 </div>
               </div>
             </div>
           )}
           {hoveredMenu === "aurajewels" && (
             <div className="dropdown-content aurajewels-dropdown">
-              <div class="dropdown-layout">
-                <div class="left-section">
-                  <div class="aurajewels-category">
+              <div className="dropdown-layout">
+                <div className="left-section">
+                  <div className="aurajewels-category">
                     <h3>Shop by category</h3>
                     <ul>
                       <li>Crystal Bracelets</li>
@@ -219,24 +290,24 @@ useEffect(() => {
                       </ul>
                     </ul>
                   </div>
-                  <div class="aurajewels-intent">
+                  <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                   </div>
                 </div>
 
-                <div class="right-section">
-                  <div class="promo promo1">Crystal Bracelets</div>
-                  <div class="promo promo2">Crystal Wearables</div>
-                  <div class="promo promo3">Check Out Our Wide Range of Crystal Bracelets!!</div>
+                <div className="right-section">
+                  <div className="promo promo1">Crystal Bracelets</div>
+                  <div className="promo promo2">Crystal Wearables</div>
+                  <div className="promo promo3">Check Out Our Wide Range of Crystal Bracelets!!</div>
                 </div>
               </div>
             </div>
           )}
           {hoveredMenu === "divinecrystals" && (
             <div className="dropdown-content divinecrystals-dropdown">
-              <div class="dropdown-layout">
-                <div class="left-section left-section-divinecrystals">
-                  <div class="aurajewels-category divinecrystals-category">
+              <div className="dropdown-layout">
+                <div className="left-section left-section-divinecrystals">
+                  <div className="aurajewels-category divinecrystals-category">
                     <h3>Shop by category</h3>
                     <div className="divinecrystals-coloum">
                       <ul>
@@ -257,25 +328,24 @@ useEffect(() => {
                         </ul>
                       </ul>
                     </div>
-
                   </div>
-                  <div class="aurajewels-intent">
+                  <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                   </div>
                 </div>
 
-                <div class="right-section right-section-divinecrystals">
-                  <div class="promo promo1">Crystal Bracelets</div>
-                  <div class="promo promo2">Crystal Wearables</div>
+                <div className="right-section right-section-divinecrystals">
+                  <div className="promo promo1">Crystal Bracelets</div>
+                  <div className="promo promo2">Crystal Wearables</div>
                 </div>
               </div>
             </div>
           )}
           {hoveredMenu === "sacredrituals" && (
             <div className="dropdown-content sacredrituals-dropdown">
-              <div class="dropdown-layout">
-                <div class="left-section">
-                  <div class="aurajewels-category">
+              <div className="dropdown-layout">
+                <div className="left-section">
+                  <div className="aurajewels-category">
                     <h3>Shop by category</h3>
                     <ul >
                       <li style={{ marginBottom: "2rem" }}>Candles</li>
@@ -284,15 +354,15 @@ useEffect(() => {
                       <li style={{ marginBottom: "2rem" }}>Sage</li>
                     </ul>
                   </div>
-                  <div class="aurajewels-intent">
+                  <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                   </div>
                 </div>
 
-                <div class="right-section">
-                  <div class="promo promo1">Crystal Bracelets</div>
-                  <div class="promo promo2">Crystal Wearables</div>
-                  <div class="promo promo3">Check Out Our Wide Range of Crystal Bracelets!!</div>
+                <div className="right-section">
+                  <div className="promo promo1">Crystal Bracelets</div>
+                  <div className="promo promo2">Crystal Wearables</div>
+                  <div className="promo promo3">Check Out Our Wide Range of Crystal Bracelets!!</div>
                 </div>
               </div>
             </div>
