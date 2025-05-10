@@ -114,7 +114,7 @@
     align-items: flex-start;
     gap: 50px;
     margin-top: 40px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   
   .DiscoverSkin-item {
