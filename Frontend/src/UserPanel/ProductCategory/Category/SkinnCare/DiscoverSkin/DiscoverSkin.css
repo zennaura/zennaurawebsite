@@ -22,7 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 30px;
+    gap: 50px;
     margin-top: 40px;
     flex-wrap: nowrap;
     /* overflow-x: auto; */
