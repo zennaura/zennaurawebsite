@@ -39,6 +39,7 @@ const DiscoverSkin = () => {
             </div>
         </>
     );
+    
 };
 
 export default DiscoverSkin;
