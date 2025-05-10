@@ -2,7 +2,7 @@
     background-color: #F2F1EF;
     color: #390611;
     text-align: left;
-    padding: 50px 110px;
+    padding: 50px 140px;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -42,7 +42,7 @@
 .justin-products {
     margin-top: 30px;
     display: flex;
-    gap: 100px;
+    gap: 50px;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -116,7 +116,7 @@
         flex-wrap: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
-        gap: 20px;
+        gap: 30px;
         padding-bottom: 10px;
         scrollbar-width: none;
         /* Firefox */

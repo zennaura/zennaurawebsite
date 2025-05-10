@@ -119,33 +119,58 @@ const ShopByConcern = () => {
     }, [currentIndex]);
 
     return (
-        <div className="ShopByConcern-container">
-            <div className="ShopByConcern-header">
-                <h2>Shop by Concern</h2>
+        <>
+            <div className="ShopByConcern-container">
+                <div className="ShopByConcern-header">
+                    <h2>Shop by Concern</h2>
+                </div>
+                <div className="ShopByConcern-slider-container">
+                    <div className="ShopByConcern-slider" ref={sliderRef}>
+                        {products.map((product, index) => (
+                            <div key={index} className="ShopByConcern-slider-item">
+
+                                <img className={index % 2 === 1 ? "ShopByConcern-slider-item-img-even" : "ShopByConcern-slider-item-img-odd"}
+                                    src={product.src} alt={product.alt} />
+
+                                <h3>{product.title}</h3>
+                                <p>{product.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="ShopByConcern-dots">
+                    {[...Array(Math.ceil(products.length / 3))].map((_, index) => (
+                        <div
+                            key={index}
+                            className={`ShopByConcern-dot ${currentIndex === index * 3 ? "active" : ""}`}
+                        ></div>
+                    ))}
+                </div>
             </div>
-            <div className="ShopByConcern-slider-container">
-                <div className="ShopByConcern-slider" ref={sliderRef}>
+
+
+            <div className="concern-container">
+                <div className="concern-title-content">
+                    <h1 className="concern-title">Shop by Concern</h1>
+                </div>
+
+                <div className="concern-products">
                     {products.map((product, index) => (
                         <div key={index} className="ShopByConcern-slider-item">
 
-                            <img className={index % 2 === 1 ? "ShopByConcern-slider-item-img-even" : "ShopByConcern-slider-item-img-odd"} 
-                            src={product.src} alt={product.alt} />
+                            <img className={index % 2 === 1 ? "ShopByConcern-slider-item-img-even" : "ShopByConcern-slider-item-img-odd"}
+                                src={product.src} alt={product.alt} />
 
                             <h3>{product.title}</h3>
                             <p>{product.description}</p>
                         </div>
                     ))}
+
                 </div>
             </div>
-            <div className="ShopByConcern-dots">
-                {[...Array(Math.ceil(products.length / 3))].map((_, index) => (
-                    <div
-                        key={index}
-                        className={`ShopByConcern-dot ${currentIndex === index * 3 ? "active" : ""}`}
-                    ></div>
-                ))}
-            </div>
-        </div>
+
+
+        </>
     );
 };
 
