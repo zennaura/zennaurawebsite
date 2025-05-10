@@ -6,6 +6,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
 .justin-heading {
     font-size: 32px;
     font-weight: bold;
@@ -21,6 +22,23 @@
     font-size: 18px;
 }
 
+
+@media (max-width: 1024px) {
+
+    .justin-container {
+        padding: 50px 0px;
+        text-align: center;
+    }
+
+    .justin-heading {
+        text-align: center;
+    }
+
+    .justin-subhead {
+        margin: auto;
+    }
+}
+
 .justin-products {
     margin-top: 30px;
     display: flex;
@@ -31,7 +49,9 @@
     flex-wrap: wrap;
 }
 
-.justin-product1, .justin-product2, .justin-product3 {
+.justin-product1,
+.justin-product2,
+.justin-product3 {
     background-color: #D9D9D9;
     color: #390611;
     padding: 30px;
@@ -39,9 +59,11 @@
     height: 30rem;
     min-width: 300px;
     max-width: 400px;
+    position: relative;
 }
 
-.justin-product1, .justin-product3 {
+.justin-product1,
+.justin-product3 {
     border-radius: 0px 100px 0px 0px;
     -webkit-border-radius: 0px 100px 0px 0px;
     -moz-border-radius: 0px 100px 0px 0px;
@@ -54,15 +76,19 @@
 }
 
 .justin-product-button {
-    border: 3px solid #390611;
+    border: 2px solid #390611;
     background-color: #D9D9D9;
     font-size: 20px;
-    padding: 10px 30px;
-    margin-top: 10rem;
-    margin-left: 4rem;
+    padding: 10px;
+    position: absolute;
+    text-transform: uppercase;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     border-radius: 5px;
 }
-.justin-title{
+
+.justin-title {
     font-family: 'Inria Serif', serif;
     font-weight: bold;
     font-size: 40px;
@@ -73,6 +99,7 @@
     font-weight: bold;
     font-family: 'Inria Serif', serif;
     margin-bottom: 35px;
+    text-align: left;
 }
 
 .justin-product-content {
@@ -81,4 +108,32 @@
     line-height: 1.5;
     margin-bottom: 15px;
     width: 70%;
+    text-align: left;
+}
+
+@media (max-width: 1024px) {
+    .justin-products {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 20px;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+        /* Firefox */
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        /* important */
+    }
+
+    .justin-products::-webkit-scrollbar {
+        display: none;
+    }
+
+    .justin-product1,
+    .justin-product2,
+    .justin-product3 {
+        flex: 0 0 auto;
+        min-width: 280px;
+        max-width: 280px;
+    }
 }
