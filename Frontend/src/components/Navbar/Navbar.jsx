@@ -16,6 +16,11 @@ import { useUser } from "../AuthContext/AuthContext";
 import SidebarMenu from "./Sidebar";
 import SkinCareSubMenu from "./SubMenu";
 import BodySoapSubMenu from "./submenus/BodyShop";
+import AuraJewels from "./submenus/AuraJewels";
+import CrystalBracelets from "./submenus/CrystalBracelets";
+import CrystalWearables from "./submenus/CrystalWearables";
+import DivineCrystalsSubMenu from "./submenus/DivineCrystals";
+import SacredRitualsSubMenu from "./submenus/SacredRituals";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -61,7 +66,7 @@ const Navbar = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_LINK}/api/products/search?query=${encodeURIComponent(searchQuery)}`
+        `${import.meta.env.VITE_BACKEND_LINK}/api/search?query=${encodeURIComponent(searchQuery)}`
       );
 
       const flattenedResults = response.data.flatMap((product) =>
@@ -121,7 +126,12 @@ const Navbar = () => {
       <nav className={`navbar-mobile ${isMenuOpen ? `openNav` : ``}`}>
         {activeMenu === 'main' && <SidebarMenu goToSubMenu={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
         {activeMenu === 'skinCare' && <SkinCareSubMenu goTo={(menu) => setActiveMenu(menu)} />}
+        {activeMenu === 'auraJewel' && <AuraJewels goTo={(menu) => setActiveMenu(menu)} />}
         {activeMenu === 'bodyShop' && <BodySoapSubMenu goTo={(menu) => setActiveMenu(menu)} />}
+        {activeMenu === 'crystalBracelets' && <CrystalBracelets goTo={(menu) => setActiveMenu(menu)} />}
+        {activeMenu === 'crystalWearables' && <CrystalWearables goTo={(menu) => setActiveMenu(menu)} />}
+        {activeMenu === 'divineCrystal' && <DivineCrystalsSubMenu goTo={(menu) => setActiveMenu(menu)} />}
+        {activeMenu === 'sacredRituals' && <SacredRitualsSubMenu goTo={(menu) => setActiveMenu(menu)} />}
         {/* You can add other submenus here like:
         {activeMenu === 'auraJewels' && <AuraJewelsSubMenu goBack={() => setActiveMenu('main')} />} 
     */}
@@ -167,7 +177,7 @@ const Navbar = () => {
                           setSearchResults([]);
                         }}
                       >
-                        <img src={result.image} alt={result.name} className="search-result-image" />
+                        <img src="https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg" alt={result.name} className="search-result-image" />
                         <div className="search-result-info">
                           <h4>{result.name}</h4>
                           <p>{result.title}</p>

@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-import "./SignInUpForm.css"; 
+import "./SignInUpForm.css";
 import {
     FaFacebookF,
     FaGooglePlusG,
@@ -43,66 +43,68 @@ const SignInUpForm = () => {
             email: formData.email,
             password: formData.password,
         };
-    
+
         if (!loginData.email || !loginData.password) {
             toast.error("❌ Please fill all fields!");
             return;
         }
-    
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/login`, loginData);
             toast.success(`✅ ${response.data.message}`);
-    
+
             const userData = response.data.userData;
             setUser(userData);
-    
+
             if (userData.userRole === "admin") {
                 navigate("/admin-homepage", { state: userData });
             } else {
                 navigate("/", { state: userData });
             }
-    
+
         } catch (error) {
             toast.error(`❌ ${error.response?.data?.message || "Login failed"}`);
         }
     };
-    
-    
 
-const handleRegister = async (e) => {
-    e.preventDefault();
-    const { phone, password, confirmPassword } = formData;
 
-    if (!/^\d{10}$/.test(phone)) {
-        toast.error("❌ Contact number must be exactly 10 digits!");
-        return;
-    }
 
-    if (password !== confirmPassword) {
-        toast.error("❌ Passwords do not match!");
-        return;
-    }
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const { phone, password, confirmPassword } = formData;
 
-    try {
-        const email = formData.email; 
-        navigate('/verification', { state: { userEmail: email , formData } });
-        setIsSignUp(false);
-    } catch (error) {
-        const errorMsg = error.response?.data?.message || "Registration failed";
-        toast.error(`❌ ${errorMsg}`);
-    }
-};
+        if (!/^\d{10}$/.test(phone)) {
+            toast.error("❌ Contact number must be exactly 10 digits!");
+            return;
+        }
 
-    const handleforgotpassword =  () => {
+        if (password !== confirmPassword) {
+            toast.error("❌ Passwords do not match!");
+            return;
+        }
+
+        try {
+            const email = formData.email;
+            navigate('/verification', { state: { userEmail: email, formData } });
+            setIsSignUp(false);
+        } catch (error) {
+            const errorMsg = error.response?.data?.message || "Registration failed";
+            toast.error(`❌ ${errorMsg}`);
+        }
+    };
+
+    const handleforgotpassword = () => {
         navigate('/emailforforgotpassword')
     }
 
-    
+
 
     return (
         <div className="SignInUpForm-body">
-            <div className={`SignInUpForm-container ${isSignUp ? "SignInUpForm-right-panel-active" : ""}`} id="container">
-                
+            <div
+                className={`SignInUpForm-container ${isSignUp ? "SignInUpForm-right-panel-active" : ""}`}
+                id="container"
+            >
                 {/* Sign Up Form */}
                 <div className="SignInUpForm-form-container SignInUpForm-sign-up-container">
                     <form>
@@ -162,6 +164,7 @@ const handleRegister = async (e) => {
                 <ToastContainer position="top-right" autoClose={3000} />
             </div>
         </div>
+
     );
 };
 

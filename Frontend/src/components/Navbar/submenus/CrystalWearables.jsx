@@ -3,23 +3,17 @@ import { FiSearch, FiChevronLeft } from 'react-icons/fi';
 import '../Sidebar.css'; // ensure this includes the relevant styles
 import Search from './Search';
 
-const BodySoapSubMenu = ({ goTo }) => {
+const CrystalWearables = ({ goTo }) => {
     const soaps = [
-        'Clay Soap',
-        'Scrub Soap',
-        'Therapeutic soap',
-        'Fruit Soap',
-        'Clay Soap',
-        'Scrub Soap',
-        'Therapeutic soap',
-        'Fruit Soap',
+        'Ear Rings/Tops',
+        'Pendants'
     ];
 
     return (
         <div className="bodysoap-sub">
             <div className="header-sub">
-                <FiChevronLeft className="back-icon-sub" onClick={() => goTo('skinCare')} />
-                <span className="title-sub">Body Soap</span>
+                <FiChevronLeft className="back-icon-sub" onClick={() => goTo('auraJewel')} />
+                <span className="title-sub">Crystal Wearables</span>
             </div>
 
             {/* <div className="search-barm search-bar-sub">
@@ -37,4 +31,4 @@ const BodySoapSubMenu = ({ goTo }) => {
     );
 };
 
-export default BodySoapSubMenu;
+export default CrystalWearables;
