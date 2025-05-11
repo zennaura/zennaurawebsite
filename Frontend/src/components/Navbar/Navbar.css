@@ -367,7 +367,7 @@ li a {
   width: 100vw;
   transform: translateX(-100vw);
   display: block;
-  position: relative;
+  position: fixed;
   z-index: 1999;
   transition: 0.2s all ease-in-out;
 }
