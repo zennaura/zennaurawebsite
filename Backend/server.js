@@ -25,7 +25,8 @@ const app = express();
 const allowedOrigins = [
   "https://zennaurawebsite.vercel.app",
   "http://localhost:5173",
-  "https://www.zennaura.in"
+  "https://www.zennaura.in",
+  "http://192.168.224.77:5173"
 ];
 
 // CORS Middleware
@@ -65,4 +66,4 @@ app.use('/api/email', sendEmailRoute);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(`🚀 Server running on port ${PORT}`));

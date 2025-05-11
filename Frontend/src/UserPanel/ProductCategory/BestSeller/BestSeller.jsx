@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./BestSeller.css";
 import ProductCart from "../../../components/Productcart/ProductCart";
 import { useNavigate } from "react-router-dom";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const BestSeller = () => {
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [autoSlide, setAutoSlide] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [currentPage, setCurrentPage] = useState(0);
+  const sliderRef = useRef(null);
   const navigate = useNavigate();
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Fetch products
   useEffect(() => {
     const fetchBestSellerProducts = async () => {
       try {
@@ -30,48 +27,18 @@ const BestSeller = () => {
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
             data: {
-              _id: product._id,
-              name: product.name,
-              title: product.title,
-              description: product.description,
-              sku: product.sku,
-              tags: product.tags,
-              stoneUsedImage: product.stoneUsedImage,
-              rating: product.rating,
-              frontImage: product.frontImage,
-              otherimages: product.otherimages,
-              healingImage: product.healingImage,
-              benefits: product.benefits,
-              whyChoose: product.whyChoose,
-              waysToClean: product.waysToClean,
-              whoWear: product.whoWear,
-              whereHowWear: product.whereHowWear,
-              productDescriptions: product.productDescriptions,
+              ...product,
               ...variant,
             },
           }))
         ).filter(product => product.data.bestSeller);
         setBestSellerProducts(flattened);
       } catch (err) {
-        console.error('Error fetching best seller products:', err);
+        console.error("Error fetching best seller products:", err);
       }
     };
     fetchBestSellerProducts();
   }, []);
-
-  // Determine cards per slide based on screen width
-  const cardsPerSlide = windowWidth <= 768 ? 3 : 4;
-  
-  // Auto-slide effect
-  useEffect(() => {
-    if (!autoSlide || bestSellerProducts.length <= cardsPerSlide) return;
-    const interval = setInterval(() => {
-      setCurrentSlide(prev => 
-        prev + cardsPerSlide >= bestSellerProducts.length ? 0 : prev + cardsPerSlide
-      );
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [autoSlide, bestSellerProducts.length, cardsPerSlide]);
 
   const handleClick = (product) => {
     navigate(`/productdetails/${product.id}`, {
@@ -79,57 +46,36 @@ const BestSeller = () => {
     });
   };
 
-  // Navigation functions
-  const nextSlide = () => {
-    setCurrentSlide(prev => 
-      prev + cardsPerSlide >= bestSellerProducts.length ? 0 : prev + cardsPerSlide
-    );
-    setAutoSlide(false);
-    setTimeout(() => setAutoSlide(true), 10000);
+  const cardsPerPage = windowWidth < 768 ? 1 : 3;
+  const totalPages = Math.ceil(bestSellerProducts.length / cardsPerPage);
+
+  const handleDotClick = (index) => {
+    if (sliderRef.current) {
+      const cardWidth = sliderRef.current.querySelector(".Featuredproducts-card")?.offsetWidth || 0;
+      sliderRef.current.scrollTo({
+        left: index * cardsPerPage * (cardWidth + 32), // 32 is the gap
+        behavior: "smooth"
+      });
+    }
   };
 
-  const prevSlide = () => {
-    setCurrentSlide(prev => 
-      prev - cardsPerSlide < 0 ? Math.max(0, bestSellerProducts.length - cardsPerSlide) : prev - cardsPerSlide
-    );
-    setAutoSlide(false);
-    setTimeout(() => setAutoSlide(true), 10000);
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const scrollLeft = sliderRef.current.scrollLeft;
+    const cardWidth = sliderRef.current.querySelector(".Featuredproducts-card")?.offsetWidth || 0;
+    const currentIndex = Math.round(scrollLeft / (cardWidth + 32) / cardsPerPage);
+    setCurrentPage(currentIndex);
   };
-
-  const goToSlide = (slideIndex) => {
-    setCurrentSlide(slideIndex * cardsPerSlide);
-    setAutoSlide(false);
-    setTimeout(() => setAutoSlide(true), 10000);
-  };
-
-  // Calculate total slides and visible products
-  const totalSlides = Math.ceil(bestSellerProducts.length / cardsPerSlide);
-  const visibleProducts = bestSellerProducts.slice(currentSlide, currentSlide + cardsPerSlide);
 
   return (
     <div className="BestSeller-container">
       <h1 className="BestSeller-heading">Best Sellers</h1>
 
-      <div className="best-seller-slider">
-        {bestSellerProducts.length > cardsPerSlide && (
-          <button className="slider-arrow left" onClick={prevSlide}>
-            <FaChevronLeft />
-          </button>
-        )}
-
+      <div className="BestSeller-slider" ref={sliderRef} onScroll={handleScroll}>
         <div className="BestSeller-cards">
-          {visibleProducts.map((product, index) => (
-            <div
-              key={product.id}
-              className={`Featuredproducts-card ${
-                windowWidth <= 768 ? 
-                  (index === 0 ? "mobile-full-card" : "mobile-half-card") :
-                  (index === 1 || index === 2) ? "featured-card-center" : ""
-              }`}
-            >
-              {console.log(product)}
+          {bestSellerProducts.map((product, index) => (
+            <div className={`Featuredproducts-card ${index == 1 || index == 2 ? 'featured-card-center' : ''}`} key={product.id}>
               <ProductCart
-                key={product.id}
                 id={product.id}
                 name={product.data.name}
                 title={product.data.title}
@@ -143,22 +89,16 @@ const BestSeller = () => {
             </div>
           ))}
         </div>
-
-        {bestSellerProducts.length > cardsPerSlide && (
-          <button className="slider-arrow right" onClick={nextSlide}>
-            <FaChevronRight />
-          </button>
-        )}
       </div>
 
-      {/* Pagination Dots */}
-      {totalSlides > 1 && (
-        <div className="pagination-dots">
-          {Array.from({ length: totalSlides }).map((_, index) => (
+      {totalPages > 1 && (
+        <div className="ShopByConcern-dots">
+          {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
-              className={`dot ${Math.floor(currentSlide / cardsPerSlide) === index ? "active" : ""}`}
-              onClick={() => goToSlide(index)}
+              className={`ShopByConcern-dot ${currentPage === index ? "active" : ""}`}
+              onClick={() => handleDotClick(index)}
+              aria-label={`Go to page ${index + 1}`}
             />
           ))}
         </div>

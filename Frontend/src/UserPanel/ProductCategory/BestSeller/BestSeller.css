@@ -1,163 +1,101 @@
+/* Container for the Best Seller Section */
 .BestSeller-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
-    background: #F2F1EF;
+    background: #f2f1ef;
     color: #3a0e0e;
+    padding: 2rem 1rem;
     overflow: hidden;
-}
-
-.BestSeller-heading {
-    font-family: 'Inria Serif';
-    padding: 2rem;
+  }
+  
+  /* Section Heading */
+  .BestSeller-heading {
+    font-family: 'Inria Serif', serif;
     font-size: 3rem;
-}
-
-.BestSeller-cards {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-}
-
-.BestSeller-card {
-    margin-top: 2rem;
-}
-
-.featured-card-center {
-    margin-top: 0rem;
-}
-
-.product-card {
-    width: 280px;
-    background: #593039;
-    color: #FFFFFF;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 215, 0, 0.7);
-    position: relative;
+    padding: 1rem 0;
     text-align: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.wishlist-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.liked {
-    color: red;
-}
-
-.unliked {
-    color: gray;
-}
-
-.product-image {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 8px 8px 0px 0px;
-}
-
-.product-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.product-description {
-    font-size: 14px;
-    color: lightgray;
-}
-
-.price-section {
-    margin-top: 5px;
-}
-
-.current-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: gold;
-}
-
-.old-price {
-    text-decoration: line-through;
-    color: gray;
-    margin-left: 8px;
-}
-
-.rating {
+  }
+  
+  /* Slider Section */
+  .BestSeller-slider {
     display: flex;
+    overflow-x: auto;
     justify-content: center;
-    margin-top: 5px;
-}
-
-.star {
-    font-size: 16px;
-    margin: 2px;
-}
-
-.filled {
-    color: yellow;
-}
-
-.empty {
-    color: gray;
-}
-
-.button-section {
-    margin-top: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    width: 100%;
+    padding: 1.5rem 0;
+  }
+  
+  .BestSeller-slider::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Container for all cards */
+  .BestSeller-cards {
     display: flex;
-}
-
-.add-to-cart,
-.buy-now {
-    flex: 1;
-    padding: 1rem;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.add-to-cart {
-    border-radius: 0px 0px 0px 5px;
-    background: transparent;
-    color: #FFFFFF;
-    border: 1px solid gold;
-}
-
-.buy-now {
-    border-radius: 0px 0px 5px 0px;
-    background: transparent;
-    color: #FFFFFF;
-    border: 1px solid gold;
-}
-.best-seller-slider{
+    gap: 2.5rem;
+    padding: 0 1rem;
+  }
+  
+  /* Individual Product Card Wrapper */
+  .Featuredproducts-card {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 280px;
+  }
+  
+  /* Dots for page indicators */
+  .ShopByConcern-dots {
+    margin-top: 1rem;
     display: flex;
+    gap: 0.5rem;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+  }
+  
+  .ShopByConcern-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .ShopByConcern-dot.active {
+    background-color: #593039;
+  }
 
-    overflow-x: auto;
-    padding: 2rem;
-}
-
-@media (max-width: 768px) {
-    .BestSeller-cards {
-        align-items: center;
+  .Featuredproducts-card.featured-card-center {
+    margin-top: -1.3rem;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .Featuredproducts-card.featured-card-center {
+      margin-top: 0rem;
     }
     
-    .BestSeller-card, .featured-card-center {
-        margin-top: 1rem;
+    .BestSeller-slider {
+        justify-content: flex-start;
     }
-    
     .BestSeller-heading {
-        font-size: 2rem;
-        padding: 1rem;
+      font-size: 2rem;
+      padding: 1rem 0;
     }
-}
+  
+    .Featuredproducts-card, .product-card-container {
+      width: 250px;
+    }
+  
+    .BestSeller-cards {
+      gap: 1rem;
+      padding: 0 0.5rem;
+    }
+  }
+  
