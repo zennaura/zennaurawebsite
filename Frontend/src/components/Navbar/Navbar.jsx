@@ -13,6 +13,9 @@ import "./Navbar.css";
 import image from "../../assests/logo.png";
 import CartSidebar from "../AddToCart/AddToCart";
 import { useUser } from "../AuthContext/AuthContext";
+import SidebarMenu from "./Sidebar";
+import SkinCareSubMenu from "./SubMenu";
+import BodySoapSubMenu from "./submenus/BodyShop";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -25,6 +28,8 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
+  const [activeMenu, setActiveMenu] = useState('main');
+
 
   useEffect(() => {
     if (user) {
@@ -52,13 +57,13 @@ const Navbar = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-    
+
     setIsLoading(true);
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_LINK}/api/products/search?query=${encodeURIComponent(searchQuery)}`
       );
-      
+
       const flattenedResults = response.data.flatMap((product) =>
         product.variants.map((variant, index) => ({
           id: `${product._id}-${index}`,
@@ -75,7 +80,7 @@ const Navbar = () => {
           category: product.category,
         }))
       );
-      
+
       setSearchResults(flattenedResults);
     } catch (error) {
       console.error("Search error:", error);
@@ -113,6 +118,14 @@ const Navbar = () => {
 
   return (
     <>
+      <nav className={`navbar-mobile ${isMenuOpen ? `openNav` : ``}`}>
+        {activeMenu === 'main' && <SidebarMenu goToSubMenu={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'skinCare' && <SkinCareSubMenu goTo={(menu) => setActiveMenu(menu)} />}
+        {activeMenu === 'bodyShop' && <BodySoapSubMenu goTo={(menu) => setActiveMenu(menu)} />}
+        {/* You can add other submenus here like:
+        {activeMenu === 'auraJewels' && <AuraJewelsSubMenu goBack={() => setActiveMenu('main')} />} 
+    */}
+      </nav>
       <nav className="navbar">
         <div className="nav_top">
           <button
@@ -139,11 +152,11 @@ const Navbar = () => {
                     <FaSearch className="icon" size={20} />
                   )}
                 </button>
-                
+
                 {searchResults.length > 0 && (
                   <div className="search-results-dropdown">
                     {searchResults.slice(0, 5).map((result) => (
-                      <Link 
+                      <Link
                         key={`${result.productId}-${result.variantId}`}
                         to={`/productdetails/${result.id}`}
                         state={result}
@@ -168,7 +181,7 @@ const Navbar = () => {
                       </Link>
                     ))}
                     {searchResults.length > 5 && (
-                      <Link 
+                      <Link
                         to={`/search?query=${encodeURIComponent(searchQuery)}`}
                         className="view-all-results"
                         onClick={() => {

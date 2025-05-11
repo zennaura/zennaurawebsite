@@ -17,9 +17,10 @@
 
 /* Logo */
 .logo {
-    width: 100%;
+  width: 100%;
   max-width: 250px;
 }
+
 .logo img {
   width: 200px;
 }
@@ -54,8 +55,9 @@
   justify-content: flex-end;
   gap: 1rem;
   color: white;
-    width: 100%;
+  width: 100%;
   max-width: 250px;
+  margin-top: 10px;
 }
 
 /* Icons */
@@ -75,7 +77,9 @@
   border: none;
   color: white;
   cursor: pointer;
+  margin-top: 10px;
 }
+
 li a {
   color: white;
   text-decoration: none;
@@ -83,7 +87,8 @@ li a {
 }
 
 /* Mobile Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+
   /* Hamburger Menu */
   .menu-btn {
     display: block;
@@ -91,6 +96,7 @@ li a {
 
   /* Hide Nav Links Initially */
   .nav-links {
+    display: none;
     flex-direction: column;
     text-align: center;
     position: absolute;
@@ -119,6 +125,16 @@ li a {
 
   .nav-item:hover {
     color: gold;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-icon {
+    display: none;
+  }
+
+  .search-container {
+    width: 200px !important;
   }
 }
 
@@ -155,8 +171,9 @@ li a {
 .nav-item a:hover {
   border-bottom: 5px solid #390611;
 }
+
 .nav-item a.active {
-  border-bottom: 5  px solid #390611;
+  border-bottom: 5 px solid #390611;
 }
 
 /* Responsive Adjustments */
@@ -257,15 +274,19 @@ li a {
   grid-column: span 2;
   /* height: 100px; */
 }
+
 .left-section-divinecrystals {
   width: 75%;
 }
+
 .right-section-divinecrystals {
   width: 25%;
 }
+
 .divinecrystals-category {
   width: 60%;
 }
+
 .divinecrystals-coloum {
   display: flex;
   justify-content: space-between;
@@ -285,6 +306,7 @@ li a {
   /* position: relative; */
   width: 100%;
   max-width: 250px;
+  margin-top: 10px;
 }
 
 .search-container.open {
@@ -307,8 +329,9 @@ li a {
   border-radius: 4px 0 0 4px;
   outline: none;
   width: 100%;
-  
+
 }
+
 .search-form button {
   padding: 8px 15px;
   background: #f8f8f8;
@@ -316,20 +339,39 @@ li a {
   border-left: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  color: goldenrod; /* Add this line */
+  color: goldenrod;
+  /* Add this line */
 }
 
 .search-form button:hover {
   background: #ddd;
-  color: darkgoldenrod; /* Optional: darker shade on hover */
+  color: darkgoldenrod;
+  /* Optional: darker shade on hover */
 }
 
 .search-icon {
   color: goldenrod;
   cursor: pointer;
-  transition: color 0.3s ease; /* Smooth transition */
+  transition: color 0.3s ease;
+  /* Smooth transition */
 }
 
 .search-icon:hover {
-  color: darkgoldenrod; /* Optional: darker shade on hover */
+  color: darkgoldenrod;
+  /* Optional: darker shade on hover */
+}
+
+
+.navbar-mobile {
+  width: 100vw;
+  transform: translateX(-100vw);
+  display: block;
+  position: relative;
+  z-index: 1999;
+  transition: 0.2s all ease-in-out;
+}
+
+
+.openNav {
+  transform: translateX(0);
 }
