@@ -8,6 +8,8 @@ import ImageContainer from '../../ProductCategory/ImageContainer/ImageContainer'
 import ProductIcon from '../ProductIcon/ProductIcon';
 import AllsoLike from '../AllsoLike/AllsoLike';
 import ShippingTab from '../ShippingTab/ShippingTab';
+import ReviewsPage from '../ReviewsPage/ReviewsPage';
+import FQApage from '../FQA/FQA';
 
 const ProductPage = () => {
   const location = useLocation();
@@ -37,6 +39,8 @@ const ProductPage = () => {
       <ImageContainer Image={product.whereHowWear} />
 
       <ShippingTab />
+      <ReviewsPage /> 
+      <FQApage />   
 
     </div>
   )

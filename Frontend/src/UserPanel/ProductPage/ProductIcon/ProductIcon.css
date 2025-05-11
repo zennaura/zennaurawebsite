@@ -7,7 +7,36 @@
 
 }
 .ProductIcon-Icons{
-    width: 150px;
-    height: 150px;
-    background-color: yellowgreen;
+  padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    max-width: 150px; /* max size */
+    min-width: 70px; /* min size for small screens */
+}
+
+.ProductIcon-Icons img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 600px) {
+    .ProductIcon-container {
+        gap: .5rem;
+    }
+
+    .ProductIcon-Icons {
+        flex: 1 1 100px;
+        max-width: 100px;
+        min-width: 60px;
+        padding: 0.5rem;
+    }
+    .ProductIcon-Icons img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
 }
