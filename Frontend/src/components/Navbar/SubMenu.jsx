@@ -1,6 +1,7 @@
 import { FiSearch, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import './Sidebar.css';
 import React from 'react';
+import Search from './submenus/Search';
 
 const SkinCareSubMenu = ({ goTo }) => {
     return (
@@ -10,10 +11,7 @@ const SkinCareSubMenu = ({ goTo }) => {
                 <span>Skin Care</span>
             </div>
 
-            <div className="search-barm search-bar-sub">
-                <FiSearch className="search-iconm" />
-                <input type="text" placeholder="Search" />
-            </div>
+            <Search />
 
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Category</h4>
