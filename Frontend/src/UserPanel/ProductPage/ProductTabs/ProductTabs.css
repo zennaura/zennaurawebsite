@@ -1,6 +1,7 @@
 .product-tabs-container {
   width: 100%;
   background-color: #f2f1ef;
+  font-family: 'Poppins';
   /* margin-top: 30px; */
 }
 
@@ -9,11 +10,11 @@
   gap: 10px;
   justify-content: space-evenly;
   border-bottom: 1px solid #390611;
+  color: #390611;
 }
 
 .tab-button {
   padding: 10px 20px;
-
   cursor: pointer;
   font-weight: bold;
   transition: background 0.3s;
@@ -23,11 +24,11 @@
   border-bottom: 2px solid #390611;
 }
 
-.tab-content {
+.tab-contents {
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  height: 430px;
+  height: 450px;
   /* background: #fafafa; */
 }
 .productTab-specification {
@@ -36,11 +37,26 @@
   justify-content: center;
   align-items: center;
 }
+.productTab-specification ul {
+  list-style: none;
+  padding: 0;
+}
+.productTab-specification li {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
 .product-tab-description {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.product-tab-description p{
+  text-align: center;
+  font-size: 1.1rem;
+  text-transform: capitalize;
 }
 .product-tab-description img {
   width:80%;
@@ -56,7 +72,25 @@
 }
 .product-tab-healing img{
   width:100%;
-  height: 300px;
+  /* height: 300px; */
   object-fit: cover;
 
+}
+@media screen and (max-width: 768px) {
+  .product-tabs-container {
+    margin-top: 0;
+  }
+  .tabs-header {
+    /* flex-direction: column; */
+    align-items: center;
+  }
+  .tab-button {
+    width: 100%;
+    text-align: center;
+  }
+  .tab-content {
+    padding: 10px;
+    height: auto;
+  }
+  
 }

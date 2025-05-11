@@ -1,67 +1,247 @@
-.faq-container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.faq-title {
-  text-align: center;
-  color: #541f1f;
-  font-size: 1.8rem;
-  margin-bottom: 2rem;
-}
-
-.faq-box {
-  background-color: #f2f1ef;
-  border-radius: 15px;
-  padding: 1rem;
-}
-
-.faq-item {
-  border-bottom: 1px solid #ccc;
-  padding: 1rem 0;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.faq-item:last-child {
-  border-bottom: none;
-}
-
-.faq-question {
+/* ReviewsPage.css */
+.reviews-page{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  /* align-items: center; */
+}
+.reviews-page-container {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: self-start ;
+}
+
+.reviews-page-summary {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.reviews-page-rating-bars{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.reviews-page-rating-bars > div {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.reviews-page-processbar {
+    /* flex: 1; */
+    width: 20vw;
+    height: 8px;
+    margin: 0 10px;
+    background-color: #ccc;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.reviews-page-add-review {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  font-weight: 500;
-  color: #333;
 }
 
-.faq-icon {
-  font-size: 1.2rem;
+.reviews-page-add-review button {
+    padding: 0.5rem 1rem;
+    background-color: #390611;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
 }
 
-.faq-answer {
-  margin-top: 0.5rem;
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.4;
+.reviews-page-add-review button:hover {
+    background-color: #3906119a;
 }
 
-@media (max-width: 600px) {
-  .faq-container {
+.reviews-page-media-section {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.reviews-page-video-images {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.reviews-page-box-video-images {
+    width: 150px;
+    height: 150px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+}
+
+.reviews-page-card-wrapper {
+    padding: 2rem;
+    background-color: #fafafa;
+}
+
+.reviews-page-card {
+    border: 1px solid #390611;
+    border-radius: 10px;
     padding: 1rem;
-  }
+    background-color: #390611;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+}
+.reviews-page-card-wrapper {
+    column-count: 3;
+    column-gap: 1.5rem;
+    padding: 2rem;
+}
 
-  .faq-title {
+.reviews-page-card {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+}
+
+
+
+.reviews-page-card-header {
+    display: flex;
+    justify-content: space-between;
+    /* font-weight: bold; */
+    margin-bottom: 1rem;
+}
+.reviews-page-card-header span{
     font-size: 1.5rem;
-  }
+    /* font-weight: 600; */
+    color: goldenrod;
+    margin: 0;
+}
+.reviews-page-card-header  .reviews-page-date{
+  font-size: 1rem;
+  color:#fff;
+}
 
-  .faq-question {
+.reviews-page-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.reviews-page-user-image {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    border-radius: 50%;
+}
+
+.reviews-page-user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.reviews-page-text p {
     font-size: 1rem;
-  }
+    line-height: 1.5;
+    color: #fff;
+}
 
-  .faq-answer {
-    font-size: 0.9rem;
-  }
+.reviews-page-images {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.reviews-page-review-image {
+    width: 100%;
+    height:350px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    object-fit: cover;
+}
+/* Base styles already exist — improvements below */
+
+/* Responsive Column Layout */
+.reviews-page-card-wrapper {
+    column-count: 3;
+    column-gap: 1.5rem;
+    padding: 2rem;
+}
+
+/* Prevent breaking inside column */
+.reviews-page-card {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    color: #fff;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .reviews-page-card-wrapper {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .reviews-page-card-wrapper {
+        column-count: 1;
+        padding: 1rem;
+    }
+
+    .reviews-page-container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .reviews-page-processbar {
+        width: 100%;
+        margin: 0 0 10px 0;
+    }
+
+    .reviews-page-video-images {
+        flex-direction: column;
+    }
+
+    .reviews-page-box-video-images {
+        width: 100%;
+        height: 200px;
+    }
+
+    .reviews-page-user {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .reviews-page-user-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .reviews-page-review-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reviews-page-add-review button {
+        width: 100%;
+        padding: 0.75rem;
+    }
+
+    .reviews-page-user-name {
+        font-size: 1rem;
+    }
+
+    .reviews-page-text p {
+        font-size: 0.95rem;
+    }
+
+    .reviews-page-card-header {
+        flex-direction: column;
+        gap: 4px;
+    }
 }
