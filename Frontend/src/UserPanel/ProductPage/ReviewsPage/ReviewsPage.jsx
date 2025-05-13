@@ -13,32 +13,32 @@ const ReviewsPage = () => {
             </div>
             <div className="reviews-page-container">
                 <div className="reviews-page-summary">
-                    <span>★★★★★★ 47.5 out of 5</span>
+                    <span className="total-reviews"><span className="reviews-star">★★★★★★ </span> 47.5 out of 5</span>
                     <span> Based on 47 reviews</span>
                 </div>
                 <div className="reviews-page-rating-bars">
                     <div className="reviews-page-stars1">
-                        <span>★★★★★★</span>
+                        <span className="reviews-star">★★★★★</span>
                         <span className="reviews-page-processbar"></span>
                         12
                     </div>
                     <div className="reviews-page-stars2">
-                        <span>★★★★★★</span>
+                        <span className="reviews-star">★★★★</span>★
                         <span className="reviews-page-processbar"></span>
                         12
                     </div>
                     <div className="reviews-page-stars3">
-                        <span>★★★★★★</span>
+                        <span className="reviews-star">★★★</span>★★
                         <span className="reviews-page-processbar"></span>
                         12
                     </div>
                     <div className="reviews-page-stars4">
-                        <span>★★★★★★</span>
+                        <span className="reviews-star">★★</span>★★★
                         <span className="reviews-page-processbar"></span>
                         12
                     </div>
                     <div className="reviews-page-stars5">
-                        <span>★★★★★★</span>
+                        <span className="reviews-star">★</span>★★★★
                         <span className="reviews-page-processbar"></span>
                         12
                     </div>

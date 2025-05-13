@@ -75,8 +75,8 @@ const ShippingTabs = () => {
                             <p>Please Allow Up To 1-2 Working Days For Order Processing.</p>
 
                             <ul className="delivery-times">
-                                <li><strong>Metro Cities</strong> – 2–5 Days After Dispatch</li>
-                                <li><strong>Other Cities</strong> – 2–6 Days After Dispatch</li>
+                                <li>Metro Cities – 2–5 Days After Dispatch</li>
+                                <li>Other Cities – 2–6 Days After Dispatch</li>
                             </ul>
 
                             <p className="disclaimer">
@@ -89,8 +89,7 @@ const ShippingTabs = () => {
 
                 {activeTab === "international" && (
                     <div className="shipping-tab-content">
-                        <h3>International Shipping</h3>
-                        <h4>International Orders Are Shipped Via One Of The Following Shipping Providers:</h4>
+                        <h3>International Orders Are Shipped Via One Of The Following Shipping Providers:</h3>
                         <ul className="shipping-providers">
                             <li>FedEx</li>
                             <li>ARAMEX INTERNATIONAL</li>

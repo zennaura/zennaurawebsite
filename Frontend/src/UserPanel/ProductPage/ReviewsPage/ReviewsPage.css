@@ -5,6 +5,18 @@
   font-family: 'Poppins', sans-serif;
   /* align-items: center; */
 }
+.reviews-page-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+.reviews-page-heading h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #390611;
+    margin: 0;
+}
 .reviews-page-container {
     padding: 2rem;
     display: flex;
@@ -14,11 +26,19 @@
 
 .reviews-page-summary {
     font-size: 1.2rem;
-    font-weight: bold;
+    /* font-weight: bold; */
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
 }
+.total-reviews{
+    width: 100%;
+}
+.reviews-star{
+    font-size: 1.5rem;
+    color: goldenrod;
+}
+
 .reviews-page-rating-bars{
     display: flex;
     flex-direction: column;
@@ -228,7 +248,7 @@
 
 @media (max-width: 480px) {
     .reviews-page-add-review button {
-        width: 100%;
+        /* width: 100%; */
         padding: 0.75rem;
     }
 

@@ -26,7 +26,7 @@
 
 .tab-contents {
   padding: 15px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 8px;
   height: 450px;
   /* background: #fafafa; */

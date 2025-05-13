@@ -59,7 +59,7 @@ function App() {
         <Route path="/aurajewels" element={<AuraJewels />} />
         <Route path="/divinecrystals" element={<DivineCrystal />} />
         <Route path="/sacredrituals" element={<SacreDrituals />} />
-        <Route path="/productdetails/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
         <Route path="/userdashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
         <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
         <Route path="/allproduct" element={<ProtectedRoute><AllProduct /></ProtectedRoute>} />

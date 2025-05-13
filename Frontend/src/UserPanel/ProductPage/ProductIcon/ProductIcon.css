@@ -24,13 +24,13 @@
 
 @media (max-width: 600px) {
     .ProductIcon-container {
-        gap: .5rem;
+        gap: 0rem;
     }
 
     .ProductIcon-Icons {
         flex: 1 1 100px;
         max-width: 100px;
-        min-width: 60px;
+        min-width: 54px;
         padding: 0.5rem;
     }
     .ProductIcon-Icons img {
