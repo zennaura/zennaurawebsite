@@ -15,6 +15,7 @@ const wishlistRoute = require("./routes/Wishlist-routes");
 const userDashboardRoutes = require("./routes/UserDashboard");
 const sendEmailRoute = require('./routes/EmailRoute');
 const reviewRoutes = require("./routes/Review-routes");
+const Coupon_Routes = require("./routes/Coupon_Routes");
 
 
 dotenv.config();
@@ -64,6 +65,7 @@ app.use("/api/wishlist", wishlistRoute);
 app.use("/api/userdashboard", userDashboardRoutes);
 app.use('/api/email', sendEmailRoute);
 app.use("/api", reviewRoutes);
+app.use("/api/coupons", Coupon_Routes);
 
 
 // Start Server
