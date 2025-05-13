@@ -10,6 +10,7 @@ import AllsoLike from '../AllsoLike/AllsoLike';
 import ShippingTab from '../ShippingTab/ShippingTab';
 import ReviewsPage from '../ReviewsPage/ReviewsPage';
 import FQApage from '../FQA/FQA';
+import './ProductPage.css';
 
 const ProductPage = () => {
   const location = useLocation();
@@ -26,24 +27,73 @@ const ProductPage = () => {
         specifications={product.specifications}
         healingImage={product.healingImage}
       />
-      <AllsoLike/>
-      {/* benefits */}
-      <ImageContainer Image={product.benefits} />
-      {/* whychoose */}
-      <ImageContainer Image={product.whyChoose} />
-      {/* ways to clease */}
-      <ImageContainer Image={product.waysToClean} />
-      {/* who wear */}
-      <ImageContainer Image={product.whoWear} />
-      {/* how and where wear */}
-      <ImageContainer Image={product.whereHowWear} />
-
-      <ShippingTab />
-       <ReviewsPage ProductId={product._id}
-        VarientId={product.__v}
-        product={product} 
+      {/* All so like this product */}
+      <AllsoLike />
+   <div className="productposter-container">
+  {/* Benefits Poster */}
+  {product.benefits && product.benefits.length > 0 && (
+    <div className="productposter benefits-poster">
+      <img 
+        src={product.benefits} 
+        alt="Benefits" 
+        className="poster-image"
       />
-      <FQApage />   
+    </div>
+  )}
+  
+  {/* Why Choose Poster */}
+  {product.whyChoose && product.whyChoose.length > 0 && (
+    <div className="productposter whychoose-poster">
+      <img 
+        src={product.whyChoose} 
+        alt="Why Choose" 
+        className="poster-image"
+      />
+    </div>
+  )}
+  
+  {/* Ways to Cleanse Poster */}
+  {product.waysToClean && product.waysToClean.length > 0 && (
+    <div className="productposter waystocleanse-poster">
+      <img 
+        src={product.waysToClean} 
+        alt="Ways to Cleanse" 
+        className="poster-image"
+      />
+    </div>
+  )}
+  
+  {/* Who Wear Poster */}
+  {product.whoWear && product.whoWear.length > 0 && (
+    <div className="productposter whowear-poster">
+      <img 
+        src={product.whoWear} 
+        alt="Who Wear" 
+        className="poster-image"
+      />
+    </div>
+  )}
+  
+  {/* How and Where Wear Poster */}
+  {product.whereHowWear && product.whereHowWear.length > 0 && (
+    <div className="productposter howwherewear-poster">
+      <img 
+        src={product.whereHowWear} 
+        alt="How and Where to Wear" 
+        className="poster-image"
+      />
+    </div>
+  )}
+</div>
+
+      {/* ShippingTab */}
+      <ShippingTab />
+      {/* Reviews and FQA */}
+      <ReviewsPage ProductId={product._id}
+        VarientId={product.__v}
+        product={product}
+      />
+      <FQApage />
 
     </div>
   )
