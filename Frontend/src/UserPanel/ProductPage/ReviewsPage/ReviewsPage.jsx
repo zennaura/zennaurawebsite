@@ -1,10 +1,12 @@
 import React from "react";
-import { useState } from "react";   
+import { useState } from "react";
 import "./ReviewsPage.css";
 import ReviewFormModal from "./ReviewFormModal";
 
-const ReviewsPage = () => {
-     const [isModalOpen, setIsModalOpen] = useState(false);
+const ReviewsPage = ({ ProductId, VarientId ,product}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log("Product Data:", product.__v);
+    console.log("Product Data:", product._id);
 
     return (
         <div div className="reviews-page">
@@ -43,11 +45,17 @@ const ReviewsPage = () => {
                         12
                     </div>
                 </div>
-              <div className="reviews-page-add-review">
-                <button onClick={() => setIsModalOpen(true)}>Write a reviews</button>
-                 <ReviewFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <div className="reviews-page-add-review">
+                    <button onClick={() => setIsModalOpen(true)}>Write a review</button>
+                    <ReviewFormModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        productId={ProductId}  // Pass your product ID here
+                        variantId={VarientId}  // Pass your variant ID here
+                    />
+                </div>
             </div>
-            </div>
+            
             <div className="reviews-page-media-section">
                 <h2>Customer Photos and Videos</h2>
                 <div className="reviews-page-video-images">
@@ -77,7 +85,7 @@ const ReviewsPage = () => {
                 <div className="reviews-page-card">
                     <div className="reviews-page-card-header">
                         <span> ★★★★★★</span>
-                         <span className="reviews-page-date">12/12/2004</span>
+                        <span className="reviews-page-date">12/12/2004</span>
                     </div>
                     <div className="reviews-page-user">
                         <img src="" alt="" className="reviews-page-user-image" />
@@ -92,7 +100,7 @@ const ReviewsPage = () => {
                 <div className="reviews-page-card">
                     <div className="reviews-page-card-header">
                         <span> ★★★★★★</span>
-                         <span className="reviews-page-date">12/12/2004</span>
+                        <span className="reviews-page-date">12/12/2004</span>
                     </div>
                     <div className="reviews-page-user">
                         <img src="" alt="" className="reviews-page-user-image" />
@@ -108,7 +116,7 @@ const ReviewsPage = () => {
                 <div className="reviews-page-card">
                     <div className="reviews-page-card-header">
                         <span> ★★★★★★</span>
-                         <span className="reviews-page-date">12/12/2004</span>
+                        <span className="reviews-page-date">12/12/2004</span>
                     </div>
                     <div className="reviews-page-user">
                         <img src="" alt="" className="reviews-page-user-image" />

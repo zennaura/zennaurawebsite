@@ -39,7 +39,10 @@ const ProductPage = () => {
       <ImageContainer Image={product.whereHowWear} />
 
       <ShippingTab />
-      <ReviewsPage /> 
+       <ReviewsPage ProductId={product._id}
+        VarientId={product.__v}
+        product={product} 
+      />
       <FQApage />   
 
     </div>

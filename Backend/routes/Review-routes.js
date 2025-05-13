@@ -1,86 +1,53 @@
-const Order = require("../model/Order")
-const Product = require("../model/Product")
-const ProductReview = require("../model/Review")
-const router = require("router")
+const express = require("express");
+const router = express.Router();
 
+// Optional: Add a Review model if you're using MongoDB
+const Review = require("../model/Review"); // adjust path as needed
 
-router.post("/addProductReview", async (req, res) => {
-    try {
-      const { productId, userId, userName, reviewMessage, reviewValue } =
-        req.body;
-  
-      const order = await Order.findOne({
-        userId,
-        "cartItems.productId": productId,
-        // orderStatus: "confirmed" || "delivered",
-      });
-  
-      if (!order) {
-        return res.status(403).json({
-          success: false,
-          message: "You need to purchase product to review it.",
-        });
-      }
-  
-      const checkExistinfReview = await ProductReview.findOne({
-        productId,
-        userId,
-      });
-  
-      if (checkExistinfReview) {
-        return res.status(400).json({
-          success: false,
-          message: "You already reviewed this product!",
-        });
-      }
-  
-      const newReview = new ProductReview({
-        productId,
-        userId,
-        userName,
-        reviewMessage,
-        reviewValue,
-      });
-  
-      await newReview.save();
-  
-      const reviews = await ProductReview.find({ productId });
-      const totalReviewsLength = reviews.length;
-      const averageReview =
-        reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
-        totalReviewsLength;
-  
-      await Product.findByIdAndUpdate(productId, { averageReview });
-  
-      res.status(201).json({
-        success: true,
-        data: newReview,
-      });
-    } catch (e) {
-      console.log(e);
-      res.status(500).json({
-        success: false,
-        message: "Error",
-      });
+// POST /api/reviews
+router.post("/reviews", async (req, res) => {
+  try {
+    const {
+      productId,
+      variantId,
+      rating,
+      title,
+      reviewText,
+      youtubeURL,
+      name,
+      email,
+      mediaUrls, // array of image/video URLs from Cloudinary
+    } = req.body;
+
+    // Basic validation
+    if (!productId || !rating || !title || !reviewText || !name || !email) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
-  });
 
-  router.get("/getProductReviews" , async (req, res) => {
-    try {
-      const { productId } = req.params;
-  
-      const reviews = await ProductReview.find({ productId });
-      res.status(200).json({
-        success: true,
-        data: reviews,
-      });
-    } catch (e) {
-      console.log(e);
-      res.status(500).json({
-        success: false,
-        message: "Error",
-      });
-    }
-  });
+    // Option 1: Save to database (e.g., MongoDB)
+    const newReview = new Review({
+      productId,
+      variantId,
+      rating,
+      title,
+      reviewText,
+      youtubeURL,
+      name,
+      email,
+      mediaUrls,
+      createdAt: new Date(),
+    });
 
-  module.exports = router;
+    await newReview.save();
+
+    // Option 2: If no DB, just log to console (for testing)
+    // console.log("Review received:", req.body);
+
+    res.status(201).json({ message: "Review submitted successfully" });
+  } catch (error) {
+    console.error("Error saving review:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+module.exports = router;

@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 
-const ProductReviewSchema = new mongoose.Schema(
-  {
-    productId: String,
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    userName: String,
-    reviewMessage: String,
-    reviewValue: Number,
-  },
-  { timestamps: true }
-);
+const ReviewSchema = new mongoose.Schema({
+  productId: { type: String, required: true },
+  variantId: { type: String },
+  rating: { type: Number, required: true },
+  title: { type: String, required: true },
+  reviewText: { type: String, required: true },
+  youtubeURL: { type: String },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  mediaUrls: [String],
+  createdAt: { type: Date, default: Date.now },
+});
 
-module.exports = mongoose.model("ProductReview", ProductReviewSchema);
+module.exports = mongoose.model("Review", ReviewSchema);

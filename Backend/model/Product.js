@@ -35,7 +35,7 @@ const ProductSchema = new mongoose.Schema({
   title: String,
   description: String,
   sku: String,
-
+// .concern add in 
   tags: [String],
   stoneUsedImage: [
     {
