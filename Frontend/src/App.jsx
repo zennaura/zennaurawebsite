@@ -33,6 +33,10 @@ import VerificationCodeInput from './components/VerificationCodeInput/Verificati
 import SetNewPassword from './components/SetNewPassword/SetNewPassword';
 import VerificationCodeforgotpassword from './components/VerificationCodeInput/VerificationCodeforgotpassword';
 import ForgotPasswordEmail from './components/ForgotPasswordEmail/ForgotPasswordEmail';
+import CouponGenerator from './Admin/Coupon/CouponGenerator/CouponGenerator'
+import CouponList from './Admin/Coupon/CouponList/CoupunList';
+import EditCoupon from './Admin/Coupon/EditCoupon/EditCoupon';
+import ContactUs from './components/ContactUs/ContactUs';
 
 function App() {
   const { user } = useUser();
@@ -73,6 +77,10 @@ function App() {
         <Route path="/emailforforgotpassword" element={<ForgotPasswordEmail />} />
         <Route path="/resetpasswordvarification" element={<VerificationCodeforgotpassword />} />
         <Route path="/resetpassword" element={<SetNewPassword />} />
+        <Route path="/generatecouponcode" element={<CouponGenerator />} />
+        <Route path="/allcoupons" element={<CouponList />} />
+        <Route path="/edit-coupon/:couponId" element={<EditCoupon />} />
+        <Route path="/contactus" element={<ContactUs />} />
       </Routes>
 
       {location.pathname !== '/verification' && location.pathname !== '/emailforforgotpassword' && location.pathname !== '/resetpasswordvarification' && location.pathname !== '/resetpassword' && <Footer />}

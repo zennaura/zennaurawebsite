@@ -46,6 +46,17 @@ const Navbar = () => {
             <span>Orders</span>
           </NavLink>
         </li>
+
+         <li className="sidebar-list-item">
+          <NavLink to="/allcoupons" activeClassName="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+              <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+            </svg>
+            <span>Coupons</span>
+          </NavLink>
+        </li>
+
         {/* link to logout */}
         <li className="sidebar-list-item" onClick={handleLogout}>
           <NavLink to="#" >
@@ -55,15 +66,9 @@ const Navbar = () => {
             <span>Logout</span>
           </NavLink>
         </li>
-        {/* <li className="sidebar-list-item">
-          <NavLink to="/statistics" activeClassName="active">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
-              <path d="M22 12A10 10 0 0 0 12 2v10z"/>
-            </svg>
-            <span>Statistics</span>
-          </NavLink>
-        </li>
+        
+
+      {/*
         <li className="sidebar-list-item">
           <NavLink to="/inbox" activeClassName="active">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
