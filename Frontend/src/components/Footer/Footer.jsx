@@ -98,12 +98,12 @@ const Footer = () => {
           <div className="footer-section">
             <h3 className="footer-title">Shop</h3>
             <ul className="footer-list">
-              <li>All Products</li>
-              <li>Skin Care</li>
-              <li>Divine Crystals</li>
-              <li>Sacred Rituals</li>
-              <li>Aura Jewels</li>
-              <li>Gifting</li>
+              <li> <Link to='/shop'>All Products</Link> </li>
+              <li> <Link to='/skincare'>Skin Care</Link> </li>
+              <li> <Link to='/divinecrystals'>Divine Crystals</Link> </li>
+              <li> <Link to='/sacredrituals'>Sacred Rituals</Link> </li>
+              <li> <Link to='/aurajewels'>Aura Jewels</Link> </li>
+              <li> <Link to='/'> Gifting</Link></li>
               <li>Travel Minis</li>
             </ul>
           </div>
@@ -124,11 +124,11 @@ const Footer = () => {
           <div className="footer-section">
             <h3 className="footer-title">Quick link</h3>
             <ul className="footer-list">
-              <li>My Account</li>
+              <li> <Link to='/userdashboard'>My Account</Link> </li>
               <li>Be A Member</li>
               <li>Blog</li>
               <li>Current Offers</li>
-              <li>Contact Us</li>
+              <li> <Link to='/contactus'>Contact Us</Link> </li>
             </ul>
           </div>
 

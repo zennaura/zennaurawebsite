@@ -226,6 +226,7 @@ li a {
   display: flex;
   font-family: "Inria Serif", serif;
   gap: 40px;
+  padding-left: 5rem;
 }
 
 .aurajewels-category h3,
