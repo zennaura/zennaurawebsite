@@ -20,8 +20,11 @@ const AddProduct = () => {
     sku: "",
   });
 
-  // Tags State
+  // Concern Tags State
   const [tags, setTags] = useState([]);
+  // Intent Tags State
+  const [Intenttags, setIntenttags] = useState([]);
+  const [tagInput, setTagInput] = useState(""); // New state for tag input
 
   // Stones Used
   const [stones, setStones] = useState([]);
@@ -55,6 +58,7 @@ const AddProduct = () => {
   const [images, setImages] = useState({
     descriptionImage: null,
     frontImage: null,
+    backImage: null,
     otherImages: [],
   });
 
@@ -101,7 +105,9 @@ const AddProduct = () => {
     setVariants([
       ...variants,
       {
+        variantname:"",
         size: "",
+        tax:"",
         salePrice: "",
         discount: "",
         costPrice: "",
@@ -193,12 +199,14 @@ const AddProduct = () => {
       sku: basicDetails.sku,
 
       tags,
+      Intenttags,
       stoneUsedImage: stones.map((stone) => ({
         title: stone.title,
         image: stone.image, // ✅ Already uploaded
       })),
 
       frontImage: images.frontImage || null,
+      backImage: images.backImage || null,
       otherImages: images.otherImages || [],
 
       healingImage: posters.healing || null,
@@ -215,7 +223,9 @@ const AddProduct = () => {
 
       variants: variants.map((variant) => ({
         ...variant,
+        variantname:(variant.variantname),
         size: Number(variant.size),
+        tax: Number(variant.tax),
         salePrice: Number(variant.salePrice),
         discount: Number(variant.discount),
         costPrice: Number(variant.costPrice),
@@ -279,7 +289,7 @@ const AddProduct = () => {
             />
           </label>
           <label className="block">
-            <span className="text-gray-700">Sub Category</span>
+            <span className="text-gray-700">Category</span>
             <input
               type="text"
               value={category.sub}
@@ -290,7 +300,7 @@ const AddProduct = () => {
             />
           </label>
           <label className="block">
-            <span className="text-gray-700">SubSub Category</span>
+            <span className="text-gray-700">Sub Category</span>
             <input
               type="text"
               value={category.subSub}
@@ -301,7 +311,7 @@ const AddProduct = () => {
             />
           </label>
           <label className="block">
-            <span className="text-gray-700"> Category</span>
+            <span className="text-gray-700">SubSub Category</span>
             <input
               type="text"
               value={category.category}
@@ -335,13 +345,14 @@ const AddProduct = () => {
           {/* Product Description */}
           <label className="block">
             <span className="text-gray-700">Product Description</span>
-            <input
-              type="text"
+            <textarea
               value={basicDetails.description}
               onChange={(e) =>
                 setBasicDetails({ ...basicDetails, description: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 h-24" // Adjust height as needed
+              rows={4} // Optional: Sets the number of visible rows
+              placeholder="Enter product description..."
             />
           </label>
 
@@ -371,9 +382,9 @@ const AddProduct = () => {
             />
           </label>
         </div>
-        {/* <!-- Tags --> */}
+        {/* <!-- Concern Tags --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Tags</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Concern Tags</h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             {/* Tag Input Field */}
             <input
@@ -425,7 +436,61 @@ const AddProduct = () => {
             ))}
           </div>
         </div>
+        {/* <!--Intent  Tags --> */}
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Intent Tags</h2>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            {/* Tag Input Field (Controlled) */}
+            <input
+              type="text"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && tagInput.trim() !== '') {
+                  setIntenttags([...Intenttags, tagInput.trim()]);
+                  setTagInput(""); // Clear input using state
+                }
+              }}
+              placeholder="Enter a tag"
+              className="flex-1 border border-gray-300 rounded-md p-2 md:p-3 text-sm md:text-base"
+            />
 
+            {/* Add Tag Button */}
+            <button
+              type="button"
+              onClick={() => {
+                if (tagInput.trim() !== '') {
+                  setIntenttags([...Intenttags, tagInput.trim()]);
+                  setTagInput(""); // Clear input using state
+                }
+              }}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm md:text-base"
+            >
+              Add
+            </button>
+          </div>
+
+          {/* List of Added Tags */}
+          <div id="tagList" className="mt-2 flex gap-2 flex-wrap">
+            {Intenttags.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full flex items-center gap-2"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIntenttags(Intenttags.filter((_, i) => i !== index));
+                  }}
+                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                >
+                  x
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
         {/* <!-- Stone Used --> */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-2">Stone Used</h2>
@@ -481,12 +546,12 @@ const AddProduct = () => {
           {/* Product Description */}
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Description</h2>
-            <input
-              type="text"
+            <textarea
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
               placeholder="Enter product description"
               className="mb-2 block w-full border border-gray-300 rounded-md p-2"
+               rows={4} 
             />
             <input
               type="file"
@@ -504,6 +569,13 @@ const AddProduct = () => {
             <input
               type="file"
               onChange={(e) => handleFileUpload(e, 'frontImage')}
+              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+            />
+             {/* Back Image */}
+            <label className="block mb-2">Product Back Image</label>
+            <input
+              type="file"
+              onChange={(e) => handleFileUpload(e, 'backImage')}
               className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
             />
 
@@ -604,15 +676,25 @@ const AddProduct = () => {
 
         {/* <!-- Variants --> */}
         <div
-            style={{padding: "10px", marginTop: "20px"}}
+          style={{ padding: "10px", marginTop: "20px" }}
 
-        className="space-y-4 border-t pt-4">
+          className="space-y-4 border-t pt-4">
           <h2 className="text-xl font-semibold text-gray-800">Variants</h2>
 
           {/* Render Each Variant Dynamically */}
           {variants.map((variant, index) => (
             <div key={index} className="border p-4 rounded-md space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {/* Variant name  */}
+                  <input
+                  type="text"
+                  value={variant.variantname}
+                  onChange={(e) =>
+                    handleVariantChange(index, 'variantname', e.target.value)
+                  }
+                  placeholder="Varient Name"
+                  className="border border-gray-300 rounded-md p-2"
+                />
                 {/* Size */}
                 <input
                   type="number"
@@ -620,7 +702,17 @@ const AddProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(index, 'size', e.target.value)
                   }
-                  placeholder="Size"
+                  placeholder="Size in mm"
+                  className="border border-gray-300 rounded-md p-2"
+                />
+                 {/* Tax */}
+                <input
+                  type="number"
+                  value={variant.tax}
+                  onChange={(e) =>
+                    handleVariantChange(index, 'tax', e.target.value)
+                  }
+                  placeholder="Tax on product"
                   className="border border-gray-300 rounded-md p-2"
                 />
 
@@ -815,7 +907,7 @@ const AddProduct = () => {
           {/* Add Variant Button */}
           <button
             type="button"
-            style={{padding: "10px"}}
+            style={{ padding: "10px" }}
             onClick={handleAddVariant}
             className="bg-green-600 text-white px-4 py-2  rounded-md hover:bg-green-700"
           >
@@ -825,7 +917,7 @@ const AddProduct = () => {
           {/* Remove Variant Button */}
           <button
             type="button"
-            style={{padding: "10px", marginLeft: "10px"}}
+            style={{ padding: "10px", marginLeft: "10px" }}
 
             onClick={handleRemoveVariant}
             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"

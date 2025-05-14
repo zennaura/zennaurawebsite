@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 
 // Variant Schema
 const VariantSchema = new mongoose.Schema({
+  variantname :String,
   size: String,
   salePrice: Number,
   discount: Number,
   costPrice: Number,
   stock: Number,
-
+  tax:Number,
+  
   variantsimages: [String], // 2 images
 
   specifications: {
@@ -37,6 +39,7 @@ const ProductSchema = new mongoose.Schema({
   sku: String,
 // .concern add in 
   tags: [String],
+  Intenttags:[String],
   stoneUsedImage: [
     {
       title: String,
@@ -60,6 +63,7 @@ const ProductSchema = new mongoose.Schema({
   },
   
   frontImage: String,
+  backImage: String,
   otherimages: [String], // 3 images
 
   healingImage: String,
