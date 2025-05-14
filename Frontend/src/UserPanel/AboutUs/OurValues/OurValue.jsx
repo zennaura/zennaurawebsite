@@ -30,7 +30,7 @@ const OurValue = () => {
         </div>
 
         
-        <div className="OurValue-row">
+        <div className="OurValue-row OurValue-row-last">
           <div className="OurValue-text OurValue-left">
             <h2 className="OurValue-value-title">Healing Beyond Beauty</h2>
             <p className="OurValue-value-detail">

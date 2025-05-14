@@ -48,7 +48,7 @@ const Footer = () => {
           {/* About Section */}
           <FooterSection title="About">
             <ul className="footer-list">
-              <li>Our Philoshophy</li>
+              <li><Link to="/aboutus">Our Philoshophy</Link></li>
               <li><Link to="/policies">Policies</Link></li>
               <li><Link to="/termsandconditions">Terms</Link></li>
               <li>FAQ’s</li>
@@ -113,7 +113,7 @@ const Footer = () => {
           <div className="footer-section">
             <h3 className="footer-title">About</h3>
             <ul className="footer-list">
-              <li>Our Philoshophy</li>
+              <li><Link to="/aboutus">Our Philoshophy</Link></li>
               <li><Link to="/policies">Policies</Link></li>
               <li><Link to="/termsandconditions">Terms</Link></li>
               <li>FAQ’s</li>

@@ -7,6 +7,7 @@
   font-family: "Poppins", sans-serif; /* Fallback to sans-serif */
   gap: 1rem;
   padding: 2rem;
+  background-color: #f0f0f0;
 }
 
 .shopby-text-box {

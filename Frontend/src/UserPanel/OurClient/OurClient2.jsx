@@ -130,18 +130,18 @@ const ourstory2 = () => {
               translateX = distance === 2 ? 480 : -480;
             } else if (distance === 3 || distance === slides.length - 3) {
               scale = 0.9;
-            //   opacity = 0.4;
+              opacity = 0.4;
               zIndex = 2;
               translateX = distance === 3 ? 800 : -800;
             } else if (distance === 4 || distance === slides.length - 4) {
               scale = 0.7;
-              opacity = 0.2;
+              opacity = 0;
               zIndex = 1;
               translateX = distance === 4 ? 1000 : -1000;
             } else if (distance === 5 || distance === slides.length - 5) {
               scale = 0.5;
               opacity = 0;
-              zIndex = 1;
+              zIndex = 0;
               translateX = distance === 4 ? 1200 : -1200;
             } else {
               scale = 0.3;

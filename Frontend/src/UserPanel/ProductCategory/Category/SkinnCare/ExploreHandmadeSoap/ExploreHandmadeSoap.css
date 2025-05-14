@@ -7,7 +7,7 @@
     background-image: url("../../../../../assests/ExploreHandmadeSoapbgimg.png");
     background-size: cover;
     background-position: center;
-    padding: 80px 20px;
+    padding: 20px 20px;
     text-align: center;
     color: #3a0e0e;
     font-family: 'Inria Serif';
@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 20rem;
+    gap: 15rem;
     margin-top: 50px;
     margin-bottom: 40px;
 }
@@ -49,16 +49,16 @@
 }
 
 .ExploreHandmadeSoap-title {
-    margin-top: 35px;
-    font-size: 25px;
-    margin-bottom: 80px;
+    margin-top: 20px;
+    font-size: 20px;
+    margin-bottom: 30px;
     line-height: 1.2;
     font-family: 'Poppins';
-    font-weight: 200;
 }
 
 .ExploreHandmadeSoap-description {
-    font-size: 24px;
+    font-weight: 600;
+    font-size: 30px;
     line-height: 1.6;
     margin-bottom: 30px;
    

@@ -13,18 +13,16 @@
   font-family: 'Inria Serif' ;
   font-size: 42px;
   text-align: center;
-  margin-bottom: 60px;
-  font-weight: 600;
-  text-transform: uppercase;
+  margin-bottom: 30px;
+  /* font-weight: 600; */
+  /* text-transform: uppercase; */
   letter-spacing: 1.3px;
 }
 
 .MakeDifferent-body {
   display: flex;
-  justify-content: center;
-  gap: 50px;
+  justify-content: space-evenly;
   width: 100%;
-  max-width: 1200px;
 }
 
 .MakeDifferent-contentdiv1,
@@ -39,8 +37,8 @@
   justify-content: space-between;
   padding: 40px;
   background-color: #d9d9d9;
-  width: 300px;
-  height: 425px;
+  width: 350px;
+  height: 450px;
 }
 
 .MakeDifferent-contentdiv1 {

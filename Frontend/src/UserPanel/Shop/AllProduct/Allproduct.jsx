@@ -95,14 +95,18 @@ const ProductListingPage = () => {
             Showing {indexOfFirstProduct + 1}–{Math.min(indexOfLastProduct, sortedProducts.length)} of {sortedProducts.length} results
           </p>
           <div className="sorting-option-right">
-            <select 
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-            >
-              <option value="default">Default Sorting</option>
-              <option value="price-low-high">Price: Low to High</option>
-              <option value="price-high-low">Price: High to Low</option>
-            </select>
+           <div className="custom-select-wrapper">
+  <select
+    className="custom-select"
+    value={sortOption}
+    onChange={(e) => setSortOption(e.target.value)}
+  >
+    <option value="default">Default Sorting</option>
+    <option value="price-low-high">Price: Low to High</option>
+    <option value="price-high-low">Price: High to Low</option>
+  </select>
+</div>
+
             <div className="view-options">
   <button 
     className={`ViewList-option ${viewMode === 'grid-3' ? 'active' : ''}`}

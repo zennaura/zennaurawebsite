@@ -6,11 +6,12 @@
 }
 
 /* Heading Styling */
-.ShopByConcern-header h2 {
-    font-family: "Poppins", sans-serif;
+.ShopByConcern-header h1 {
+    font-family: "Inria Serif", sans-serif;
     font-size: 40px;
-    font-weight: bold;
-    color: #4B1D1D;
+    margin-bottom: 20px;
+    /* font-weight: bold; */
+    color: #390611;
 }
 
 /* Slider Container */
@@ -28,7 +29,7 @@
 .ShopByConcern-slider {
     display: flex;
     gap: 50px;
-    margin: 40px 65px;
+    /* margin: 40px 65px; */
     justify-content: center;
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -41,7 +42,7 @@
     display: flex;
     flex-direction: column;
     flex: 0 0 auto;
-    width: 400px;
+    width: 350px;
     padding: 15px;
     text-align: center;
     align-items: center;
@@ -51,13 +52,13 @@
 /* Image Styling */
 .ShopByConcern-slider-item img {
     width: 90%;
-    height: 400px;
+    height: 350px;
     object-fit: cover;
     margin-bottom: 15px;
     background-color: #D9D9D9;
 }
 
-.ShopByConcern-slider-item-img-even {
+/* .ShopByConcern-slider-item-img-even {
     border-radius: 0px 0px 0px 80px;
     -webkit-border-radius: 0px 0px 0px 80px;
     -moz-border-radius: 0px 0px 0px 80px;
@@ -67,7 +68,7 @@
     border-radius: 0px 80px 0px 0px;
     -webkit-border-radius: 0px 80px 0px 0px;
     -moz-border-radius: 0px 80px 0px 0px;
-}
+} */
 
 /* Title Styling */
 .ShopByConcern-slider-item h3 {
@@ -83,7 +84,7 @@
 /* Description Styling */
 .ShopByConcern-slider-item p {
     font-family: "Poppins", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     color: #4B1D1D;
     width: 85%;
 }
@@ -96,7 +97,7 @@
 }
 
 .ShopByConcern-dot {
-    width: 40px;
+    width: 30px;
     height: 5px;
     background-color: white;
     margin: 0 5px;
@@ -107,7 +108,7 @@
 
 .ShopByConcern-dot.active {
     background-color: #4B1D1D;
-    width: 45px;
+    width: 30px;
 }
 
 @media (max-width: 1024px) {

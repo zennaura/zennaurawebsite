@@ -1,6 +1,6 @@
 /* General Section Styling */
 .our-story {
-  font-family: 'Inria Serif';
+  font-family: "Inria Serif";
   text-align: center;
   padding: 30px 20px;
   overflow: hidden;
@@ -12,7 +12,7 @@
 }
 
 .our-story h2 {
-  font-family: 'Inria Serif';
+  font-family: "Inria Serif";
   font-size: 40px;
   color: #390611;
   margin-bottom: 30px;
@@ -70,14 +70,18 @@
   justify-content: center;
   text-align: center;
   flex-direction: column;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   position: relative;
   padding: 2rem;
   border-radius: 20px;
   overflow: hidden;
 }
-.storycard-content{
+.storycard-content {
   height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .story-card.active {
@@ -116,35 +120,37 @@
 .story-card > * {
   position: relative;
   z-index: 1;
+  padding: 4rem;
 }
 
 .story-card h3 {
   font-family: "Inria Serif", serif;
-  font-size: 34px;
-  color: #FFFFFF;
+  font-size: 30px;
+  color: #ffffff;
   font-weight: bold;
-  margin: 0 0 15px;
+  margin: 0 0 35px;
 }
 
 .story-card p {
-  font-family: "Inria Serif", serif;
+  font-family: "Poppins", serif;
   color: #fff;
-  font-size: 28px;
-  line-height: 1.6;
+  text-align: center;
+  width: 80%;
+  font-size: 18px;
+  /* line-height: 1.6; */
   margin: 15px 0 10px;
 }
 
 /* Know More Button */
 .know-more {
-  background: linear-gradient(135deg, #f5e0d5, #c49a6c);
-  border: none;
-  padding: 10px 20px;
-  margin-top: 15px;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  font-size: 16px;
+     font-family: 'Poppins';
+    background-color: #390611;
+    color: #FFFFFF;
+    font-size: 18px;
+    border: none;
+    margin-bottom: 2rem;
+    padding: 15px 10px;
+    border-radius: 10px;
 }
 
 .know-more:hover {
@@ -161,17 +167,18 @@
 }
 
 .dot {
-  width: 50px;
+  width: 30px;
   height: 7px;
   margin: 0 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 1rem;
-  border: 2px solid #390611;
-  background-color: transparent;
+  border: 1px solid #390611;
+  background-color: #3906116a;
 }
 
-.dot.active, .dot:hover {
+.dot.active,
+.dot:hover {
   background-color: rgba(57, 6, 17, 1);
 }
 
@@ -180,32 +187,32 @@
   .our-story {
     padding: 25px 15px;
   }
-  
+
   .our-story h2 {
     font-size: 32px;
     margin-bottom: 20px;
   }
-  
+
   .story-card {
     min-height: 350px;
     padding: 1.5rem;
   }
-  
+
   .story-card h3 {
     font-size: 28px;
   }
-  
+
   .story-card p {
     font-size: 22px;
     line-height: 1.5;
   }
-  
+
   .slider-btn {
     width: 36px;
     height: 36px;
     font-size: 20px;
   }
-  
+
   .dot {
     width: 40px;
     height: 6px;
@@ -218,41 +225,41 @@
   .our-story {
     padding: 20px 10px;
   }
-  
+
   .our-story h2 {
     font-size: 26px;
     margin-bottom: 15px;
   }
-  
+
   .story-card {
     min-height: 300px;
     padding: 1rem;
     border-radius: 15px;
   }
-  
+
   .story-card h3 {
     font-size: 22px;
     margin-bottom: 10px;
   }
-  
+
   .story-card p {
     font-size: 18px;
     line-height: 1.4;
     margin: 10px 0;
   }
-  
+
   .know-more {
     padding: 8px 16px;
     font-size: 14px;
   }
-  
+
   .slider-btn {
     width: 32px;
     height: 32px;
     font-size: 18px;
     padding: 8px;
   }
-  
+
   .dot {
     width: 30px;
     height: 5px;
@@ -265,11 +272,11 @@
   .story-card h3 {
     font-size: 20px;
   }
-  
+
   .story-card p {
     font-size: 16px;
   }
-  
+
   .know-more {
     padding: 6px 12px;
     font-size: 13px;

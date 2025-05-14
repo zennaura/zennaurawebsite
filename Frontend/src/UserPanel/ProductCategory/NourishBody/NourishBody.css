@@ -4,13 +4,16 @@
     justify-content: center;
     align-items: center;
     font-size: 20px;
-    font-family: 'Poppins';
+    font-family: 'Inria Serif';
     color: #390611;
 }
 
 .nourishbody-header{
     margin-bottom: 10px;
     padding: 30px;
+}
+.nourishbody-header h1{
+    font-size: 40px;
 }
 .nourishbody-content{
     width: 100%;

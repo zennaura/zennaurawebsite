@@ -14,7 +14,7 @@ const Bemember = () => {
   const benefits = [
     {
       icon: rewardIcon,
-      title: "Rewards On All Purchases",
+      title: "Rewards Point",
     },
     {
       icon: dealIcon,
@@ -26,15 +26,15 @@ const Bemember = () => {
     },
     {
       icon: trainingIcon,
-      title: "Access To  Workshops & Rituals",
+      title: "Access To  Workshops",
     },
     {
       icon: surpriseIcon,
-      title: "Customized Member Card",
+      title: "Customized Card",
     },
     {
       icon: memberCardIcon,
-      title: " Birthday & Anniversary Gifts",
+      title: " Surprise Gifts",
     },
   ];
 

@@ -70,7 +70,7 @@ html {
   cursor: pointer;
   transition: background 0.3s ease;
   border-radius: 1rem;
-  border: 2px solid #390611;
+  /* border: 1px solid #390611; */
 }
 
 .dot.active {

@@ -107,10 +107,12 @@
 .redifining-img-box1 {
   position: absolute;
   width: 300px;
-  height: 400px;
-  top: 5%;
-  right: 20%;
+  height: 420px;
+  /* top: 2%; */
+  right: 18%;
   z-index: 2;
+  border-radius: 160px 160px 0px 0px;
+
 }
 
 .redifining-img-box2 {
@@ -118,18 +120,17 @@
   width: 200px;
   height: 250px;
   top: 50%;
-  right: 0%;
+  right: 6%;
   z-index: 3;
 }
 
 /* Right Image Boxes */
 .redifining-img-box3 {
   position: absolute;
-
-  width: 250px;
-  height: 300px;
-  left: 10%;
-  top: 5%;
+  width: 280px;
+  height: 400px;
+  left: 5%;
+  /* top: 5%; */
   z-index: 1;
 }
 
@@ -137,7 +138,7 @@
   position: absolute;
   width: 180px;
   height: 250px;
-  left: 40%;
+  left: 45%;
   top: 30%;
   z-index: 2;
 }
@@ -146,7 +147,7 @@
   position: absolute;
   width: 180px;
   height: 250px;
-  left: 20%;
+  left: 25%;
   top: 50%;
   z-index: 3;
 }

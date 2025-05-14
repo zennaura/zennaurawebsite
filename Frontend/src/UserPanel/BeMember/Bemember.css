@@ -56,19 +56,19 @@
 /* Benefits Cards */
 .bemember-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3rem;
   width: 100%;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
 }
 
 .bemember-card {
   background: rgba(255, 255, 255, 0.142);
   backdrop-filter: blur(10px);
-  height: 350px;
+  height: 250px;
   width: 100%;
-  max-width: 250px;
+  max-width: 300px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   border-radius: 143px 142px 10px 10px;
@@ -88,14 +88,14 @@
 }
 
 .bemember-card-icon img {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
 }
 
 .bemember-card-title {
   font-family: "Inria Serif", serif;
-  font-size: 20px;
+  font-size: 17px;
   color: #5a3a2e;
 }
 

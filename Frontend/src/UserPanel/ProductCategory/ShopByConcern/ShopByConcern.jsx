@@ -122,7 +122,7 @@ const ShopByConcern = () => {
         <>
             <div className="ShopByConcern-container">
                 <div className="ShopByConcern-header">
-                    <h2>Shop by Concern</h2>
+                    <h1>Shop by Concern</h1>
                 </div>
                 <div className="ShopByConcern-slider-container">
                     <div className="ShopByConcern-slider" ref={sliderRef}>
@@ -133,7 +133,7 @@ const ShopByConcern = () => {
                                     src={product.src} alt={product.alt} />
 
                                 <h3>{product.title}</h3>
-                                <p>{product.description}</p>
+                                {/* <p>{product.description}</p> */}
                             </div>
                         ))}
                     </div>

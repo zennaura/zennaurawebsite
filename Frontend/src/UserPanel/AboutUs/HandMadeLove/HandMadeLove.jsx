@@ -10,7 +10,7 @@ const Handmadelove = () => {
       <div className="Handmadelove-content">
         <div className="Handmadelove-div Handmadelove-div-left">
           <div className="Handmadelove-textdiv">
-            <h1>If You Can Eat It, <br /> You Can Use It on Your Skin</h1>
+            <h1>If You Can Eat It,It's save for your Skin</h1>
             <p>
               Our skincare is chemical & preservative free, made from real,
               edible ingredients.
@@ -20,7 +20,7 @@ const Handmadelove = () => {
         <div className="Handmadelove-div Handmadelove-div-right">
           <div className="Handmadelove-textdiv">
             <h1>
-              Handcrafted by Women <br />
+              Handcrafted by Women 
               Artisans
             </h1>
             <p>

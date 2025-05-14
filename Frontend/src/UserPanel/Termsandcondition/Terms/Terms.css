@@ -10,30 +10,36 @@
 
 .terms-greet {
     font-family: 'Inria Serif';
-    font-weight: 525;
-    font-size: 27px;
+    /* font-weight: 525; */
+    font-size: 16px;
     margin-top: 85px;
     margin-left: 89px;
     margin-bottom: 40px;
 }
 
+
+
 .terms-list {
-    list-style-type: none;
+  list-style-position: outside;
+  padding-left: 1.5rem;
 }
+
+
 
 .terms-point {
     color: #390611;
     font-family: 'Poppins', sans-serif;
-    font-size: 30px;
-    font-weight: 400;
-    margin-left: 142px;
+    font-size: 14px;
+    /* font-weight: 400; */
+    margin-left: 12px;
+    margin-bottom: 20px;
 }
 
 .terms-point a {
     color: #390611;
     font-family: 'Poppins', sans-serif;
-    font-size: 30px;
-    font-weight: 400;
+    font-size: 14px;
+    /* font-weight: 400; */
     text-decoration: underline;
 }
 

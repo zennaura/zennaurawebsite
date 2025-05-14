@@ -56,7 +56,7 @@ const Filter = () => {
         <div className="filter-price">
           <h2>Price</h2>
           <div className="price-range">
-            <span>Min ₹{minPrice}</span>
+            <span> ₹{minPrice}</span>
             <input
               type="range"
               min="0"
@@ -71,7 +71,7 @@ const Filter = () => {
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
             />
-            <span>Max ₹{maxPrice}</span>
+            <span> ₹{maxPrice}</span>
           </div>
         </div>
 

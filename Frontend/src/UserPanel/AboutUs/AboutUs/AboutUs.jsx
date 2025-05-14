@@ -20,8 +20,8 @@ const AboutUs = () => {
     {/* <OurPhilosophy /> */}
     <ImageContainer Image = {Readytoexpe}/>
     <WhyWeStarted/>
-    <ImageContainer Image = {Readytoexpe}/>
     <OurValues/>
+    <ImageContainer Image = {Readytoexpe}/>
     <HandMadeLove/>
     <WhyZenn/>
     <ImageContainer Image = {Spiritualjourneyimg}/>

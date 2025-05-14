@@ -28,14 +28,38 @@
     align-items: center;
     gap: 1rem;
   }
-  
-  .sorting-options select {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #390611;
-    color: white;
-    border-radius: 4px;
-  }
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  /* width: 250px; */
+}
+
+.custom-select {
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 16px;
+  /* border: 2px solid #390611; */
+  border-radius: 5px;
+  background-color: #f2f1ef;
+  color: #390611;
+  cursor: pointer;
+}
+
+/* Custom arrow using ::after */
+.custom-select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 14px;
+  color: #390611;
+}
+
   
   .ViewList-option {
     display: grid;
