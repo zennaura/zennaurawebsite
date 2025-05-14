@@ -25,6 +25,11 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get("/fetchqueries", async (req, res) => {
+  const queries = await ContactQuery.find();
+  res.json(queries);
+});
+
 
 router.get("/unreplied", async (req, res) => {
   try {
@@ -35,17 +40,16 @@ router.get("/unreplied", async (req, res) => {
   }
 });
 
-router.put('/:id/replied', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-    const query = await ContactQuery.findByIdAndUpdate(
+    const updated = await ContactQuery.findByIdAndUpdate(
       req.params.id,
       { replied: req.body.replied },
       { new: true }
     );
-    if (!query) return res.status(404).json({ message: 'Not found' });
-    res.json(query);
+    res.json(updated);
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Update failed' });
   }
 });
 
