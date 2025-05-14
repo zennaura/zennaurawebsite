@@ -29,6 +29,7 @@ const UpdateProduct = () => {
   });
 
   const [tags, setTags] = useState([]);
+  const [Intenttags, setIntenttags] = useState([]);
   const [stoneName, setStoneName] = useState("");
   const [stoneImage, setStoneImage] = useState(null);
   const [stones, setStones] = useState([]);
@@ -37,6 +38,7 @@ const UpdateProduct = () => {
   const [images, setImages] = useState({
     descriptionImage: null,
     frontImage: null,
+    backImage: null,
     otherImages: [],
   });
 
@@ -69,12 +71,14 @@ const UpdateProduct = () => {
       });
 
       setTags(Array.isArray(productData.tags) ? productData.tags : []);
+      setIntenttags(Array.isArray(productData.Intenttags) ? productData.Intenttags : []);
       setStones(Array.isArray(productData.stoneUsedImage) ? productData.stoneUsedImage : []);
       setProductDescription(productData.productDescriptions?.title || "");
 
       setImages({
         descriptionImage: productData.productDescriptions?.image || null,
         frontImage: productData.frontImage || null,
+        backImage: productData.backImage || null,
         otherImages: Array.isArray(productData.otherImages) ? productData.otherImages : []
       });
 
@@ -88,30 +92,32 @@ const UpdateProduct = () => {
       });
 
       setVariants(
-        Array.isArray(productData.variants) 
+        Array.isArray(productData.variants)
           ? productData.variants.map(v => ({
-              ...v,
-              size: String(v.size || ""),
-              salePrice: String(v.salePrice || ""),
-              discount: String(v.discount || ""),
-              costPrice: String(v.costPrice || ""),
-              stock: String(v.stock || ""),
-              images: Array.isArray(v.variantsimages) ? v.variantsimages : [],
-              specifications: {
-                material: v.specifications?.material || "",
-                productType: v.specifications?.productType || "",
-                beadSize: v.specifications?.beadSize || "",
-                size: v.specifications?.size || "",
-                color: v.specifications?.color || "",
-                weight: v.specifications?.weight || "",
-                packaging: v.specifications?.packaging || ""
-              },
-              featureProduct: Boolean(v.featureProduct),
-              bestSeller: Boolean(v.bestSeller)
-            }))
+            ...v,
+            variantname: String(v.variantname || ""),
+            size: String(v.size || ""),
+            tax: String(v.tax || ""),
+            salePrice: String(v.salePrice || ""),
+            discount: String(v.discount || ""),
+            costPrice: String(v.costPrice || ""),
+            stock: String(v.stock || ""),
+            images: Array.isArray(v.variantsimages) ? v.variantsimages : [],
+            specifications: {
+              material: v.specifications?.material || "",
+              productType: v.specifications?.productType || "",
+              beadSize: v.specifications?.beadSize || "",
+              size: v.specifications?.size || "",
+              color: v.specifications?.color || "",
+              weight: v.specifications?.weight || "",
+              packaging: v.specifications?.packaging || ""
+            },
+            featureProduct: Boolean(v.featureProduct),
+            bestSeller: Boolean(v.bestSeller)
+          }))
           : []
       );
-      
+
       setLoading(false);
     } else {
       setError("No product data received");
@@ -148,7 +154,7 @@ const UpdateProduct = () => {
   // Improved deleteFromCloudinary function
   const deleteFromCloudinary = async (url) => {
     if (!url) return;
-    
+
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/cloudnaryimg/delete-img`, {
         method: "POST",
@@ -216,7 +222,7 @@ const UpdateProduct = () => {
         // Only after successful upload, delete old images
         if (images.otherImages && images.otherImages.length > 0) {
           await Promise.all(
-            images.otherImages.map(url => 
+            images.otherImages.map(url =>
               deleteFromCloudinary(url).catch(e => null)
             )
           );
@@ -261,7 +267,9 @@ const UpdateProduct = () => {
     setVariants([
       ...variants,
       {
+        variantname: "",
         size: "",
+        tax:"",
         salePrice: "",
         discount: "",
         costPrice: "",
@@ -305,14 +313,14 @@ const UpdateProduct = () => {
   const handleVariantImageUpload = async (index, event) => {
     try {
       const files = Array.from(event.target.files).slice(0, 2);
-      
+
       // Upload new images first
       const urls = await Promise.all(files.map(uploadToCloudinary));
       // Only after successful upload, delete old images
       const variant = variants[index];
       if (variant.images && variant.images.length > 0) {
         await Promise.all(
-          variant.images.map(url => 
+          variant.images.map(url =>
             deleteFromCloudinary(url).catch(e => null)
           )
         );
@@ -346,7 +354,7 @@ const UpdateProduct = () => {
     try {
       const variant = variants[variantIndex];
       const imageUrl = variant.images[imageIndex];
-      
+
       if (imageUrl) {
         await deleteFromCloudinary(imageUrl);
       }
@@ -380,9 +388,11 @@ const UpdateProduct = () => {
       sku: basicDetails.sku,
 
       tags,
+      Intenttags,
       stoneUsedImage: stones,
 
       frontImage: images.frontImage,
+      backImage: images.backImage,
       otherImages: images.otherImages,
 
       healingImage: posters.healing,
@@ -400,6 +410,8 @@ const UpdateProduct = () => {
       variants: variants.map((variant) => ({
         ...variant,
         size: variant.size,
+        tax: variant.tax,
+        variantname: variant.variantname,
         salePrice: Number(variant.salePrice),
         discount: Number(variant.discount),
         costPrice: Number(variant.costPrice),
@@ -414,7 +426,7 @@ const UpdateProduct = () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${productData._id}`, {
         method: "PUT",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedProductData),
@@ -483,6 +495,17 @@ const UpdateProduct = () => {
             />
           </label>
           <label className="block">
+            <span className="text-gray-700"> Category</span>
+            <input
+              type="text"
+              value={category.category}
+              onChange={(e) =>
+                setCategory({ ...category, category: e.target.value })
+              }
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+            />
+          </label>
+          <label className="block">
             <span className="text-gray-700">Sub Category</span>
             <input
               type="text"
@@ -502,17 +525,7 @@ const UpdateProduct = () => {
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
             />
           </label>
-          <label className="block">
-            <span className="text-gray-700"> Category</span>
-            <input
-              type="text"
-              value={category.category}
-              onChange={(e) =>
-                setCategory({ ...category, category: e.target.value })
-              }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
-          </label>
+
         </div>
 
         {/* Basic Details */}
@@ -521,7 +534,7 @@ const UpdateProduct = () => {
             Basic Details
           </h2>
 
-          <label className="block">
+          {/* <label className="block">
             <span className="text-gray-700">Product Name</span>
             <input
               type="text"
@@ -532,7 +545,7 @@ const UpdateProduct = () => {
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               required
             />
-          </label>
+          </label> */}
 
           <label className="block">
             <span className="text-gray-700">Product Description</span>
@@ -573,10 +586,10 @@ const UpdateProduct = () => {
           </label>
         </div>
 
-        {/* Tags */}
+        {/*Concern Tags */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            Product Tags
+            Product Concern Tags
           </h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             <input
@@ -629,6 +642,62 @@ const UpdateProduct = () => {
           </div>
         </div>
 
+        {/*Intent Tags */}
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            Product Intent Tags
+          </h2>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <input
+              type="text"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && e.target.value.trim() !== "") {
+                  setIntenttags([...Intenttags, e.target.value.trim()]);
+                  e.target.value = "";
+                }
+              }}
+              placeholder="Enter a tag"
+              className="flex-1 border border-gray-300 rounded-md p-2 md:p-3 text-sm md:text-base"
+            />
+
+            <button
+              type="button"
+              onClick={() => {
+                const inputField = document.querySelector(
+                  'input[placeholder="Enter a tag"]'
+                );
+                if (inputField && inputField.value.trim() !== "") {
+                  setIntenttags([...Intenttags, inputField.value.trim()]);
+                  inputField.value = "";
+                }
+              }}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm md:text-base"
+            >
+              Add
+            </button>
+          </div>
+
+          <div id="tagList" className="mt-2 flex gap-2 flex-wrap">
+            {Intenttags.map((Intenttag, index) => (
+              <span
+                key={index}
+                className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full flex items-center gap-2"
+              >
+                {Intenttag}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIntenttags(Intenttags.filter((_, i) => i !== index));
+                  }}
+                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                >
+                  x
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* Stone Used */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
@@ -662,9 +731,9 @@ const UpdateProduct = () => {
             {stones.map((stone, index) => (
               <div key={index} className="flex items-center gap-2 bg-blue-100 rounded-full px-3 py-1">
                 {stone.image && (
-                  <img 
-                    src={stone.image} 
-                    alt={stone.title} 
+                  <img
+                    src={stone.image}
+                    alt={stone.title}
                     className="w-6 h-6 rounded-full object-cover"
                   />
                 )}
@@ -689,12 +758,12 @@ const UpdateProduct = () => {
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               Product Description
             </h2>
-            <input
-              type="text"
+            <textarea
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
               placeholder="Enter product description"
               className="mb-2 block w-full border border-gray-300 rounded-md p-2"
+              rows={4}
             />
             <input
               type="file"
@@ -703,14 +772,14 @@ const UpdateProduct = () => {
             />
             {images.descriptionImage && (
               <div className="mt-2 flex items-center gap-2">
-                <img 
-                  src={images.descriptionImage} 
-                  alt="Description" 
+                <img
+                  src={images.descriptionImage}
+                  alt="Description"
                   className="h-20 object-contain"
                 />
                 <button
                   type="button"
-                  onClick={() => setImages({...images, descriptionImage: null})}
+                  onClick={() => setImages({ ...images, descriptionImage: null })}
                   className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                 >
                   Remove
@@ -718,12 +787,12 @@ const UpdateProduct = () => {
               </div>
             )}
           </div>
-
+          {/* Product Images */}
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               Product Images
             </h2>
-
+            {/* Front Images */}
             <label className="block mb-2">Product Front Image</label>
             <input
               type="file"
@@ -732,21 +801,44 @@ const UpdateProduct = () => {
             />
             {images.frontImage && (
               <div className="mt-2 flex items-center gap-2">
-                <img 
-                  src={images.frontImage} 
-                  alt="Front" 
+                <img
+                  src={images.frontImage}
+                  alt="Front"
                   className="h-20 object-contain"
                 />
                 <button
                   type="button"
-                  onClick={() => setImages({...images, frontImage: null})}
+                  onClick={() => setImages({ ...images, frontImage: null })}
                   className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                 >
                   Remove
                 </button>
               </div>
             )}
-
+            {/* Back Images */}
+            <label className="block mb-2">Product Back Image</label>
+            <input
+              type="file"
+              onChange={(e) => handleFileUpload(e, "backImage")}
+              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+            />
+            {images.backImage && (
+              <div className="mt-2 flex items-center gap-2">
+                <img
+                  src={images.backImage}
+                  alt="Front"
+                  className="h-20 object-contain"
+                />
+                <button
+                  type="button"
+                  onClick={() => setImages({ ...images, backImage: null })}
+                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+            {/* Other Images */}
             <label className="block mb-2 mt-4">Other Images</label>
             <input
               type="file"
@@ -757,9 +849,9 @@ const UpdateProduct = () => {
             <div className="flex flex-wrap gap-2 mt-2">
               {images.otherImages?.map((img, index) => (
                 <div key={index} className="relative flex items-center gap-2">
-                  <img 
-                    src={img} 
-                    alt={`Product ${index}`} 
+                  <img
+                    src={img}
+                    alt={`Product ${index}`}
                     className="h-20 object-contain"
                   />
                   <button
@@ -788,14 +880,14 @@ const UpdateProduct = () => {
               />
               {posters.healing && (
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={posters.healing} 
-                    alt="Healing" 
+                  <img
+                    src={posters.healing}
+                    alt="Healing"
                     className="h-16 object-contain"
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({...posters, healing: null})}
+                    onClick={() => setPosters({ ...posters, healing: null })}
                     className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -813,14 +905,14 @@ const UpdateProduct = () => {
               />
               {posters.benefits && (
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={posters.benefits} 
-                    alt="Benefits" 
+                  <img
+                    src={posters.benefits}
+                    alt="Benefits"
                     className="h-16 object-contain"
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({...posters, benefits: null})}
+                    onClick={() => setPosters({ ...posters, benefits: null })}
                     className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -838,14 +930,14 @@ const UpdateProduct = () => {
               />
               {posters.whyChoose && (
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={posters.whyChoose} 
-                    alt="Why Choose" 
+                  <img
+                    src={posters.whyChoose}
+                    alt="Why Choose"
                     className="h-16 object-contain"
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({...posters, whyChoose: null})}
+                    onClick={() => setPosters({ ...posters, whyChoose: null })}
                     className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -863,14 +955,14 @@ const UpdateProduct = () => {
               />
               {posters.waysToClean && (
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={posters.waysToClean} 
-                    alt="Ways to Clean" 
+                  <img
+                    src={posters.waysToClean}
+                    alt="Ways to Clean"
                     className="h-16 object-contain"
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({...posters, waysToClean: null})}
+                    onClick={() => setPosters({ ...posters, waysToClean: null })}
                     className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -888,14 +980,14 @@ const UpdateProduct = () => {
               />
               {posters.whoWear && (
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={posters.whoWear} 
-                    alt="Who Wear" 
+                  <img
+                    src={posters.whoWear}
+                    alt="Who Wear"
                     className="h-16 object-contain"
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({...posters, whoWear: null})}
+                    onClick={() => setPosters({ ...posters, whoWear: null })}
                     className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -913,14 +1005,14 @@ const UpdateProduct = () => {
               />
               {posters.howToWear && (
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={posters.howToWear} 
-                    alt="How to Wear" 
+                  <img
+                    src={posters.howToWear}
+                    alt="How to Wear"
                     className="h-16 object-contain"
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({...posters, howToWear: null})}
+                    onClick={() => setPosters({ ...posters, howToWear: null })}
                     className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -938,6 +1030,16 @@ const UpdateProduct = () => {
           {variants.map((variant, index) => (
             <div key={index} className="border p-4 rounded-md space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {/* Variant name  */}
+                <input
+                  type="text"
+                  value={variant.variantname}
+                  onChange={(e) =>
+                    handleVariantChange(index, 'variantname', e.target.value)
+                  }
+                  placeholder="Varient Name"
+                  className="border border-gray-300 rounded-md p-2"
+                />
                 <input
                   type="number"
                   value={variant.size}
@@ -947,7 +1049,16 @@ const UpdateProduct = () => {
                   placeholder="Size"
                   className="border border-gray-300 rounded-md p-2"
                 />
-
+                {/* Tax */}
+                <input
+                  type="number"
+                  value={variant.tax}
+                  onChange={(e) =>
+                    handleVariantChange(index, 'tax', e.target.value)
+                  }
+                  placeholder="Tax on product"
+                  className="border border-gray-300 rounded-md p-2"
+                />
                 <input
                   type="number"
                   value={variant.salePrice}
@@ -1103,7 +1214,7 @@ const UpdateProduct = () => {
                 <input
                   type="text"
                   value={variant.specifications.packaging}
-                  onChange={(e) =>  
+                  onChange={(e) =>
                     handleVariantChange(
                       index,
                       "specifications.packaging",
@@ -1129,11 +1240,9 @@ const UpdateProduct = () => {
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${
-                    variant.featureProduct ? "bg-blue-600" : "bg-gray-300"
-                  } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${
-                    variant.featureProduct ? "after:translate-x-5" : ""
-                  }`}
+                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${variant.featureProduct ? "bg-blue-600" : "bg-gray-300"
+                    } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.featureProduct ? "after:translate-x-5" : ""
+                    }`}
                 ></span>
                 <span className="text-sm text-gray-700">Feature Product</span>
               </label>
@@ -1152,11 +1261,9 @@ const UpdateProduct = () => {
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${
-                    variant.bestSeller ? "bg-blue-600" : "bg-gray-300"
-                  } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${
-                    variant.bestSeller ? "after:translate-x-5" : ""
-                  }`}
+                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${variant.bestSeller ? "bg-blue-600" : "bg-gray-300"
+                    } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.bestSeller ? "after:translate-x-5" : ""
+                    }`}
                 ></span>
                 <span className="text-sm text-gray-700">Best Seller</span>
               </label>

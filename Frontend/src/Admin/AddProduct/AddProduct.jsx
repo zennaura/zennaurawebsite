@@ -330,7 +330,7 @@ const AddProduct = () => {
           </h2>
 
           {/* Product Name */}
-          <label className="block">
+          {/* <label className="block">
             <span className="text-gray-700">Product Name</span>
             <input
               type="text"
@@ -340,7 +340,7 @@ const AddProduct = () => {
               }
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
             />
-          </label>
+          </label> */}
 
           {/* Product Description */}
           <label className="block">
