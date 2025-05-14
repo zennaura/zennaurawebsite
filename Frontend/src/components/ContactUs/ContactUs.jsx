@@ -1,16 +1,48 @@
 import React from "react";
 import "./ContactUs.css";
-import ImageHead from "../ImageHead/ImageHead";
 
 const ContactUs = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const data = {
+      firstname: form[0].value,
+      lastname: form[1].value,
+      email: form[2].value,
+      phone: form[3].value,
+      subject: form[4].value,
+      message: form[5].value,
+    };
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("Your message has been sent successfully!");
+        form.reset();
+      } else {
+        alert(result.message || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      alert("Failed to submit. Please try again later.");
+    }
+  };
+
   return (
-    <>
-    <ImageHead Title = 'Contact Us'/>
     <div className="contact-container">
       <h1 className="contact-title">Get In Touch</h1>
       <p className="contact-description">
         For immediate answers to questions about shipping, deliveries, and other frequent concerns, please check our
-        FAQs page. This might save you time and provide you with a quick solution or you can get in touch by
+        <a href="#" className="faq-link">FAQs page</a>. This might save you time and provide you with a quick solution or you can get in touch by
         filling out this form and we will get back to you within 24 Business Hours.
       </p>
 
@@ -25,7 +57,7 @@ const ContactUs = () => {
           </div>
         </div>
 
-        <form className="contact-form">
+        <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-row">
             <input type="text" placeholder="First Name" required />
             <input type="text" placeholder="Last Name" required />
@@ -62,7 +94,6 @@ const ContactUs = () => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 
