@@ -153,6 +153,7 @@
       // Define all image fields to check
       const imageFields = [
         'frontImage',
+        'backImage',
         'productDescriptions.image',
         'otherImages',
         'healingImage',
@@ -245,6 +246,7 @@
     // Add all possible image fields
     const imageFields = [
       'frontImage',
+      'backImage',
       'productDescriptions.image',
       'otherImages',
       'healingImage',
