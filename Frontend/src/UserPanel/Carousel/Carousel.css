@@ -11,7 +11,7 @@ html {
   justify-content: center;
   position: relative;
   flex-direction: column;
-  padding-top: 2rem;
+  padding-top: 1.8rem;
   padding-bottom: 2rem;
   width: 100vw; /* FULL screen width */
   max-width: 100vw;
@@ -27,7 +27,7 @@ html {
   justify-content: center;
   align-items: center;
   width: 100vw; /* Full width of the screen */
-  height: 450px;
+  height: 410px;
   position: relative;
   overflow: hidden;
 }

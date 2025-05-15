@@ -10,9 +10,10 @@
 
 .contact-title {
   font-size: 3rem;
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
   margin-bottom: 0.5rem;
+  font-family: 'Inria Serrif';
 }
 
 .contact-description {
@@ -165,4 +166,19 @@
 .contact-extra div span {
   display: inline-block;
   margin-right: 0.5rem;
+}
+.contactus-phone,
+.contactus-email,
+.contactus-location,
+.contactus-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.contactus-whatsapp:hover {
+  color: #25D366;
+  text-decoration: underline;
 }

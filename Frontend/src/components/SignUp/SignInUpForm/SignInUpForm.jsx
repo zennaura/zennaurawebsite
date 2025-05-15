@@ -4,6 +4,9 @@ import { useUser } from '../../AuthContext/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UptoDate from "../../../UserPanel/UpToDate/UptoDate";
+import FollowUs from "../../../UserPanel/FollowUs/FollowUs";
+
 
 
 import "./SignInUpForm.css";
@@ -117,13 +120,13 @@ const SignInUpForm = () => {
                             </div>
                             <span>or use your email for registration</span>
                             <div className="SignInUpForm-fullname">
-                                <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} />
-                                <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} />
+                                <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required />
+                                <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required />
                             </div>
-                            <input type="email" name="email" placeholder="Email" onChange={handleChange} />
-                            <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} />
-                            <input type="password" name="password" placeholder="Password" onChange={handleChange} />
-                            <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} />
+                            <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+                            <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} required />
+                            <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+                            <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required />
                             <input type="text" name="referralCode" placeholder="Referral Code (Optional)" onChange={handleChange} />
                             <button type="button" onClick={handleRegister}>Sign Up</button>
                         </form>
@@ -218,6 +221,10 @@ const SignInUpForm = () => {
 
                 <ToastContainer position="top-right" autoClose={3000} />
             </div>
+            <FollowUs />
+
+            <UptoDate />
+
         </>
     );
 };

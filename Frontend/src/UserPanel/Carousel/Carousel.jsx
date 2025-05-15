@@ -132,7 +132,7 @@ const Carousel = () => {
               translateX = distance === 3 ? 800 : -800;
             } else if (distance === 4 || distance === slides.length - 4) {
               scale = 0.7;
-              opacity = 0.2;
+              opacity = 0;
               zIndex = 1;
               translateX = distance === 4 ? 1000 : -1000;
             } else if (distance === 5 || distance === slides.length - 5) {

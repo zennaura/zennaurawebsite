@@ -9,7 +9,7 @@ import {
 import { TfiYoutube } from "react-icons/tfi";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaPinterest } from "react-icons/fa";
-import { FaSquareFacebook  } from "react-icons/fa6"; // Square Facebook icon from Font Awesome 6
+import { FaSquareFacebook } from "react-icons/fa6"; // Square Facebook icon from Font Awesome 6
 
 const FollowUs = () => {
     return (
@@ -21,7 +21,7 @@ const FollowUs = () => {
                     alt="Jewelry Background"
                     className="background-img"
                 />
-                
+
             </div>
 
             {/* Content Overlay */}
@@ -31,6 +31,9 @@ const FollowUs = () => {
 
                 {/* Social Media Icons */}
                 <div className="function-social-icons">
+                    <a href="https://www.facebook.com/zennaura/" target="_blank" rel="noopener noreferrer">
+                        <FaSquareFacebook className="function-icon" /> {/* Square Facebook icon */}
+                    </a>
                     <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
                         <FaInstagram className="function-icon" />
                     </a>
@@ -41,11 +44,9 @@ const FollowUs = () => {
                         <FaXTwitter className="function-icon" /> {/* X icon instead of Twitter */}
                     </a>
                     <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
-                        <FaPinterest  className="function-icon" /> 
+                        <FaPinterest className="function-icon" />
                     </a>
-                    <a href="https://www.facebook.com/zennaura/" target="_blank" rel="noopener noreferrer">
-                        <FaSquareFacebook className="function-icon" /> {/* Square Facebook icon */}
-                    </a>
+
                 </div>
             </div>
         </div>

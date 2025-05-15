@@ -1,5 +1,5 @@
 .UserDashboard-container {
-  width: 100%;
+  width: 75%;
   padding: 1rem;
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
@@ -57,6 +57,7 @@
 .UserDashboard-username {
   font-size: 24px;
   margin-bottom: 10px;
+  font-family: 'inria serif';
 }
 
 .UserDashboard-points {

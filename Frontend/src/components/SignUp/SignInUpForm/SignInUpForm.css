@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   height: 100vh;
 }
 
@@ -13,17 +13,17 @@
     background: #f6f5f7;
     display: none;
   }
-
 }
-
+.SignInUpForm-form-container form h1,
 .SignInUpForm-overlay-panel h1 {
-  font-weight: bold;
+  /* font-weight: bold; */
   margin: 0;
+  font-family: "Inria Serif";
   font-size: 3rem;
 }
 
 .SignInUpForm-overlay-panel p {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 100;
   line-height: 25px;
   letter-spacing: 0.5px;
@@ -50,6 +50,7 @@
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
+  margin-top: 1.8rem;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
@@ -66,6 +67,7 @@
 .SignInUpForm-container button.SignInUpForm-ghost {
   background-color: transparent;
   border-color: #ffffff;
+  margin-top: 0;
 }
 
 .SignInUpForm-form-container form {
@@ -84,7 +86,7 @@
   border: none;
   padding: 12px 15px;
   margin: 8px 0;
-  width: 60%;
+  width: 100%;
 }
 
 .SignInUpForm-container {
@@ -112,7 +114,8 @@
   z-index: 2;
 }
 
-.SignInUpForm-container.SignInUpForm-right-panel-active .SignInUpForm-sign-in-container {
+.SignInUpForm-container.SignInUpForm-right-panel-active
+  .SignInUpForm-sign-in-container {
   transform: translateX(100%);
 }
 
@@ -123,7 +126,8 @@
   z-index: 1;
 }
 
-.SignInUpForm-container.SignInUpForm-right-panel-active .SignInUpForm-sign-up-container {
+.SignInUpForm-container.SignInUpForm-right-panel-active
+  .SignInUpForm-sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
@@ -131,7 +135,6 @@
 }
 
 @keyframes show {
-
   0%,
   49.99% {
     opacity: 0;
@@ -156,7 +159,8 @@
   z-index: 100;
 }
 
-.SignInUpForm-container.SignInUpForm-right-panel-active .SignInUpForm-overlay-container {
+.SignInUpForm-container.SignInUpForm-right-panel-active
+  .SignInUpForm-overlay-container {
   transform: translateX(-100%);
 }
 
@@ -197,7 +201,8 @@
   transform: translateX(-20%);
 }
 
-.SignInUpForm-container.SignInUpForm-right-panel-active .SignInUpForm-overlay-left {
+.SignInUpForm-container.SignInUpForm-right-panel-active
+  .SignInUpForm-overlay-left {
   transform: translateX(0);
 }
 
@@ -206,7 +211,8 @@
   transform: translateX(0);
 }
 
-.SignInUpForm-container.SignInUpForm-right-panel-active .SignInUpForm-overlay-right {
+.SignInUpForm-container.SignInUpForm-right-panel-active
+  .SignInUpForm-overlay-right {
   transform: translateX(20%);
 }
 
@@ -230,11 +236,10 @@
   /* justify-content: space-between; */
   gap: 10px;
   align-items: center;
+  width: 100%;
 }
 
-
 @media (max-width: 768px) {
-
   .SignInUpForm-toggle-arrow {
     position: absolute;
     bottom: 20px;
@@ -250,7 +255,7 @@
   }
 
   .SignInUpForm-toggle-arrow::after {
-    content: '\2194';
+    content: "\2194";
     color: #fff;
     font-size: 24px;
     display: flex;
@@ -258,5 +263,4 @@
     justify-content: center;
     height: 100%;
   }
-
 }

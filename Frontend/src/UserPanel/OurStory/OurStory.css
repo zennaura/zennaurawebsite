@@ -22,7 +22,7 @@
 .story-slider {
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -144,19 +144,16 @@
 /* Know More Button */
 .know-more {
      font-family: 'Poppins';
-    background-color: #390611;
+    background-color: #de5e7a8c;
     color: #FFFFFF;
     font-size: 18px;
     border: none;
     margin-bottom: 2rem;
-    padding: 15px 10px;
+    padding: 15px 20px;
     border-radius: 10px;
 }
 
-.know-more:hover {
-  background: linear-gradient(135deg, #c49a6c, #f5e0d5);
-  transform: scale(1.05);
-}
+
 
 /* Dots Navigation */
 .dots-container {

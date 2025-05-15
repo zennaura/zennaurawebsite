@@ -90,7 +90,9 @@ const UserDashboard = () => {
           <div className="UserDashboard-accountdetails">
             <h4>
               <span>Account Details</span>
+              {/* <Link to=''> */}
               <FaEdit className="UserDashboard-editIcon" />
+              {/* </Link> */}
             </h4>
             <p>
               First Name: <strong>{user.firstName}</strong>
