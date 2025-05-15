@@ -6,6 +6,13 @@
   flex-direction: column;
   font-family: 'Poppins';
   height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  .SignInUpForm-body {
+    background: #f6f5f7;
+    display: none;
+  }
 
 }
 
@@ -223,4 +230,33 @@
   /* justify-content: space-between; */
   gap: 10px;
   align-items: center;
+}
+
+
+@media (max-width: 768px) {
+
+  .SignInUpForm-toggle-arrow {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: #390611;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 200;
+  }
+
+  .SignInUpForm-toggle-arrow::after {
+    content: '\2194';
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
 }

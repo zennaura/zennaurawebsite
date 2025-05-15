@@ -22,7 +22,7 @@ const SidebarMenu = ({ goToSubMenu, closeMenu }) => {
                 <FiChevronLeft className="back-icon-sub" onClick={closeMenu} />
                 <span className="title-sub">Main Menu</span>
             </div>
-            <Search />
+            <Search closeSide={closeMenu} />
 
             <ul className="menu-listm">
                 {menuItems.map((item, index) => (

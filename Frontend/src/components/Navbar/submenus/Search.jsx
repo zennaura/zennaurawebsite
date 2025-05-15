@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 import axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
 
-const Search = () => {
+const Search = ({closeSide}) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -46,7 +46,7 @@ const Search = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             const searchContainer = document.querySelector('.search-container');
-            if (searchContainer && !searchContainer.contains(event.target)) {
+            if (!searchContainer && !searchContainer.contains(event.target)) {
                 setSearchQuery("");
                 setSearchResults([]);
             }
@@ -79,6 +79,7 @@ const Search = () => {
                             state={result}
                             className="search-result-item"
                             onClick={() => {
+                                closeSide()
                                 setSearchQuery("");
                                 setSearchResults([]);
                             }}

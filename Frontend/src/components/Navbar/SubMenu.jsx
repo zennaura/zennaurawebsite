@@ -3,7 +3,7 @@ import './Sidebar.css';
 import React from 'react';
 import Search from './submenus/Search';
 
-const SkinCareSubMenu = ({ goTo }) => {
+const SkinCareSubMenu = ({ goTo, closeMenu }) => {
     return (
         <div className="sidebar-sub">
             <div className="header-sub">
@@ -11,7 +11,7 @@ const SkinCareSubMenu = ({ goTo }) => {
                 <span>Skin Care</span>
             </div>
 
-            <Search />
+            <Search closeSide={closeMenu} />
 
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Category</h4>

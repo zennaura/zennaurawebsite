@@ -3,7 +3,7 @@ import { FiSearch, FiChevronLeft } from 'react-icons/fi';
 import '../Sidebar.css'; // ensure this includes the relevant styles
 import Search from './Search';
 
-const CrystalBracelets = ({ goTo }) => {
+const CrystalBracelets = ({ goTo, closeMenu }) => {
     const soaps = [
         'Combo Bracelets',
         'Disease Specific',
@@ -21,7 +21,7 @@ const CrystalBracelets = ({ goTo }) => {
                 <FiSearch className="search-iconm" />
                 <input type="text" placeholder="Search" />
             </div> */}
-            <Search />
+            <Search closeSide={closeMenu} />
 
             <ul className="list-sub">
                 {soaps.map((item, index) => (
