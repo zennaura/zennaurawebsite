@@ -3,7 +3,7 @@ import { FiSearch, FiChevronLeft } from 'react-icons/fi';
 import '../Sidebar.css'; // ensure this includes the relevant styles
 import Search from './Search';
 
-const SacredRitualsSubMenu = ({ goTo }) => {
+const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
     const items = [
         'Candles',
         'Incense Sticks',
@@ -18,7 +18,7 @@ const SacredRitualsSubMenu = ({ goTo }) => {
                 <span className="title-sub">Sacred Rituals</span>
             </div>
 
-            <Search />
+            <Search closeSide={closeMenu} />
 
             <ul className="list-sub">
                 {items.map((item, index) => (

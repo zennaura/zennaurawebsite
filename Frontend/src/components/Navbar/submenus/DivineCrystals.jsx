@@ -3,7 +3,7 @@ import { FiSearch, FiChevronLeft } from 'react-icons/fi';
 import '../Sidebar.css'; // ensure this includes the relevant styles
 import Search from './Search';
 
-const DivineCrystalsSubMenu = ({ goTo }) => {
+const DivineCrystalsSubMenu = ({ goTo, closeMenu }) => {
     const items = [
         'Charging Crystals',
         'Crystal Tree',
@@ -19,7 +19,7 @@ const DivineCrystalsSubMenu = ({ goTo }) => {
                 <span className="title-sub">Divine Crystals</span>
             </div>
 
-            <Search />
+            <Search closeSide={closeMenu} />
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Category</h4>
                 <ul className="list-sub list-subd">

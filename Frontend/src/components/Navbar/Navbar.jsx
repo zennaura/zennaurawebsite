@@ -125,15 +125,14 @@ const Navbar = () => {
     <>
       <nav className={`navbar-mobile ${isMenuOpen ? `openNav` : ``}`}>
         {activeMenu === 'main' && <SidebarMenu goToSubMenu={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
-        {activeMenu === 'skinCare' && <SkinCareSubMenu goTo={(menu) => setActiveMenu(menu)} />}
-        {activeMenu === 'auraJewel' && <AuraJewels goTo={(menu) => setActiveMenu(menu)} />}
-        {activeMenu === 'bodyShop' && <BodySoapSubMenu goTo={(menu) => setActiveMenu(menu)} />}
-        {activeMenu === 'crystalBracelets' && <CrystalBracelets goTo={(menu) => setActiveMenu(menu)} />}
-        {activeMenu === 'crystalWearables' && <CrystalWearables goTo={(menu) => setActiveMenu(menu)} />}
-        {activeMenu === 'divineCrystal' && <DivineCrystalsSubMenu goTo={(menu) => setActiveMenu(menu)} />}
-        {activeMenu === 'sacredRituals' && <SacredRitualsSubMenu goTo={(menu) => setActiveMenu(menu)} />}
-        {/* You can add other submenus here like:
-        {activeMenu === 'auraJewels' && <AuraJewelsSubMenu goBack={() => setActiveMenu('main')} />} 
+        {activeMenu === 'skinCare' && <SkinCareSubMenu goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'auraJewel' && <AuraJewels goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'bodyShop' && <BodySoapSubMenu goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'crystalBracelets' && <CrystalBracelets goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'crystalWearables' && <CrystalWearables goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'divineCrystal' && <DivineCrystalsSubMenu goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {activeMenu === 'sacredRituals' && <SacredRitualsSubMenu goTo={(menu) => setActiveMenu(menu)} closeMenu={() => setIsMenuOpen(!isMenuOpen)} />}
+        {/* You can add other submenus here
     */}
       </nav>
       <nav className="navbar">
