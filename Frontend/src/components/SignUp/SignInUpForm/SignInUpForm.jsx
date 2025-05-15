@@ -4,7 +4,6 @@ import { useUser } from '../../AuthContext/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IoMdClose } from "react-icons/io";
 
 
 import "./SignInUpForm.css";
@@ -205,8 +204,8 @@ const SignInUpForm = () => {
                         </div>
                         <span className="text-sm mb-2 text-center">or use your email for registration</span>
                         <div className="flex gap-2 mb-2">
-                            <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} className="flex-1 p-2 bg-gray-100 rounded" />
                         </div>
+                        <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} className="flex-1 p-2 mb-2 bg-gray-100 rounded" />
                         <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} className="flex-1 p-2 mb-2 bg-gray-100 rounded" />
                         <input type="email" name="email" placeholder="Email" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
                         <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
