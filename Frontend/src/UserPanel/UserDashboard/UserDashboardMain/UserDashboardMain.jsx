@@ -20,7 +20,7 @@ const UserDashboardMain = () => {
   const renderComponent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <UserDashboard />;
+              return <UserDashboard onNavigate={handleNavigation} />;
       case 'editInfo':
         return <UserDashboardEditInfo />;
       case 'orderHistory':

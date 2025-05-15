@@ -11,31 +11,36 @@ import {
   FaEdit,
 } from "react-icons/fa";
 
-const UserDashboard = () => {
-    const { user } = useUser();
-    
-    // Default address if no address exists
-    const defaultAddress = {
-      street: "Not specified",
-      city: "Not specified",
-      state: "Not specified",
-      country: "Not specified",
-      zipCode: "Not specified"
-    };
-    
-    // Get the first address or use default
-    const address = user.Address && user.Address.length > 0 ? user.Address[0] : defaultAddress;
-    
-    // Format date if it exists
-    const formatDate = (dateString) => {
-      if (!dateString) return "N/A";
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    };
+const UserDashboard = ({ onNavigate }) => {
+  const { user } = useUser();
+
+  // Default address if no address exists
+  const defaultAddress = {
+    street: "Not specified",
+    city: "Not specified",
+    state: "Not specified",
+    country: "Not specified",
+    zipCode: "Not specified"
+  };
+
+  // Get the first address or use default
+  const address = user.Address && user.Address.length > 0 ? user.Address[0] : defaultAddress;
+
+  // Format date if it exists
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  // Handle edit click
+  const handleEditClick = (section) => {
+    onNavigate(section === 'account' ? 'editInfo' : 'address');
+  };
 
   return (
     <div className="UserDashboard-container">
@@ -45,9 +50,9 @@ const UserDashboard = () => {
           <div className="UserDashboard-userDetails-upper">
             <div className="UserDashboard-avatarBox">
               {user.profilePicture ? (
-                <img 
-                  src={user.profilePicture} 
-                  alt="Profile" 
+                <img
+                  src={user.profilePicture}
+                  alt="Profile"
                   className="UserDashboard-avatarImage"
                 />
               ) : (
@@ -59,6 +64,10 @@ const UserDashboard = () => {
               <FaStar className="UserDashboard-icon" />
               Points: {user.Points || 0}
             </div>
+          <p className="text-[10px] my-1 text-[#48091a] bg-white border border-[#48091a] px-4 py-2 rounded-md max-w-fit shadow-sm font-medium">
+  Become a member to start earning points and unlock rewards.
+</p>
+
           </div>
 
           <div className="UserDashboard-infoList">
@@ -84,15 +93,16 @@ const UserDashboard = () => {
         </div>
 
         {/* Account and Shipping Info */}
-
         <div className="UserDashboard-otherdetials">
           {/* Account Details */}
           <div className="UserDashboard-accountdetails">
             <h4>
               <span>Account Details</span>
-              {/* <Link to=''> */}
-              <FaEdit className="UserDashboard-editIcon" />
-              {/* </Link> */}
+
+              <FaEdit
+                className="UserDashboard-editIcon"
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleEditClick('account')} />
             </h4>
             <p>
               First Name: <strong>{user.firstName}</strong>
@@ -115,7 +125,10 @@ const UserDashboard = () => {
           <div className="UserDashboard-shippingAddress">
             <h4>
               <span>Shipping Address</span>
-              <FaEdit className="UserDashboard-editIcon" />
+              <FaEdit
+                className="UserDashboard-editIcon"
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleEditClick('address')} />
             </h4>
             <p>
               Address: <strong>{address.addressLine2}</strong>

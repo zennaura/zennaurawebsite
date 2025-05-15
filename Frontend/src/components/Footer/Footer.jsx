@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
-import { FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube, FaFacebook, FaChevronDown } from "react-icons/fa6";
+import {
+  FaInstagram,
+  FaLinkedin,
+} from "react-icons/fa";
+import { TfiYoutube } from "react-icons/tfi";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaPinterest } from "react-icons/fa";
+import { FaSquareFacebook } from "react-icons/fa6";
+import { FaChevronDown } from "react-icons/fa";
 import './Footer.css';
 
 const FooterSection = ({ title, children }) => {
@@ -78,11 +86,21 @@ const Footer = () => {
           <div className="follow">
             <h3 className="footer-follow-title">Follow</h3>
             <div className="footer-icons">
-              <FaInstagram />
-              <FaLinkedinIn />
-              <FaXTwitter />
-              <FaYoutube />
-              <FaFacebook />
+              <a href="https://www.facebook.com/zennaura/" target="_blank" rel="noopener noreferrer">
+                <FaSquareFacebook /> {/* Square Facebook icon */}
+              </a>
+              <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://www.linkedin.com/company/zennaura/" target="_blank" rel="noopener noreferrer">
+                <FaLinkedin />
+              </a>
+              <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
+                <FaXTwitter /> {/* X icon instead of Twitter */}
+              </a>
+              <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
+                <FaPinterest />
+              </a>
             </div>
           </div>
         </div>
@@ -140,11 +158,21 @@ const Footer = () => {
             <p>Phone: +91 93551-88066</p>
             <h3 className="footer-follow-title">Follow</h3>
             <div className="footer-icons">
-              <FaInstagram />
-              <FaLinkedinIn />
-              <FaXTwitter />
-              <FaYoutube />
-              <FaFacebook />
+              <a href="https://www.facebook.com/zennaura/" target="_blank" rel="noopener noreferrer">
+                <FaSquareFacebook /> {/* Square Facebook icon */}
+              </a>
+              <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://www.linkedin.com/company/zennaura/" target="_blank" rel="noopener noreferrer">
+                <FaLinkedin />
+              </a>
+              <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
+                <FaXTwitter /> {/* X icon instead of Twitter */}
+              </a>
+              <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
+                <FaPinterest />
+              </a>
             </div>
           </div>
         </div>

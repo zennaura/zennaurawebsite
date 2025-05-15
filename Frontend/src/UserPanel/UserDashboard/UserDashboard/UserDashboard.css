@@ -61,11 +61,12 @@
 }
 
 .UserDashboard-points {
-  background-color: #fff;
+  background-color: gray;
   color: #48091a;
   padding: 6px 12px;
   border-radius: 6px;
   display: flex;
+  pointer-events: none;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
