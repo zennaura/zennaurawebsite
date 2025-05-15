@@ -182,7 +182,7 @@ const AddProduct = () => {
     e.preventDefault();
 
     // Basic validation (customize as needed)
-    if (!basicDetails.name || !basicDetails.description || !basicDetails.sku || variants.length === 0) {
+    if ( !basicDetails.description || !basicDetails.sku || variants.length === 0) {
       alert("Please fill in all required fields and add at least one variant.");
       return;
     }
