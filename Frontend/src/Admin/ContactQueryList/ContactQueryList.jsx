@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ContactQueryList.css";
+import AdminNavbar from '../AdminNavbar/AdminNavbar'
 
 const ContactQueryList = () => {
   const [queries, setQueries] = useState([]);
@@ -41,6 +42,9 @@ const ContactQueryList = () => {
   }, []);
 
   return (
+    <>
+    <div className="main-contact-container">
+        <AdminNavbar/>    
     <div className="contactqueries-container">
       <h2 className="contactqueries-heading">Contact Queries</h2>
       <table className="contactqueries-table">
@@ -79,6 +83,8 @@ const ContactQueryList = () => {
         </tbody>
       </table>
     </div>
+</div>
+    </>
   );
 };
 

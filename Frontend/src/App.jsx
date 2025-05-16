@@ -37,6 +37,7 @@ import CouponGenerator from './Admin/Coupon/CouponGenerator/CouponGenerator'
 import CouponList from './Admin/Coupon/CouponList/CoupunList';
 import EditCoupon from './Admin/Coupon/EditCoupon/EditCoupon';
 import ContactUs from './components/ContactUs/ContactUs';
+import ContactQueryList from './Admin/ContactQueryList/ContactQueryList';
 
 function App() {
   const { user } = useUser();
@@ -50,11 +51,10 @@ function App() {
 
       <Routes>
         {/* Public Routes */}
+        <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/manageproducts" element={<ManageProducts />} />
-
-        <Route path="/" element={<Homepage />} />
+       
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/policies" element={<Policies />} />
         <Route path="/termsandconditions" element={<TermsAndConditions />} />
@@ -65,22 +65,26 @@ function App() {
         <Route path="/sacredrituals" element={<SacreDrituals />} />
         <Route path="/productdetails/:id" element={<ProductDetails />} />
         <Route path="/userdashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
-        <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
         <Route path="/allproduct" element={<ProtectedRoute><AllProduct /></ProtectedRoute>} />
-        <Route path="/admin-homepage" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/admin-view-orders" element={<ProtectedRoute><ViewAllorder /></ProtectedRoute>} />
-        <Route path="/admin-view-products" element={<ProtectedRoute><ViewAllProduct /></ProtectedRoute>} />
-        <Route path="/admin-update-product-form" element={<ProtectedRoute><UpdateProduct /></ProtectedRoute>} />
         <Route path="/checkout-page" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
         <Route path="/thankyou-page" element={<ProtectedRoute><Thankyoupage /></ProtectedRoute>} />
         <Route path="/verification" element={<VerificationCodeInput />} />
         <Route path="/emailforforgotpassword" element={<ForgotPasswordEmail />} />
         <Route path="/resetpasswordvarification" element={<VerificationCodeforgotpassword />} />
         <Route path="/resetpassword" element={<SetNewPassword />} />
-        <Route path="/generatecouponcode" element={<CouponGenerator />} />
-        <Route path="/allcoupons" element={<CouponList />} />
-        <Route path="/edit-coupon/:couponId" element={<EditCoupon />} />
+
+
+        <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+        <Route path="/manageproducts" element={<ProtectedRoute><ManageProducts /></ProtectedRoute>} />
+        <Route path="/admin-homepage" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin-view-orders" element={<ProtectedRoute><ViewAllorder /></ProtectedRoute>} />
+        <Route path="/admin-view-products" element={<ProtectedRoute><ViewAllProduct /></ProtectedRoute>} />
+        <Route path="/admin-update-product-form" element={<ProtectedRoute><UpdateProduct /></ProtectedRoute>} />
+        <Route path="/generatecouponcode" element={<ProtectedRoute><CouponGenerator /></ProtectedRoute>} />
+        <Route path="/allcoupons" element={<ProtectedRoute><CouponList /></ProtectedRoute>} />
+        <Route path="/edit-coupon/:couponId" element={<ProtectedRoute><EditCoupon /></ProtectedRoute>} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/queries" element={<ProtectedRoute><ContactQueryList/></ProtectedRoute>} />
       </Routes>
 
       {location.pathname !== '/verification' && location.pathname !== '/emailforforgotpassword' && location.pathname !== '/resetpasswordvarification' && location.pathname !== '/resetpassword' && <Footer />}
