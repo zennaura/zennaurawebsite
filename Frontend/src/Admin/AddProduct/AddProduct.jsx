@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
+  const navigate = useNavigate(); // ✅ Add this inside your component
   // State to manage success message
   const [success, setSuccess] = useState(false);
 
@@ -57,8 +58,7 @@ const AddProduct = () => {
   const [productDescription, setProductDescription] = useState("");
   const [images, setImages] = useState({
     descriptionImage: null,
-    frontImage: null,
-    backImage: null,
+
     otherImages: [],
   });
 
@@ -104,15 +104,18 @@ const AddProduct = () => {
   const handleAddVariant = () => {
     setVariants([
       ...variants,
+      // In handleAddVariant function:
       {
-        variantname:"",
+        variantname: "",
         size: "",
-        tax:"",
+        tax: "",
         salePrice: "",
         discount: "",
         costPrice: "",
         stock: "",
-        images: [],
+        variantsimages: [], // Changed from 'images' to 'variantsimages'
+        frontImage: "",
+        backImage: "",
         specifications: {
           material: "",
           productType: "",
@@ -152,11 +155,22 @@ const AddProduct = () => {
 
   // Handle Variant Image Upload
   const handleVariantImageUpload = async (index, event) => {
-    const files = Array.from(event.target.files).slice(0, 2); // Limit to 2 images
-    const urls = await Promise.all(files.map(uploadToCloudinary));
+    const files = Array.from(event.target.files);
+    const urls = await Promise.all(files.map(file => uploadToCloudinary(file)));
 
     const updatedVariants = [...variants];
-    updatedVariants[index].images = urls; // Store Cloudinary URLs
+    // Use 'variantsimages' instead of 'images'
+    updatedVariants[index].variantsimages = [...(updatedVariants[index].variantsimages || []), ...urls];
+    setVariants(updatedVariants);
+  };
+
+  const handleVariantSingleImageUpload = async (index, field, event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const url = await uploadToCloudinary(file);
+    const updatedVariants = [...variants];
+    updatedVariants[index][field] = url;
     setVariants(updatedVariants);
   };
 
@@ -182,7 +196,7 @@ const AddProduct = () => {
     e.preventDefault();
 
     // Basic validation (customize as needed)
-    if ( !basicDetails.description || !basicDetails.sku || variants.length === 0) {
+    if (!basicDetails.description || !basicDetails.sku || variants.length === 0) {
       alert("Please fill in all required fields and add at least one variant.");
       return;
     }
@@ -193,7 +207,6 @@ const AddProduct = () => {
       subSubCategory: category.subSub,
       category: category.category,
 
-      name: basicDetails.name,
       title: basicDetails.title,
       description: basicDetails.description,
       sku: basicDetails.sku,
@@ -202,12 +215,11 @@ const AddProduct = () => {
       Intenttags,
       stoneUsedImage: stones.map((stone) => ({
         title: stone.title,
-        image: stone.image, // ✅ Already uploaded
+        image: stone.image,
       })),
 
-      frontImage: images.frontImage || null,
-      backImage: images.backImage || null,
-      otherImages: images.otherImages || [],
+      // Fix: Change 'otherImages' to 'otherimages' to match schema
+      otherimages: images.otherImages || [],
 
       healingImage: posters.healing || null,
       benefits: posters.benefits || null,
@@ -223,17 +235,18 @@ const AddProduct = () => {
 
       variants: variants.map((variant) => ({
         ...variant,
-        variantname:(variant.variantname),
+        variantname: variant.variantname,
         size: Number(variant.size),
         tax: Number(variant.tax),
         salePrice: Number(variant.salePrice),
         discount: Number(variant.discount),
         costPrice: Number(variant.costPrice),
         stock: Number(variant.stock),
-        variantsimages: variant.images || [],
+        frontImage: variant.frontImage || null,
+        backImage: variant.backImage || null,
+        variantsimages: variant.variantsimages || [], // Changed from variant.images
       })),
     };
-
     console.log('Sending Product Data:', productData);
 
     try {
@@ -244,9 +257,11 @@ const AddProduct = () => {
       });
 
       if (response.ok) {
-        setSuccess(true); // ✅ Trigger success animation
-        setTimeout(() => setSuccess(false), 3000); // Hide after 3 sec
-        // Optionally reset form state here
+        setSuccess(true); // Show success message
+        setTimeout(() => {
+          setSuccess(false);
+          navigate("/admin-view-products"); // ✅ Navigate after 3 seconds
+        }, 3000); // Delay can be adjusted or removed
       } else {
         const errorData = await response.json();
         console.error('Backend Error:', errorData);
@@ -551,7 +566,7 @@ const AddProduct = () => {
               onChange={(e) => setProductDescription(e.target.value)}
               placeholder="Enter product description"
               className="mb-2 block w-full border border-gray-300 rounded-md p-2"
-               rows={4} 
+              rows={4}
             />
             <input
               type="file"
@@ -562,22 +577,9 @@ const AddProduct = () => {
 
           {/* Product Images */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Images</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Common Images</h2>
 
-            {/* Front Image */}
-            <label className="block mb-2">Product Front Image</label>
-            <input
-              type="file"
-              onChange={(e) => handleFileUpload(e, 'frontImage')}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
-            />
-             {/* Back Image */}
-            <label className="block mb-2">Product Back Image</label>
-            <input
-              type="file"
-              onChange={(e) => handleFileUpload(e, 'backImage')}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
-            />
+
 
             {/* Other Images */}
             <label className="block mb-2">Other Images</label>
@@ -686,7 +688,7 @@ const AddProduct = () => {
             <div key={index} className="border p-4 rounded-md space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {/* Variant name  */}
-                  <input
+                <input
                   type="text"
                   value={variant.variantname}
                   onChange={(e) =>
@@ -705,7 +707,7 @@ const AddProduct = () => {
                   placeholder="Size in mm"
                   className="border border-gray-300 rounded-md p-2"
                 />
-                 {/* Tax */}
+                {/* Tax */}
                 <input
                   type="number"
                   value={variant.tax}
@@ -763,7 +765,24 @@ const AddProduct = () => {
 
               {/* Variant Images */}
               <div className="my-5">
+                {/* Front Image */}
+                <label className="block mb-2">Product Front Image</label>
+                <input
+                  type="file"
+                  onChange={(e) => handleVariantSingleImageUpload(index, 'frontImage', e)}
+                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                />
+
+                {/* Back Image */}
+                <label className="block mb-2">Product Back Image</label>
+                <input
+                  type="file"
+                  onChange={(e) => handleVariantSingleImageUpload(index, 'backImage', e)}
+                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                />
+                {/* Varient Image */}
                 <label className="block mb-1">Variant Image (max 2)</label>
+                {/* Variant Images (multiple) */}
                 <input
                   type="file"
                   onChange={(e) => handleVariantImageUpload(index, e)}

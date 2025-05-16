@@ -2,14 +2,16 @@ const mongoose = require('mongoose');
 
 // Variant Schema
 const VariantSchema = new mongoose.Schema({
-  variantname :String,
+  variantname: String,
   size: String,
   salePrice: Number,
   discount: Number,
   costPrice: Number,
   stock: Number,
-  tax:Number,
-  
+  tax: Number,
+  frontImage: String,
+  backImage: String,
+
   variantsimages: [String], // 2 images
 
   specifications: {
@@ -29,17 +31,17 @@ const VariantSchema = new mongoose.Schema({
 // Product Schema
 const ProductSchema = new mongoose.Schema({
   parentCategory: String, //aura
-  subCategory: String, //crystal 
-  subSubCategory: String, //combo
   category: String, //love 
+  subCategory: String, //crystal 
+  subSubCategory: String, //combo  not in use 
 
   name: String,
   title: String,
   description: String,
   sku: String,
-// .concern add in 
+  // .concern add in 
   tags: [String],
-  Intenttags:[String],
+  Intenttags: [String],
   stoneUsedImage: [
     {
       title: String,
@@ -61,9 +63,8 @@ const ProductSchema = new mongoose.Schema({
     title: String,
     image: String
   },
-  
-  frontImage: String,
-  backImage: String,
+
+
   otherimages: [String], // 3 images
 
   healingImage: String,

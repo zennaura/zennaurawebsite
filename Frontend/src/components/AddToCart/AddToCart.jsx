@@ -45,7 +45,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
 
     try {
       await axios.put(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/updateQuantity`, {
-        userId: user._id,
+        userId: user._id||'',
         productId,
         variantId,
         quantity: newQuantity

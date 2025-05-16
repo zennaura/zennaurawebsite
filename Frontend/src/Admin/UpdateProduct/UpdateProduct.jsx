@@ -37,9 +37,7 @@ const UpdateProduct = () => {
 
   const [images, setImages] = useState({
     descriptionImage: null,
-    frontImage: null,
-    backImage: null,
-    otherImages: [],
+    otherimages: [],
   });
 
   const [posters, setPosters] = useState({
@@ -77,9 +75,7 @@ const UpdateProduct = () => {
 
       setImages({
         descriptionImage: productData.productDescriptions?.image || null,
-        frontImage: productData.frontImage || null,
-        backImage: productData.backImage || null,
-        otherImages: Array.isArray(productData.otherImages) ? productData.otherImages : []
+        otherimages: Array.isArray(productData.otherimages) ? productData.otherimages : []
       });
 
       setPosters({
@@ -102,6 +98,8 @@ const UpdateProduct = () => {
             discount: String(v.discount || ""),
             costPrice: String(v.costPrice || ""),
             stock: String(v.stock || ""),
+            frontImage: v.frontImage || null,
+            backImage: v.backImage || null,
             images: Array.isArray(v.variantsimages) ? v.variantsimages : [],
             specifications: {
               material: v.specifications?.material || "",
@@ -214,15 +212,15 @@ const UpdateProduct = () => {
       const files = event.target.files;
       if (!files || files.length === 0) return;
 
-      if (fieldName === "otherImages") {
+      if (fieldName === "otherimages") {
         // Upload new images first
         const urls = await Promise.all(
           Array.from(files).map((file) => uploadToCloudinary(file))
         );
         // Only after successful upload, delete old images
-        if (images.otherImages && images.otherImages.length > 0) {
+        if (images.otherimages && images.otherimages.length > 0) {
           await Promise.all(
-            images.otherImages.map(url =>
+            images.otherimages.map(url =>
               deleteFromCloudinary(url).catch(e => null)
             )
           );
@@ -264,30 +262,35 @@ const UpdateProduct = () => {
 
   // Variant handlers
   const handleAddVariant = () => {
-    setVariants([
-      ...variants,
-      {
-        variantname: "",
-        size: "",
-        tax:"",
-        salePrice: "",
-        discount: "",
-        costPrice: "",
-        stock: "",
-        images: [],
-        specifications: {
-          material: "",
-          productType: "",
-          beadSize: "",
-          size: "",
-          color: "",
-          weight: "",
-          packaging: "",
-        },
-        featureProduct: false,
-        bestSeller: false,
-      },
-    ]);
+    // In the useEffect initialization:
+    setVariants(
+      Array.isArray(productData.variants)
+        ? productData.variants.map(v => ({
+          ...v,
+          variantname: String(v.variantname || ""),
+          size: String(v.size || ""),
+          tax: String(v.tax || ""),
+          salePrice: String(v.salePrice || ""),
+          discount: String(v.discount || ""),
+          costPrice: String(v.costPrice || ""),
+          stock: String(v.stock || ""),
+          frontImage: v.frontImage || null,
+          backImage: v.backImage || null,
+          variantsimages: Array.isArray(v.variantsimages) ? v.variantsimages : [], // Fixed field name
+          specifications: {
+            material: v.specifications?.material || "",
+            productType: v.specifications?.productType || "",
+            beadSize: v.specifications?.beadSize || "",
+            size: v.specifications?.size || "",
+            color: v.specifications?.color || "",
+            weight: v.specifications?.weight || "",
+            packaging: v.specifications?.packaging || "",
+          },
+          featureProduct: Boolean(v.featureProduct),
+          bestSeller: Boolean(v.bestSeller)
+        }))
+        : []
+    );
   };
 
   const handleRemoveVariant = (index) => {
@@ -312,38 +315,43 @@ const UpdateProduct = () => {
   // Variant image handlers
   const handleVariantImageUpload = async (index, event) => {
     try {
-      const files = Array.from(event.target.files).slice(0, 2);
+      const files = Array.from(event.target.files); // Limit to 2 images
+      if (files.length === 0) return;
 
       // Upload new images first
       const urls = await Promise.all(files.map(uploadToCloudinary));
-      // Only after successful upload, delete old images
-      const variant = variants[index];
-      if (variant.images && variant.images.length > 0) {
-        await Promise.all(
-          variant.images.map(url =>
-            deleteFromCloudinary(url).catch(e => null)
-          )
-        );
-      }
+
+      // Get old images for cleanup
+      const oldImages = variants[index].variantsimages || [];
+
+      // Update state with new images
       const updatedVariants = [...variants];
-      updatedVariants[index].images = urls;
+      updatedVariants[index].variantsimages = urls;
       setVariants(updatedVariants);
+
+      // Clean up old images (fire and forget)
+      if (oldImages.length > 0) {
+        Promise.all(
+          oldImages.map(url =>
+            deleteFromCloudinary(url).catch(e => null)
+          ));
+      }
     } catch (error) {
       console.error("Variant image upload error:", error);
       setError("Failed to upload variant images. Please try again.");
     }
   };
 
-  // Remove image from otherImages
+  // Remove image from otherimages
   const handleRemoveOtherImage = async (index) => {
     try {
-      const imageUrl = images.otherImages[index];
+      const imageUrl = images.otherimages[index];
       if (imageUrl) {
         await deleteFromCloudinary(imageUrl);
       }
-      const updatedImages = [...images.otherImages];
+      const updatedImages = [...images.otherimages];
       updatedImages.splice(index, 1);
-      setImages({ ...images, otherImages: updatedImages });
+      setImages({ ...images, otherimages: updatedImages });
     } catch (error) {
       console.error("Error removing image:", error);
     }
@@ -371,7 +379,7 @@ const UpdateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!basicDetails.name || !basicDetails.description || !basicDetails.sku || variants.length === 0) {
+    if (!basicDetails.description || !basicDetails.sku || variants.length === 0) {
       alert("Please fill in all required fields and add at least one variant.");
       return;
     }
@@ -382,7 +390,7 @@ const UpdateProduct = () => {
       subSubCategory: category.subSub,
       category: category.category,
 
-      name: basicDetails.name,
+      // name: basicDetails.name,
       title: basicDetails.title,
       description: basicDetails.description,
       sku: basicDetails.sku,
@@ -391,9 +399,7 @@ const UpdateProduct = () => {
       Intenttags,
       stoneUsedImage: stones,
 
-      frontImage: images.frontImage,
-      backImage: images.backImage,
-      otherImages: images.otherImages,
+      otherimages: images.otherimages,
 
       healingImage: posters.healing,
       benefits: posters.benefits,
@@ -406,17 +412,15 @@ const UpdateProduct = () => {
         title: productDescription,
         image: images.descriptionImage,
       },
-
       variants: variants.map((variant) => ({
         ...variant,
-        size: variant.size,
-        tax: variant.tax,
-        variantname: variant.variantname,
+        size: Number(variant.size),
+        tax: Number(variant.tax),
         salePrice: Number(variant.salePrice),
         discount: Number(variant.discount),
         costPrice: Number(variant.costPrice),
         stock: Number(variant.stock),
-        variantsimages: variant.images || [],
+        variantsimages: variant.variantsimages || [], // Fixed field name
         specifications: variant.specifications,
         featureProduct: variant.featureProduct,
         bestSeller: variant.bestSeller
@@ -790,64 +794,19 @@ const UpdateProduct = () => {
           {/* Product Images */}
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              Product Images
+              Product Comman Images
             </h2>
-            {/* Front Images */}
-            <label className="block mb-2">Product Front Image</label>
-            <input
-              type="file"
-              onChange={(e) => handleFileUpload(e, "frontImage")}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
-            />
-            {images.frontImage && (
-              <div className="mt-2 flex items-center gap-2">
-                <img
-                  src={images.frontImage}
-                  alt="Front"
-                  className="h-20 object-contain"
-                />
-                <button
-                  type="button"
-                  onClick={() => setImages({ ...images, frontImage: null })}
-                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
-                >
-                  Remove
-                </button>
-              </div>
-            )}
-            {/* Back Images */}
-            <label className="block mb-2">Product Back Image</label>
-            <input
-              type="file"
-              onChange={(e) => handleFileUpload(e, "backImage")}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
-            />
-            {images.backImage && (
-              <div className="mt-2 flex items-center gap-2">
-                <img
-                  src={images.backImage}
-                  alt="Front"
-                  className="h-20 object-contain"
-                />
-                <button
-                  type="button"
-                  onClick={() => setImages({ ...images, backImage: null })}
-                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
-                >
-                  Remove
-                </button>
-              </div>
-            )}
+
             {/* Other Images */}
             <label className="block mb-2 mt-4">Other Images</label>
             <input
               type="file"
-              onChange={(e) => handleFileUpload(e, "otherImages")}
+              onChange={(e) => handleFileUpload(e, "otherimages")}
               className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
               multiple
             />
             <div className="flex flex-wrap gap-2 mt-2">
-              {images.otherImages?.map((img, index) => (
+              {images.otherimages?.map((img, index) => (
                 <div key={index} className="relative flex items-center gap-2">
                   <img
                     src={img}
@@ -1100,6 +1059,91 @@ const UpdateProduct = () => {
                 />
               </div>
 
+              {/* Front Image */}
+              <div className="my-5">
+                <label className="block mb-1">Front Image</label>
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      uploadToCloudinary(file).then(url => {
+                        const updatedVariants = [...variants];
+                        if (updatedVariants[index].frontImage) {
+                          deleteFromCloudinary(updatedVariants[index].frontImage);
+                        }
+                        updatedVariants[index].frontImage = url;
+                        setVariants(updatedVariants);
+                      });
+                    }
+                  }}
+                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                />
+                {variant.frontImage && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <img
+                      src={variant.frontImage}
+                      alt="Front"
+                      className="h-20 object-contain"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updatedVariants = [...variants];
+                        deleteFromCloudinary(updatedVariants[index].frontImage);
+                        updatedVariants[index].frontImage = null;
+                        setVariants(updatedVariants);
+                      }}
+                      className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                    >
+                      x
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Back Image */}
+              <div className="my-5">
+                <label className="block mb-1">Back Image</label>
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      uploadToCloudinary(file).then(url => {
+                        const updatedVariants = [...variants];
+                        if (updatedVariants[index].backImage) {
+                          deleteFromCloudinary(updatedVariants[index].backImage);
+                        }
+                        updatedVariants[index].backImage = url;
+                        setVariants(updatedVariants);
+                      });
+                    }
+                  }}
+                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                />
+                {variant.backImage && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <img
+                      src={variant.backImage}
+                      alt="Back"
+                      className="h-20 object-contain"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updatedVariants = [...variants];
+                        deleteFromCloudinary(updatedVariants[index].backImage);
+                        updatedVariants[index].backImage = null;
+                        setVariants(updatedVariants);
+                      }}
+                      className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                    >
+                      x
+                    </button>
+                  </div>
+                )}
+              </div>
               <div className="my-5">
                 <label className="block mb-1">Variant Image (max 2)</label>
                 <input

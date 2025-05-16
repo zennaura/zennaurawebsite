@@ -43,7 +43,7 @@ const ProductsManagement = () => {
   };
 
   const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    // product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -85,10 +85,10 @@ const ProductsManagement = () => {
             {filteredProducts.map((product) => (
               <div key={product._id} className="admin-product-card">
                 <div className="admin-product-image">
-                  <img src={product.frontImage || 'https://via.placeholder.com/150'} alt={product.name} />
+                  <img src={product.frontImage || 'https://via.placeholder.com/150'}  />
                 </div>
                 <div className="admin-product-details">
-                  <h3 className="admin-product-name">{product.name}</h3>
+                  {/* <h3 className="admin-product-name">{product.name}</h3> */}
                   <p className="admin-product-title">{product.title}</p>
                   <div className="admin-product-categories">
                     <span>{product.parentCategory}</span> &gt;
