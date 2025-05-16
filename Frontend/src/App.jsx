@@ -66,8 +66,8 @@ function App() {
         <Route path="/productdetails/:id" element={<ProductDetails />} />
         <Route path="/userdashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
         <Route path="/allproduct" element={<ProtectedRoute><AllProduct /></ProtectedRoute>} />
-        <Route path="/checkout-page" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
-        <Route path="/thankyou-page" element={<ProtectedRoute><Thankyoupage /></ProtectedRoute>} />
+        <Route path="/checkout-page" element={<CheckoutPage />} />
+        <Route path="/thankyou-page" element={<Thankyoupage />} />
         <Route path="/verification" element={<VerificationCodeInput />} />
         <Route path="/emailforforgotpassword" element={<ForgotPasswordEmail />} />
         <Route path="/resetpasswordvarification" element={<VerificationCodeforgotpassword />} />

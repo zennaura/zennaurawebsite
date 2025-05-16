@@ -10,7 +10,7 @@ const Product = require("../model/Product");
 router.post("/add", async (req, res) => {
   try {
     const { productId, variantId, userId } = req.body;
-    console.log("Request body:", req.body);
+    // console.log("Request body:", req.body);
 
     // Extract base product ID (removes variant suffix if exists)
     const baseProductId = productId.includes('-') 

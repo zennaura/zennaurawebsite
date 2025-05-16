@@ -43,17 +43,42 @@ router.get('/allcoupons', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/searchcoupon', async (req, res) => {
   try {
-    const coupon = await Coupon.findById(req.params.id);
+    const { code } = req.query;
+    
+    if (!code) {
+      return res.status(400).json({ message: 'Coupon code is required' });
+    }
+
+    const coupon = await Coupon.findOne({ code });
 
     if (!coupon) {
       return res.status(404).json({ message: 'Coupon not found' });
     }
 
-    res.status(200).json(coupon);
+    // Check if coupon is active and not expired
+    const currentDate = new Date();
+    const isExpired = currentDate > coupon.expiryDate;
+
+    if (!coupon.isActive || isExpired) {
+      return res.status(400).json({ 
+        message: isExpired ? 'Coupon has expired' : 'Coupon is not active',
+        isActive: false
+      });
+    }
+
+    res.status(200).json({
+      code: coupon.code,
+      discount: coupon.discount,
+      maxDiscount: coupon.maxDiscount,
+      minOrder: coupon.minOrder,
+      expiryDate: coupon.expiryDate,
+      isActive: coupon.isActive
+    });
+
   } catch (error) {
-    console.error('Error fetching coupon by ID:', error);
+    console.error('Error searching coupon:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

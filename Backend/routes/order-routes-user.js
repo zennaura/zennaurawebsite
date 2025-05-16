@@ -9,25 +9,55 @@ const router = express.Router();
 router.post('/placeorder', async (req, res) => {
   try {
     const {
-      user,           // Changed from userId
-      orderItems,     // Changed from individual productId/quantity
+      user,           // Will be null for guest users
+      guestUser,      // Contains guest user info
+      orderItems,
       shippingAddress,
       paymentMethod,
       totalAmount
     } = req.body;
 
-    // Create a new order
+    // Validate order items
+    if (!orderItems || orderItems.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Your cart is empty"
+      });
+    }
+
+    // Validate required fields for guest checkout
+    if (!user) {
+      if (!guestUser?.firstName || !guestUser?.lastName || !guestUser?.email || !guestUser?.phone) {
+        return res.status(400).json({
+          success: false,
+          message: "Please provide all required guest information"
+        });
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(guestUser.email)) {
+        return res.status(400).json({
+          success: false,
+          message: "Please provide a valid email address"
+        });
+      }
+    }
+
+    // Create the order
     const order = new Order({
-      user: user,
+      user: user || null,
+      guestUser: !user ? guestUser : null,
       orderItems: orderItems.map(item => ({
         product: item.product,
         quantity: item.quantity,
-        price: item.price       // Changed from calculated price
+        price: item.price
       })),
       shippingAddress,
       paymentMethod,
       totalAmount,
-      orderStatus: "Processing"
+      orderStatus: "Processing",
+      isGuestOrder: !user
     });
 
     await order.save();
@@ -37,10 +67,12 @@ router.post('/placeorder', async (req, res) => {
       message: "Order placed successfully",
       order
     });
+
   } catch (error) {
+    console.error("Order placement error:", error);
     res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message || "Failed to place order"
     });
   }
 });

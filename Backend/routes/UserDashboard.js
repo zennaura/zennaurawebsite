@@ -5,26 +5,24 @@ const User = require("../model/UserRegistration");
 
 // In your backend routes
 router.put('/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const updateData = req.body;
-      
-      const updatedUser = await User.findByIdAndUpdate(
-        id,
-        updateData,
-        { new: true }
-      );
-      
-      if (!updatedUser) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      
-      res.json({ user: updatedUser });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
+  try {
+    const { firstName, lastName, phone, profileImage } = req.body;
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { firstName, lastName, phone, profileImage },
+      { new: true } // Return the updated user
+    );
+    
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  });
+    
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 // In your userDashboardRoutes.js
 router.post('/:userId/address', async (req, res) => {
     try {

@@ -1,18 +1,96 @@
-  const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-  const orderSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    orderItems: [{
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
-      quantity: { type: Number, required: true },
-      price: { type: Number, required: true },
-    }],
-    shippingAddress: { type: String, required: true },
-    paymentMethod: { type: String, required: true }, // COD, Card, UPI
-    paymentStatus: { type: String, enum: ["Pending", "Paid"], default: "Pending" },
-    totalAmount: { type: Number, required: true },
-    orderStatus: { type: String, enum: ["Processing", "Shipped", "Delivered"], default: "Processing" },
-  }, { timestamps: true });
+const orderSchema = new mongoose.Schema({
+  // For logged-in users (optional)
+  user: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User" 
+  },
+  
+  // For guest users (optional)
+  guestUser: {
+    firstName: { type: String },
+    lastName: { type: String },
+    email: { 
+      type: String,
+      validate: {
+        validator: function(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        },
+        message: props => `${props.value} is not a valid email address!`
+      }
+    },
+    phone: { type: String }
+  },
 
-  module.exports = mongoose.model("Order", orderSchema);
-    
+  // Order items (required)
+  orderItems: [{
+    product: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Product", 
+      required: true 
+    },
+    quantity: { 
+      type: Number, 
+      required: true,
+      min: [1, 'Quantity must be at least 1']
+    },
+    price: { 
+      type: Number, 
+      required: true,
+      min: [0, 'Price cannot be negative']
+    },
+  }],
+
+  // Shipping information (required)
+  shippingAddress: { 
+    type: String, 
+    required: true 
+  },
+
+  // Payment information (required)
+  paymentMethod: { 
+    type: String, 
+    required: true,
+    enum: ["COD", "Card", "UPI"],
+    default: "COD"
+  },
+
+  paymentStatus: { 
+    type: String, 
+    enum: ["Pending", "Paid", "Failed", "Refunded"], 
+    default: "Pending" 
+  },
+
+  // Financial information (required)
+  totalAmount: { 
+    type: Number, 
+    required: true,
+    min: [0, 'Total amount cannot be negative']
+  },
+
+  // Order status tracking
+  orderStatus: { 
+    type: String, 
+    enum: ["Processing", "Shipped", "Delivered", "Cancelled"], 
+    default: "Processing" 
+  },
+
+  // Flags
+  isGuestOrder: {
+    type: Boolean,
+    default: false
+  }
+
+}, { 
+  timestamps: true,
+  // Validate that either user or guestUser exists
+  validate: {
+    validator: function() {
+      return this.user || (this.guestUser && this.guestUser.email && this.guestUser.phone);
+    },
+    message: 'Either user reference or complete guest information is required'
+  }
+});
+
+module.exports = mongoose.model("Order", orderSchema);

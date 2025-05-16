@@ -8,20 +8,26 @@ import AdminNavbar from '../AdminNavbar/AdminNavbar';
 
 const ProductsManagement = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
-      setProducts(response.data);
+      setProducts(response.data || []);
     } catch (error) {
       console.error('Error fetching products:', error);
+      setError('Failed to fetch products');
       toast.error('Failed to fetch products');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,14 +45,46 @@ const ProductsManagement = () => {
   };
 
   const handleEditClick = (product) => {
-    navigate('/admin-update-product-form', { state: { product: product } });
+    navigate('/admin-update-product-form', { state: { product } });
   };
 
-  const filteredProducts = products.filter(product =>
-    // product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProducts = products.filter(product => {
+    const searchTermLower = searchTerm.toLowerCase();
+    return (
+      product.name?.toLowerCase().includes(searchTermLower) ||
+      product.sku?.toLowerCase().includes(searchTermLower) ||
+      product.category?.toLowerCase().includes(searchTermLower) ||
+      product.parentCategory?.toLowerCase().includes(searchTermLower) ||
+      product.subCategory?.toLowerCase().includes(searchTermLower) ||
+      product.subSubCategory?.toLowerCase().includes(searchTermLower)
+    );
+  });
+
+  if (loading) {
+    return (
+      <div className="main-container">
+        <div className="left-container">
+          <AdminNavbar />
+        </div>
+        <div className="right-container">
+          <div className="loading-spinner">Loading products...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="main-container">
+        <div className="left-container">
+          <AdminNavbar />
+        </div>
+        <div className="right-container">
+          <div className="error-message">{error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="main-container">
@@ -82,53 +120,78 @@ const ProductsManagement = () => {
 
           {/* Products Grid */}
           <div className="admin-products-grid">
-            {filteredProducts.map((product) => (
-              <div key={product._id} className="admin-product-card">
-                <div className="admin-product-image">
-                  <img src={product.frontImage || 'https://via.placeholder.com/150'}  />
-                </div>
-                <div className="admin-product-details">
-                  {/* <h3 className="admin-product-name">{product.name}</h3> */}
-                  <p className="admin-product-title">{product.title}</p>
-                  <div className="admin-product-categories">
-                    <span>{product.parentCategory}</span> &gt;
-                    <span>{product.subCategory}</span> &gt;
-                    <span>{product.subSubCategory}</span> &gt;
-                    <span>{product.category}</span>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <div key={product._id || Math.random()} className="admin-product-card">
+                  <div className="admin-product-image">
+                    <img 
+                      src={product.frontImage || 'https://via.placeholder.com/150'} 
+                      alt={product.name || 'Product image'} 
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/150';
+                      }}
+                    />
                   </div>
-                  <p className="admin-product-sku">SKU: {product.sku}</p>
+                  <div className="admin-product-details">
+                    <h3 className="admin-product-name">{product.name || 'Unnamed Product'}</h3>
+                    <p className="admin-product-title">{product.title || 'No title'}</p>
+                    <div className="admin-product-categories">
+                      <span>{product.parentCategory || 'No category'}</span> &gt;
+                      <span>{product.subCategory || 'No subcategory'}</span> &gt;
+                      <span>{product.subSubCategory || 'No sub-subcategory'}</span> &gt;
+                      <span>{product.category || 'No category'}</span>
+                    </div>
+                    <p className="admin-product-sku">SKU: {product.sku || 'N/A'}</p>
 
-                  <div className="admin-product-variants">
-                    {product.variants.map((variant, index) => (
-                      <div key={index} className="admin-product-variant">
-                        <p>Size: {variant.size}</p>
-                        <p>Price: ${variant.saleprice} ({variant.discount}% off)</p>
-                        <p>Stock: {variant.stock}</p>
-                      </div>
-                    ))}
+                    <div className="admin-product-variants">
+                      {product.variants?.length > 0 ? (
+                        product.variants.map((variant, index) => (
+                          <div key={index} className="admin-product-variant">
+                            <p>Size: {variant.size || 'N/A'}</p>
+                            <p>Price: ${(variant.saleprice || 0).toFixed(2)} ({(variant.discount || 0)}% off)</p>
+                            <p>Stock: {variant.stock || 0}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="no-variants">No variants available</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="admin-product-actions">
+                    <button
+                      className="admin-product-edit"
+                      onClick={() => handleEditClick(product)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="admin-product-delete"
+                      onClick={() => handleDeleteProduct(product._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-                <div className="admin-product-actions">
-                  <button
-                    className="admin-product-edit"
-                    onClick={() => handleEditClick(product)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="admin-product-delete"
-                    onClick={() => handleDeleteProduct(product._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+              ))
+            ) : (
+              <div className="no-products-found">
+                {searchTerm ? 'No products match your search' : 'No products available'}
               </div>
-            ))}
+            )}
           </div>
-           
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };
