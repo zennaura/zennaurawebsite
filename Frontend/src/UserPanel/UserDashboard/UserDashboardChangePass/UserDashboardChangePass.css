@@ -1,8 +1,8 @@
 .UserDashboardChangePass-container {
-  padding: 40px;
-  background-color: #fdfdfd;
-  height: 100%;
-  width: 75%;
+ width: 75%;
+  padding: 30px;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 .UserDashboardChangePass-title {

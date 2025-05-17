@@ -1,7 +1,8 @@
 .UserDashboardAddAddress-container {
   padding: 30px;
   width: 75%;
-  background-color: #fdfdfd;
+  /* background-color: #fdfdfd; */
+  box-sizing: border-box;
 }
 
 .UserDashboardAddAddress-title {

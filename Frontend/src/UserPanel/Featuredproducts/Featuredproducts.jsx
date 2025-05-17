@@ -26,6 +26,7 @@ const FeaturedProducts = () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
         const productsData = await res.json();
+        // making the varient as individual product 
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
