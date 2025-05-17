@@ -15,10 +15,10 @@ import './ProductPage.css';
 const ProductPage = () => {
   const location = useLocation();
   const product = location.state || {};
-  // console.log("Product Data:", product);
+  console.log("Product Data:", product);
   return (
     <div>
-      <ImageHead Title="Product detail" />
+      <ImageHead Title={product.variantname} />
       <Productdetails product={product} />
       <ProductIcon />
       <StoneUsed image={product.stoneUsedImage} />

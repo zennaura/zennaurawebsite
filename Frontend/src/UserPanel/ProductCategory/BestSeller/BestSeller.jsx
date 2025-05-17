@@ -41,8 +41,21 @@ const BestSeller = () => {
   }, []);
 
   const handleClick = (product) => {
+    // Find all variants of this product
+    const productVariants = bestSellerProducts
+      .filter(p => p.data._id === product.data._id)
+      .map(v => ({
+        variantname: v.data.variantname,
+        id: v.id,
+        frontImage: v.data.frontImage,
+        salePrice: v.data.salePrice
+      }));
+    
     navigate(`/productdetails/${product.id}`, {
-      state: product.data,
+      state: {
+        ...product.data,
+        allVariants: productVariants
+      },
     });
   };
 

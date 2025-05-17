@@ -9,6 +9,8 @@ const FeaturedProducts = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoSlide, setAutoSlide] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // Handle window resize
@@ -20,27 +22,28 @@ const FeaturedProducts = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Fetch products (unchanged)
+  // Fetch products
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
+        if (!res.ok) throw new Error('Failed to fetch products');
+        
         const productsData = await res.json();
-        console.log('productData:', productsData)
-        // making the varient as individual product 
+        
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
             data: {
               _id: product._id,
-              // name: product.name,
               title: product.title,
               description: product.description,
               sku: product.sku,
               tags: product.tags,
               stoneUsedImage: product.stoneUsedImage,
               rating: product.rating,
-              frontImage: product.frontImage,
+              // frontImage: product.frontImage,
               otherimages: product.otherimages,
               healingImage: product.healingImage,
               benefits: product.benefits,
@@ -53,36 +56,52 @@ const FeaturedProducts = () => {
             },
           }))
         ).filter(product => product.data.featureProduct);
+        
         setFeaturedProducts(flattened);
-        console.log('flattend product:', flattened)
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching featured products:', err);
+        setError(err.message);
+        setLoading(false);
       }
     };
+    
     fetchFeaturedProducts();
   }, []);
 
-  // Determine cards per slide based on screen width
-  const cardsPerSlide = windowWidth <= 768 ? 3 : 4;
+  const cardsPerSlide = windowWidth <= 768 ? 1 : windowWidth <= 1024 ? 2 : 4;
 
-  // Auto-slide effect (updated with cardsPerSlide)
+  // Auto-slide effect
   useEffect(() => {
     if (!autoSlide || featuredProducts.length <= cardsPerSlide) return;
     const interval = setInterval(() => {
       setCurrentSlide(prev =>
         prev + cardsPerSlide >= featuredProducts.length ? 0 : prev + cardsPerSlide
       );
-    }, 6000000);
+    }, 5000); // Changed to 5 seconds
     return () => clearInterval(interval);
   }, [autoSlide, featuredProducts.length, cardsPerSlide]);
 
   const handleClick = (product) => {
+    // Find all variants of this product
+    const productVariants = featuredProducts
+      .filter(p => p.data._id === product.data._id)
+      .map(v => ({
+        variantname: v.data.variantname,
+        id: v.id,
+        frontImage: v.data.frontImage,
+        salePrice: v.data.salePrice
+      }));
+    
     navigate(`/productdetails/${product.id}`, {
-      state: product.data,
+      state: {
+        ...product.data,
+        allVariants: productVariants
+      },
     });
   };
 
-  // Navigation functions (updated with cardsPerSlide)
+  // Navigation functions
   const nextSlide = () => {
     setCurrentSlide(prev =>
       prev + cardsPerSlide >= featuredProducts.length ? 0 : prev + cardsPerSlide
@@ -105,9 +124,12 @@ const FeaturedProducts = () => {
     setTimeout(() => setAutoSlide(true), 10000);
   };
 
-  // Calculate total slides and visible products
   const totalSlides = Math.ceil(featuredProducts.length / cardsPerSlide);
   const visibleProducts = featuredProducts.slice(currentSlide, currentSlide + cardsPerSlide);
+
+  if (loading) return <div className="loading-message">Loading featured products...</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
+  if (featuredProducts.length === 0) return <div className="no-products-message">No featured products available</div>;
 
   return (
     <div className="Featuredproducts-container">
@@ -134,7 +156,7 @@ const FeaturedProducts = () => {
                 id={product.id}
                 name={product.data.variantname}
                 title={product.data.title}
-                frontimage  ={product.data.frontImage}
+                frontimage={product.data.frontImage}
                 backImage={product.data.backImage}
                 price={product.data.salePrice}
                 originalPrice={product.data.costPrice}
@@ -153,7 +175,6 @@ const FeaturedProducts = () => {
         )}
       </div>
 
-      {/* Pagination Dots */}
       {totalSlides > 1 && (
         <div className="pagination-dots">
           {Array.from({ length: totalSlides }).map((_, index) => (

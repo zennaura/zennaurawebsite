@@ -26,24 +26,24 @@ const AllSoLike = () => {
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
             data: {
-                _id: product._id,
-                name: product.name,
-                title: product.title,
-                description: product.description,
-                sku: product.sku,
-                tags: product.tags,
-                stoneUsedImage: product.stoneUsedImage,
-                rating: product.rating,
-                frontImage: product.frontImage,
-                otherimages: product.otherimages,
-                healingImage: product.healingImage,
-                benefits: product.benefits,
-                whyChoose: product.whyChoose,
-                waysToClean: product.waysToClean,
-                whoWear: product.whoWear,
-                whereHowWear: product.whereHowWear,
-                productDescriptions: product.productDescriptions,
-                ...variant,
+              _id: product._id,
+              name: product.name,
+              title: product.title,
+              description: product.description,
+              sku: product.sku,
+              tags: product.tags,
+              stoneUsedImage: product.stoneUsedImage,
+              rating: product.rating,
+              // frontImage: product.frontImage,
+              otherimages: product.otherimages,
+              healingImage: product.healingImage,
+              benefits: product.benefits,
+              whyChoose: product.whyChoose,
+              waysToClean: product.waysToClean,
+              whoWear: product.whoWear,
+              whereHowWear: product.whereHowWear,
+              productDescriptions: product.productDescriptions,
+              ...variant,
             },
           }))
         );
@@ -63,13 +63,13 @@ const AllSoLike = () => {
       const similar = allProducts.filter(product => {
         // Exclude the current product
         if (product.id === location.state?.id) return false;
-        
+
         // Check for matching tags
-        return product.data.tags.some(tag => 
+        return product.data.tags.some(tag =>
           currentProductTags.includes(tag)
         );
       });
-      
+
       setSimilarProducts(similar);
     }
   }, [allProducts, currentProductTags, location.state?.id]);
@@ -79,7 +79,7 @@ const AllSoLike = () => {
     if (!autoSlide || similarProducts.length <= 4) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide(prev => 
+      setCurrentSlide(prev =>
         prev + 4 >= similarProducts.length ? 0 : prev + 4
       );
     }, 5000);
@@ -88,14 +88,27 @@ const AllSoLike = () => {
   }, [autoSlide, similarProducts.length]);
 
   const handleClick = (product) => {
+    // Find all variants of this product
+    const productVariants = similarProducts
+      .filter(p => p.data._id === product.data._id)
+      .map(v => ({
+        variantname: v.data.variantname,
+        id: v.id,
+        frontImage: v.data.frontImage,
+        salePrice: v.data.salePrice
+      }));
+    
     navigate(`/productdetails/${product.id}`, {
-      state: product.data,
+      state: {
+        ...product.data,
+        allVariants: productVariants
+      },
     });
   };
 
   // Navigation functions
   const nextSlide = () => {
-    setCurrentSlide(prev => 
+    setCurrentSlide(prev =>
       prev + 4 >= similarProducts.length ? 0 : prev + 4
     );
     setAutoSlide(false);
@@ -103,7 +116,7 @@ const AllSoLike = () => {
   };
 
   const prevSlide = () => {
-    setCurrentSlide(prev => 
+    setCurrentSlide(prev =>
       prev - 4 < 0 ? Math.max(0, similarProducts.length - 4) : prev - 4
     );
     setAutoSlide(false);
@@ -127,23 +140,24 @@ const AllSoLike = () => {
       <div className="featured-slider">
         <div className="AllSoLike-cards">
           {visibleProducts.length > 0 ? (
-           visibleProducts.map((product, index) => (
-            <div key={product.id} className={`AllSoLike-card ${(index === 1 || index === 2) ? "featured-card-center" : ""}`}>
-              <ProductCart
-                key={product.id}
-                id={product.id}
-                name={product.data.name}
-                title={product.data.title}
-                image={product.data.frontImage}
-                price={product.data.salePrice}
-                originalPrice={product.data.costPrice}
-                rating={product.data.rating}
-                isFeatured={product.data.featureProduct}
-                isBest={product.data.bestSeller}
-                onBuyNowClick={() => handleClick(product)}
-              />
-            </div>
-          ))
+            visibleProducts.map((product, index) => (
+              <div key={product.id} className={`AllSoLike-card ${(index === 1 || index === 2) ? "featured-card-center" : ""}`}>
+                <ProductCart
+                  key={product.id}
+                  id={product.id}
+                  name={product.data.variantname}
+                  title={product.data.title}
+                  frontimage={product.data.frontImage}
+                  backImage={product.data.backImage}
+                  price={product.data.salePrice}
+                  originalPrice={product.data.costPrice}
+                  rating={product.data.rating}
+                  isFeatured={product.data.featureProduct}
+                  isBest={product.data.bestSeller}
+                  onBuyNowClick={() => handleClick(product)}
+                />
+              </div>
+            ))
           ) : (
             <p className="no-products">No similar products found</p>
           )}

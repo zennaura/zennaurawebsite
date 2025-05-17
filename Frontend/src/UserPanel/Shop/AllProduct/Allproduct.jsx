@@ -11,6 +11,7 @@ const ProductListingPage = ({ products }) => {
   const [viewMode, setViewMode] = useState('grid-3');
   const productsPerPage = 12;
   const navigate = useNavigate();
+  console.log("productlisting product:",products)
 
   useEffect(() => {
     //   const fetchProducts = async () => {
@@ -66,9 +67,35 @@ const ProductListingPage = ({ products }) => {
     }
   }, [products, sortOption]);
 
+ // Create a map of product base IDs to all their variants
+  const productVariantsMap = useMemo(() => {
+    const map = {};
+    products.forEach(variant => {
+      // Extract the base product ID (before the hyphen)
+      const baseId = variant.id.split('-')[0];
+      if (!map[baseId]) {
+        map[baseId] = [];
+      }
+      map[baseId].push({
+        variantname: variant.data.variantname,
+        id: variant.id,
+        salePrice: variant.data.salePrice,
+        frontImage: variant.data.frontImage
+      });
+    });
+    return map;
+  }, [products]);
+
   const handleClick = (variant) => {
+    // Extract base product ID
+    const baseId = variant.id.split('-')[0];
+    
     navigate(`/productdetails/${variant.id}`, {
-      state: variant.data,
+      state: {
+        ...variant.data,
+        // Include all variants for this product
+        allVariants: productVariantsMap[baseId] || []
+      }
     });
   };
 
