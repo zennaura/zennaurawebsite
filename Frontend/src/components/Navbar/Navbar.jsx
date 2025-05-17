@@ -34,6 +34,33 @@ const Navbar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
   const [activeMenu, setActiveMenu] = useState('main');
+  const [categoryData, setCategoryData] = useState([]);
+  const [availableIntents, setAvailableIntents] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/categories');
+        const data = await res.json();
+        setCategoryData(data);
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      }
+    };
+
+    const fetchIntents = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/intents');
+        const data = await res.json();
+        setAvailableIntents(data);
+      } catch (err) {
+        console.error('Failed to fetch intents:', err);
+      }
+    };
+
+    fetchCategories();
+    fetchIntents();
+  }, []);
 
 
   useEffect(() => {
@@ -264,22 +291,29 @@ const Navbar = () => {
                 <div className="left-section">
                   <div className="aurajewels-category">
                     <h3>Shop by category</h3>
-                    <ul>
-                      <li>Body Soap</li>
-                      <ul style={{ marginTop: "1rem" }}>
-                        <li>Clay Soap</li>
-                        <li>Scrub Soap</li>
-                        <li>Therapeutic Soap</li>
-                        <li>Fruit Soap</li>
-                        <li>Clay Soap</li>
-                        <li>Scrub Soap</li>
-                        <li>Therapeutic Soap</li>
-                        <li>Fruit Soap</li>
-                      </ul>
-                    </ul>
+                    {categoryData.map((parent) =>
+                      parent.subCategories.map((sub) => (
+                        <ul key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`}>
+                          {(sub.categories || []).map((category) => (
+                            parent.parentCategory === "Skin Care" && (
+                              <div key={parent.subCategories + `Hello`}>
+                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                </ul>
+                              </div>
+                            )
+                          ))}
+                        </ul>
+                      ))
+                    )}
                   </div>
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
+                    <ul>
+                      {availableIntents.map((intent) => (
+                        <li key={intent + "Skin Care"}>{intent}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
@@ -297,25 +331,31 @@ const Navbar = () => {
                 <div className="left-section">
                   <div className="aurajewels-category">
                     <h3>Shop by category</h3>
-                    <ul>
-                      <li>Crystal Bracelets</li>
-                      <ul style={{ marginTop: "1rem" }}>
-                        <li>Combo Bracelets</li>
-                        <li>Disease Specific</li>
-                        <li>Chakra Bracelets</li>
-                        <li>Zodiac Bracelets</li>
-                      </ul>
-                      <li style={{ marginTop: "1.4rem" }}>Crystal Wearables</li>
-                      <ul style={{ marginTop: "1rem" }}>
-                        <li>Ear Rings/Tops</li>
-                        <li>Pendants</li>
-                      </ul>
-                    </ul>
+                    {categoryData.map((parent) =>
+                      parent.subCategories.map((sub) => (
+                        <ul key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`}>
+                          {(sub.categories || []).map((category) => (
+                            parent.parentCategory === "Aura Jewels" && (
+                              <div key={parent.subCategories + `Hello`}>
+                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                </ul>
+                              </div>
+                            )
+                          ))}
+                        </ul>
+                      ))
+                    )}
                   </div>
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
+                    <ul>
+                      {availableIntents.map((intent) => (
+                        <li key={intent + "HiHiAura Jewels"}>{intent}</li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
+                </div >
 
                 <div className="right-section">
                   <div className="promo promo1">Crystal Bracelets</div>
@@ -331,28 +371,29 @@ const Navbar = () => {
                 <div className="left-section left-section-divinecrystals">
                   <div className="aurajewels-category divinecrystals-category">
                     <h3>Shop by category</h3>
-                    <div className="divinecrystals-coloum">
-                      <ul>
-                        <li style={{ marginBottom: "2rem" }}>Charging Crystals</li>
-                        <li style={{ marginBottom: "2rem" }}>Crystal Tree</li>
-                        <li style={{ marginBottom: "2rem" }}>Pyramid</li>
-                        <li style={{ marginBottom: "2rem" }}>Skin Roller</li>
-                        <li style={{ marginBottom: "2rem" }}>Zibu Coins</li>
-                      </ul>
-                      <ul>
-                        <li style={{ marginBottom: "2rem" }}>Key Chain</li>
-                        <li style={{ marginBottom: "2rem" }}>Towers/Wands</li>
-                        <li style={{ marginBottom: "2rem" }}>Crystal Tumbles</li>
-                        <ul style={{ marginTop: "1rem" }}>
-                          <li style={{ marginBottom: "1rem" }} >Polished Tumble</li>
-                          <li style={{ marginBottom: "1rem" }} >Raw Tumble</li>
-                          <li style={{ marginBottom: "1rem" }} >Tumble Combo</li>
+                    {categoryData.map((parent) =>
+                      parent.subCategories.map((sub) => (
+                        <ul key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`}>
+                          {(sub.categories || []).map((category) => (
+                            parent.parentCategory === "Divine Crystals" && (
+                              <div key={parent.subCategories + `Hello`}>
+                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                </ul>
+                              </div>
+                            )
+                          ))}
                         </ul>
-                      </ul>
-                    </div>
+                      ))
+                    )}
                   </div>
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
+                    <ul>
+                      {availableIntents.map((intent) => (
+                        <li key={intent + "Divine Crystals"}>{intent}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
@@ -369,15 +410,29 @@ const Navbar = () => {
                 <div className="left-section">
                   <div className="aurajewels-category">
                     <h3>Shop by category</h3>
-                    <ul >
-                      <li style={{ marginBottom: "2rem" }}>Candles</li>
-                      <li style={{ marginBottom: "2rem" }}>Incense Sticks</li>
-                      <li style={{ marginBottom: "2rem" }}>Magical Spray</li>
-                      <li style={{ marginBottom: "2rem" }}>Sage</li>
-                    </ul>
+                    {categoryData.map((parent) =>
+                      parent.subCategories.map((sub) => (
+                        <ul key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`}>
+                          {(sub.categories || []).map((category) => (
+                            parent.parentCategory === "Sacred Rituals" && (
+                              <div key={parent.subCategories + `Hello`}>
+                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                </ul>
+                              </div>
+                            )
+                          ))}
+                        </ul>
+                      ))
+                    )}
                   </div>
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
+                    <ul>
+                      {availableIntents.map((intent) => (
+                        <li key={intent + "Sacred Rituals"}>{intent}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
@@ -389,7 +444,7 @@ const Navbar = () => {
               </div>
             </div>
           )}
-        </div>
+        </div >
       )}
 
       <CartSidebar
