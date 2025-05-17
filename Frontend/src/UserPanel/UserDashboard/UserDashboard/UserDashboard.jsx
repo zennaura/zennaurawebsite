@@ -9,6 +9,7 @@ import {
   FaPhoneAlt,
   FaStar,
   FaEdit,
+  FaTrashAlt,
 } from "react-icons/fa";
 import axios from 'axios';
 
@@ -19,6 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const UserDashboard = ({ onNavigate }) => {
   const { user, setUser } = useUser();
   const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const defaultAddress = {
     street: "Not specified",
@@ -59,6 +61,31 @@ const UserDashboard = ({ onNavigate }) => {
     return data.secure_url;
   };
 
+  const deleteFromCloudinary = async (url) => {
+    if (!url) return;
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/cloudnaryimg/delete-img`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageUrl: url }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Backend deletion error:", errorData);
+        return { success: false, error: errorData.error || "Failed to delete image" };
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Network error:", error);
+      return { success: false, error: "Network error while deleting image" };
+    }
+  };
+
   const handleImageUpload = async (e) => {
     if (!e.target.files?.length) return;
 
@@ -79,9 +106,18 @@ const UserDashboard = ({ onNavigate }) => {
     setIsUploading(true);
 
     try {
-      const imageUrl = await uploadToCloudinary(file, "profilepicture");
+      // Delete previous image if exists
+      if (user.profilePicture) {
+        const deleteResult = await deleteFromCloudinary(user.profilePicture);
+        if (deleteResult.success === false) {
+          console.warn("Failed to delete old profile image:", deleteResult.error);
+          // Continue anyway, don't block upload
+        }
+      }
 
-      const response = await axios.put(
+      const imageUrl = await uploadToCloudinary(file);
+
+      await axios.put(
         `${import.meta.env.VITE_BACKEND_LINK}/api/userdashboard/profile-image/${user._id}`,
         { profileimage: imageUrl }
       );
@@ -101,14 +137,55 @@ const UserDashboard = ({ onNavigate }) => {
     }
   };
 
+  const handleDeleteImage = async () => {
+    if (!user.profilePicture) {
+      toast.info("No profile image to delete.");
+      return;
+    }
+
+    if (!window.confirm("Are you sure you want to delete your profile image?")) {
+      return;
+    }
+
+    setIsDeleting(true);
+
+    try {
+      const deleteResult = await deleteFromCloudinary(user.profilePicture);
+      if (deleteResult.success === false) {
+        throw new Error(deleteResult.error || "Failed to delete image");
+      }
+
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/userdashboard/profile-image/${user._id}`,
+        { profileimage: "" }
+      );
+
+      setUser(prev => ({
+        ...prev,
+        profilePicture: ""
+      }));
+
+      toast.success("Profile image deleted successfully.");
+    } catch (error) {
+      console.error('Delete image error:', error);
+      toast.error(error.message || "Failed to delete profile image.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div className="UserDashboard-container">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <div className="UserDashboard-box">
         <div className="UserDashboard-userDetails">
           <div className="UserDashboard-userDetails-upper">
-            <div className="UserDashboard-avatarBox">
-              <label htmlFor="profile-upload" className="profile-upload-label">
+            <div className="UserDashboard-avatarBox" style={{ position: 'relative' }}>
+              <label
+                htmlFor="profile-upload"
+                className="profile-upload-label"
+                style={{ cursor: isUploading ? 'default' : 'pointer' }}
+              >
                 {isUploading ? (
                   <div className="uploading-text">Uploading...</div>
                 ) : (
@@ -131,8 +208,31 @@ const UserDashboard = ({ onNavigate }) => {
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
+                disabled={isUploading || isDeleting}
                 style={{ display: 'none' }}
               />
+
+              {/* Delete image button */}
+              {user.profilePicture && !isUploading && (
+                <button
+                  className="delete-image-btn"
+                  onClick={handleDeleteImage}
+                  disabled={isDeleting}
+                  style={{
+                    position: 'absolute',
+                    top: 5,
+                    right: 5,
+                    background: 'rgba(255,255,255,0.8)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    cursor: isDeleting ? 'not-allowed' : 'pointer',
+                    padding: '5px'
+                  }}
+                  title="Delete profile image"
+                >
+                  <FaTrashAlt color="red" size={18} />
+                </button>
+              )}
             </div>
             <h3 className="UserDashboard-username">{user.firstName} {user.lastName}</h3>
             <div className="UserDashboard-points">
@@ -169,7 +269,7 @@ const UserDashboard = ({ onNavigate }) => {
               <span>Shipping Address</span>
               <FaEdit className="UserDashboard-editIcon" onClick={() => handleEditClick('address')} />
             </h4>
-            <p>Address: <strong>{address.addressLine2}</strong></p>
+            <p>Address: <strong>{address.addressLine2 || 'Not specified'}</strong></p>
             <p>City: <strong>{address.city}</strong></p>
             <p>State: <strong>{address.state}</strong></p>
             <p>Country: <strong>{address.country}</strong></p>
