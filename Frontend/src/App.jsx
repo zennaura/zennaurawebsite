@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { useUser } from './components/AuthContext/AuthContext';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import ProtectedRouteforadminpage from './components/ProtectedRoute/ProtectedRouteforadminpage';
 import Homepage from './UserPanel/Homepage/Homepage';
 import Registration from './components/Registration/Registration';
 import Login from './components/SignUp/WelcomeToZennAura/WelcomeToZennAura';
@@ -38,6 +39,7 @@ import CouponList from './Admin/Coupon/CouponList/CoupunList';
 import EditCoupon from './Admin/Coupon/EditCoupon/EditCoupon';
 import ContactUs from './components/ContactUs/ContactUs';
 import ContactQueryList from './Admin/ContactQueryList/ContactQueryList';
+import ViewAllUsers from './Admin/ViewAllUsers/ViewAllUsers';
 
 function App() {
   const { user } = useUser();
@@ -72,19 +74,24 @@ function App() {
         <Route path="/emailforforgotpassword" element={<ForgotPasswordEmail />} />
         <Route path="/resetpasswordvarification" element={<VerificationCodeforgotpassword />} />
         <Route path="/resetpassword" element={<SetNewPassword />} />
-
-
-        <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
-        <Route path="/manageproducts" element={<ProtectedRoute><ManageProducts /></ProtectedRoute>} />
-        <Route path="/admin-homepage" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/admin-view-orders" element={<ProtectedRoute><ViewAllorder /></ProtectedRoute>} />
-        <Route path="/admin-view-products" element={<ProtectedRoute><ViewAllProduct /></ProtectedRoute>} />
-        <Route path="/admin-update-product-form" element={<ProtectedRoute><UpdateProduct /></ProtectedRoute>} />
-        <Route path="/generatecouponcode" element={<ProtectedRoute><CouponGenerator /></ProtectedRoute>} />
-        <Route path="/allcoupons" element={<ProtectedRoute><CouponList /></ProtectedRoute>} />
-        <Route path="/edit-coupon/:couponId" element={<ProtectedRoute><EditCoupon /></ProtectedRoute>} />
         <Route path="/contactus" element={<ContactUs />} />
-        <Route path="/queries" element={<ProtectedRoute><ContactQueryList/></ProtectedRoute>} />
+
+        
+
+        {/* all the admin part should be in this protected route by which i can not accesible be any user */}
+       <Route element={<ProtectedRouteforadminpage />}>
+          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/manageproducts" element={<ManageProducts />} />
+          <Route path="/admin-homepage" element={<AdminDashboard />} />
+          <Route path="/admin-view-orders" element={<ViewAllorder />} />
+          <Route path="/admin-view-products" element={<ViewAllProduct />} />
+          <Route path="/admin-update-product-form" element={<UpdateProduct />} />
+          <Route path="/generatecouponcode" element={<CouponGenerator />} />
+          <Route path="/allcoupons" element={<CouponList />} />
+          <Route path="/edit-coupon/:couponId" element={<EditCoupon />} />
+          <Route path="/queries" element={<ContactQueryList />} />
+          <Route path="/users" element={<ViewAllUsers />} />
+        </Route>
       </Routes>
 
       {location.pathname !== '/verification' && location.pathname !== '/emailforforgotpassword' && location.pathname !== '/resetpasswordvarification' && location.pathname !== '/resetpassword' && <Footer />}

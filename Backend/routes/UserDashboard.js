@@ -114,4 +114,13 @@ router.put('/profile-image/:id', async (req, res) => {
   }
 });
 
+router.get('/fetchalluser', async (req, res) => {
+  try {
+    const users = await User.find({}).sort('-createdAt');
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
   module.exports = router;
