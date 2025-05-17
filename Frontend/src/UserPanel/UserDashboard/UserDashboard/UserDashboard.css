@@ -1,5 +1,5 @@
 .UserDashboard-container {
-  width: 75%;
+  width: 100%;
   padding: 30px;
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
@@ -133,6 +133,7 @@
 
 /* Tablets and Up */
 @media (min-width: 768px) {
+
   .UserDashboard-box {
     flex-direction: row;
     align-items: flex-start;
@@ -151,6 +152,8 @@
 @media (min-width: 992px) {
   .UserDashboard-container {
     padding: 2rem;
+  width: 75%;
+
   }
 
   .UserDashboard-userDetails {

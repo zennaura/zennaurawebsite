@@ -76,6 +76,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .shipping-message {
@@ -264,11 +265,6 @@
   background-color: #333;
 }
 
-.cart-empty {
-  text-align: center;
-  padding: 3rem 0;
-  color: #888;
-}
 
 .cart-overlay {
   position: fixed;
@@ -374,4 +370,81 @@
   text-decoration: line-through;
   color: #000;
   /* font-size: 0.85rem; */
+}
+
+.cart-empty{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.close-btn-empty{
+  cursor: pointer;
+  font-size: 3rem;
+  color: #000;
+}
+
+.empty-cart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.empty-cart-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.empty-cart-icon {
+  margin-bottom: 1.5rem;
+  color: #666; /* Adjust color as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-cart-title {
+  font-size: 1.rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.empty-cart-message {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.empty-cart-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.empty-cart-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.empty-cart-button.primary {
+  background-color: #2563eb; /* Adjust to your brand color */
+  color: white;
+}
+
+.empty-cart-button.primary:hover {
+  background-color: #1d4ed8; /* Darker shade */
+}
+
+.empty-cart-button.secondary {
+  background-color: transparent;
+  color: #2563eb; /* Match primary color */
+  border: 1px solid #2563eb;
+}
+
+.empty-cart-button.secondary:hover {
+  background-color: #f0f5ff; /* Very light tint of primary color */
 }

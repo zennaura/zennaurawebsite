@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './CartSidebar.css';
 import { useUser } from '../AuthContext/AuthContext';
 import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
+import { MdShoppingCart } from 'react-icons/md'; // Material Design
 
 const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
 
     try {
       await axios.put(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/updateQuantity`, {
-        userId: user._id||'',
+        userId: user._id || '',
         productId,
         variantId,
         quantity: newQuantity
@@ -54,7 +56,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
     } catch (error) {
       console.error('Error updating quantity:', error);
     }
-  };  
+  };
 
   const removeItem = async (productId, variantId) => {
     try {
@@ -162,16 +164,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
       <div className={`cart-overlay ${isOpen ? 'open' : ''}`} onClick={onClose} />
 
       <div className={`cart-sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="cart-header">
-          <div className="cart-total-product-count">
-            <h2>Cart <span className="cart-product-count">{cartItemCount}</span></h2>
-            <button onClick={onClose} className="close-btn">×</button>
-          </div>
-          <div className="shipping-message">
-            {getShippingMessage()}
-          </div>
-        </div>
-
+       
         <div className="cart-content">
           {loading ? (
             <div className="loading-spinner-container">
@@ -179,11 +172,42 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
               <p>Loading cart...</p>
             </div>
           ) : cartItems.length === 0 ? (
+
+            // when cart is empty
             <div className="cart-empty">
-              <p>Your cart is empty</p>
+              <button onClick={onClose} className="close-btn-empty">×</button>
+
+              <div className="empty-cart-container">
+                <div className="empty-cart-content">
+                  <div className="empty-cart-icon">
+
+                    <MdShoppingCart size={64} />
+                  </div>
+                  <h2 className="empty-cart-title">Oops! Your bag is empty!</h2>
+                  <p className="empty-cart-message">Start adding products now.</p>
+
+                  <div className="empty-cart-actions">
+                    <Link to="/wishlist" className="empty-cart-button primary">
+                      Add Items From Wishlist
+                    </Link>
+                    <Link to="/products" className="empty-cart-button secondary">
+                      Continue shopping
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <>
+              <div className="cart-header">
+                <div className="cart-total-product-count">
+                  <h2>Cart <span className="cart-product-count">{cartItemCount}</span></h2>
+                  <button onClick={onClose} className="close-btn">×</button>
+                </div>
+                <div className="shipping-message">
+                  {getShippingMessage()}
+                </div>
+              </div>
               <div className="quick-add-section">
                 <h3>View quick add items:</h3>
                 {cartItems.map((item) => (
@@ -283,7 +307,7 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
                 </div>
               </div>
 
-              <button className="checkout-btn" onClick={() => {handleCheckout(); onClose();}}>CHECKOUT</button>
+              <button className="checkout-btn" onClick={() => { handleCheckout(); onClose(); }}>CHECKOUT</button>
             </>
           )}
         </div>
