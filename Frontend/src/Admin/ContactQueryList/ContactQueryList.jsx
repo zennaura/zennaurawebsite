@@ -7,7 +7,7 @@ const ContactQueryList = () => {
 
   const fetchQueries = async () => {
     try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/contact/fetchqueries`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/contact/unreplied`);
       const data = await res.json();
       setQueries(data);
     } catch (err) {

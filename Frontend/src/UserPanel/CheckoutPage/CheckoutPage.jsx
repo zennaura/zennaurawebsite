@@ -3,6 +3,7 @@ import axios from "axios";
 import ImageHead from "../../components/ImageHead/ImageHead";
 import { useUser } from "../../components/AuthContext/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -23,7 +24,9 @@ const CheckoutPage = () => {
   const [error, setError] = useState(null);
 
   // Address states
-  const [selectedAddressId, setSelectedAddressId] = useState(user?.Address?.[0]?._id || "");
+  const [selectedAddressId, setSelectedAddressId] = useState(
+    user?.Address?.[0]?._id || ""
+  );
   const [country, setCountry] = useState(user?.Address?.[0]?.country || "");
   const [city, setCity] = useState(user?.Address?.[0]?.city || "");
   const [state, setState] = useState(user?.Address?.[0]?.state || "");
@@ -47,7 +50,9 @@ const CheckoutPage = () => {
   if (!products.length) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <h2 className="text-xl font-semibold">No product data found. Please go back and select products.</h2>
+        <h2 className="text-xl font-semibold">
+          No product data found. Please go back and select products.
+        </h2>
       </div>
     );
   }
@@ -60,18 +65,18 @@ const CheckoutPage = () => {
   }, 0);
 
   const shipping = 100;
-  
+
   // Calculate discount based on percentage
   const calculateDiscount = () => {
     if (!appliedCoupon) return 0;
-    
+
     const percentageDiscount = subtotal * (appliedCoupon.discount / 100);
-    
+
     // Apply max discount if specified
     if (appliedCoupon.maxDiscount) {
       return Math.min(percentageDiscount, appliedCoupon.maxDiscount);
     }
-    
+
     return percentageDiscount;
   };
 
@@ -83,7 +88,7 @@ const CheckoutPage = () => {
     try {
       setCouponMessage("");
       setIsCheckingCoupon(true);
-      
+
       if (!couponCode.trim()) {
         setCouponMessage("Please enter a coupon code");
         return;
@@ -116,14 +121,15 @@ const CheckoutPage = () => {
 
       // Apply valid coupon
       setAppliedCoupon(coupon);
-      setCouponMessage(`Coupon applied! You have got ${coupon.discount}% of discount`);
-      
+      setCouponMessage(
+        `Coupon applied! You have got ${coupon.discount}% of discount`
+      );
     } catch (error) {
       console.error("Coupon validation error:", error);
       setCouponMessage(
         error.response?.data?.message ||
-        error.message ||
-        "Failed to validate coupon. Please try again."
+          error.message ||
+          "Failed to validate coupon. Please try again."
       );
     } finally {
       setIsCheckingCoupon(false);
@@ -160,6 +166,69 @@ const CheckoutPage = () => {
     }));
   };
 
+  // Send order confirmation email
+  const sendOrderConfirmationEmail = async () => {
+    try {
+      // Prepare the email message with order details
+      const message = `
+        <h2>Thank you for your order!</h2>
+        <p>Dear ${firstName} ${lastName},</p>
+        <p>You have successfully placed an order with the following details:</p>
+        
+        <h3>Order Summary:</h3>
+        <ul>
+          ${products
+            .map(
+              (product) => `
+            <li>
+              ${product.name} (${product.size || "Standard"}) - 
+              Quantity: ${quantities[product._id] || 1} - 
+              Price: ₹${product.salePrice}
+            </li>
+          `
+            )
+            .join("")}
+        </ul>
+        
+        <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
+        ${
+          appliedCoupon
+            ? `<p><strong>Discount (${appliedCoupon.discount}%):</strong> -₹${discountAmount.toFixed(
+                2
+              )}</p>`
+            : ""
+        }
+        <p><strong>Shipping:</strong> ₹${shipping.toFixed(2)}</p>
+        <p><strong>Total Amount:</strong> ₹${total.toFixed(2)}</p>
+        
+        <h3>Shipping Address:</h3>
+        <p>${address}, ${city}, ${state}, ${country}, ${postalCode}</p>
+        
+        <p>Thank you for shopping with us!</p>
+      `;
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/email/sendMail`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            to: email,
+            subject: `Order Confirmation - ${new Date().toLocaleDateString()}`,
+            message: message,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (!data.success) {
+        console.error("Order confirmation email failed:", data.message);
+      }
+    } catch (err) {
+      console.error("Failed to send order confirmation email:", err);
+    }
+  };
+
   // Handle order submission
   const handlePlaceOrder = async () => {
     // Validate all required fields
@@ -172,10 +241,10 @@ const CheckoutPage = () => {
       { value: firstName, field: "First Name" },
       { value: lastName, field: "Last Name" },
       { value: email, field: "Email" },
-      { value: phone, field: "Phone" }
+      { value: phone, field: "Phone" },
     ];
 
-    const missingField = requiredFields.find(field => !field.value);
+    const missingField = requiredFields.find((field) => !field.value);
     if (missingField) {
       setError(`Please fill in the ${missingField.field} field`);
       return;
@@ -205,13 +274,16 @@ const CheckoutPage = () => {
 
     try {
       // Prepare order items
-      const orderItems = products.map(product => {
+      const orderItems = products.map((product) => {
         if (!product._id) throw new Error(`Product ${product.name} has no ID`);
         const quantity = Number(quantities[product._id] || 1);
-        if (isNaN(quantity)) throw new Error(`Invalid quantity for ${product.name}`);
-        if (quantity < 1) throw new Error(`Quantity must be at least 1 for ${product.name}`);
+        if (isNaN(quantity))
+          throw new Error(`Invalid quantity for ${product.name}`);
+        if (quantity < 1)
+          throw new Error(`Quantity must be at least 1 for ${product.name}`);
         const price = Number(product.salePrice);
-        if (isNaN(price) || price <= 0) throw new Error(`Invalid price for ${product.name}`);
+        if (isNaN(price) || price <= 0)
+          throw new Error(`Invalid price for ${product.name}`);
         return {
           product: product._id,
           quantity,
@@ -220,27 +292,32 @@ const CheckoutPage = () => {
       });
 
       // Prepare order data
-      const orderData = {
-        user: user?._id ? { user: user._id } : null,
-        guestUser: !user?._id ? {
-          firstName,
-          lastName,
-          email,
-          phone
-        } : null,
-        orderItems,
-        shippingAddress: `${address}, ${city}, ${state}, ${country}, ${postalCode}`,
-        paymentMethod: "COD",
-        subtotal: parseFloat(subtotal.toFixed(2)),
-        shipping: parseFloat(shipping.toFixed(2)),
-        discount: parseFloat(discountAmount.toFixed(2)),
-        totalAmount: parseFloat(total.toFixed(2)),
-        appliedCoupon: appliedCoupon ? couponCode : null,
-        couponDetails: appliedCoupon ? {
-          percentage: appliedCoupon.discount,
-          maxDiscount: appliedCoupon.maxDiscount
-        } : null
-      };
+      // Prepare order data
+const orderData = {
+  user: user?._id || null, // Changed from { user: user._id } to just user._id
+  guestUser: !user?._id
+    ? {
+        firstName,
+        lastName,
+        email,
+        phone,
+      }
+    : null,
+  orderItems,
+  shippingAddress: `${address}, ${city}, ${state}, ${country}, ${postalCode}`,
+  paymentMethod: "COD",
+  subtotal: parseFloat(subtotal.toFixed(2)),
+  shipping: parseFloat(shipping.toFixed(2)),
+  discount: parseFloat(discountAmount.toFixed(2)),
+  totalAmount: parseFloat(total.toFixed(2)),
+  appliedCoupon: appliedCoupon ? couponCode : null,
+  couponDetails: appliedCoupon
+    ? {
+        percentage: appliedCoupon.discount,
+        maxDiscount: appliedCoupon.maxDiscount,
+      }
+    : null,
+};
 
       // Submit order
       const response = await axios.post(
@@ -257,21 +334,23 @@ const CheckoutPage = () => {
         throw new Error(response.data.message || "Order failed");
       }
 
+      // Send order confirmation email
+      await sendOrderConfirmationEmail();
+
       // Navigate to thank you page
       navigate("/thankyou-page", {
         state: {
           orderId: response.data.order._id,
           total: total,
-          couponUsed: appliedCoupon ? couponCode : null
+          couponUsed: appliedCoupon ? couponCode : null,
         },
       });
-
     } catch (error) {
       console.error("Order error:", error);
       setError(
         error.response?.data?.message ||
-        error.message ||
-        "Failed to place order. Please try again."
+          error.message ||
+          "Failed to place order. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -293,10 +372,14 @@ const CheckoutPage = () => {
 
           {/* Contact Information Section */}
           <div className="checkout-page-contact bg-white p-4 md:p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Contact Details</h2>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+              Contact Details
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               <div>
-                <label className="block text-sm text-gray-500 mb-1">First Name</label>
+                <label className="block text-sm text-gray-500 mb-1">
+                  First Name
+                </label>
                 <input
                   type="text"
                   value={firstName}
@@ -306,7 +389,9 @@ const CheckoutPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Last Name</label>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Last Name
+                </label>
                 <input
                   type="text"
                   value={lastName}
@@ -316,7 +401,9 @@ const CheckoutPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Email</label>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Email
+                </label>
                 <input
                   type="email"
                   value={email}
@@ -326,7 +413,9 @@ const CheckoutPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Phone</label>
+                <label className="block text-sm text-gray-500 mb-1">
+                  Phone
+                </label>
                 <input
                   type="tel"
                   value={phone}
@@ -343,7 +432,9 @@ const CheckoutPage = () => {
             {user?.Address?.length > 0 ? (
               <>
                 <div className="flex justify-between items-center">
-                  <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Shipping Address</h2>
+                  <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+                    Shipping Address
+                  </h2>
                   <button
                     onClick={() => setShowAllAddresses(!showAllAddresses)}
                     className="text-sm md:text-base text-blue-500 underline"
@@ -353,7 +444,9 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label className="block mb-2 font-medium text-gray-700">Select Address</label>
+                  <label className="block mb-2 font-medium text-gray-700">
+                    Select Address
+                  </label>
                   <select
                     value={selectedAddressId}
                     onChange={handleAddressChange}
@@ -368,58 +461,70 @@ const CheckoutPage = () => {
                 </div>
               </>
             ) : (
-              <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Shipping Address</h2>
+              <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+                Shipping Address
+              </h2>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Country/Region</label>
-                <input 
-                  type="text" 
-                  value={country} 
+                <label className="block text-sm text-gray-500 mb-1">
+                  Country/Region
+                </label>
+                <input
+                  type="text"
+                  value={country}
                   className="w-full border-b outline-none p-2 bg-transparent"
-                  onChange={(e) => setCountry(e.target.value)} 
-                  required 
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">City</label>
-                <input 
-                  type="text" 
-                  value={city} 
+                <label className="block text-sm text-gray-500 mb-1">
+                  City
+                </label>
+                <input
+                  type="text"
+                  value={city}
                   className="w-full border-b outline-none p-2 bg-transparent"
-                  onChange={(e) => setCity(e.target.value)} 
-                  required 
+                  onChange={(e) => setCity(e.target.value)}
+                  required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">State</label>
-                <input 
-                  type="text" 
-                  value={state} 
+                <label className="block text-sm text-gray-500 mb-1">
+                  State
+                </label>
+                <input
+                  type="text"
+                  value={state}
                   className="w-full border-b outline-none p-2 bg-transparent"
-                  onChange={(e) => setState(e.target.value)} 
-                  required 
+                  onChange={(e) => setState(e.target.value)}
+                  required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">Postal Code</label>
-                <input 
-                  type="text" 
-                  value={postalCode} 
+                <label className="block text-sm text-gray-500 mb-1">
+                  Postal Code
+                </label>
+                <input
+                  type="text"
+                  value={postalCode}
                   className="w-full border-b outline-none p-2 bg-transparent"
-                  onChange={(e) => setPostalCode(e.target.value)} 
-                  required 
+                  onChange={(e) => setPostalCode(e.target.value)}
+                  required
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-sm text-gray-500 mb-1">Address</label>
-                <input 
-                  type="text" 
-                  value={address} 
+                <label className="block text-sm text-gray-500 mb-1">
+                  Address
+                </label>
+                <input
+                  type="text"
+                  value={address}
                   className="w-full border-b outline-none p-2 bg-transparent"
-                  onChange={(e) => setAddress(e.target.value)} 
-                  required 
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -428,11 +533,21 @@ const CheckoutPage = () => {
               <div className="mt-6 space-y-4">
                 {user.Address.map((addr) => (
                   <div key={addr._id} className="p-4 bg-gray-50 rounded shadow">
-                    <p><strong>Country:</strong> {addr.country}</p>
-                    <p><strong>City:</strong> {addr.city}</p>
-                    <p><strong>State:</strong> {addr.state}</p>
-                    <p><strong>Postal Code:</strong> {addr.zipCode}</p>
-                    <p><strong>Address:</strong> {addr.addressLine1}</p>
+                    <p>
+                      <strong>Country:</strong> {addr.country}
+                    </p>
+                    <p>
+                      <strong>City:</strong> {addr.city}
+                    </p>
+                    <p>
+                      <strong>State:</strong> {addr.state}
+                    </p>
+                    <p>
+                      <strong>Postal Code:</strong> {addr.zipCode}
+                    </p>
+                    <p>
+                      <strong>Address:</strong> {addr.addressLine1}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -444,12 +559,16 @@ const CheckoutPage = () => {
             <button
               onClick={handlePlaceOrder}
               disabled={isSubmitting}
-              className={`w-full border-2 border-[#45040F] text-[#45040F] py-3 md:py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`w-full border-2 border-[#45040F] text-[#45040F] py-3 md:py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              {isSubmitting ? 'Processing...' : 'Place Order'}
+              {isSubmitting ? "Processing..." : "Place Order"}
             </button>
             <div className="mt-3 md:mt-4 text-center">
-              <a href="/cart" className="text-[#45040F] underline">BACK TO SHOPPING CART</a>
+              <a href="/cart" className="text-[#45040F] underline">
+                BACK TO SHOPPING CART
+              </a>
             </div>
           </div>
         </div>
@@ -459,7 +578,9 @@ const CheckoutPage = () => {
           <div className="space-y-4 md:space-y-6">
             <div className="flex justify-between items-center border-b pb-2">
               <h3 className="text-base md:text-lg font-semibold">Your Order</h3>
-              <a href="/cart" className="text-sm underline">Edit cart</a>
+              <a href="/cart" className="text-sm underline">
+                Edit cart
+              </a>
             </div>
 
             {/* Coupon Code Section */}
@@ -484,14 +605,20 @@ const CheckoutPage = () => {
                   <button
                     onClick={handleApplyCoupon}
                     disabled={isCheckingCoupon}
-                    className={`bg-[#45040F] text-white px-4 py-2 rounded-md hover:bg-[#5a0515] transition ${isCheckingCoupon ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`bg-[#45040F] text-white px-4 py-2 rounded-md hover:bg-[#5a0515] transition ${
+                      isCheckingCoupon ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   >
-                    {isCheckingCoupon ? 'Checking...' : 'Apply'}
+                    {isCheckingCoupon ? "Checking..." : "Apply"}
                   </button>
                 )}
               </div>
               {couponMessage && (
-                <p className={`text-sm ${appliedCoupon ? 'text-green-500' : 'text-red-500'}`}>
+                <p
+                  className={`text-sm ${
+                    appliedCoupon ? "text-green-500" : "text-red-500"
+                  }`}
+                >
                   {couponMessage}
                 </p>
               )}
@@ -499,26 +626,37 @@ const CheckoutPage = () => {
 
             {/* Product List */}
             {products.map((product) => (
-              <div key={`${product._id}-${product.variantId || 'default'}`} className="flex items-center gap-3 md:gap-4">
-                <img 
-                  src={product.frontImage} 
-                  alt={product.name} 
-                  className="bg-gray-200 h-14 md:h-16 w-14 md:w-16 object-cover rounded" 
+              <div
+                key={`${product._id}-${product.variantId || "default"}`}
+                className="flex items-center gap-3 md:gap-4"
+              >
+                <img
+                  src={product.frontImage}
+                  alt={product.name}
+                  className="bg-gray-200 h-14 md:h-16 w-14 md:w-16 object-cover rounded"
                 />
                 <div className="flex flex-col flex-grow">
                   <p className="font-medium text-sm md:text-base">{product.name}</p>
                   <p className="text-xs md:text-sm text-gray-500">{product.size}</p>
-                  <select 
+                  <select
                     className="mt-1 border p-1 text-xs md:text-sm max-w-[80px]"
-                    value={quantities[product._id]} 
-                    onChange={(e) => handleQuantityChange(product._id, Number(e.target.value))}
+                    value={quantities[product._id]}
+                    onChange={(e) =>
+                      handleQuantityChange(product._id, Number(e.target.value))
+                    }
                   >
-                    {[...Array(Math.min(10, product.stock || 10)).keys()].map((i) => (
-                      <option key={i + 1} value={i + 1}>{i + 1}</option>
-                    ))}
+                    {[...Array(Math.min(10, product.stock || 10)).keys()].map(
+                      (i) => (
+                        <option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
-                <p className="font-medium text-sm md:text-base whitespace-nowrap">₹{product.salePrice}</p>
+                <p className="font-medium text-sm md:text-base whitespace-nowrap">
+                  ₹{product.salePrice}
+                </p>
               </div>
             ))}
 

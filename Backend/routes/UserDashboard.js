@@ -2,28 +2,6 @@ const express = require("express");
 const router = express.Router();
 const User = require("../model/UserRegistration");
 
-
-// In your backend routes
-router.put('/:id', async (req, res) => {
-  try {
-    const { firstName, lastName, phone, profileImage } = req.body;
-    
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { firstName, lastName, phone, profileImage },
-      { new: true } // Return the updated user
-    );
-    
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-// In your userDashboardRoutes.js
 router.post('/:userId/address', async (req, res) => {
     try {
       const { userId } = req.params;
@@ -115,4 +93,25 @@ router.put('/:userId/password', async (req, res) => {
         });
     }
 });
+
+router.put('/profile-image/:id', async (req, res) => {
+  const { id } = req.params;
+  const { profileimage } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { profilePicture: profileimage },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.status(200).json({ message: 'Profile image updated', user });
+  } catch (error) {
+    console.error('Update profile image error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
   module.exports = router;

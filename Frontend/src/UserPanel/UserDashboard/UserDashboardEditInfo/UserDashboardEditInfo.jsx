@@ -6,7 +6,6 @@ import './UserDashboardEditInfo.css';
 const UserDashboardEditInfo = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
-  const [isUploading, setIsUploading] = useState(false);
   
   // Initialize form state with user data (keeping all original fields)
   const [formData, setFormData] = useState({
@@ -17,8 +16,7 @@ const UserDashboardEditInfo = () => {
     email: user?.email || '',
     dateOfAnniversary: user?.dateOfAnniversary?.split('T')[0] || '',
     gender: user?.gender || '',
-    country: user?.Address?.[0]?.country || 'India',
-    profileImage: user?.profileImage || ''
+    country: user?.Address?.[0]?.country || 'India'
   });
 
   const handleChange = (e) => {
@@ -29,25 +27,6 @@ const UserDashboardEditInfo = () => {
     }));
   };
 
-  // Simplified image upload - just stores as base64
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setIsUploading(true);
-    
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFormData(prev => ({
-        ...prev,
-        profileImage: reader.result
-      }));
-      setIsUploading(false);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // Simplified submit - just logs data and updates local state
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -63,43 +42,12 @@ const UserDashboardEditInfo = () => {
     
     setUser(updatedUser);
     alert('Profile updated successfully!');
-    navigate('/profile');
+    navigate('/userdashboard');
   };
 
-  // Keep the exact same JSX structure to preserve CSS
   return (
     <div className="UserDashboardEditInfo-container">
       <h2 className="UserDashboardEditInfo-title">Personal Information</h2>
-      
-      <div className="profile-image-section">
-        <label htmlFor="profile-upload" className="profile-upload-label">
-          {isUploading ? (
-            <div className="uploading-text">Uploading...</div>
-          ) : (
-            <>
-              {formData.profileImage ? (
-                <img 
-                  src={formData.profileImage} 
-                  alt="Profile" 
-                  className="profile-image-preview"
-                />
-              ) : (
-                <div className="profile-image-placeholder">
-                  {formData.firstName?.charAt(0) || 'U'}
-                </div>
-              )}
-              <span className="edit-icon">✏️ Edit Photo</span>
-            </>
-          )}
-        </label>
-        <input
-          id="profile-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          style={{ display: 'none' }}
-        />
-      </div>
       
       <form className="UserDashboardEditInfo-form" onSubmit={handleSubmit}>
         <div className="UserDashboardEditInfo-formGroup">

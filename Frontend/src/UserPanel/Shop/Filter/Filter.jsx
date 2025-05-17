@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Filter.css';
 
-const Filter = () => {
+const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
-  const [productCategories, setProductCategories] = useState([]);
-  const [concerns, setConcerns] = useState([]);
-  const [intents, setIntents] = useState([]);
+  // const [productCategories, setProductCategories] = useState([]);
+  // const [intents, setIntents] = useState([]);
   const [rating, setRating] = useState('');
+  // const [concerns, setConcerns] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [availableConcerns, setAvailableConcerns] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
@@ -50,15 +50,7 @@ const Filter = () => {
 
   const handleCheckboxChange = (e, type) => {
     const value = e.target.value;
-    const setter = {
-      productCategories: setProductCategories,
-      concerns: setConcerns,
-      intents: setIntents,
-    }[type];
-
-    setter((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
-    );
+    onFilterChange(type, value);
   };
 
   return (
@@ -95,10 +87,7 @@ const Filter = () => {
           <div className="filter-option-group">
             {categoryData.map((parent) =>
               parent.subCategories.map((sub) => (
-                <div
-                  key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`}
-                  className="filter-option"
-                >
+                <div key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`} className="filter-option">
                   {(sub.categories || []).map((category) => (
                     <div key={`${parent.parentCategory}-${sub.subCategory}-${category}`}>
                       <input
@@ -109,7 +98,7 @@ const Filter = () => {
                         onChange={(e) => handleCheckboxChange(e, 'productCategories')}
                       />
                       <label htmlFor={`${sub.subCategory}-${category}`}>
-                        {parent.parentCategory} → {sub.subCategory} → {category}
+                        {parent.parentCategory ? parent.parentCategory : ""} {category ? "→ " + category : ""} {sub.subCategory ? "→ " + sub.subCategory : ""}
                       </label>
                     </div>
                   ))}
@@ -118,6 +107,7 @@ const Filter = () => {
             )}
           </div>
         </div>
+
 
         {/* Concern */}
         <div className="filter-concern">

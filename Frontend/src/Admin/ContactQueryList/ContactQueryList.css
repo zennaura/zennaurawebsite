@@ -1,6 +1,7 @@
 .main-contact-container{
     display: flex;
-    flex-direction: column;
+    background-color: #f9f9f9;
+
 }
 
 .contactqueries-container {
@@ -8,6 +9,7 @@
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   min-height: 100vh;
+  padding-left: 10rem;
 }
 
 .contactqueries-heading {
