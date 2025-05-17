@@ -215,20 +215,70 @@
   .SignInUpForm-overlay-right {
   transform: translateX(20%);
 }
-
-.SignInUpForm-social-container {
-  margin: 20px 0;
+.SignInUpForm-social-container{
+  display: flex;
+  gap: 1rem;
+  color: #fff;
 }
 
-.SignInUpForm-social-container a {
-  border: 1px solid #dddddd;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
+/* General Styles */
+.SignInUpForm-social {
+  display: flex;
   align-items: center;
-  margin: 0 5px;
-  height: 30px;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+/* Facebook Button */
+.SignInUpForm-social {
+  background-color: #1877F2; /* Facebook blue */
+  color: white;
+}
+.SignInUpForm-google
+.SignInUpForm-social-icon{
+  border: 1px solid #c23327 ;
+
+}
+.SignInUpForm-social-icon{
+  background-color: #fff;
+  padding: 10px 10px;
+  border: 1px solid #156eeb ;
+
+}
+
+.SignInUpForm-social:hover {
+  background-color: #156eeb; /* Slightly darker blue on hover */
+}
+
+/* Google Button */
+.SignInUpForm-google {
+  background-color: #DB4437; /* Google red */
+  color: white;
+}
+
+.SignInUpForm-google:hover {
+  background-color: #c23327; /* Slightly darker red on hover */
+}
+
+/* Icon Styling */
+.SignInUpForm-social svg {
   width: 30px;
+  height: 30px;
+}
+
+/* Text Styling */
+.SignInUpForm-social-content {
+  display: flex;
+  color: #fff;
+  align-items: center;
+  padding: 10px 10px;
+
 }
 
 .SignInUpForm-fullname {

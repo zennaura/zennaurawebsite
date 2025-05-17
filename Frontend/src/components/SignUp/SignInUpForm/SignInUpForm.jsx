@@ -12,9 +12,9 @@ import FollowUs from "../../../UserPanel/FollowUs/FollowUs";
 import "./SignInUpForm.css";
 import {
     FaFacebookF,
-    FaGooglePlusG,
-    FaLinkedinIn,
+
 } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 axios.defaults.withCredentials = true;
 
@@ -113,10 +113,21 @@ const SignInUpForm = () => {
                     <div className="SignInUpForm-form-container SignInUpForm-sign-up-container">
                         <form>
                             <h1>Create Account</h1>
-                            <div className="SignInUpForm-social-container">
-                                <a href="#" className="SignInUpForm-social"><FaFacebookF /></a>
-                                <a href="#" className="SignInUpForm-social"><FaGooglePlusG /></a>
-                                <a href="#" className="SignInUpForm-social"><FaLinkedinIn /></a>
+                                 <div className="SignInUpForm-social-container">
+                                <a href="#" className="SignInUpForm-social">
+                                    <div className="SignInUpForm-social-icon">
+                                        <FaFacebookF />
+                                    </div>
+                                    <div className="SignInUpForm-social-content">Sign In With Facebook</div>
+                                </a>
+                                <a href="#" className="SignInUpForm-social SignInUpForm-google">
+                                    <div className="SignInUpForm-social-icon">
+                                        <FcGoogle />
+                                    </div>
+                                    <div className="SignInUpForm-social-content">Sign In With Google</div>
+                                </a>
+
+
                             </div>
                             <span>or use your email for registration</span>
                             <div className="SignInUpForm-fullname">
@@ -137,9 +148,20 @@ const SignInUpForm = () => {
                         <form onSubmit={handleLogin}>
                             <h1>Sign in</h1>
                             <div className="SignInUpForm-social-container">
-                                <a href="#" className="SignInUpForm-social"><FaFacebookF /></a>
-                                <a href="#" className="SignInUpForm-social"><FaGooglePlusG /></a>
-                                <a href="#" className="SignInUpForm-social"><FaLinkedinIn /></a>
+                                <a href="#" className="SignInUpForm-social">
+                                    <div className="SignInUpForm-social-icon">
+                                        <FaFacebookF />
+                                    </div>
+                                    <div className="SignInUpForm-social-content">Sign In With Facebook</div>
+                                </a>
+                                <a href="#" className="SignInUpForm-social SignInUpForm-google">
+                                    <div className="SignInUpForm-social-icon">
+                                        <FcGoogle />
+                                    </div>
+                                    <div className="SignInUpForm-social-content">Sign In With Google</div>
+                                </a>
+
+
                             </div>
                             <span>or use your account</span>
                             <input type="email" name="email" placeholder="Email" onChange={handleChange} />
@@ -185,8 +207,8 @@ const SignInUpForm = () => {
                         <h1 className="text-2xl font-bold mb-4 text-center">Sign In</h1>
                         <div className="flex justify-center space-x-2 mb-4">
                             <a href="#" className="p-2 border rounded-full"><FaFacebookF /></a>
-                            <a href="#" className="p-2 border rounded-full"><FaGooglePlusG /></a>
-                            <a href="#" className="p-2 border rounded-full"><FaLinkedinIn /></a>
+                            <a href="#" className="p-2 border rounded-full"><FcGoogle /></a>
+
                         </div>
                         <span className="text-sm mb-2 text-center">or use your account</span>
                         <input type="email" name="email" placeholder="Email" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
@@ -202,8 +224,8 @@ const SignInUpForm = () => {
                         <h1 className="text-2xl font-bold mb-4 text-center">Create Account</h1>
                         <div className="flex justify-center space-x-2 mb-4">
                             <a href="#" className="p-2 border rounded-full"><FaFacebookF /></a>
-                            <a href="#" className="p-2 border rounded-full"><FaGooglePlusG /></a>
-                            <a href="#" className="p-2 border rounded-full"><FaLinkedinIn /></a>
+                            <a href="#" className="p-2 border rounded-full"><FcGoogle /></a>
+
                         </div>
                         <span className="text-sm mb-2 text-center">or use your email for registration</span>
                         <div className="flex gap-2 mb-2">
