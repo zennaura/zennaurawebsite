@@ -46,13 +46,21 @@ router.post("/products", async (req, res) => {
 });
 
 // Get all products
-router.get("/products", async (req, res) => {
+router.get('/products', async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 }).lean();
-    res.status(200).json(products);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ error: "Failed to fetch products." });
+    const { categories, concerns, intents } = req.query;
+
+    const query = {};
+
+    if (categories) query.category = { $in: JSON.parse(categories) };
+    if (concerns) query.tags = { $in: JSON.parse(concerns) };
+    if (intents) query.Intenttags = { $in: JSON.parse(intents) };
+
+    const products = await Product.find(query); // if query is empty, returns all
+    res.json(products);
+  } catch (err) {
+    console.error('Error fetching filtered products:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -425,8 +433,6 @@ async function getSearchSuggestions(query) {
     return [];
   }
 }
-
-// GET /categories - Fetch category hierarchy (parent -> sub -> category)
 router.get('/categories', async (req, res) => {
   try {
     const result = await Product.aggregate([
@@ -441,11 +447,20 @@ router.get('/categories', async (req, res) => {
       },
       {
         $group: {
+          _id: {
+            parentCategory: "$_id.parentCategory",
+            subCategory: "$_id.subCategory"
+          },
+          categories: { $addToSet: "$_id.category" }
+        }
+      },
+      {
+        $group: {
           _id: "$_id.parentCategory",
           subCategories: {
-            $addToSet: {
+            $push: {
               subCategory: "$_id.subCategory",
-              category: "$_id.category"
+              categories: "$categories"
             }
           }
         }
@@ -465,6 +480,7 @@ router.get('/categories', async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 // GET: Unique Concerns
 router.get('/concerns', async (req, res) => {
