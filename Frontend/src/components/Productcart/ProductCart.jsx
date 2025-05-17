@@ -4,62 +4,46 @@ import axios from "axios";
 import { useUser } from '../../components/AuthContext/AuthContext';
 import "./productCard.css";
 
-const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isFeatured, rating, onBuyNowClick ,isBestSeller }) => {
-  const [liked, setLiked] = React.useState(false); // State to track if the product is liked
-  const { user } = useUser(); // Get user from context
+const ProductCard = ({ id, name, title, backImage, frontimage, price, originalPrice, isBest, isFeatured, rating, onBuyNowClick, isBestSeller }) => {
+  const [liked, setLiked] = React.useState(false);
+  const { user } = useUser();
 
-  // Extract product ID and variant ID
   const productId = id.split("-")[0];
   const variantId = id.split("-")[1];
 
-  // Fetch wishlist when the component mounts
   React.useEffect(() => {
     const fetchWishlist = async () => {
       if (!user) return;
-
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/wishlist/${user._id}`);
-       
         const isInWishlist = response.data.items.some(
           (item) =>
             item.productId.toString() === productId && item.variantId.toString() === variantId
         );
-        // console.log("Is Product in Wishlist?", isInWishlist);
-
-        setLiked(isInWishlist); // Set the initial liked state
+        setLiked(isInWishlist);
       } catch (error) {
         console.error("Error fetching wishlist:", error);
       }
     };
-
     fetchWishlist();
-  }, [user, id]); // Re-fetch if user or product ID changes
+  }, [user, id]);
 
-  // Function to handle wishlist toggle
   const handleWishlistClick = async () => {
     if (!user) {
       alert("Please login to add items to wishlist");
       return;
     }
-
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/wishlist/toggle`, {
         userId: user._id,
         productId,
         variantId,
       });
-
-      // console.log("Toggle Wishlist Response:", response.data);
-
-      // Update the liked state based on the server's response
       const isInWishlist = response.data.wishlist.items.some(
         (item) =>
           item.productId.toString() === productId && item.variantId.toString() === variantId
       );
-      // console.log("Updated Is Product in Wishlist?", isInWishlist);
-
       setLiked(isInWishlist);
-
       alert(isInWishlist ? "Added to wishlist!" : "Removed from wishlist!");
     } catch (error) {
       console.error("Error:", error.response?.data?.error || error.message);
@@ -73,16 +57,14 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
         alert('Please login to add items to cart');
         return;
       }
-
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_LINK}/api/cart/add`,
         {
-          productId: id, // Full ID like "67f96b7992d4b635fe174cab-0"
-          variantId: id.split('-')[1], // Just the "0" part
+          productId: id,
+          variantId: id.split('-')[1],
           userId: user._id
         }
       );
-
       alert('Product added to cart!');
     } catch (error) {
       console.error('Error:', error.response?.data?.error || error.message);
@@ -114,36 +96,48 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
           </div>
         </div>
       )}
-      {/* Wishlist Icon */}
+      
       <div className="product-card-wishlist" onClick={handleWishlistClick}>
         {liked ? (
-          <FaHeart className="product-card-wishlist-liked" />
+          <div className="product-card-icon">
+            <FaHeart className="product-card-wishlist-liked" />
+          </div>
         ) : (
-          <FaHeart className="product-card-wishlist-default" />
+          <div className="product-card-icon">
+            <FaHeart className="product-card-wishlist-default" />
+          </div>
         )}
       </div>
 
-      {/* Image Section */}
+      {/* Updated Image Section with Flip Effect */}
       <div className="product-card-image-container">
-        <img
-          src={image || "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"}
-          alt={title}
-          className="product-card-image"
-        />
+        <div className="product-card-image-flip">
+          <div className="product-card-image-front">
+            <img
+              src={frontimage || "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"}
+              alt={title}
+              className="product-card-image"
+            />
+          </div>
+          <div className="product-card-image-back">
+            <img
+              src={backImage || frontimage || "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"}
+              alt={title}
+              className="product-card-image"
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Content Section */}
       <div className="product-card-content">
-        <h3 className="product-card-title">{name}</h3>
-        <p className="product-card-subtitle">{title}</p>
+        <h3 onClick={onBuyNowClick} className="product-card-title">{name}</h3>
+        <p onClick={onBuyNowClick} className="product-card-subtitle">{title}</p>
 
-        {/* Price Section */}
         <div className="product-card-price-container">
           <span className="product-card-price">₹{price}</span>
           <span className="product-card-original-price">₹{originalPrice}</span>
         </div>
 
-        {/* Rating Section */}
         <div className="product-card-rating">
           {[...Array(Math.floor(rating))].map((_, index) => (
             <FaStar key={index} className="product-card-star-filled" />
@@ -154,12 +148,11 @@ const ProductCard = ({ id, name, title, image, price, originalPrice, isBest, isF
           ))}
         </div>
 
-        {/* Action Buttons */}
         <div className="product-card-actions">
           <button className="product-card-add-to-cart" onClick={handleAddToCart}>
             ADD TO CART
           </button>
-          <button onClick={onBuyNowClick} className="product-card-buy-now">
+          <button className="product-card-buy-now">
             BUY NOW
           </button>
         </div>

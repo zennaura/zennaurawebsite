@@ -141,9 +141,10 @@ const ProductListingPage = ({ products }) => {
           <ProductCard
             key={variant.id}
             id={variant.id}
-            name={variant.data.name}
+            name={variant.data.variantname}
             title={variant.data.title}
-            image={variant.data.frontImage}
+            frontimage={variant.data.frontImage}
+            backImage={variant.data.backImage}
             price={variant.data.salePrice}
             originalPrice={variant.data.costPrice}
             rating={variant.data.rating}

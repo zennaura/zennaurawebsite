@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './CartSidebar.css';
 import { useUser } from '../AuthContext/AuthContext';
 import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
-import { MdShoppingCart } from 'react-icons/md'; // Material Design
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
   const navigate = useNavigate();
@@ -180,8 +180,9 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
               <div className="empty-cart-container">
                 <div className="empty-cart-content">
                   <div className="empty-cart-icon">
+                    
+                    <AiOutlineShoppingCart />
 
-                    <MdShoppingCart size={64} />
                   </div>
                   <h2 className="empty-cart-title">Oops! Your bag is empty!</h2>
                   <p className="empty-cart-message">Start adding products now.</p>

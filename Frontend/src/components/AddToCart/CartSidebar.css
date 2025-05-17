@@ -374,10 +374,14 @@
 
 .cart-empty{
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 10rem;
   flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Poppins';
 }
 .close-btn-empty{
+  text-align: end;
   cursor: pointer;
   font-size: 3rem;
   color: #000;
@@ -403,6 +407,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 3rem;
 }
 
 .empty-cart-title {
@@ -431,20 +436,16 @@
 }
 
 .empty-cart-button.primary {
-  background-color: #2563eb; /* Adjust to your brand color */
-  color: white;
+  background-color: #6666668a; /* Adjust to your brand color */
+  color: black;
 }
 
-.empty-cart-button.primary:hover {
-  background-color: #1d4ed8; /* Darker shade */
-}
 
 .empty-cart-button.secondary {
   background-color: transparent;
-  color: #2563eb; /* Match primary color */
-  border: 1px solid #2563eb;
+  background-color: #390611;
+  border: 1px solid #390611;
+  color: white;
+
 }
 
-.empty-cart-button.secondary:hover {
-  background-color: #f0f5ff; /* Very light tint of primary color */
-}

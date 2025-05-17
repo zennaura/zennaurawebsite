@@ -77,9 +77,10 @@ const BestSeller = () => {
             <div className={`Featuredproducts-card ${index == 1 || index == 2 ? 'featured-card-center' : ''}`} key={product.id}>
               <ProductCart
                 id={product.id}
-                name={product.data.name}
+                name={product.data.variantname}
                 title={product.data.title}
-                image={product.data.frontImage}
+                frontimage={product.data.frontImage}
+                backImage={product.data.backImage}
                 price={product.data.salePrice}
                 originalPrice={product.data.costPrice}
                 rating={product.data.rating}

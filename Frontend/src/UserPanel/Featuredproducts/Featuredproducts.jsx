@@ -26,13 +26,14 @@ const FeaturedProducts = () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
         const productsData = await res.json();
+        console.log('productData:', productsData)
         // making the varient as individual product 
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
             data: {
               _id: product._id,
-              name: product.name,
+              // name: product.name,
               title: product.title,
               description: product.description,
               sku: product.sku,
@@ -53,6 +54,7 @@ const FeaturedProducts = () => {
           }))
         ).filter(product => product.data.featureProduct);
         setFeaturedProducts(flattened);
+        console.log('flattend product:', flattened)
       } catch (err) {
         console.error('Error fetching featured products:', err);
       }
@@ -62,12 +64,12 @@ const FeaturedProducts = () => {
 
   // Determine cards per slide based on screen width
   const cardsPerSlide = windowWidth <= 768 ? 3 : 4;
-  
+
   // Auto-slide effect (updated with cardsPerSlide)
   useEffect(() => {
     if (!autoSlide || featuredProducts.length <= cardsPerSlide) return;
     const interval = setInterval(() => {
-      setCurrentSlide(prev => 
+      setCurrentSlide(prev =>
         prev + cardsPerSlide >= featuredProducts.length ? 0 : prev + cardsPerSlide
       );
     }, 6000000);
@@ -82,7 +84,7 @@ const FeaturedProducts = () => {
 
   // Navigation functions (updated with cardsPerSlide)
   const nextSlide = () => {
-    setCurrentSlide(prev => 
+    setCurrentSlide(prev =>
       prev + cardsPerSlide >= featuredProducts.length ? 0 : prev + cardsPerSlide
     );
     setAutoSlide(false);
@@ -90,7 +92,7 @@ const FeaturedProducts = () => {
   };
 
   const prevSlide = () => {
-    setCurrentSlide(prev => 
+    setCurrentSlide(prev =>
       prev - cardsPerSlide < 0 ? Math.max(0, featuredProducts.length - cardsPerSlide) : prev - cardsPerSlide
     );
     setAutoSlide(false);
@@ -122,18 +124,18 @@ const FeaturedProducts = () => {
           {visibleProducts.map((product, index) => (
             <div
               key={product.id}
-              className={`Featuredproducts-card ${
-                windowWidth <= 768 ? 
+              className={`Featuredproducts-card ${windowWidth <= 768 ?
                   (index === 0 ? "mobile-full-card" : "mobile-half-card") :
                   (index === 1 || index === 2) ? "featured-card-center" : ""
-              }`}
+                }`}
             >
               <ProductCart
                 key={product.id}
                 id={product.id}
-                name={product.data.name}
+                name={product.data.variantname}
                 title={product.data.title}
-                image={product.data.frontImage}
+                frontimage  ={product.data.frontImage}
+                backImage={product.data.backImage}
                 price={product.data.salePrice}
                 originalPrice={product.data.costPrice}
                 rating={product.data.rating}
