@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import {useUser} from '../../../components/AuthContext/AuthContext'
+
 
 const EditCoupon = () => {
   const { couponId } = useParams();
@@ -11,7 +13,7 @@ const EditCoupon = () => {
   const [expiryDate, setExpiryDate] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-
+const { user } = useUser();
   useEffect(() => {
     const fetchCoupon = async () => {
       try {
@@ -47,6 +49,23 @@ const EditCoupon = () => {
     }
   };
 
+  
+  if (user?.userRole !== 'admin') {
+  return (
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h2>
+        <p className="text-gray-700 mb-4">This page is not accessible by you.</p>
+        <button 
+          onClick={() => navigate('/')}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+        >
+          Go to Home
+        </button>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
       <h2 className="text-xl font-semibold mb-4 text-center">Edit Coupon</h2>
