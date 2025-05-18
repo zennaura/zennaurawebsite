@@ -1,283 +1,672 @@
-/* Admin Orders Show Container */
-.main-container{
+/* Admin Orders Show Container - Enhanced */
+.main-container {
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f7fa;
 }
-.left-container{
-  width: 250px;
+
+.left-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.right-container{
-  width: 90%;
+
+.right-container {
+  width: 100%;
+  padding: 1rem;
 }
+
 .admin-ordershow.app-content {
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #f5f7fa;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Header Styles - Enhanced */
+.admin-ordershow .app-content-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-ordershow .app-content-headerText {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.admin-ordershow .app-content-headerText::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 3px;
+}
+
+/* Search and Filter Section - Enhanced */
+.admin-ordershow .app-content-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-ordershow .search-bar {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.admin-ordershow .search-bar:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.admin-ordershow .app-content-actions-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Filter Button - Enhanced */
+.admin-ordershow .filter-button-wrapper {
+  position: relative;
+}
+
+.admin-ordershow .action-button.filter {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.admin-ordershow .action-button.filter:hover {
+  background-color: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.admin-ordershow .filter-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  width: 280px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+}
+
+.admin-ordershow .filter-button-wrapper.active .filter-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.admin-ordershow .filter-menu label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.admin-ordershow .filter-menu select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.admin-ordershow .filter-menu select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.admin-ordershow .filter-menu-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.admin-ordershow .filter-button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-ordershow .filter-button.reset {
+  background: #f8f9fa;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+}
+
+.admin-ordershow .filter-button.reset:hover {
+  background: #f1f5f9;
+}
+
+.admin-ordershow .filter-button.apply {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.admin-ordershow .filter-button.apply:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+/* Orders Table Styles - Enhanced */
+.admin-ordershow .orders-area-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.admin-ordershow .orders-header {
+  display: none; /* Hidden on mobile, shown on tablet+ */
+  background-color: #f8fafc;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+  color: #4a5568;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-ordershow .orders-row {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.admin-ordershow .orders-row:hover {
+  background-color: #f8fafc;
+  transform: translateX(2px);
+}
+
+.admin-ordershow .order-cell {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.admin-ordershow .order-cell::before {
+  content: attr(data-label);
+  font-weight: 600;
+  color: #4a5568;
+  margin-right: 1rem;
+  flex: 1;
+}
+
+.admin-ordershow .order-cell > span,
+.admin-ordershow .order-cell > div {
+  flex: 2;
+  text-align: right;
+}
+
+/* Customer Info - Enhanced */
+.admin-ordershow .customer-name {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.admin-ordershow .customer-email,
+.admin-ordershow .customer-phone {
+  font-size: 0.85rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.admin-ordershow .customer-email::before {
+  content: '✉️';
+  margin-right: 0.25rem;
+}
+
+.admin-ordershow .customer-phone::before {
+  content: '📱';
+  margin-right: 0.25rem;
+}
+
+/* Status Badges - Enhanced */
+.admin-ordershow .order-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.admin-ordershow .order-status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.admin-ordershow .order-status.processing {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+.admin-ordershow .order-status.shipped {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.admin-ordershow .order-status.delivered {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Buttons - Enhanced */
+.admin-ordershow .view-button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.admin-ordershow .view-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.admin-ordershow .view-button::after {
+  content: '→';
+  transition: transform 0.2s ease;
+}
+
+.admin-ordershow .view-button:hover::after {
+  transform: translateX(2px);
+}
+
+/* Expanded Order Details - Enhanced */
+.admin-ordershow .order-details-expanded {
+  padding: 1.5rem;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  margin-top: 1rem;
+  border: 1px solid #e2e8f0;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-ordershow .details-section {
+  margin-bottom: 1.5rem;
+}
+
+.admin-ordershow .details-section:last-child {
+  margin-bottom: 0;
+}
+
+.admin-ordershow .details-section h4 {
+  font-size: 1rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-ordershow .details-section h4::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+}
+
+/* Items List - Enhanced */
+.admin-ordershow .items-list-expanded {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.admin-ordershow .item-detail {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.admin-ordershow .item-detail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.admin-ordershow .item-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-ordershow .item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-ordershow .item-info {
+  flex: 1;
+}
+
+.admin-ordershow .item-info div {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.admin-ordershow .item-info div:last-child {
+  margin-bottom: 0;
+}
+
+/* Shipping Address - Enhanced */
+.admin-ordershow .shipping-address-details {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.admin-ordershow .shipping-address-details div {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-ordershow .shipping-address-details div:last-child {
+  margin-bottom: 0;
+}
+
+.admin-ordershow .shipping-address-details div::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #64748b;
+  opacity: 0.5;
+}
+
+/* Payment Information - Enhanced */
+.admin-ordershow .payment-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.admin-ordershow .payment-status.paid {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.admin-ordershow .payment-status.pending {
+  background-color: #fef9c3;
+  color: #854d0e;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 640px) {
+  .main-container {
+    flex-direction: row;
   }
   
-  /* Header Styles */
-  .admin-ordershow .app-content-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  .left-container {
+    width: 250px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
   }
   
-  .admin-ordershow .app-content-headerText {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
+  .right-container {
+    width: calc(100% - 250px);
+    padding: 1.5rem;
   }
   
-  .admin-ordershow .mode-switch {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Search and Filter Section */
   .admin-ordershow .app-content-actions {
-    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
   }
   
   .admin-ordershow .search-bar {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 300px;
-    font-size: 14px;
-  }
-  
-  .admin-ordershow .app-content-actions-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  /* Filter Button */
-  .admin-ordershow .filter-button-wrapper {
-    position: relative;
-  }
-  
-  .admin-ordershow .action-button {
-    background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 8px 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-  }
-  
-  .admin-ordershow .action-button:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .admin-ordershow .filter-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    width: 200px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 10;
-    display: none;
-  }
-  
-  .admin-ordershow .filter-button-wrapper:hover .filter-menu {
-    display: block;
-  }
-  
-  .admin-ordershow .filter-menu label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 13px;
-    color: #666;
-  }
-  
-  .admin-ordershow .filter-menu select {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-  }
-  
-  .admin-ordershow .filter-menu-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .admin-ordershow .filter-button {
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  
-  .admin-ordershow .filter-button.reset {
-    background: #f8f9fa;
-    border: 1px solid #ddd;
-  }
-  
-  .admin-ordershow .filter-button.apply {
-    background: #007bff;
-    color: white;
-    border: none;
-  }
-  
-  /* Orders Table Styles */
-  .admin-ordershow .orders-area-wrapper {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    overflow: hidden;
+    width: auto;
+    min-width: 300px;
   }
   
   .admin-ordershow .orders-header {
     display: flex;
-    background-color: #f8f9fa;
-    padding: 15px 20px;
-    font-weight: 600;
-    border-bottom: 1px solid #e9ecef;
   }
   
   .admin-ordershow .orders-row {
-    display: flex;
-    padding: 15px 20px;
-    border-bottom: 1px solid #e9ecef;
+    flex-direction: row;
     align-items: center;
   }
   
-  .admin-ordershow .orders-row:hover {
-    background-color: #f9f9f9;
-  }
-  
   .admin-ordershow .order-cell {
-    flex: 1;
-    padding: 0 10px;
-    min-width: 0;
-    font-size: 14px;
+    display: block;
+    padding: 0 0.5rem;
   }
   
+  .admin-ordershow .order-cell::before {
+    display: none;
+  }
+  
+  .admin-ordershow .order-cell > span,
+  .admin-ordershow .order-cell > div {
+    text-align: left;
+  }
+  
+  .admin-ordershow .customer-email,
+  .admin-ordershow .customer-phone {
+    display: block;
+  }
+  
+  .admin-ordershow .customer-email::before,
+  .admin-ordershow .customer-phone::before {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
   .admin-ordershow .order-cell.order-id {
-    flex: 0.8;
-    font-weight: 500;
+    flex: 0.5;
   }
   
   .admin-ordershow .order-cell.customer {
-    flex: 1.2;
-  }
-  
-  .admin-ordershow .order-cell.items {
     flex: 1.5;
   }
   
-  .admin-ordershow .order-cell.actions {
+  .admin-ordershow .order-cell.date {
+    flex: 0.8;
+  }
+  
+  .admin-ordershow .order-cell.items {
     flex: 0.6;
-    display: flex;
-    gap: 10px;
   }
   
-  /* Customer Info */
-  .admin-ordershow .customer-name {
-    font-weight: 500;
-    margin-bottom: 3px;
+  .admin-ordershow .order-cell.amount {
+    flex: 0.6;
   }
   
-  .admin-ordershow .customer-email {
-    font-size: 0.8rem;
-    color: #6c757d;
+  .admin-ordershow .order-cell.status {
+    flex: 0.8;
   }
   
-  /* Items List */
-  .admin-ordershow .items-list {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  .admin-ordershow .order-cell.actions {
+    flex: 0.5;
   }
-  
-  .admin-ordershow .item {
-    font-size: 0.9rem;
-  }
-  
-  /* Status Badges */
-  .admin-ordershow .order-status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: capitalize;
-  }
-  
-  .admin-ordershow .order-status.processing {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-  
-  .admin-ordershow .order-status.shipped {
-    background-color: #cce5ff;
-    color: #004085;
-  }
-  
-  .admin-ordershow .order-status.delivered {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  /* Payment Status */
-  .admin-ordershow .payment-status {
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-top: 3px;
-  }
-  
-  .admin-ordershow .payment-status.paid {
-    color: #28a745;
-  }
-  
-  .admin-ordershow .payment-status.pending {
-    color: #ffc107;
-  }
-  
-  /* Buttons */
-  .admin-ordershow .view-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: background-color 0.2s;
-  }
-  
-  .admin-ordershow .view-button:hover {
-    background-color: #0069d9;
-  }
-  
-  .admin-ordershow .action-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #6c757d;
-    transition: color 0.2s;
-  }
-  
-  .admin-ordershow .action-button:hover {
-    color: #495057;
-  }
+}
+
+/* Micro-interactions */
+.admin-ordershow .orders-row {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-ordershow .orders-row:active {
+  transform: scale(0.99);
+}
+
+/* Focus states for accessibility */
+.admin-ordershow .view-button:focus,
+.admin-ordershow .action-button.filter:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Loading skeleton animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.admin-ordershow .loading-skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Status Select Styles */
+.status-select-wrapper {
+  position: relative;
+}
+
+.status-loading {
+  font-size: 0.8rem;
+  color: #64748b;
+  padding: 0.35rem 0;
+}
+
+.status-select {
+  appearance: none;
+  padding: 0.35rem 1.75rem 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+  transition: all 0.2s ease;
+}
+
+.status-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.status-select.processing {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+.status-select.shipped {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-select.delivered {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-select.cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Status dropdown arrow color */
+.status-select option {
+  background: white;
+  color: #1a1a1a;
+}
