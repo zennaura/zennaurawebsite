@@ -48,7 +48,7 @@ router.post("/products", async (req, res) => {
 // Get all products
 router.get('/products', async (req, res) => {
   try {
-    const { categories, concerns, intents } = req.query;
+    const { subCategory, concerns, intents } = req.query;
 
     const query = {};
 
