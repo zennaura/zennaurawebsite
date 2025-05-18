@@ -89,6 +89,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
               parent.subCategories.map((sub) => (
                 <div key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`} className="filter-option">
                   {(sub.categories || []).map((category) => (
+
                     <div key={`${parent.parentCategory}-${sub.subCategory}-${category}`}>
                       <input
                         type="checkbox"
@@ -124,8 +125,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
                     onChange={(e) => handleCheckboxChange(e, 'concerns')}
                   />
                   <label htmlFor={concern}>{concern}</label>
-                </div>
-              ))
+                </div>))
             ) : (
               <p>Loading concerns...</p>
             )}

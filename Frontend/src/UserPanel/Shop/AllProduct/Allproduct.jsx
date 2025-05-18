@@ -11,7 +11,6 @@ const ProductListingPage = ({ products }) => {
   const [viewMode, setViewMode] = useState('grid-3');
   const productsPerPage = 12;
   const navigate = useNavigate();
-  console.log("productlisting product:",products)
 
   useEffect(() => {
     //   const fetchProducts = async () => {
