@@ -126,6 +126,27 @@ router.patch('/update/:id', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const couponId = req.params.id;
+    const updates = req.body;
+
+    const updatedCoupon = await Coupon.findByIdAndUpdate(couponId, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedCoupon) {
+      return res.status(404).json({ message: 'Coupon not found' });
+    }
+
+    res.status(200).json(updatedCoupon);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 router.delete('/delete/:id', async (req, res) => {
   const couponId = req.params.id;
 

@@ -85,31 +85,41 @@ router.get("/getOrderDetailsForAdmin/:id", async (req, res) => {
 });
 
 // Update order status
-router.post("/updateOrderStatus/:id", async (req, res) => {
+router.put('/updateOrderStatus/:orderId', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { orderStatus } = req.body;
+    const { orderId } = req.params;
+    const { status } = req.body;
 
-    const order = await Order.findById(id);
-
-    if (!order) {
-      return res.status(404).json({
+    if (!['Processing', 'Shipped', 'Delivered', 'Cancelled'].includes(status)) {
+      return res.status(400).json({ 
         success: false,
-        message: "Order not found!",
+        message: 'Invalid status value' 
       });
     }
 
-    await Order.findByIdAndUpdate(id, { orderStatus });
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { orderStatus: status },
+      { new: true }
+    );
 
-    res.status(200).json({
+    if (!updatedOrder) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'Order not found' 
+      });
+    }
+
+    res.json({ 
       success: true,
-      message: "Order status updated successfully!",
+      message: 'Order status updated successfully',
+      data: updatedOrder
     });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    res.status(500).json({ 
       success: false,
-      message: "Some error occurred!",
+      message: 'Server error while updating order status' 
     });
   }
 });

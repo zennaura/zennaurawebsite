@@ -152,7 +152,7 @@ const ProductsManagement = () => {
                     />
                   </div>
                   <div className="admin-product-details">
-                    <h3 className="admin-product-name">{product.name || 'Unnamed Product'}</h3>
+                    {/* <h3 className="admin-product-name">{product.name || 'Unnamed Product'}</h3> */}
                     <p className="admin-product-title">{product.title || 'No title'}</p>
                     <div className="admin-product-categories">
                       <span>{product.parentCategory || 'No category'}</span> &gt;
