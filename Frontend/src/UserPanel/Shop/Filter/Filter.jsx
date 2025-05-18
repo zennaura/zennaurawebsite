@@ -41,7 +41,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/categories');
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
         const data = await res.json();
         setCategoryData(data);
       } catch (err) {
@@ -61,7 +61,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
 
     const fetchIntents = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/intents');
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/intents`);
         const data = await res.json();
         setAvailableIntents(data);
       } catch (err) {

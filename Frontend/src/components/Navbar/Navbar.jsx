@@ -37,21 +37,53 @@ const Navbar = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
   const [auraIntents, setAuraIntents] = useState([]);
+  const [skinCareIntents, setSkinCareIntent] = useState([]);
+  const [divineIntents, setDivineIntents] = useState([]);
+  const [sacredIntents, setSacredIntent] = useState([]);
 
   // Function to fetch intents
   const fetchAuraJewelIntents = async () => {
     try {
-      const res = await axios.get('/products/intents/aura-jewels');
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/aura-jewels`);
       setAuraIntents(res.data);
     } catch (error) {
-      console.error('Failed to fetch Aura Jewel intents:', error);
+      console.error('Failed to fetch intents:', error);
+    }
+  };
+
+  const fetchSkinCareIntents = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/skin-care`);
+      setSkinCareIntent(res.data);
+    } catch (error) {
+      console.error('Failed to fetch intents:', error);
+    }
+  };
+
+
+  const fetchDivineIntents = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/divine-crystals`);
+      setDivineIntents(res.data);
+    } catch (error) {
+      console.error('Failed to fetch intents:', error);
+    }
+  };
+
+
+  const fetchSacredIntents = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/sacred-rituals`);
+      setSacredIntent(res.data);
+    } catch (error) {
+      console.error('Failed to fetch intents:', error);
     }
   };
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/categories');
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
         const data = await res.json();
         setCategoryData(data);
       } catch (err) {
@@ -61,7 +93,7 @@ const Navbar = () => {
 
     const fetchIntents = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/intents');
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/intents`);
         const data = await res.json();
         setAvailableIntents(data);
       } catch (err) {
@@ -71,6 +103,10 @@ const Navbar = () => {
 
     fetchCategories();
     fetchIntents();
+    fetchAuraJewelIntents();
+    fetchSkinCareIntents();
+    fetchDivineIntents();
+    fetchSacredIntents();
   }, []);
 
 
@@ -324,10 +360,11 @@ const Navbar = () => {
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                     <ul>
-                      {availableIntents.map((intent) => (
+                      {skinCareIntents.map((intent) => (
                         <Link
                           to="/shop"
                           state={{ autoSelects: intent }}
+                          key={intent}
                         >
                           <li key={intent + "Skin Care"}>{intent}</li></Link>
                       ))}
@@ -372,8 +409,13 @@ const Navbar = () => {
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                     <ul>
-                      {availableIntents.map((intent) => (
-                        <li key={intent + "HiHiAura Jewels"}>{intent}</li>
+                      {auraIntents.map((intent) => (
+                        <Link
+                          to="/shop"
+                          state={{ autoSelects: intent }}
+                          key={intent}
+                        >
+                          <li key={intent + "Skin Care"}>{intent}</li></Link>
                       ))}
                     </ul>
                   </div>
@@ -415,7 +457,7 @@ const Navbar = () => {
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                     <ul>
-                      {availableIntents.map((intent) => (
+                      {divineIntents.map((intent) => (
                         <Link
                           to="/shop"
                           state={{ autoSelects: intent }}>
@@ -460,7 +502,7 @@ const Navbar = () => {
                   <div className="aurajewels-intent">
                     <h3>Shop by Intent</h3>
                     <ul>
-                      {availableIntents.map((intent) => (
+                      {sacredIntents.map((intent) => (
                         <Link
                           to="/shop"
                           state={{ autoSelects: intent }}>

@@ -4,15 +4,27 @@ import '../Sidebar.css'; // ensure this includes the relevant styles
 import Search from './Search';
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
     const [categoryData, setCategoryData] = useState([]);
     const [availableIntents, setAvailableIntents] = useState([]);
+    const [sacredIntents, setSacredIntent] = useState([]);
+
+
+    const fetchSacredIntents = async () => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/sacred-rituals`);
+            setSacredIntent(res.data);
+        } catch (error) {
+            console.error('Failed to fetch intents:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/categories');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
                 const data = await res.json();
                 setCategoryData(data);
             } catch (err) {
@@ -22,7 +34,7 @@ const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
 
         const fetchIntents = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/intents');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/intents`);
                 const data = await res.json();
                 setAvailableIntents(data);
             } catch (err) {
@@ -30,6 +42,7 @@ const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
             }
         };
 
+        fetchSacredIntents();
         fetchCategories();
         fetchIntents();
     }, []);
@@ -68,9 +81,10 @@ const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Intent</h4>
                 <ul>
-                    {availableIntents.map((intent) => (
+                    {sacredIntents.map((intent) => (
                         <Link
                             to="/shop"
+                            key={intent}
                             state={{ autoSelects: intent }} onClick={closeMenu}>
                             <li key={intent + "SacredRituals"}>{intent}</li></Link>
                     ))}

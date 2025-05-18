@@ -4,15 +4,28 @@ import React from 'react';
 import Search from './Search';
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 const AuraJewels = ({ goTo, closeMenu }) => {
     const [categoryData, setCategoryData] = useState([]);
     const [availableIntents, setAvailableIntents] = useState([]);
+    const [auraIntents, setAuraIntents] = useState([]);
+
+    // Function to fetch intents
+    const fetchAuraJewelIntents = async () => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/aura-jewels`);
+            setAuraIntents(res.data);
+        } catch (error) {
+            console.error('Failed to fetch intents:', error);
+        }
+    };
+
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/categories');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
                 const data = await res.json();
                 setCategoryData(data);
             } catch (err) {
@@ -22,7 +35,7 @@ const AuraJewels = ({ goTo, closeMenu }) => {
 
         const fetchIntents = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/intents');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/intents`);
                 const data = await res.json();
                 setAvailableIntents(data);
             } catch (err) {
@@ -30,6 +43,7 @@ const AuraJewels = ({ goTo, closeMenu }) => {
             }
         };
 
+        fetchAuraJewelIntents();
         fetchCategories();
         fetchIntents();
     }, []);
@@ -67,9 +81,10 @@ const AuraJewels = ({ goTo, closeMenu }) => {
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Intent</h4>
                 <ul>
-                    {availableIntents.map((intent) => (
+                    {auraIntents.map((intent) => (
                         <Link
                             to="/shop"
+                            key={intent}
                             state={{ autoSelects: intent }} onClick={closeMenu}>
                             <li key={intent + "Skin Care"}>{intent}</li></Link>
                     ))}

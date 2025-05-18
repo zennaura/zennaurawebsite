@@ -4,15 +4,28 @@ import React from 'react';
 import Search from './submenus/Search';
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from 'react'
+import axios from "axios";
 
 const SkinCareSubMenu = ({ goTo, closeMenu }) => {
     const [categoryData, setCategoryData] = useState([]);
     const [availableIntents, setAvailableIntents] = useState([]);
+    const [skinCareIntents, setSkinCareIntent] = useState([]);
+
+    // Function to fetch intents
+    const fetchSkinCareIntents = async () => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/intents/skin-care`);
+            setSkinCareIntent(res.data);
+        } catch (error) {
+            console.error('Failed to fetch intents:', error);
+        }
+    };
+
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/categories');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
                 const data = await res.json();
                 setCategoryData(data);
             } catch (err) {
@@ -22,14 +35,14 @@ const SkinCareSubMenu = ({ goTo, closeMenu }) => {
 
         const fetchIntents = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/intents');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/intents`);
                 const data = await res.json();
                 setAvailableIntents(data);
             } catch (err) {
                 console.error('Failed to fetch intents:', err);
             }
         };
-
+        fetchSkinCareIntents();
         fetchCategories();
         fetchIntents();
     }, []);
@@ -68,7 +81,7 @@ const SkinCareSubMenu = ({ goTo, closeMenu }) => {
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Intent</h4>
                 <ul>
-                    {availableIntents.map((intent) => (
+                    {skinCareIntents.map((intent) => (
                         <Link
                             to="/shop"
                             state={{ autoSelects: intent }} onClick={closeMenu}>
