@@ -66,7 +66,7 @@ const ProductListingPage = ({ products }) => {
     }
   }, [products, sortOption]);
 
- // Create a map of product base IDs to all their variants
+  // Create a map of product base IDs to all their variants
   const productVariantsMap = useMemo(() => {
     const map = {};
     products.forEach(variant => {
@@ -88,7 +88,7 @@ const ProductListingPage = ({ products }) => {
   const handleClick = (variant) => {
     // Extract base product ID
     const baseId = variant.id.split('-')[0];
-    
+
     navigate(`/productdetails/${variant.id}`, {
       state: {
         ...variant.data,

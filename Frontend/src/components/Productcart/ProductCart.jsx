@@ -152,7 +152,7 @@ const ProductCard = ({ id, name, title, backImage, frontimage, price, originalPr
           <button className="product-card-add-to-cart" onClick={handleAddToCart}>
             ADD TO CART
           </button>
-          <button className="product-card-buy-now">
+          <button className="product-card-buy-now" onClick={onBuyNowClick}>
             BUY NOW
           </button>
         </div>
