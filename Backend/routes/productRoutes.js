@@ -502,4 +502,22 @@ router.get('/intents', async (req, res) => {
   }
 });
 
+// Utility: Get unique intent tags by parentCategory
+const getUniqueIntents = (parentCategory) => async (req, res) => {
+  try {
+    const products = await Product.find({ parentCategory }, 'Intenttags');
+    const allIntents = products.flatMap(p => p.Intenttags || []);
+    const uniqueIntents = [...new Set(allIntents)];
+    res.json(uniqueIntents);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Routes
+router.get('/intents/skin-care', getUniqueIntents('Skin Care'));
+router.get('/intents/aura-jewels', getUniqueIntents('Aura Jewels'));
+router.get('/intents/divine-crystals', getUniqueIntents('Divine Crystals'));
+router.get('/intents/sacred-rituals', getUniqueIntents('Sacred Rituals'));
+
 module.exports = router;
