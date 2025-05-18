@@ -36,6 +36,17 @@ const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState('main');
   const [categoryData, setCategoryData] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
+  const [auraIntents, setAuraIntents] = useState([]);
+
+  // Function to fetch intents
+  const fetchAuraJewelIntents = async () => {
+    try {
+      const res = await axios.get('/products/intents/aura-jewels');
+      setAuraIntents(res.data);
+    } catch (error) {
+      console.error('Failed to fetch Aura Jewel intents:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
