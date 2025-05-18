@@ -1,6 +1,7 @@
 import React from 'react';
 import './shop.css';
 import { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 // Import Components
 import Filter from '../Filter/Filter';
@@ -23,6 +24,14 @@ const Shop = () => {
   const [concerns, setConcerns] = useState([]);
   const [intents, setIntents] = useState([]);
   const [products, setProducts] = useState([]);
+  const location = useLocation();
+  const { autoSelects } = location.state || {};
+  const [autoSelectsState, setAutoSelectsState] = useState(autoSelects || []);
+
+  useEffect(() => {
+    setAutoSelectsState(autoSelects || []);
+  }, [location.state]);
+
 
   const fetchProducts = async (filters = {}) => {
     try {
@@ -34,7 +43,7 @@ const Shop = () => {
       if (hasFilters) {
         const params = new URLSearchParams();
         if (productCategories.length)
-          params.append("categories", JSON.stringify(productCategories));
+          params.append("subCategory", JSON.stringify(productCategories));
         if (concerns.length) params.append("concerns", JSON.stringify(concerns));
         if (intents.length) params.append("intents", JSON.stringify(intents));
         url += `?${params.toString()}`;
@@ -95,6 +104,7 @@ const Shop = () => {
           productCategories={productCategories}
           concerns={concerns}
           intents={intents}
+          autoCheck={[autoSelectsState]}
           onFilterChange={handleFilterChange}
         />
 

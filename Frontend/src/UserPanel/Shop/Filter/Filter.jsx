@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Filter.css';
 
-const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
+const Filter = ({ productCategories, concerns, intents, onFilterChange, autoCheck = [], }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   // const [productCategories, setProductCategories] = useState([]);
@@ -11,6 +11,32 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
   const [categoryData, setCategoryData] = useState([]);
   const [availableConcerns, setAvailableConcerns] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
+  const [selectedProductCategories, setSelectedProductCategories] = useState([]);
+  const [selectedConcerns, setSelectedConcerns] = useState([]);
+  const [selectedIntents, setSelectedIntents] = useState([]);
+
+  const prevAutoCheckRef = useRef([]);
+
+  useEffect(() => {
+    // Only update states if autoCheck changed (shallow compare)
+    const prev = prevAutoCheckRef.current;
+    const changed =
+      autoCheck.length !== prev.length ||
+      autoCheck.some((val) => !prev.includes(val));
+
+    if (changed) {
+      setSelectedProductCategories((prevSelected) => [
+        ...new Set([...prevSelected, ...autoCheck]),
+      ]);
+      setSelectedConcerns((prevSelected) => [
+        ...new Set([...prevSelected, ...autoCheck]),
+      ]);
+      setSelectedIntents((prevSelected) => [
+        ...new Set([...prevSelected, ...autoCheck]),
+      ]);
+      prevAutoCheckRef.current = autoCheck;
+    }
+  }, [autoCheck]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -50,7 +76,23 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
 
   const handleCheckboxChange = (e, type) => {
     const value = e.target.value;
-    onFilterChange(type, value);
+    const isChecked = e.target.checked;
+
+    const updateState = (current, setState) => {
+      const newValues = isChecked
+        ? [...current, value]
+        : current.filter((v) => v !== value);
+      setState(newValues);
+      onFilterChange(type, value);
+    };
+
+    if (type === 'productCategories') {
+      updateState(selectedProductCategories, setSelectedProductCategories);
+    } else if (type === 'concerns') {
+      updateState(selectedConcerns, setSelectedConcerns);
+    } else if (type === 'intents') {
+      updateState(selectedIntents, setSelectedIntents);
+    }
   };
 
   return (
@@ -94,12 +136,12 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
                       <input
                         type="checkbox"
                         id={`${sub.subCategory}-${category}`}
-                        value={category}
-                        checked={productCategories.includes(category)}
+                        value={sub.subCategory}
+                        checked={selectedProductCategories.includes(sub.subCategory)}
                         onChange={(e) => handleCheckboxChange(e, 'productCategories')}
                       />
                       <label htmlFor={`${sub.subCategory}-${category}`}>
-                        {parent.parentCategory ? parent.parentCategory : ""} {category ? "→ " + category : ""} {sub.subCategory ? "→ " + sub.subCategory : ""}
+                        {sub.subCategory}
                       </label>
                     </div>
                   ))}
@@ -121,7 +163,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
                     type="checkbox"
                     id={concern}
                     value={concern}
-                    checked={concerns.includes(concern)}
+                    checked={selectedConcerns.includes(concern)}
                     onChange={(e) => handleCheckboxChange(e, 'concerns')}
                   />
                   <label htmlFor={concern}>{concern}</label>
@@ -143,7 +185,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange }) => {
                     type="checkbox"
                     id={intent}
                     value={intent}
-                    checked={intents.includes(intent)}
+                    checked={selectedIntents.includes(intent)}
                     onChange={(e) => handleCheckboxChange(e, 'intents')}
                   />
                   <label htmlFor={intent}>{intent}</label>

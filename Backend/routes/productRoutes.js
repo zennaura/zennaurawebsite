@@ -52,7 +52,7 @@ router.get('/products', async (req, res) => {
 
     const query = {};
 
-    if (categories) query.category = { $in: JSON.parse(categories) };
+    if (subCategory) query.subCategory = { $in: JSON.parse(subCategory) };
     if (concerns) query.tags = { $in: JSON.parse(concerns) };
     if (intents) query.Intenttags = { $in: JSON.parse(intents) };
 

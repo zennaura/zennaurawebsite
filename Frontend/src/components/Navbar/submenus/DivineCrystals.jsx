@@ -3,6 +3,7 @@ import { FiSearch, FiChevronLeft } from 'react-icons/fi';
 import '../Sidebar.css'; // ensure this includes the relevant styles
 import Search from './Search';
 import { useState, useEffect } from 'react'
+import { useNavigate, Link } from "react-router-dom";
 
 const DivineCrystalsSubMenu = ({ goTo, closeMenu }) => {
     const [categoryData, setCategoryData] = useState([]);
@@ -49,7 +50,10 @@ const DivineCrystalsSubMenu = ({ goTo, closeMenu }) => {
                             {(sub.categories || []).map((category) => (
                                 parent.parentCategory === "Divine Crystals" && (
                                     <div key={parent.subCategories + `Hello`}>
-                                        <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                        <Link
+                                            to="/shop"
+                                            state={{ autoSelects: sub.subCategory }} onClick={closeMenu}>
+                                            <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                         <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
                                         </ul>
                                     </div>
@@ -64,7 +68,10 @@ const DivineCrystalsSubMenu = ({ goTo, closeMenu }) => {
                 <h4 className="section-title-sub">Shop By Intent</h4>
                 <ul>
                     {availableIntents.map((intent) => (
-                        <li key={intent + "Skin Care"}>{intent}</li>
+                        <Link
+                            to="/shop"
+                            state={{ autoSelects: intent }} onClick={closeMenu}>
+                            <li key={intent + "Skin Care"}>{intent}</li></Link>
                     ))}
                 </ul>
             </div>

@@ -297,7 +297,10 @@ const Navbar = () => {
                           {(sub.categories || []).map((category) => (
                             parent.parentCategory === "Skin Care" && (
                               <div key={parent.subCategories + `Hello`}>
-                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <Link
+                                  to="/shop"
+                                  state={{ autoSelects: sub.subCategory }}
+                                ><li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
                                 </ul>
                               </div>
@@ -311,7 +314,11 @@ const Navbar = () => {
                     <h3>Shop by Intent</h3>
                     <ul>
                       {availableIntents.map((intent) => (
-                        <li key={intent + "Skin Care"}>{intent}</li>
+                        <Link
+                          to="/shop"
+                          state={{ autoSelects: intent }}
+                        >
+                          <li key={intent + "Skin Care"}>{intent}</li></Link>
                       ))}
                     </ul>
                   </div>
@@ -337,7 +344,11 @@ const Navbar = () => {
                           {(sub.categories || []).map((category) => (
                             parent.parentCategory === "Aura Jewels" && (
                               <div key={parent.subCategories + `Hello`}>
-                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <Link
+                                  to="/shop"
+                                  state={{ autoSelects: sub.subCategory }}
+                                >
+                                  <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
                                 </ul>
                               </div>
@@ -377,7 +388,10 @@ const Navbar = () => {
                           {(sub.categories || []).map((category) => (
                             parent.parentCategory === "Divine Crystals" && (
                               <div key={parent.subCategories + `Hello`}>
-                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <Link
+                                  to="/shop"
+                                  state={{ autoSelects: sub.subCategory }}>
+                                  <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
                                 </ul>
                               </div>
@@ -391,7 +405,10 @@ const Navbar = () => {
                     <h3>Shop by Intent</h3>
                     <ul>
                       {availableIntents.map((intent) => (
-                        <li key={intent + "Divine Crystals"}>{intent}</li>
+                        <Link
+                          to="/shop"
+                          state={{ autoSelects: intent }}>
+                          <li key={intent + "Divine Crystals"}>{intent}</li></Link>
                       ))}
                     </ul>
                   </div>
@@ -416,7 +433,10 @@ const Navbar = () => {
                           {(sub.categories || []).map((category) => (
                             parent.parentCategory === "Sacred Rituals" && (
                               <div key={parent.subCategories + `Hello`}>
-                                <li key={`${sub.subCategories}`}>{sub.subCategory}</li>
+                                <Link
+                                  to="/shop"
+                                  state={{ autoSelects: sub.subCategory }}>
+                                  <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
                                 </ul>
                               </div>
@@ -430,7 +450,10 @@ const Navbar = () => {
                     <h3>Shop by Intent</h3>
                     <ul>
                       {availableIntents.map((intent) => (
-                        <li key={intent + "Sacred Rituals"}>{intent}</li>
+                        <Link
+                          to="/shop"
+                          state={{ autoSelects: intent }}>
+                          <li key={intent + "Sacred Rituals"}>{intent}</li></Link>
                       ))}
                     </ul>
                   </div>
