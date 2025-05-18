@@ -2,7 +2,6 @@ const express = require('express');
 const Coupon = require('../model/Coupon');
 const router = express.Router();
 
-
 router.post("/generate", async (req, res) => {
   try {
     const { code, discount, expiryDate } = req.body;
@@ -44,12 +43,20 @@ router.get('/allcoupons', async (req, res) => {
   }
 });
 
+// Search and validate coupon
 router.get('/searchcoupon', async (req, res) => {
   try {
-    const { code } = req.query;
-    
+    const { code, userId } = req.query;
+
     if (!code) {
       return res.status(400).json({ message: 'Coupon code is required' });
+    }
+
+    if (!userId) {
+      return res.status(400).json({ 
+        message: 'You need to be logged in to use coupons',
+        requiresLogin: true
+      });
     }
 
     const coupon = await Coupon.findOne({ code });
@@ -58,7 +65,7 @@ router.get('/searchcoupon', async (req, res) => {
       return res.status(404).json({ message: 'Coupon not found' });
     }
 
-    // Check if coupon is active and not expired
+    // Check if coupon is expired
     const currentDate = new Date();
     const isExpired = currentDate > coupon.expiryDate;
 
@@ -69,13 +76,18 @@ router.get('/searchcoupon', async (req, res) => {
       });
     }
 
+    // Check if user has already used this coupon
+    const alreadyUsed = coupon.usedByUsers?.includes(userId);
+
     res.status(200).json({
       code: coupon.code,
       discount: coupon.discount,
       maxDiscount: coupon.maxDiscount,
       minOrder: coupon.minOrder,
       expiryDate: coupon.expiryDate,
-      isActive: coupon.isActive
+      isActive: coupon.isActive,
+      alreadyUsed,
+      isValid: true
     });
 
   } catch (error) {
@@ -83,6 +95,55 @@ router.get('/searchcoupon', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Mark a coupon as used by a user
+router.put('/use', async (req, res) => {
+  try {
+    const { code, userId } = req.body;
+
+    if (!code || !userId) {
+      return res.status(400).json({ message: 'Coupon code and userId are required' });
+    }
+
+    const coupon = await Coupon.findOne({ code });
+
+    if (!coupon) {
+      return res.status(404).json({ message: 'Coupon not found' });
+    }
+
+    // Check if already used by this user
+    if (coupon.usedByUsers?.includes(userId)) {
+      return res.status(400).json({ message: 'Coupon already used by this user' });
+    }
+
+    // Check if coupon is active and not expired
+    const currentDate = new Date();
+    const isExpired = currentDate > coupon.expiryDate;
+
+    if (!coupon.isActive || isExpired) {
+      return res.status(400).json({
+        message: isExpired ? 'Coupon has expired' : 'Coupon is not active',
+        isActive: false
+      });
+    }
+
+    // Add userId to usedByUsers
+    coupon.usedByUsers.push(userId);
+    await coupon.save();
+
+    res.status(200).json({ 
+      success: true,
+      message: 'Coupon marked as used', 
+      coupon 
+    });
+
+  } catch (error) {
+    console.error('Error updating coupon usage:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 router.patch('/toggle/:id', async (req, res) => {
   try {

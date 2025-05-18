@@ -5,6 +5,7 @@ import { useUser } from "../../components/AuthContext/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -94,13 +95,23 @@ const CheckoutPage = () => {
         return;
       }
 
+      if (!user?._id) {
+        setCouponMessage("You need to login to use coupons");
+        return;
+      }
+
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_LINK}/api/coupons/searchcoupon`,
-        { params: { code: couponCode } }
+        { params: { code: couponCode, userId: user._id } }
       );
 
-      if (!response.data || !response.data.isActive) {
-        setCouponMessage("Invalid or expired coupon code");
+      if (!response.data.isValid) {
+        setCouponMessage(response.data.message || "Invalid coupon code");
+        return;
+      }
+
+      if (response.data.alreadyUsed) {
+        setCouponMessage("You have already used this coupon");
         return;
       }
 
@@ -122,7 +133,7 @@ const CheckoutPage = () => {
       // Apply valid coupon
       setAppliedCoupon(coupon);
       setCouponMessage(
-        `Coupon applied! You have got ${coupon.discount}% of discount`
+        `Coupon applied! You have got ${coupon.discount}% discount (Max ₹${coupon.maxDiscount || "No limit"})`
       );
     } catch (error) {
       console.error("Coupon validation error:", error);
@@ -229,6 +240,21 @@ const CheckoutPage = () => {
     }
   };
 
+  // Mark coupon as used
+  const markCouponAsUsed = async () => {
+    if (!appliedCoupon || !user?._id) return;
+
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/coupons/use`,
+        { code: appliedCoupon.code, userId: user._id }
+      );
+    } catch (error) {
+      console.error("Failed to mark coupon as used:", error);
+      // This shouldn't fail the order, just log the error
+    }
+  };
+
   // Handle order submission
   const handlePlaceOrder = async () => {
     // Validate all required fields
@@ -273,6 +299,11 @@ const CheckoutPage = () => {
     setError(null);
 
     try {
+      // Mark coupon as used if applied
+      if (appliedCoupon && user?._id) {
+        await markCouponAsUsed();
+      }
+
       // Prepare order items
       const orderItems = products.map((product) => {
         if (!product._id) throw new Error(`Product ${product.name} has no ID`);
@@ -292,32 +323,31 @@ const CheckoutPage = () => {
       });
 
       // Prepare order data
-      // Prepare order data
-const orderData = {
-  user: user?._id || null, // Changed from { user: user._id } to just user._id
-  guestUser: !user?._id
-    ? {
-        firstName,
-        lastName,
-        email,
-        phone,
-      }
-    : null,
-  orderItems,
-  shippingAddress: `${address}, ${city}, ${state}, ${country}, ${postalCode}`,
-  paymentMethod: "COD",
-  subtotal: parseFloat(subtotal.toFixed(2)),
-  shipping: parseFloat(shipping.toFixed(2)),
-  discount: parseFloat(discountAmount.toFixed(2)),
-  totalAmount: parseFloat(total.toFixed(2)),
-  appliedCoupon: appliedCoupon ? couponCode : null,
-  couponDetails: appliedCoupon
-    ? {
-        percentage: appliedCoupon.discount,
-        maxDiscount: appliedCoupon.maxDiscount,
-      }
-    : null,
-};
+      const orderData = {
+        user: user?._id || null,
+        guestUser: !user?._id
+          ? {
+              firstName,
+              lastName,
+              email,
+              phone,
+            }
+          : null,
+        orderItems,
+        shippingAddress: `${address}, ${city}, ${state}, ${country}, ${postalCode}`,
+        paymentMethod: "COD",
+        subtotal: parseFloat(subtotal.toFixed(2)),
+        shipping: parseFloat(shipping.toFixed(2)),
+        discount: parseFloat(discountAmount.toFixed(2)),
+        totalAmount: parseFloat(total.toFixed(2)),
+        appliedCoupon: appliedCoupon ? couponCode : null,
+        couponDetails: appliedCoupon
+          ? {
+              percentage: appliedCoupon.discount,
+              maxDiscount: appliedCoupon.maxDiscount,
+            }
+          : null,
+      };
 
       // Submit order
       const response = await axios.post(
@@ -356,7 +386,6 @@ const orderData = {
       setIsSubmitting(false);
     }
   };
-
   return (
     <>
       <ImageHead Title="Checkout" />
@@ -555,22 +584,25 @@ const orderData = {
           </div>
 
           {/* Place Order Button */}
-          <div className="mt-6 md:mt-8">
-            <button
-              onClick={handlePlaceOrder}
-              disabled={isSubmitting}
-              className={`w-full border-2 border-[#45040F] text-[#45040F] py-3 md:py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${
-                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              {isSubmitting ? "Processing..." : "Place Order"}
-            </button>
-            <div className="mt-3 md:mt-4 text-center">
-              <a href="/cart" className="text-[#45040F] underline">
-                BACK TO SHOPPING CART
-              </a>
-            </div>
-          </div>
+         <div className="mt-6 md:mt-8">
+  <button
+    onClick={handlePlaceOrder}
+    disabled={isSubmitting}
+    className={`w-full border-2 border-[#45040F] text-[#45040F] py-3 md:py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${
+      isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+  >
+    {isSubmitting ? "Processing..." : "Place Order"}
+  </button>
+  {error && (
+    <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+  )}
+  <div className="mt-3 md:mt-4 text-center">
+    <a href="/cart" className="text-[#45040F] underline">
+      BACK TO SHOPPING CART
+    </a>
+  </div>
+         </div>
         </div>
 
         {/* Right Section - Order Summary */}
@@ -585,44 +617,49 @@ const orderData = {
 
             {/* Coupon Code Section */}
             <div className="border-b pb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <input
-                  type="text"
-                  value={couponCode}
-                  placeholder="Enter coupon code"
-                  className="flex-1 border p-2 rounded-md"
-                  onChange={(e) => setCouponCode(e.target.value)}
-                  disabled={appliedCoupon}
-                />
-                {appliedCoupon ? (
-                  <button
-                    onClick={handleRemoveCoupon}
-                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
-                  >
-                    Remove
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleApplyCoupon}
-                    disabled={isCheckingCoupon}
-                    className={`bg-[#45040F] text-white px-4 py-2 rounded-md hover:bg-[#5a0515] transition ${
-                      isCheckingCoupon ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {isCheckingCoupon ? "Checking..." : "Apply"}
-                  </button>
-                )}
-              </div>
-              {couponMessage && (
-                <p
-                  className={`text-sm ${
-                    appliedCoupon ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  {couponMessage}
-                </p>
-              )}
-            </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={couponCode}
+                      placeholder="Enter coupon code"
+                      className="flex-1 border p-2 rounded-md"
+                      onChange={(e) => setCouponCode(e.target.value)}
+                      disabled={!!appliedCoupon}
+                    />
+                    {appliedCoupon ? (
+                      <button
+                        onClick={handleRemoveCoupon}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                      >
+                        Remove
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleApplyCoupon}
+                        disabled={isCheckingCoupon || !user?._id}
+                        className={`bg-[#45040F] text-white px-4 py-2 rounded-md hover:bg-[#5a0515] transition ${
+                          isCheckingCoupon || !user?._id ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        {isCheckingCoupon ? "Checking..." : "Apply"}
+                      </button>
+                    )}
+                  </div>
+                  {!user?._id && (
+                    <p className="text-sm text-yellow-600">
+                      You need to login to use coupons
+                    </p>
+                  )}
+                  {couponMessage && (
+                    <p
+                      className={`text-sm ${
+                        appliedCoupon ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {couponMessage}
+                    </p>
+                  )}
+          </div>
 
             {/* Product List */}
             {products.map((product) => (
