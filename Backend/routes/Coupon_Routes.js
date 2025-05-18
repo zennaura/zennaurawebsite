@@ -2,6 +2,7 @@ const express = require('express');
 const Coupon = require('../model/Coupon');
 const router = express.Router();
 
+
 router.post("/generate", async (req, res) => {
   try {
     const { code, discount, expiryDate } = req.body;

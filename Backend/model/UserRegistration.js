@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     }],
     dateOfBirth: { type: Date, default: null },
     dateOfAnniversary: { type: Date, default: null },
-    gender: { type: String, enum: ["male", "female", "other"] },
+    gender: { type: String, default: null, enum: ["male", "female", "other"] },
 
 }, { timestamps: true });
 
