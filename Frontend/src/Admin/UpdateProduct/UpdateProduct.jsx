@@ -265,34 +265,32 @@ const UpdateProduct = () => {
   // Variant handlers
   const handleAddVariant = () => {
     // In the useEffect initialization:
-    setVariants(
-      Array.isArray(productData.variants)
-        ? productData.variants.map(v => ({
-          ...v,
-          variantname: String(v.variantname || ""),
-          size: String(v.size || ""),
-          tax: String(v.tax || ""),
-          salePrice: String(v.salePrice || ""),
-          discount: String(v.discount || ""),
-          costPrice: String(v.costPrice || ""),
-          stock: String(v.stock || ""),
-          frontImage: v.frontImage || null,
-          backImage: v.backImage || null,
-          variantsimages: Array.isArray(v.variantsimages) ? v.variantsimages : [], // Fixed field name
-          specifications: {
-            material: v.specifications?.material || "",
-            productType: v.specifications?.productType || "",
-            beadSize: v.specifications?.beadSize || "",
-            size: v.specifications?.size || "",
-            color: v.specifications?.color || "",
-            weight: v.specifications?.weight || "",
-            packaging: v.specifications?.packaging || "",
-          },
-          featureProduct: Boolean(v.featureProduct),
-          bestSeller: Boolean(v.bestSeller)
-        }))
-        : []
-    );
+    setVariants(prevVariants => [
+    ...prevVariants,
+    {
+      variantname: "",
+      size: "",
+      tax: "",
+      salePrice: "",
+      discount: "",
+      costPrice: "",
+      stock: "",
+      frontImage: null,
+      backImage: null,
+      variantsimages: [],
+      specifications: {
+        material: "",
+        productType: "",
+        beadSize: "",
+        size: "",
+        color: "",
+        weight: "",
+        packaging: "",
+      },
+      featureProduct: false,
+      bestSeller: false,
+    }
+  ]);
   };
 
   const handleRemoveVariant = (index) => {
