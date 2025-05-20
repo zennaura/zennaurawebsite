@@ -100,16 +100,17 @@
 }
 
 .img-box:hover img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 /* Left Image Boxes */
 .redifining-img-box1 {
   position: absolute;
-  width: 300px;
+  width: 350px;
   height: 420px;
   /* top: 2%; */
-  right: 18%;
+  right: 22%;
+  /* right: 30%; */
   z-index: 2;
   border-radius: 160px 160px 0px 0px;
 
@@ -129,7 +130,7 @@
   position: absolute;
   width: 280px;
   height: 400px;
-  left: 5%;
+  left: 10%;
   /* top: 5%; */
   z-index: 1;
 }
@@ -138,7 +139,7 @@
   position: absolute;
   width: 180px;
   height: 250px;
-  left: 45%;
+  left: 50%;
   top: 30%;
   z-index: 2;
 }
@@ -147,7 +148,7 @@
   position: absolute;
   width: 180px;
   height: 250px;
-  left: 25%;
+  left: 30%;
   top: 50%;
   z-index: 3;
 }
