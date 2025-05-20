@@ -120,12 +120,12 @@ li a {
     padding: 0.75rem;
     cursor: pointer;
     color: white;
-    transition: color 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 
-  .nav-item:hover {
+  /* .nav-item:hover {
     color: gold;
-  }
+  } */
 }
 
 @media (max-width: 768px) {
@@ -168,8 +168,16 @@ li a {
   gap: 15px;
 }
 
+.nav-item a{
+  transition: all 0.5s;
+}
 .nav-item a:hover {
-  border-bottom: 5px solid #390611;
+  /* border-bottom: 5px solid #390611; */
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  display: inline-block;
+  
+   /* transform: scale(1.5); */
 }
 
 .nav-item a.active {
@@ -341,7 +349,7 @@ li a {
   border-left: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  color: goldenrod;
+  color: black;
   /* Add this line */
 }
 
@@ -352,7 +360,7 @@ li a {
 }
 
 .search-icon {
-  color: goldenrod;
+  color: white;
   cursor: pointer;
   transition: color 0.3s ease;
   /* Smooth transition */
