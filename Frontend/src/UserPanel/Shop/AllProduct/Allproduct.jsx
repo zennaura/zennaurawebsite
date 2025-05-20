@@ -3,6 +3,8 @@ import "./Allproduct.css";
 import ProductCard from "../../../components/Productcart/ProductCart";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import SortDropdown from "../Filter/Sort";
+import PopupFilter from "../Filter/SmallFilter";
 
 const ProductListingPage = ({ products }) => {
   // const [products, setProducts] = useState([]);
@@ -162,7 +164,7 @@ const ProductListingPage = ({ products }) => {
       </header>
 
       {/* Product Grid */}
-      <div className={`product-grid ${viewMode}`}>
+      <div className={`flex gap-4 flex-wrap md:gap-8`}>
         {currentProducts.map((variant) => (
           <ProductCard
             key={variant.id}
@@ -205,6 +207,10 @@ const ProductListingPage = ({ products }) => {
           </span>
         </footer>
       )}
+      <div className="flex justify-center items-center gap-4 lg:hidden">
+        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+        <PopupFilter />
+      </div>
     </div>
   )
 };

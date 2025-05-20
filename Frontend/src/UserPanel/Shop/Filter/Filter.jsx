@@ -96,7 +96,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
   };
 
   return (
-    <div className="filter-container">
+    <div className="filter-container md:hidden lg:block">
       <h1 className="filter-heading">Filter</h1>
       <div className="filter-options">
 
