@@ -4,7 +4,7 @@
   /* justify-content: space-evenly; */
   align-items: center;
   width: 100%;
-  min-height: 90vh;
+  min-height: 80vh;
   background-color: #ffffff;
   color: #390611;
   overflow: hidden;
@@ -155,7 +155,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .redefining-container {
-    min-height: 60vh;
+    min-height: 50vh;
   }
 
   .word {
