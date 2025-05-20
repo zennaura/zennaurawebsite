@@ -37,6 +37,10 @@
     color: #390611;
     padding-bottom: 15px;
 }
+.large-cert {
+  /* width: 120px; */
+  height: 135px;
+}
 
 @media screen and (max-width: 768px) {
     .certifications-container {
