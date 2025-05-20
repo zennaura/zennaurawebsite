@@ -113,7 +113,7 @@ const SignInUpForm = () => {
                     <div className="SignInUpForm-form-container SignInUpForm-sign-up-container">
                         <form>
                             <h1>Create Account</h1>
-                                 <div className="SignInUpForm-social-container">
+                            <div className="SignInUpForm-social-container">
                                 <a href="#" className="SignInUpForm-social">
                                     <div className="SignInUpForm-social-icon">
                                         <FaFacebookF />
@@ -195,49 +195,49 @@ const SignInUpForm = () => {
                 <div className="mb-6">
                     <button
                         onClick={() => setIsSignUp(!isSignUp)}
-                        className="bg-[#390611] pointer absolute right-0 top-0 text-white px-6 py-2 shadow hover:bg-[#4d0a15] transition-colors"
+                        className="bg-[#390611] pointer absolute right-0 top-0 text-white !px-6 !py-2 shadow hover:bg-[#4d0a15] transition-colors"
                     >
                         {isSignUp ? `Sign In` : `Sign Up`}
                     </button>
                 </div>
 
                 {/* Sign In Form */}
-                <div className={`w-full max-w-md bg-white p-8 transform transition-transform duration-500 ${isSignUp ? '-translate-x-full opacity-0 absolute' : 'translate-x-0 opacity-100 relative'}`}>
+                <div className={`w-full max-w-md bg-white !p-8 transform transition-transform duration-500 ${isSignUp ? '-translate-x-full opacity-0 absolute' : 'translate-x-0 opacity-100 relative'}`}>
                     <form onSubmit={handleLogin} className="flex flex-col">
-                        <h1 className="text-2xl font-bold mb-4 text-center">Sign In</h1>
-                        <div className="flex justify-center space-x-2 mb-4">
-                            <a href="#" className="p-2 border rounded-full"><FaFacebookF /></a>
-                            <a href="#" className="p-2 border rounded-full"><FcGoogle /></a>
+                        <h1 className="text-2xl font-bold !mb-4 text-center">Sign In</h1>
+                        <div className="flex justify-center space-x-2 !mb-4">
+                            <a href="#" className="!p-2 border rounded-full"><FaFacebookF /></a>&nbsp;
+                            <a href="#" className="!p-2 border rounded-full"><FcGoogle /></a>
 
                         </div>
-                        <span className="text-sm mb-2 text-center">or use your account</span>
-                        <input type="email" name="email" placeholder="Email" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
-                        <input type="password" name="password" placeholder="Password" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
-                        <a href="#" onClick={handleforgotpassword} className="text-sm text-gray-600 mb-4">Forgot your password?</a>
-                        <button type="submit" className="bg-[#390611] hover:bg-[#4d0a15] text-white px-6 py-2 rounded uppercase text-sm">Sign In</button>
+                        <span className="text-sm !mb-2 text-center">or use your account</span>
+                        <input type="email" name="email" placeholder="Email" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-2" />
+                        <input type="password" name="password" placeholder="Password" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-2" />
+                        <a href="#" onClick={handleforgotpassword} className="text-sm text-gray-600 !mb-4">Forgot your password?</a>
+                        <button type="submit" className="bg-[#390611] hover:bg-[#4d0a15] text-white !px-6 !py-2 rounded uppercase text-sm">Sign In</button>
                     </form>
                 </div>
 
                 {/* Sign Up Form */}
-                <div className={`w-full max-w-md bg-white p-8 transform transition-transform duration-500 absolute ${isSignUp ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
+                <div className={`w-full max-w-md bg-white !p-8 transform transition-transform duration-500 absolute ${isSignUp ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
                     <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
-                        <h1 className="text-2xl font-bold mb-4 text-center">Create Account</h1>
-                        <div className="flex justify-center space-x-2 mb-4">
-                            <a href="#" className="p-2 border rounded-full"><FaFacebookF /></a>
-                            <a href="#" className="p-2 border rounded-full"><FcGoogle /></a>
+                        <h1 className="text-2xl font-bold !mb-4 text-center">Create Account</h1>
+                        <div className="flex justify-center space-x-2 !mb-4">
+                            <a href="#" className="!p-2 border rounded-full"><FaFacebookF /></a>&nbsp;
+                            <a href="#" className="!p-2 border rounded-full"><FcGoogle /></a>
 
                         </div>
-                        <span className="text-sm mb-2 text-center">or use your email for registration</span>
-                        <div className="flex gap-2 mb-2">
+                        <span className="text-sm !mb-2 text-center">or use your email for registration</span>
+                        <div className="flex gap-2 !mb-2">
                         </div>
-                        <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} className="flex-1 p-2 mb-2 bg-gray-100 rounded" />
-                        <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} className="flex-1 p-2 mb-2 bg-gray-100 rounded" />
-                        <input type="email" name="email" placeholder="Email" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
-                        <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
-                        <input type="password" name="password" placeholder="Password" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
-                        <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-2" />
-                        <input type="text" name="referralCode" placeholder="Referral Code (Optional)" onChange={handleChange} className="p-2 bg-gray-100 rounded mb-4" />
-                        <button type="button" onClick={handleRegister} className="bg-[#390611] hover:bg-[#4d0a15] text-white px-6 py-2 rounded uppercase text-sm">Sign Up</button>
+                        <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} className="flex-1 !p-2 !mb-2 bg-gray-100 rounded" />
+                        <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} className="flex-1 !p-2 !mb-2 bg-gray-100 rounded" />
+                        <input type="email" name="email" placeholder="Email" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-2" />
+                        <input type="text" name="phone" placeholder="Phone Number" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-2" />
+                        <input type="password" name="password" placeholder="Password" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-2" />
+                        <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-2" />
+                        <input type="text" name="referralCode" placeholder="Referral Code (Optional)" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-4" />
+                        <button type="button" onClick={handleRegister} className="bg-[#390611] hover:bg-[#4d0a15] text-white !px-6 !py-2 rounded uppercase text-sm">Sign Up</button>
                     </form>
                 </div>
 

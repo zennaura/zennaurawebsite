@@ -106,7 +106,7 @@ const PopupFilter = ({
     const renderSection = (title, content, expanded, toggle) => (
         <div className="border-b border-gray-300">
             <div
-                className="flex justify-between items-center px-4 py-2 cursor-pointer bg-gray-200 hover:bg-gray-300"
+                className="flex justify-between items-center !px-4 !py-2 cursor-pointer bg-gray-200 hover:bg-gray-300"
                 onClick={toggle}
             >
                 <span>{title}</span>
@@ -114,7 +114,7 @@ const PopupFilter = ({
                     {expanded ? <FaChevronUp size={10} /> : <FaChevronDown size={10} />}
                 </div>
             </div>
-            {expanded && <div className="px-6 py-2 bg-white">{content}</div>}
+            {expanded && <div className="!px-6 !py-2 bg-white">{content}</div>}
         </div>
     );
 
@@ -138,7 +138,7 @@ const PopupFilter = ({
         <div className="relative">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex justify-center items-center gap-4 font-bold bg-[#4a001f] text-white px-4 py-2 rounded"
+                className="flex justify-center items-center gap-4 font-bold bg-[#4a001f] text-white !px-4 !py-2 rounded"
             >
                 <FaFilter /> Filters
             </button>
@@ -263,7 +263,7 @@ const PopupFilter = ({
 
                     {/* Apply Button */}
                     <div
-                        className="text-white text-center bg-[#4a001f] py-3 font-semibold cursor-pointer"
+                        className="text-white text-center bg-[#4a001f] !py-3 font-semibold cursor-pointer"
                         onClick={handleApply}
                     >
                         Apply

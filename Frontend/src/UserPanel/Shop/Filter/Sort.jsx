@@ -27,7 +27,7 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
         <div className="relative inline-block text-left" ref={dropdownRef}>
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="flex justify-center items-center gap-4 font-bold bg-[#4a001f] text-white px-4 py-2 rounded"
+                className="flex justify-center items-center gap-4 font-bold bg-[#4a001f] text-white !px-4 !py-2 rounded"
             >
                 <FaSortAmountDown className="text-sm" />
                 Sort
@@ -35,14 +35,14 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
 
             {open && (
                 <div className="absolute z-10 mt-2 w-48 bg-white border border-gray-200 rounded shadow-md">
-                    <div className="bg-gray-100 px-3 py-2 text-gray-800 font-semibold rounded-t">
+                    <div className="bg-gray-100 !px-3 !py-2 text-gray-800 font-semibold rounded-t">
                         Sort
                     </div>
                     <ul className="divide-y divide-gray-200">
                         {options.map((option) => (
                             <li
                                 key={option.value}
-                                className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${sortOption === option.value ? "text-purple-600 font-semibold" : ""
+                                className={`!px-4 !py-2 cursor-pointer hover:bg-gray-100 ${sortOption === option.value ? "text-purple-600 font-semibold" : ""
                                     }`}
                                 onClick={() => {
                                     setSortOption(option.value);

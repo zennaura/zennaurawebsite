@@ -119,6 +119,12 @@
   padding: 20px 0;
 }
 
+@media (max-width: 768px) {
+  .pagination {
+    justify-content: center;
+  }
+}
+
 .pagination-box {
   display: flex;
   justify-content: center;

@@ -164,7 +164,7 @@ const ProductListingPage = ({ products }) => {
       </header>
 
       {/* Product Grid */}
-      <div className={`flex gap-4 flex-wrap md:gap-8`}>
+      <div className={`flex gap-4 flex-wrap md:gap-8 justify-center items-center`}>
         {currentProducts.map((variant) => (
           <ProductCard
             key={variant.id}
@@ -207,7 +207,7 @@ const ProductListingPage = ({ products }) => {
           </span>
         </footer>
       )}
-      <div className="flex justify-center items-center gap-4 lg:hidden">
+      <div className="flex justify-center items-center gap-4 lg:hidden !mb-2">
         <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
         <PopupFilter />
       </div>
