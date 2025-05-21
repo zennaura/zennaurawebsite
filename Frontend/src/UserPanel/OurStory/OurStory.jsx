@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./OurStory.css";
+import one from "../../assests/storybg1.png";
+import two from "../../assests/storybg2.png";
+import three from "../../assests/storybg3.png";
 
 const slides = [
   {
     title: "The Beginning – A Journey into Crystal Healing & Manifestation",
     content:
-      "At Zenn Aura, we believe in the power of natural energy, reiki healing, and crystal therapy. Our journey started with a deep passion for spiritual healing, manifestation, and self-care rituals. ",
+      "At Zenn Aura, we believe in the power of natural energy, reiki healing, Manifestation, and crystal therapy. Our journey started with a deep passion for spiritual healing, pure manifestation, and self-care rituals. ",
     quote: "From reiki-infused crystals to aromatherapy candles, chakra healing tools, and smudging rituals—Zenn Aura is your gateway to spiritual wellness.",
+    src:""
   },
   {
     title: "The Philosophy – Where Spirituality Meets Self-Care & Gifting",
@@ -21,7 +25,7 @@ const slides = [
     - Cleanse negative energy with sage & Palo Santo
     - Manifest your dreams with reiki-infused crystals & candles
     - Enhance meditation & chakra healing with sacred tools.`,
-    quote: "Transform your space. Elevate your energy. Manifest your best life.",
+    quote: "Zenn Aura represents a lifestyle that celebrates balance, harmony, and conscious self-care. Transform your space. Elevate your energy. Manifest your best life.",
   },
 ];
 

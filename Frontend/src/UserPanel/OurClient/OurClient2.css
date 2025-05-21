@@ -15,7 +15,7 @@ html {
   /* padding-bottom: 2rem; */
   width: 100vw; /* FULL screen width */
   max-width: 100vw;
-  height: 75vh; /* FULL screen height */
+  height: 60vh; /* FULL screen height */
   overflow: hidden;
   margin: 0; /* Remove any margin */
   padding-left: 0;

@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 .sidebarm {
     width: 100vw;
     background-color: white;
-    font-family: 'Arial', sans-serif;
+    font-family: "Open Sans",'Arial', sans-serif;
     /* Unified font */
     position: fixed;
     top: 0;
@@ -65,7 +66,7 @@
 .sidebar-sub {
     width: 100vw;
     background-color: #f2f1ef;
-    font-family: 'Arial', sans-serif;
+    font-family: "Open Sans",'Arial', sans-serif;
     /* Unified font */
     height: 100vh;
     z-index: 1999;
@@ -229,7 +230,7 @@ ul li.menu-itemm a {
 }
 
 li.menu-itemm {
-    font-family: sans-serif !important;
+    font-family: "Open Sans",sans-serif !important;
 }
 
 .searchContains {

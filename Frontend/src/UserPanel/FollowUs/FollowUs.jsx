@@ -1,6 +1,6 @@
 import React from "react";
 import "./FollowUs.css";
-import Followusbgimg from "../../assests/Followusbgimg.png";
+import Followusbgimg from "../../assests/followus.png";
 // Import icons from react-icons
 import {
     FaInstagram,
@@ -32,19 +32,19 @@ const FollowUs = () => {
                 {/* Social Media Icons */}
                 <div className="function-social-icons">
                     <a href="https://www.facebook.com/zennaura/" target="_blank" rel="noopener noreferrer">
-                        <FaSquareFacebook className="function-icon" /> {/* Square Facebook icon */}
+                        <FaSquareFacebook className="function-icon" color="#390611"/> {/* Square Facebook icon */}
                     </a>
                     <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
-                        <FaInstagram className="function-icon" />
+                        <FaInstagram className="function-icon" color="#390611" />
                     </a>
                     <a href="https://www.linkedin.com/company/zennaura/" target="_blank" rel="noopener noreferrer">
-                        <FaLinkedin className="function-icon" />
+                        <FaLinkedin className="function-icon" color="#390611" />
                     </a>
                     <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
-                        <FaXTwitter className="function-icon" /> {/* X icon instead of Twitter */}
+                        <FaXTwitter className="function-icon" color="#390611" /> {/* X icon instead of Twitter */}
                     </a>
                     <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
-                        <FaPinterest className="function-icon" />
+                        <FaPinterest className="function-icon" color="#390611"/>
                     </a>
 
                 </div>

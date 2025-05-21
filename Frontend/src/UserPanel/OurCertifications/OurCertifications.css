@@ -8,7 +8,7 @@
     font-family: 'Inria Serif';
     font-size: 40px;
     color: #390611;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .certifications-container {
@@ -20,14 +20,14 @@
 
 .cert-image {
     min-width: 100px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     height: 100px;
     filter: grayscale(100%);
     object-fit: cover;
     transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.cert-image:hover {
+.cert-image.show-color {
     filter: grayscale(0%);
 }
 
@@ -36,10 +36,6 @@
     margin-top: 15px;
     color: #390611;
     padding-bottom: 15px;
-}
-.large-cert {
-  /* width: 120px; */
-  height: 135px;
 }
 
 @media screen and (max-width: 768px) {

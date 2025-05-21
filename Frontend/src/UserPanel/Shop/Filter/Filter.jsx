@@ -112,14 +112,14 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
               value={minPrice}
               onChange={(e) => setMinPrice(Number(e.target.value))}
             />
-            <input
+            {/* <input
               type="range"
               min="0"
               max="1000"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-            />
-            <span>₹{maxPrice}</span>
+            /> */}
+            {/* <span>₹{maxPrice}</span> */}
           </div>
         </div>
 

@@ -2,7 +2,7 @@
 
 /* HandMadeLove.css */
 .Handmadelove-container {
-  font-family: "Inria Serif";
+  /* font-family: "Inria Serif";
   background-color: #ffffff;
   color: #390611;
   padding: 35px 60px;
@@ -10,7 +10,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 55px;
+  padding-bottom: 55px; */
+  background-color: #FFFFFF;
+  color: #390611;
+  padding: 40px 60px;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Handmadelove-title {
@@ -24,16 +31,26 @@
 
 .Handmadelove-content {
   display: flex;
-  /* flex-direction: row; */
   align-items: center;
   justify-content: space-evenly;
   border-radius: 8px;
   width: 100%;
 }
-
-.Handmadelove-textdiv {
+.Handmadelove-div{
+  font-family: 'Poppins';
+  display: flex;
+  color: #390611;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
   background-color: #d9d9d9;
-  box-shadow: 0 2px 8px rgba(57, 6, 17, 0.1);
+  width: 350px;
+  height: 450px;
+}
+.Handmadelove-textdiv {
+  /* background-color: #d9d9d9;
+  box-shadow: 0 2px 8px rgba(57, 6, 17, 0.1); */
   width: 300px;
   height: 400px;
   display: flex;

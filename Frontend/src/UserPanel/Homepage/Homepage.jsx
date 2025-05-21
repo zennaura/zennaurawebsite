@@ -13,7 +13,7 @@ import UptoDate from '../UpToDate/UptoDate';
 import FollowUs from '../FollowUs/FollowUs';
 import Bemember from '../BeMember/Bemember';
 import ImageContainer from "../ProductCategory/ImageContainer/ImageContainer";
-import Homepageposter from '../../assests/Homepagepos.png';
+import Homepageposter from '../../assests/awaken.png';
 import OurClient2 from '../OurClient/OurClient2.jsx';
 import { useUser } from '../../components/AuthContext/AuthContext';
 import PosterSlider from './posterSlider'

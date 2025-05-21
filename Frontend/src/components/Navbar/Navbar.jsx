@@ -415,7 +415,7 @@ const Navbar = () => {
                           state={{ autoSelects: intent }}
                           key={intent}
                         >
-                          <li key={intent + "Skin Care"}>{intent}</li></Link>
+                          <li key={intent + "Skin Care"} style={{paddingBottom:"8px"}}>{intent}</li></Link>
                       ))}
                     </ul>
                   </div>

@@ -8,7 +8,8 @@ import WhyWeStarted from "../WhyWeStarted/WhyWeStarted"
 import WhyZenn from "../WhyZenn/WhyZenn"
 import ImageHead from "../../../components/ImageHead/ImageHead";
 import ImageContainer from "../../ProductCategory/ImageContainer/ImageContainer";
-import Readytoexpe from "../../../assests/readytoexpe.png"
+import Readytoexpe from "../../../assests/readytoexpe.png";
+import AboutUs1 from "../../../assests/aboutus1.png";
 import OurCertifications from "../../OurCertifications/OurCertifications";
 import FollowUs from "../../FollowUs/FollowUs";
 import UptoDate from "../../UpToDate/UptoDate";
@@ -18,7 +19,7 @@ const AboutUs = () => {
     <>
     <ImageHead Title = "About Us"/>
     {/* <OurPhilosophy /> */}
-    <ImageContainer Image = {Readytoexpe}/>
+    <ImageContainer Image = {AboutUs1}/>
     <WhyWeStarted/>
     <OurValues/>
     <ImageContainer Image = {Readytoexpe}/>
