@@ -348,7 +348,8 @@ const Navbar = () => {
                                   to="/shop"
                                   state={{ autoSelects: sub.subCategory }}
                                 ><li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
-                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem"  }}>
+                                  <li>{category}</li>
                                 </ul>
                               </div>
                             )
@@ -397,7 +398,8 @@ const Navbar = () => {
                                   state={{ autoSelects: sub.subCategory }}
                                 >
                                   <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
-                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem" }}>
+                                  <li>&gt; {category}</li>
                                 </ul>
                               </div>
                             )
@@ -445,7 +447,8 @@ const Navbar = () => {
                                   to="/shop"
                                   state={{ autoSelects: sub.subCategory }}>
                                   <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
-                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem"  }}>
+                                   <li>&gt; {category}</li>
                                 </ul>
                               </div>
                             )
@@ -490,7 +493,8 @@ const Navbar = () => {
                                   to="/shop"
                                   state={{ autoSelects: sub.subCategory }}>
                                   <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
-                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
+                                <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem"  }}>
+                                   <li>&gt; {category}</li>
                                 </ul>
                               </div>
                             )
