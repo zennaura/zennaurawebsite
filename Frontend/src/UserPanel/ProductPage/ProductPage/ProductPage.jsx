@@ -1,5 +1,5 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import ImageHead from '../../../components/ImageHead/ImageHead'
 import Productdetails from '../Productdetails/Productdetails'
 import StoneUsed from '../StoneUsed/StoneUsed'
@@ -13,9 +13,43 @@ import FQApage from '../FQA/FQA';
 import './ProductPage.css';
 
 const ProductPage = () => {
+  // const location = useLocation();
+  // const product = location.state || {};
+  // const [product, setCurrentProduct] = useState(initialProduct);
+
+  // const handleVariantChange = (id) => {
+  //   // Fetch or find product by id here, then update currentProduct state
+  //   const newProduct = product.allVariants.find(p => p.id === id);
+  //   setCurrentProduct(newProduct);
+  // };
+
   const location = useLocation();
-  const product = location.state || {};
+  const { id } = useParams(); // Fallback if location.state isn't available
+  const initialProduct = location.state;
+  const [product, setProduct] = useState(initialProduct);
+
+  useEffect(() => {
+    const state = location.state;
+
+    if (state?.product && state?.selectedVariant) {
+      // merge selected variant into product
+      const updatedProduct = {
+        ...state.product,
+        ...state.selectedVariant,
+      };
+      setProduct(updatedProduct);
+    } else {
+      // fallback: fetch from backend
+      fetch(`/api/products/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) setProduct(data.product);
+        });
+    }
+  }, [location.state?.selectedVariant, id]);
+
   console.log("Product Data:", product);
+  // console.log("initial",initialProduct);
   return (
     <div>
       <ImageHead Title={product.variantname} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import "./ProductDetails.css";
 import Carouselimg5 from "../../../assests/Carouselimg5.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 const ProductDetails = ({ product }) => {
   const navigate = useNavigate();
@@ -12,6 +12,69 @@ const ProductDetails = ({ product }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // useEffect(() => {
+  //   if (onVariantChange) {
+  //     onVariantChange(id);
+  //   }
+  // }, [id, onVariantChange]);
+  // const { id } = useParams(); // this is the variant id
+  // console.log(id);
+  // const [product, setProduct] = useState(null);
+  // const [variant, setVariant] = useState(null);
+
+  // useEffect(() => {
+  //   // Find the product that contains this variant
+  //   const foundProduct = allProducts.find(p =>
+  //     p.variants.some(v => v._id === id)
+  //   );
+
+  //   if (foundProduct) {
+  //     setProduct(foundProduct);
+  //     const foundVariant = foundProduct.variants.find(v => v._id === id);
+  //     setVariant(foundVariant);
+  //   }
+  // }, [id]);
+
+  // if (!product || !variant) return <div>Loading...</div>;
+
+  // const { id } = useParams(); // variant id from URL
+  //   const location = useLocation();
+  //   const [product, setProduct] = useState(location.state || null);
+
+  // useEffect(() => {
+  //   // if (location.state) {
+  //   //   setProduct(location.state); // update product if passed through navigation
+  //   // } else {
+  //     // fallback: fetch product by id if not in location.state
+  //     fetch(`/api/products/${id}`)
+  //       .then(res => res.json())
+  //       .then(data => setProduct(data))
+  //       .catch(err => console.error(err));
+  //   // }
+  // }, [id, location.state]); // run when id or location.state changes
+
+  //   useEffect(() => {
+  //   if (location.state?.selectedVariant && location.state?.product) {
+  //     // Override product variant if passed from navigation
+  //     const updatedProduct = {
+  //       ...location.state.product,
+  //       variantname: location.state.selectedVariant.variantname,
+  //       size: location.state.selectedVariant.size,
+  //       salePrice: location.state.selectedVariant.salePrice,
+  //       costPrice: location.state.selectedVariant.costPrice,
+  //       // Add other fields you expect to override
+  //     };
+  //     setProduct(updatedProduct);
+  //   } else {
+  //     // Fallback to API
+  //     fetch(`/api/products/${id}`)
+  //       .then(res => res.json())
+  //       .then(data => setProduct(data))
+  //       // .catch(err => console.error(err));
+  //   }
+  // }, [id, location.state]);
+  //   if (!product) return <p>Loading...</p>;
 
   const toggleDisclaimer = () => {
     setIsExpanded(!isExpanded);
@@ -29,7 +92,6 @@ const ProductDetails = ({ product }) => {
     setShowFullDescription(!showFullDescription);
   };
 
-
   // Memoize the product images to prevent unnecessary recalculations
   const slides = useMemo(() => {
     const images = [];
@@ -39,7 +101,7 @@ const ProductDetails = ({ product }) => {
         images.push({
           image: src,
           title: title,
-          loading: true
+          loading: true,
         });
       }
     };
@@ -54,7 +116,10 @@ const ProductDetails = ({ product }) => {
       addImage(img, `${product.name} - Image ${index + 1}`);
     });
 
-    addImage(product?.productDescriptions?.image, `${product.name} - Description`);
+    addImage(
+      product?.productDescriptions?.image,
+      `${product.name} - Description`
+    );
 
     product?.stoneUsedImage?.forEach((stone, index) => {
       if (stone.image) {
@@ -120,17 +185,20 @@ const ProductDetails = ({ product }) => {
   const handlebuyitnow = () => {
     navigate("/checkout-page", {
       state: {
-        products: [{
-          ...product,
-          quantity: quantity
-        }]
-      }
+        products: [
+          {
+            ...product,
+            quantity: quantity,
+          },
+        ],
+      },
     });
   };
 
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
   }
+  // console.log(product.allVariants);
 
   return (
     <div className="product-page">
@@ -138,7 +206,8 @@ const ProductDetails = ({ product }) => {
         {/* Product Info Section */}
         <div className="info-section">
           <h1 className="product-title" aria-label="Product title">
-            <span className="product-name">{product.variantname}</span> – {product.title}
+            <span className="product-name">{product.variantname}</span> –{" "}
+            {product.title}
           </h1>
 
           <div className="rating-container" aria-label="Product rating">
@@ -146,7 +215,8 @@ const ProductDetails = ({ product }) => {
           </div>
 
           <p aria-label="Product size">
-            <strong>Size:</strong> <span className="product-size">{product.size}</span>
+            <strong>Size:</strong>{" "}
+            <span className="product-size">{product.size}</span>
           </p>
           {/* Here are the tags */}
           {/* <div className="specs-container">
@@ -158,7 +228,18 @@ const ProductDetails = ({ product }) => {
           {/* Here are other varient names */}
           <div className="specs-container">
             {product.allVariants?.map((variant, index) => (
-              <p key={index} className="specs-p" aria-label={`Product variant: ${variant.variantname}`}>
+              <p
+                className="specs-p"
+                aria-label={`Product variant: ${variant.variantname}`}
+                onClick={() => {
+                  navigate(`/productdetails/${variant.id}`, {
+                    state: {
+                      product: product, // full product
+                      selectedVariant: variant, // newly selected variant
+                    },
+                  });
+                }}
+              >
                 {variant.variantname}
               </p>
             ))}
@@ -167,10 +248,22 @@ const ProductDetails = ({ product }) => {
           <div className="price-container" aria-label="Product pricing">
             <p className="price-label">M.R.P.:</p>
             <div className="price-mrp-box">
-              <p className="price-value">₹{product.salePrice}.00</p>
+              <p className="price-value">
+                ₹
+                {(
+                  product.salePrice +
+                  (product.salePrice * product.tax) / 100 -
+                  ((product.salePrice +
+                    (product.salePrice * product.tax) / 100) *
+                    product.discount) /
+                    100
+                ).toFixed(2)}{" "}
+              </p>
               <p className="price-note">Inclusive of all taxes</p>
             </div>
-            <p className="price-original">₹{product.costPrice}.00</p>
+            <p className="price-original">
+              ₹{(product.salePrice + (product.salePrice * product.tax) / 100).toFixed(2)}
+            </p>
           </div>
 
           <div className="quantity-container" aria-label="Quantity selector">
@@ -218,26 +311,27 @@ const ProductDetails = ({ product }) => {
                 ? product.description
                 : truncateDescription(product.description, 50)}
             </p>
-            {product.description && product.description.split(/\s+/).length > 50 && (
-              <button
-                className="description-text-knowmore-btn"
-                onClick={toggleDescription}
-              >
-                {showFullDescription ? "Show less" : "Know more"}
-              </button>
-            )}
+            {product.description &&
+              product.description.split(/\s+/).length > 50 && (
+                <button
+                  className="description-text-knowmore-btn"
+                  onClick={toggleDescription}
+                >
+                  {showFullDescription ? "Show less" : "Know more"}
+                </button>
+              )}
           </div>
           <div className="Disclaimer-container">
             <div className="Disclaimer-header" onClick={toggleDisclaimer}>
               <h2 className="Disclaimer-title">Disclaimer</h2>
-              <span className={`Disclaimer-add-btn ${isExpanded ? 'expanded' : ''}`}>
-                {isExpanded ? '−' : '+'}
+              <span
+                className={`Disclaimer-add-btn ${isExpanded ? "expanded" : ""}`}
+              >
+                {isExpanded ? "−" : "+"}
               </span>
             </div>
             {isExpanded && (
-              <div className="Disclaimer-content">
-                {product.description}
-              </div>
+              <div className="Disclaimer-content">{product.description}</div>
             )}
           </div>
         </div>
@@ -246,26 +340,39 @@ const ProductDetails = ({ product }) => {
         <div className="gallery-section">
           <div className="vertical">
             {slides.map((slide, i) => {
-              const distance = (i - carouselIndex + slides.length) % slides.length;
+              const distance =
+                (i - carouselIndex + slides.length) % slides.length;
               let scale, opacity, zIndex, translateY;
 
               // Calculate styles based on distance and device type
               if (isMobile) {
                 if (distance === 0) {
-                  scale = 1; opacity = 1; zIndex = 5; translateY = 0;
+                  scale = 1;
+                  opacity = 1;
+                  zIndex = 5;
+                  translateY = 0;
                 } else if (distance === 1 || distance === slides.length - 1) {
-                  scale = 0.7; opacity = 0.6; zIndex = 3;
+                  scale = 0.7;
+                  opacity = 0.6;
+                  zIndex = 3;
                   translateY = distance === 1 ? 200 : -200;
                 } else if (distance === 2 || distance === slides.length - 2) {
-                  scale = 0.4; opacity = 0; zIndex = 1;
+                  scale = 0.4;
+                  opacity = 0;
+                  zIndex = 1;
                   translateY = distance === 2 ? 300 : -300;
                 } else {
-                  scale = 0; opacity = 0; zIndex = 1;
+                  scale = 0;
+                  opacity = 0;
+                  zIndex = 1;
                   translateY = distance < slides.length / 2 ? 1200 : -1200;
                 }
               } else {
                 if (distance === 0) {
-                  scale = 1.2; opacity = 1; zIndex = 5; translateY = 0;
+                  scale = 1.2;
+                  opacity = 1;
+                  zIndex = 5;
+                  translateY = 0;
                 } else if (distance === 1 || distance === slides.length - 1) {
                   scale = 1;
                   opacity = 0.8;
