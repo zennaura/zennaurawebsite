@@ -14,6 +14,34 @@ const ProductListingPage = ({ products }) => {
   const productsPerPage = 12;
   const navigate = useNavigate();
 
+  const groupedProducts = useMemo(() => {
+  const productMap = new Map();
+
+  products.forEach((variant) => {
+    const baseId = variant.id.split("-")[0];
+
+    if (!productMap.has(baseId)) {
+      productMap.set(baseId, variant); // Only keep the first variant
+    }
+  });
+
+  return Array.from(productMap.values());
+}, [products]);
+
+  const sortedProducts = useMemo(() => {
+  const toSort = [...groupedProducts];
+
+  switch (sortOption) {
+    case "price-low-high":
+      return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
+    case "price-high-low":
+      return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
+    default:
+      return toSort;
+  }
+}, [groupedProducts, sortOption]);
+
+
   useEffect(() => {
     //   const fetchProducts = async () => {
     //     try {
@@ -56,17 +84,17 @@ const ProductListingPage = ({ products }) => {
   }, []);
 
   // Sorting logic
-  const sortedProducts = useMemo(() => {
-    const productsToSort = [...products];
-    switch (sortOption) {
-      case "price-low-high":
-        return productsToSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
-      case "price-high-low":
-        return productsToSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
-      default:
-        return productsToSort;
-    }
-  }, [products, sortOption]);
+  // const sortedProducts = useMemo(() => {
+  //   const productsToSort = [...products];
+  //   switch (sortOption) {
+  //     case "price-low-high":
+  //       return productsToSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
+  //     case "price-high-low":
+  //       return productsToSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
+  //     default:
+  //       return productsToSort;
+  //   }
+  // }, [products, sortOption]);
 
   // Create a map of product base IDs to all their variants
   const productVariantsMap = useMemo(() => {
@@ -173,8 +201,15 @@ const ProductListingPage = ({ products }) => {
             title={variant.data.title}
             frontimage={variant.data.frontImage}
             backImage={variant.data.backImage}
-            price={variant.data.salePrice}
-            originalPrice={variant.data.costPrice}
+            price={(
+                  variant.data.salePrice +
+                  (variant.data.salePrice * variant.data.tax) / 100 -
+                  ((variant.data.salePrice +
+                    (variant.data.salePrice * variant.data.tax) / 100) *
+                    variant.data.discount) /
+                    100
+                ).toFixed(2) }
+            originalPrice={(variant.data.salePrice + (variant.data.salePrice * variant.data.tax) / 100).toFixed(2)}
             rating={variant.data.rating}
             isFeatured={variant.data.featureProduct}
             isBestSeller={variant.data.bestSeller}
