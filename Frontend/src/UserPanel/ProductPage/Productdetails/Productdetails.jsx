@@ -107,7 +107,7 @@ const ProductDetails = ({ product }) => {
     };
 
     addImage(product?.frontImage, product?.name);
-
+    addImage(product?.backImage, product?.name);
     product?.variantsimages?.forEach((variant, index) => {
       addImage(variant, `${product.name} - Variant ${index + 1}`);
     });
@@ -133,7 +133,7 @@ const ProductDetails = ({ product }) => {
 
     return images;
   }, [product]);
-
+  console.log("Product Data",product);
   // Carousel navigation handlers
   const nextSlide = useCallback(() => {
     setCarouselIndex((prev) => (prev + 1) % slides.length);
