@@ -295,7 +295,7 @@ const AddProduct = () => {
   return (
     <div className="bg-gray-50 flex justify-center items-center p-6">
       {success && (
-        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 animate-bounce z-50">
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white !px-6 !py-3 rounded-lg shadow-lg transition-all duration-300 animate-bounce z-50">
           ✅ Product Added Successfully!
         </div>
       )}
@@ -317,7 +317,7 @@ const AddProduct = () => {
               onChange={(e) =>
                 setCategory({ ...category, parent: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
           <label className="block">
@@ -328,7 +328,7 @@ const AddProduct = () => {
               onChange={(e) =>
                 setCategory({ ...category, sub: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
           <label className="block">
@@ -339,7 +339,7 @@ const AddProduct = () => {
               onChange={(e) =>
                 setCategory({ ...category, subSub: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
           <label className="block">
@@ -350,7 +350,7 @@ const AddProduct = () => {
               onChange={(e) =>
                 setCategory({ ...category, category: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
         </div>
@@ -382,7 +382,7 @@ const AddProduct = () => {
               onChange={(e) =>
                 setBasicDetails({ ...basicDetails, description: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2 h-24" // Adjust height as needed
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2 !h-24" // Adjust height as needed
               rows={4} // Optional: Sets the number of visible rows
               placeholder="Enter product description..."
             />
@@ -397,7 +397,7 @@ const AddProduct = () => {
               onChange={(e) =>
                 setBasicDetails({ ...basicDetails, title: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
 
@@ -410,13 +410,13 @@ const AddProduct = () => {
               onChange={(e) =>
                 setBasicDetails({ ...basicDetails, sku: e.target.value })
               }
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
         </div>
         {/* <!-- Concern Tags --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Concern Tags</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Concern Tags</h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             {/* Tag Input Field */}
             <input
@@ -428,7 +428,7 @@ const AddProduct = () => {
                 }
               }}
               placeholder="Enter a tag"
-              className="flex-1 border border-gray-300 rounded-md p-2 md:p-3 text-sm md:text-base"
+              className="flex-1 border border-gray-300 rounded-md !p-2 md:p-3 text-sm md:text-base"
             />
 
             {/* Add Tag Button */}
@@ -441,7 +441,7 @@ const AddProduct = () => {
                   inputField.value = ''; // Clear the input field
                 }
               }}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm md:text-base"
+              className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 text-sm md:text-base cursor-pointer"
             >
               Add
             </button>
@@ -452,7 +452,7 @@ const AddProduct = () => {
             {tags.map((tag, index) => (
               <span
                 key={index}
-                className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full flex items-center gap-2"
+                className="bg-blue-100 text-blue-800 text-sm font-medium !mr-2 !px-2.5 !py-0.5 rounded-full flex items-center gap-2"
               >
                 {tag} {/* Display the tag */}
                 <button
@@ -460,7 +460,7 @@ const AddProduct = () => {
                   onClick={() => {
                     setTags(tags.filter((_, i) => i !== index)); // Remove the tag
                   }}
-                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                  className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                 >
                   x
                 </button>
@@ -470,7 +470,7 @@ const AddProduct = () => {
         </div>
         {/* <!--Intent  Tags --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Intent Tags</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Intent Tags</h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             {/* Tag Input Field (Controlled) */}
             <input
@@ -484,7 +484,7 @@ const AddProduct = () => {
                 }
               }}
               placeholder="Enter a tag"
-              className="flex-1 border border-gray-300 rounded-md p-2 md:p-3 text-sm md:text-base"
+              className="flex-1 border border-gray-300 rounded-md !p-2 md:p-3 text-sm md:text-base"
             />
 
             {/* Add Tag Button */}
@@ -496,7 +496,7 @@ const AddProduct = () => {
                   setTagInput(""); // Clear input using state
                 }
               }}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm md:text-base"
+              className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 text-sm md:text-base cursor-pointer"
             >
               Add
             </button>
@@ -507,7 +507,7 @@ const AddProduct = () => {
             {Intenttags.map((tag, index) => (
               <span
                 key={index}
-                className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full flex items-center gap-2"
+                className="bg-blue-100 text-blue-800 text-sm font-medium !mr-2 !px-2.5 !py-0.5 rounded-full flex items-center gap-2"
               >
                 {tag}
                 <button
@@ -515,7 +515,7 @@ const AddProduct = () => {
                   onClick={() => {
                     setIntenttags(Intenttags.filter((_, i) => i !== index));
                   }}
-                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                  className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                 >
                   x
                 </button>
@@ -525,46 +525,46 @@ const AddProduct = () => {
         </div>
         {/* <!-- Stone Used --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Stone Used</h2>
-          <div className="flex flex-col gap-2">
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">Stone Used</h2>
+          <div className="flex flex-col !gap-2">
             {/* Stone Name Input */}
             <input
               type="text"
               value={stoneName}
               onChange={(e) => setStoneName(e.target.value)}
               placeholder="Enter stone name"
-              className="border border-gray-300 rounded-md p-2"
+              className="border border-gray-300 rounded-md !p-2"
             />
 
             {/* Stone Image Upload */}
             <input
               type="file"
               onChange={(e) => setStoneImage(e.target.files[0])}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+              className="!w-full cursor-pointer border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
             />
 
             {/* Add Stone Button */}
             <button
               type="button"
               onClick={handleAddStone}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 w-fit"
+              className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 !w-fit cursor-pointer"
             >
               Add Stone
             </button>
           </div>
 
           {/* List of Added Stones */}
-          <div id="stoneList" className="mt-2 flex gap-2 flex-wrap">
+          <div id="stoneList" className="!mt-2 flex gap-2 flex-wrap">
             {stones.map((stone, index) => (
               <span
                 key={index}
-                className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full flex items-center gap-2"
+                className="bg-blue-100 text-blue-800 text-sm font-medium !mr-2 !px-2.5 !py-0.5 rounded-full flex items-center gap-2"
               >
                 {stone.title} {/* Display the stone name */}
                 <button
                   type="button"
                   onClick={() => handleRemoveStone(index)}
-                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                  className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                 >
                   x
                 </button>
@@ -577,33 +577,33 @@ const AddProduct = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Product Description */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Description</h2>
+            <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Description</h2>
             <textarea
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
               placeholder="Enter product description"
-              className="mb-2 block w-full border border-gray-300 rounded-md p-2"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
               rows={4}
             />
             <input
               type="file"
               onChange={(e) => handleFileUpload(e, 'descriptionImage')}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+              className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
             />
           </div>
 
           {/* Product Images */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Product Common Images</h2>
+            <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Common Images</h2>
 
 
 
             {/* Other Images */}
-            <label className="block mb-2">Other Images</label>
+            <label className="block !mb-2">Other Images</label>
             <input
               type="file"
               onChange={(e) => handleFileUpload(e, 'otherImages')}
-              className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+              className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               multiple
             />
           </div>
@@ -611,10 +611,10 @@ const AddProduct = () => {
 
         {/* <!-- Posters --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Posters</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">Posters</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {/* Healing Poster */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center !space-y-2">
               <label htmlFor="healing" className="text-sm font-medium text-gray-700">
                 Healing
               </label>
@@ -622,12 +622,12 @@ const AddProduct = () => {
                 type="file"
                 id="healing"
                 onChange={(e) => handlePosterUpload(e, 'healing')}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* Benefits Poster */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center !space-y-2">
               <label htmlFor="benefits" className="text-sm font-medium text-gray-700">
                 Benefits
               </label>
@@ -635,12 +635,12 @@ const AddProduct = () => {
                 type="file"
                 id="benefits"
                 onChange={(e) => handlePosterUpload(e, 'benefits')}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* Why Choose Poster */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center !space-y-2">
               <label htmlFor="why-choose" className="text-sm font-medium text-gray-700">
                 Why Choose
               </label>
@@ -648,12 +648,12 @@ const AddProduct = () => {
                 type="file"
                 id="why-choose"
                 onChange={(e) => handlePosterUpload(e, 'whyChoose')}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 !cursor-pointer"
               />
             </div>
 
             {/* Ways to Clean Poster */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center !space-y-2">
               <label htmlFor="ways-to-clean" className="text-sm font-medium text-gray-700">
                 Ways to Clean
               </label>
@@ -661,12 +661,12 @@ const AddProduct = () => {
                 type="file"
                 id="ways-to-clean"
                 onChange={(e) => handlePosterUpload(e, 'waysToClean')}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* Who Wear Poster */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center !space-y-2">
               <label htmlFor="who-wear" className="text-sm font-medium text-gray-700">
                 Who Wear
               </label>
@@ -674,12 +674,12 @@ const AddProduct = () => {
                 type="file"
                 id="who-wear"
                 onChange={(e) => handlePosterUpload(e, 'whoWear')}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* How to Wear Poster */}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col items-center !space-y-2">
               <label htmlFor="how-to-wear" className="text-sm font-medium text-gray-700">
                 How to Wear
               </label>
@@ -687,7 +687,7 @@ const AddProduct = () => {
                 type="file"
                 id="how-to-wear"
                 onChange={(e) => handlePosterUpload(e, 'howToWear')}
-                className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
           </div>
@@ -697,12 +697,12 @@ const AddProduct = () => {
         <div
           style={{ padding: "10px", marginTop: "20px" }}
 
-          className="space-y-4 border-t pt-4">
+          className="!space-y-4 border-t !pt-4">
           <h2 className="text-xl font-semibold text-gray-800">Variants</h2>
 
           {/* Render Each Variant Dynamically */}
           {variants.map((variant, index) => (
-            <div key={index} className="border p-4 rounded-md space-y-4">
+            <div key={index} className="border !p-4 rounded-md !space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {/* Variant name  */}
                 <input
@@ -712,7 +712,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'variantname', e.target.value)
                   }
                   placeholder="Varient Name"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* Size */}
                 <input
@@ -722,7 +722,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'size', e.target.value)
                   }
                   placeholder="Size in mm"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* Tax */}
                 <input
@@ -732,7 +732,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'tax', e.target.value)
                   }
                   placeholder="Tax on product"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Sale Price */}
@@ -743,7 +743,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'salePrice', e.target.value)
                   }
                   placeholder="Sale Price"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Discount */}
@@ -754,7 +754,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'discount', e.target.value)
                   }
                   placeholder="Discount"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Cost Price */}
@@ -765,7 +765,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'costPrice', e.target.value)
                   }
                   placeholder="Cost Price"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Stock */}
@@ -776,26 +776,26 @@ const AddProduct = () => {
                     handleVariantChange(index, 'stock', e.target.value)
                   }
                   placeholder="Stock"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
               </div>
 
               {/* Variant Images */}
-              <div className="my-5">
+              <div className="!my-5">
                 {/* Front Image */}
-                <label className="block mb-2">Product Front Image</label>
+                <label className="block !mb-2">Product Front Image</label>
                 <input
                   type="file"
                   onChange={(e) => handleVariantSingleImageUpload(index, 'frontImage', e)}
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                  className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600 cursor-pointer"
                 />
 
                 {/* Back Image */}
-                <label className="block mb-2">Product Back Image</label>
+                <label className="block !mb-2">Product Back Image</label>
                 <input
                   type="file"
                   onChange={(e) => handleVariantSingleImageUpload(index, 'backImage', e)}
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
+                  className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600 cursor-pointer"
                 />
                 {/* Varient Image */}
                 <label className="block mb-1">Variant Image (max 2)</label>
@@ -803,14 +803,14 @@ const AddProduct = () => {
                 <input
                   type="file"
                   onChange={(e) => handleVariantImageUpload(index, e)}
-                  className="w-full border border-gray-300 rounded-md p-2 text-sm text-gray-500 file:border-0 file:bg-blue-600 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-700"
+                  className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-600 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-700 cursor-pointer"
                   accept="image/*"
                   multiple
                 />
               </div>
 
               {/* Specifications */}
-              <div style={{ padding: "20px" }} className="grid grid-cols-2 mb-5 mt-5 pt-5 md:grid-cols-3 gap-4">
+              <div style={{ padding: "20px" }} className="grid grid-cols-2 !mb-5 !mt-5 !pt-5 md:grid-cols-3 gap-4">
                 {/* Material */}
                 <input
                   type="text"
@@ -823,7 +823,7 @@ const AddProduct = () => {
                     )
                   }
                   placeholder="Material"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* beadSize */}
                 <input
@@ -837,7 +837,7 @@ const AddProduct = () => {
                     )
                   }
                   placeholder="Bead Size"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Product Type */}
@@ -852,7 +852,7 @@ const AddProduct = () => {
                     )
                   }
                   placeholder="Product Type"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Size */}
@@ -863,7 +863,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'specifications.size', e.target.value)
                   }
                   placeholder="Size"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
 
                 {/* Color */}
@@ -874,7 +874,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'specifications.color', e.target.value)
                   }
                   placeholder="Color"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* Weight */}
                 <input
@@ -884,7 +884,7 @@ const AddProduct = () => {
                     handleVariantChange(index, 'specifications.weight', e.target.value)
                   }
                   placeholder="Weight"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* Packaging */}
                 <input
@@ -898,12 +898,12 @@ const AddProduct = () => {
                     )
                   }
                   placeholder="Packaging"
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md !p-2"
                 />
               </div>
 
               {/* Feature Product Toggle */}
-              <label className="inline-flex items-center cursor-pointer my-4 space-x-2">
+              <label className="inline-flex items-center cursor-pointer !my-4 !space-x-2">
                 <input
                   type="checkbox"
                   checked={variant.featureProduct}
@@ -913,15 +913,15 @@ const AddProduct = () => {
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${variant.featureProduct ? 'bg-blue-600' : 'bg-gray-300'
-                    } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.featureProduct ? 'after:translate-x-5' : ''
+                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${variant.featureProduct ? 'bg-blue-600' : 'bg-gray-300'
+                    } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.featureProduct ? 'after:translate-x-5' : ''
                     }`}
                 ></span>
-                <span className="text-sm text-gray-700">Feature Product</span>
+                <span className="text-sm text-gray-700" style={{marginRight:"8px"}}>Feature Product</span>
               </label>
 
               {/* Best Seller Toggle */}
-              <label className="inline-flex items-center cursor-pointer space-x-2">
+              <label className="inline-flex items-center cursor-pointer !space-x-2">
                 <input
                   type="checkbox"
                   checked={variant.bestSeller}
@@ -931,8 +931,8 @@ const AddProduct = () => {
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${variant.bestSeller ? 'bg-blue-600' : 'bg-gray-300'
-                    } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.bestSeller ? 'after:translate-x-5' : ''
+                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${variant.bestSeller ? 'bg-blue-600' : 'bg-gray-300'
+                    } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.bestSeller ? 'after:!translate-x-5' : ''
                     }`}
                 ></span>
                 <span className="text-sm text-gray-700">Best Seller</span>
@@ -943,9 +943,9 @@ const AddProduct = () => {
           {/* Add Variant Button */}
           <button
             type="button"
-            style={{ padding: "10px" }}
+            style={{ padding: "10px",cursor:"pointer" }}
             onClick={handleAddVariant}
-            className="bg-green-600 text-white px-4 py-2  rounded-md hover:bg-green-700"
+            className="bg-green-600 text-white !px-4 !py-2  rounded-md hover:bg-green-700"
           >
             Add Variant
           </button>
@@ -953,10 +953,10 @@ const AddProduct = () => {
           {/* Remove Variant Button */}
           <button
             type="button"
-            style={{ padding: "10px", marginLeft: "10px" }}
+            style={{ padding: "10px", marginLeft: "10px",cursor:"pointer" }}
 
             onClick={handleRemoveVariant}
-            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+            className="bg-red-600 text-white !px-4 !py-2 rounded-md hover:bg-red-700 cursor-pointer"
           >
             Remove Variant
           </button>
@@ -964,7 +964,7 @@ const AddProduct = () => {
         {/* <!-- Submit Button --> */}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 w-full"
+          className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 w-full cursor-pointer"
         >
           Add Product
         </button>
