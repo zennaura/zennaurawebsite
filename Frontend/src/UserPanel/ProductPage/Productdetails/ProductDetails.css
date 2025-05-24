@@ -58,8 +58,12 @@
 .specs-p {
   border: 2px solid #222;
   padding: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
 }
-
+.specs-p:hover{
+  transform: translateY(-10px);
+}
 .price-container {
   display: flex;
   gap: 1rem;
@@ -192,6 +196,9 @@
   background-color: #F2F1EF;
   color: #390611 ;
   font-size: 18px;
+}
+.Disclaimer-add-btn{
+  cursor: pointer;
 }
 /* slider  */
 .gallery-section {

@@ -214,10 +214,10 @@ const ProductDetails = ({ product }) => {
             <span className="review-count">20 Reviews</span>
           </div>
 
-          <p aria-label="Product size">
+          {/* <p aria-label="Product size">
             <strong>Size:</strong>{" "}
             <span className="product-size">{product.size}</span>
-          </p>
+          </p> */}
           {/* Here are the tags */}
           {/* <div className="specs-container">
             {product.tags?.map((tag, index) => (
@@ -375,7 +375,7 @@ const ProductDetails = ({ product }) => {
                   translateY = 0;
                 } else if (distance === 1 || distance === slides.length - 1) {
                   scale = 1;
-                  opacity = 0.8;
+                  opacity = 1; 
                   zIndex = 4;
                   translateY = distance === 1 ? 450 : -450;
                 } else {
