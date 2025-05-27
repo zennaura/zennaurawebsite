@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
 import axios from "axios";
 import { useUser } from '../../components/AuthContext/AuthContext';
@@ -10,7 +10,7 @@ const ProductCard = ({ id, name, title, backImage, frontimage, price, originalPr
 
   const productId = id.split("-")[0];
   const variantId = id.split("-")[1];
-
+const [hovered, setHovered] = useState(false);
   React.useEffect(() => {
     const fetchWishlist = async () => {
       if (!user) return;
@@ -111,21 +111,24 @@ const ProductCard = ({ id, name, title, backImage, frontimage, price, originalPr
 
       {/* Updated Image Section with Flip Effect */}
       <div className="product-card-image-container">
-        <div className="product-card-image-flip">
-          <div className="product-card-image-front">
+        <div className="product-card-image-flip"  onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
+          {/* <div className="product-card-image-front"> */}
             <img
               src={frontimage || "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"}
               alt={title}
-              className="product-card-image"
+            // className="product-card-image"
+             className={`hover-img ${!hovered ? 'visible' : ''}`}
             />
-          </div>
-          <div className="product-card-image-back">
+          {/* </div>
+          <div className="product-card-image-back"> */}
             <img
               src={backImage || frontimage || "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"}
               alt={title}
-              className="product-card-image"
+            // className="product-card-image"
+             className={`hover-img ${hovered ? 'visible' : ''}`}
             />
-          </div>
+          {/* </div> */}
         </div>
       </div>
 
