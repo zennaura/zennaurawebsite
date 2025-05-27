@@ -194,7 +194,7 @@ const CheckoutPage = () => {
             <li>
               ${product.name} (${product.size || "Standard"}) - 
               Quantity: ${quantities[product._id] || 1} - 
-              Price: ₹${product.salePrice}
+              Price: ₹${(product.salePrice + (product.salePrice * product.tax) / 100).toFixed(2)}
             </li>
           `
             )

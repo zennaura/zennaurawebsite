@@ -43,7 +43,7 @@ const Homepage = () => {
             <OurStory />
             <OurClient2 />
             <Bemember />
-            <FollowUs />
+            {/* <FollowUs /> */}
             <UptoDate />
         </>
 

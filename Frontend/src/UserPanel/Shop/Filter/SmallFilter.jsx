@@ -55,7 +55,7 @@ const PopupFilter = ({
 
         const fetchConcerns = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/concerns');
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/concerns`);
                 const data = await res.json();
                 setAvailableConcerns(data);
             } catch (err) {

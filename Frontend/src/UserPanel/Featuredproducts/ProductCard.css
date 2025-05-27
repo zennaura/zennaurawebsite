@@ -20,13 +20,16 @@
   display: flex;
   justify-content: center;
   /* align-items: center; */
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .Featuredproducts-card {
   margin-top: 2rem;
+  transition: all 1s;
 }
-
+.Featuredproducts-card:hover{
+  transform: translateY(-25px);
+}
 .featured-card-center {
   margin-top: 0rem;
 }

@@ -144,15 +144,19 @@
 /* Know More Button */
 .know-more {
      font-family: 'Poppins';
-    background-color: #de5e7a8c;
+    background-color: #5a3a2e;
     color: #FFFFFF;
     font-size: 18px;
     border: none;
     margin-bottom: 2rem;
     padding: 15px 20px;
     border-radius: 10px;
+    cursor: pointer;
+    transition: all 1s;
 }
-
+.know-more:hover{
+  background-color: #c49a6c;
+}
 
 
 /* Dots Navigation */

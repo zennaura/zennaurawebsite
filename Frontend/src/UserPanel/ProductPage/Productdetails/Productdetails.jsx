@@ -106,15 +106,30 @@ const ProductDetails = ({ product }) => {
       }
     };
 
+    if (product?.otherimages && product.otherimages.length > 0) {
+      const img1 = product.otherimages[0];
+      addImage(img1, `${product.name} - Image top}`);
+    }
+
     addImage(product?.frontImage, product?.name);
-    addImage(product?.backImage, product?.name);
+    // addImage(product?.backImage, product?.name);
+    const isFirstVariant =
+  product?.allVariants &&
+  product.allVariants.length > 0 &&
+  product.allVariants[0].id === product.id;
+
+if (isFirstVariant) {
+  addImage(product?.backImage, product?.name);
+}
     product?.variantsimages?.forEach((variant, index) => {
       addImage(variant, `${product.name} - Variant ${index + 1}`);
     });
-
-    product?.otherimages?.forEach((img, index) => {
-      addImage(img, `${product.name} - Image ${index + 1}`);
-    });
+    if (product?.otherimages && product?.otherimages.length > 0) {
+   
+      product?.otherimages.slice(1)?.forEach((img, index) => {
+        addImage(img, `${product.name} - Image ${index + 1}`);
+      });
+ }
 
     addImage(
       product?.productDescriptions?.image,
@@ -194,7 +209,7 @@ const ProductDetails = ({ product }) => {
       },
     });
   };
-
+  console.log("All variants", product.variants)
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
   }

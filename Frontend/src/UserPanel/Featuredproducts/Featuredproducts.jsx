@@ -147,8 +147,7 @@ const FeaturedProducts = () => {
             <div
               key={product.id}
               className={`Featuredproducts-card ${windowWidth <= 768 ?
-                  (index === 0 ? "mobile-full-card" : "mobile-half-card") :
-                  (index === 1 || index === 2) ? "featured-card-center" : ""
+                  (index === 0 ? "mobile-full-card" : "mobile-half-card") :""
                 }`}
             >
               <ProductCart

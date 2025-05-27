@@ -109,7 +109,7 @@
 }
 .journey-button button{
   font-family: 'Poppins';
-  background-color: #390611;
+  background-color: #5a3a2e;
   color: #FFFFFF;
   font-size: 25px;
   border: none;
@@ -118,8 +118,11 @@
   padding: 15px 30px;
   border-radius: 10px;
   box-sizing: border-box;
+  transition: all 0.8s;
 }
-
+.journey-button button:hover{
+  background-color: #c49a6c;
+}
 
 @media screen and (max-width: 1024px) {
   .Journey-container{
