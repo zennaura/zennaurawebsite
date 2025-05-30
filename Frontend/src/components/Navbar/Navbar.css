@@ -31,7 +31,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.4rem 2rem;
+  /* padding: 0.4rem 2rem; */
 }
 
 /* Navigation Links */
@@ -58,6 +58,7 @@
   width: 100%;
   max-width: 250px;
   margin-top: 10px;
+  margin-right: 20px;
 }
 
 /* Icons */
@@ -200,7 +201,7 @@ li a {
 /* Dropdown Container */
 .dropdown-container {
   position: absolute;
-  top: 19%;
+  top: 18%;
   left: 0;
   width: 100%;
   height: 450px;
@@ -239,6 +240,7 @@ li a {
 
 .aurajewels-category h3,
 .aurajewels-intent h3 {
+  width: 50%;
   border-bottom: 1px solid #333;
   font-size: 1rem;
   padding-bottom: 5px;
@@ -252,11 +254,13 @@ li a {
   list-style: none;
   padding-left: 0;
   margin-left: 3rem;
-  padding-bottom: 18px;
-  font-size: 0.8rem;
+  padding-bottom: 1px;
+  font-size: 0.9rem;
   font-family: "Open Sans","Poppins", sans-serif;
 }
-
+.aurajewels-category,.aurajewels-intent {
+  width: 90%;
+}
 .aurajewels-category ul ul {
   padding-left: 15px;
 
@@ -300,7 +304,7 @@ li a {
 }
 
 .left-section-divinecrystals {
-  width: 75%;
+  width: 65%;
 }
 
 .right-section-divinecrystals {
@@ -332,7 +336,7 @@ li a {
   width: 100%;
   max-width: 300px;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 30px;
 }
 
 .search-container.open {
@@ -341,13 +345,36 @@ li a {
   /* right: 60px; */
   /* background-color: #f8f8f8; */
   z-index: 1000;
+  /* background-color: white; */
 }
-
+/* .searching{
+  width: 100vw;
+  height: 100vh;
+} */
 .search-form {
+  position: absolute;
+  /* left: 0; */
+  top: 10vh;
   display: flex;
-  width: 100%;
+  width: 85vw;
+  /* height: 50vh; */
+  margin-top: -8px;
+  /* justify-content: center;
+   */
+   
+  /* z-index: 20003; */
+  margin-left: 5rem;
+  /* height: 100vh; */
+  /* background-color: black;  */
+  padding: 2rem;
+  padding-bottom: 0.2rem;
+  animation: slideIn 0.5s ease-in-out ;
 }
 
+@keyframes slideIn {
+  from{transform: translateY(-100px);}
+  to{transform: translateY(0px);}
+}
 .search-form input {
   flex: 1;
   padding: 8px 15px;
@@ -374,6 +401,19 @@ li a {
   color: darkgoldenrod;
   /* Optional: darker shade on hover */
 }
+.search-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 3px solid black;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .search-icon {
   color: white;
@@ -383,7 +423,7 @@ li a {
 }
 
 .search-icon:hover {
-  color: darkgoldenrod;
+  color: gray;
   /* Optional: darker shade on hover */
 }
 
@@ -406,11 +446,11 @@ li a {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: 95vw;
   background-color: white;
   border: 1px solid #ccc;
   color: black;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 9999;

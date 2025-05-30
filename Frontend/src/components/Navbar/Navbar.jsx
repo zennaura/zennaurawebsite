@@ -8,6 +8,7 @@ import {
   FaUser,
   FaBars,
   FaTimes,
+  FaSpinner
 } from "react-icons/fa";
 import "./Navbar.css";
 import image from "../../assests/logo.png";
@@ -220,7 +221,8 @@ const Navbar = () => {
 
           <div className={`search-container ${isSearchOpen ? "open" : ""}`}>
             {isSearchOpen ? (
-              <form onSubmit={handleSearch} className="search-form">
+              <div className="searching"> 
+                <form onSubmit={handleSearch} className="search-form">
                 <input
                   type="text"
                   placeholder="Search products..."
@@ -230,7 +232,9 @@ const Navbar = () => {
                 />
                 <button type="submit">
                   {isLoading ? (
-                    <div className="search-spinner"></div>
+                    <div className="search-spinner">
+                      
+                    </div>
                   ) : (
                     <FaSearch className="icon" size={20} />
                   )}
@@ -279,6 +283,7 @@ const Navbar = () => {
                   </div>
                 )}
               </form>
+              </div>
             ) : (
               <FaSearch
                 className="icon search-icon"
@@ -399,7 +404,7 @@ const Navbar = () => {
                                 >
                                   <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem" }}>
-                                  <li>&gt; {category}</li>
+                                  <li>{category===""?"":`>  `}{category}</li>
                                 </ul>
                               </div>
                             )
@@ -448,7 +453,7 @@ const Navbar = () => {
                                   state={{ autoSelects: sub.subCategory }}>
                                   <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem"  }}>
-                                   <li>&gt; {category}</li>
+                                   <li>{category===""?"":`>  `} {category}</li>
                                 </ul>
                               </div>
                             )
@@ -494,7 +499,7 @@ const Navbar = () => {
                                   state={{ autoSelects: sub.subCategory }}>
                                   <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                 <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem",fontSize:"0.7rem",marginLeft:"-1rem"  }}>
-                                   <li>&gt; {category}</li>
+                                   <li>{category===""?"":`>  `}{category}</li>
                                 </ul>
                               </div>
                             )
