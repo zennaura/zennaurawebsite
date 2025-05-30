@@ -139,6 +139,13 @@
 
 /* Tablet Styles (992px and below) */
 @media (max-width: 992px) {
+  /* .bemember-container{
+    margin-right: 1rem;
+  } */
+   .bemember-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem 2rem;
+  }
   .bemember-heading {
     font-size: 3rem;
   }
@@ -162,6 +169,7 @@
   .bemember-card-icon img {
     width: 130px;
     height: 130px;
+    /* margin-right: 1rem; */
   }
 }
 

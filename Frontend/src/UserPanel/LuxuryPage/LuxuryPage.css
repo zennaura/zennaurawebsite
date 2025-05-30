@@ -131,8 +131,25 @@
   margin-top: 25px;
 }
 /* RESPONSIVE DESIGN */
+@media (max-width: 1024px){
+  .luxuryPage-container{
+    min-height: 50vh;
+  }
+}
 
+@media (max-width: 830px){
+  .luxuryPage-title {
+    font-size: 3rem;
+  }
+  .luxuryPage-subtext{
+    font-size: 0.8rem;
+    /* min-height: 60vh; */
+  }
+}
 @media (max-width: 768px) {
+  .luxuryPage-container{
+    min-height: 55vh;
+  }
   .luxuryPage-title {
     font-size: 2rem;
   }
@@ -156,6 +173,7 @@
 }
 
 @media (max-width: 480px) {
+  
   .luxuryPage-image-container{
     display: none;
   }
@@ -197,11 +215,15 @@
     padding: 0 0 0 0;
   }
   .luxuryPage-container {
-    min-height: 40vh;
+    /* margin-top: 2rem; */
+    min-height: 33vh;
     display: block;
     /* background-color: rgba(57, 24, 6, 0.06); */
 }
 .luxuryPage-features{
   height: 100%;
 }
+.luxuryPage-subtext{
+    margin-top: 0.5rem !important;
+  }
 }

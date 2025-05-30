@@ -149,8 +149,9 @@
 
 @media screen and (max-width: 768px) {
   .Journey-container {
-    height: auto;
+    height: 59vh;
     padding: 2rem;
+    display: none;
   }
   .Journey-content {
     width: 100%;

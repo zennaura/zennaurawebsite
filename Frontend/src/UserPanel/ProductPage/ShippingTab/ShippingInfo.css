@@ -1,13 +1,15 @@
 .shipping-tabs-container {
   font-family: "poppins", sans-serif;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #F2F1EF;
   border-radius: 8px;
   overflow: hidden;
 }
 
 .tabs-header {
   display: flex;
-  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  background-color: #F2F1EF;
+  border-bottom: 1px solid #F2F1EF;
 }
 
 .tab-button {
@@ -23,10 +25,12 @@
 
 .tab-content {
   padding: 20px;
-  background-color: #fff;
-  height: 430px;
+  background-color: #F2F1EF !important;
+  /* height: 430px; */
 }
-
+.shipping-tab-content{
+  padding: 1rem 5rem;
+}
 .shipping-tab-content h3 {
   color: #2c3e50;
   margin-bottom: 1rem;
@@ -43,7 +47,9 @@
   margin-bottom: 1rem;
   line-height: 1.6;
 }
-
+.delivery-time-info{
+  margin-top: 1rem;
+}
 .shipping-providers {
   list-style-type: none;
   padding-left: 0;

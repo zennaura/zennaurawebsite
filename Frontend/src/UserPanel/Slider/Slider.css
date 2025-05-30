@@ -102,7 +102,7 @@
 /* For mobile devices */
 @media (max-width: 768px) {
 
-
+  
   .slider-image img {
     width: 200px;
     height: 280px;
@@ -120,6 +120,12 @@
 
 /* For very small screens */
 @media (max-width: 480px) {
+  .slider-container{
+    height: 90vh;
+  }
+  .slider-image{
+    margin-top: 15rem;
+  }
   .slider-big-image{
     position: absolute;
     /* height: 50%; */
@@ -141,5 +147,21 @@
   .slider-arrow-left, .slider-arrow-right {
     width: 40px;
     font-size: 1.2rem;
+  }
+}
+@media (max-width:395px) {
+  .slider-container{
+    height: 100vh;
+  }
+  .slider-image{
+    margin-top: 15rem;
+  }
+}
+@media (max-width:380px) {
+  .slider-container{
+    height: 110vh;
+  }
+  .slider-image{
+    margin-top: 10rem;
   }
 }

@@ -192,7 +192,7 @@ const ProductListingPage = ({ products }) => {
       </header>
 
       {/* Product Grid */}
-      <div className={`flex gap-4 flex-wrap md:gap-8 justify-center items-center`}>
+      <div className={`product-grid ${viewMode}`}>
         {currentProducts.map((variant) => (
           <ProductCard
             key={variant.id}

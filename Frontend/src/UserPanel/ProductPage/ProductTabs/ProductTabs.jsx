@@ -3,12 +3,13 @@ import "./ProductTabs.css"; // Optional external CSS
 
 const ProductTabs = ({ productDescriptions, specifications, healingImage }) => {
   const [activeTab, setActiveTab] = useState("description");
-
+  const bulletPoints = productDescriptions.title.split('\n').filter(Boolean);
   return (
     <div className="product-tabs-container">
       {/* Tab Headers */}
       <div className="tabs-header">
         <button
+          id="product-description"
           className={`tab-button ${activeTab === "description" ? "active" : ""}`}
           onClick={() => setActiveTab("description")}
         >
@@ -32,8 +33,12 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage }) => {
       <div className="tab-contents">
         {activeTab === "description" && productDescriptions && (
           <div className="product-tab-description">
-            <p>{productDescriptions.title}</p>
-            <img className="descriptionproduct" src={productDescriptions.image} alt="" />
+            <ul>
+        {bulletPoints.map((point, index) => (
+          <li key={index}>{point.trim()}</li>
+        ))}
+      </ul>
+            {/* <img className="descriptionproduct" style={{border:"none",outline:"none"}} src={productDescriptions.image} alt="" /> */}
           </div>
         )}
 

@@ -51,13 +51,22 @@
 .justin-product3 {
   background-color: #d9d9d9;
   color: #390611;
-  padding: 30px;
+  padding: 40px;
   flex: 1;
   height: 450px;
-  width: 300px;
+  width: 350px;
   position: relative;
 }
 
+/* display: flex;
+  color: #390611;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: #d9d9d9;
+  width: 350px;
+  height: 450px; */
 .justin-product1,
 .justin-product3 {
   border-radius: 0px 100px 0px 0px;

@@ -163,7 +163,11 @@
     font-size: 2rem;
   }
 }
-
+/* @media (max-width: 768px) {
+  .redefining-container {
+    min-height: 65vh;
+  }
+} */
 @media (max-width: 480px) {
   .redefining-container {
     min-height: 30vh;

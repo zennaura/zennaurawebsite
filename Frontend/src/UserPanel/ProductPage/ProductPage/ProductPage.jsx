@@ -31,7 +31,7 @@ const ProductPage = () => {
   useEffect(() => {
     const state = location.state;
 
-    if (state?.product && state?.selectedVariant) {
+    if (state?.product ) {
       // merge selected variant into product
       const updatedProduct = {
         ...state.product,

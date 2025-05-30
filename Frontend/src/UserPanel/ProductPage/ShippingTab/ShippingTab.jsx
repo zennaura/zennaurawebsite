@@ -80,7 +80,7 @@ const ShippingTabs = () => {
                             </ul>
 
                             <p className="disclaimer">
-                                *These Are Estimated Delivery Times Please Note That Your Parcel Can Take More Or Less Time To Deliver.
+                                These Are Estimated Delivery Times Please Note That Your Parcel Can Take More Or Less Time To Deliver.
                             </p>
                         </div>
                     </div>

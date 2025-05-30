@@ -389,66 +389,66 @@ const CheckoutPage = () => {
   return (
     <>
       <ImageHead Title="Checkout" />
-      <div className="checkout-page-container flex flex-col md:flex-row justify-between p-4 md:p-8 bg-gray-100 min-h-screen">
+      <div className="checkout-page-container flex flex-col md:flex-row justify-between !p-4 md:!p-8 bg-gray-100 min-h-screen">
         {/* Left Section - Contact and Shipping Info */}
-        <div className="checkout-page-left w-full md:w-2/3 space-y-6 md:space-y-8">
+        <div className="checkout-page-left w-full md:w-2/3 !space-y-6 md:space-y-8">
           {/* Error Display */}
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="bg-red-100 border border-red-400 text-red-700 !px-4 !py-3 rounded">
               {error}
             </div>
           )}
 
           {/* Contact Information Section */}
-          <div className="checkout-page-contact bg-white p-4 md:p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+          <div className="checkout-page-contact bg-white p-4 md:!p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl md:!text-2xl font-semibold !mb-4 md:!mb-6">
               Contact Details
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 !gap-3 md:!gap-4">
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   First Name
                 </label>
                 <input
                   type="text"
                   value={firstName}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full !border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setFirstName(e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   Last Name
                 </label>
                 <input
                   type="text"
                   value={lastName}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setLastName(e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block !text-sm text-gray-500 !mb-1">
                   Email
                 </label>
                 <input
                   type="email"
                   value={email}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   Phone
                 </label>
                 <input
                   type="tel"
                   value={phone}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setPhone(e.target.value)}
                   required
                 />
@@ -457,29 +457,29 @@ const CheckoutPage = () => {
           </div>
 
           {/* Shipping Address Section */}
-          <div className="checkout-page-shipping bg-white p-4 md:p-6 rounded-lg shadow-sm">
+          <div className="checkout-page-shipping bg-white !p-4 md:!p-6 rounded-lg shadow-sm">
             {user?.Address?.length > 0 ? (
               <>
                 <div className="flex justify-between items-center">
-                  <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+                  <h2 className="!text-xl md:!text-2xl font-semibold !mb-4 md:!mb-6">
                     Shipping Address
                   </h2>
                   <button
                     onClick={() => setShowAllAddresses(!showAllAddresses)}
-                    className="text-sm md:text-base text-blue-500 underline"
+                    className="text-sm md:!text-base text-blue-500 underline"
                   >
                     {showAllAddresses ? "Hide All Addresses" : "Show All Addresses"}
                   </button>
                 </div>
 
                 <div className="mb-4">
-                  <label className="block mb-2 font-medium text-gray-700">
+                  <label className="block !mb-2 font-medium text-gray-700">
                     Select Address
                   </label>
                   <select
                     value={selectedAddressId}
                     onChange={handleAddressChange}
-                    className="border p-2 w-full rounded-md"
+                    className="border !p-2 w-full rounded-md"
                   >
                     {user.Address.map((addr) => (
                       <option key={addr._id} value={addr._id}>
@@ -490,68 +490,68 @@ const CheckoutPage = () => {
                 </div>
               </>
             ) : (
-              <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+              <h2 className="text-xl md:!text-2xl font-semibold !mb-4 md:!mb-6">
                 Shipping Address
               </h2>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 !gap-3 md:gap-4">
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   Country/Region
                 </label>
                 <input
                   type="text"
                   value={country}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setCountry(e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   City
                 </label>
                 <input
                   type="text"
                   value={city}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setCity(e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   State
                 </label>
                 <input
                   type="text"
                   value={state}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setState(e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   Postal Code
                 </label>
                 <input
                   type="text"
                   value={postalCode}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setPostalCode(e.target.value)}
                   required
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-sm text-gray-500 mb-1">
+                <label className="block text-sm text-gray-500 !mb-1">
                   Address
                 </label>
                 <input
                   type="text"
                   value={address}
-                  className="w-full border-b outline-none p-2 bg-transparent"
+                  className="w-full border-b outline-none !p-2 bg-transparent"
                   onChange={(e) => setAddress(e.target.value)}
                   required
                 />
@@ -559,9 +559,9 @@ const CheckoutPage = () => {
             </div>
 
             {showAllAddresses && user?.Address && (
-              <div className="mt-6 space-y-4">
+              <div className="!mt-6 !space-y-4">
                 {user.Address.map((addr) => (
-                  <div key={addr._id} className="p-4 bg-gray-50 rounded shadow">
+                  <div key={addr._id} className="!p-4 bg-gray-50 rounded shadow">
                     <p>
                       <strong>Country:</strong> {addr.country}
                     </p>
@@ -584,20 +584,20 @@ const CheckoutPage = () => {
           </div>
 
           {/* Place Order Button */}
-         <div className="mt-6 md:mt-8">
+         <div className="!mt-6 md:!mt-8">
   <button
     onClick={handlePlaceOrder}
     disabled={isSubmitting}
-    className={`w-full border-2 border-[#45040F] text-[#45040F] py-3 md:py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${
+    className={`w-full border-2 border-[#45040F] text-[#45040F] !py-3 md:!py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${
       isSubmitting ? "opacity-50 cursor-not-allowed" : ""
     }`}
   >
     {isSubmitting ? "Processing..." : "Place Order"}
   </button>
   {error && (
-    <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+    <p className="text-red-500 text-sm !mt-2 text-center">{error}</p>
   )}
-  <div className="mt-3 md:mt-4 text-center">
+  <div className="!mt-3 md:!mt-4 text-center">
     <a href="/cart" className="text-[#45040F] underline">
       BACK TO SHOPPING CART
     </a>
@@ -606,30 +606,30 @@ const CheckoutPage = () => {
         </div>
 
         {/* Right Section - Order Summary */}
-        <div className="w-full md:w-1/3 bg-white p-4 md:p-6 rounded-lg shadow-sm mt-6 md:mt-0">
+        <div className="w-full md:!w-1/3 bg-white !p-4 md:!p-6 rounded-lg shadow-sm !mt-6 md:!mt-0">
           <div className="space-y-4 md:space-y-6">
-            <div className="flex justify-between items-center border-b pb-2">
-              <h3 className="text-base md:text-lg font-semibold">Your Order</h3>
+            <div className="flex justify-between items-center !border-b !pb-2" style={{paddingBottom:"0.2rem",marginBottom:"1rem"}}>
+              <h3 className="text-base md:!text-lg font-semibold">Your Order</h3>
               <a href="/cart" className="text-sm underline">
                 Edit cart
               </a>
             </div>
 
             {/* Coupon Code Section */}
-            <div className="border-b pb-4">
-                  <div className="flex items-center gap-2 mb-2">
+            <div className="border-b !pb-4">
+                  <div className="flex items-center gap-2 !mb-2">
                     <input
                       type="text"
                       value={couponCode}
                       placeholder="Enter coupon code"
-                      className="flex-1 border p-2 rounded-md"
+                      className="flex-1 border !p-2 rounded-md"
                       onChange={(e) => setCouponCode(e.target.value)}
                       disabled={!!appliedCoupon}
                     />
                     {appliedCoupon ? (
                       <button
                         onClick={handleRemoveCoupon}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                        className="bg-red-500 text-white !px-4 !py-2 rounded-md hover:bg-red-600 transition"
                       >
                         Remove
                       </button>
@@ -637,7 +637,7 @@ const CheckoutPage = () => {
                       <button
                         onClick={handleApplyCoupon}
                         disabled={isCheckingCoupon || !user?._id}
-                        className={`bg-[#45040F] text-white px-4 py-2 rounded-md hover:bg-[#5a0515] transition ${
+                        className={`bg-[#45040F] text-white !px-4 !py-2 rounded-md hover:bg-[#5a0515] transition ${
                           isCheckingCoupon || !user?._id ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                       >
@@ -665,18 +665,18 @@ const CheckoutPage = () => {
             {products.map((product) => (
               <div
                 key={`${product._id}-${product.variantId || "default"}`}
-                className="flex items-center gap-3 md:gap-4"
+                className="flex items-center gap-3 md:!gap-4"
               >
                 <img
                   src={product.frontImage}
                   alt={product.name}
-                  className="bg-gray-200 h-14 md:h-16 w-14 md:w-16 object-cover rounded"
+                  className="bg-gray-200 !h-14 md:!h-16 !w-14 md:!w-16 object-cover rounded"
                 />
                 <div className="flex flex-col flex-grow">
                   <p className="font-medium text-sm md:text-base">{product.name}</p>
-                  <p className="text-xs md:text-sm text-gray-500">{product.size}</p>
+                  <p className="text-xs md:!text-sm text-gray-500">{product.size}</p>
                   <select
-                    className="mt-1 border p-1 text-xs md:text-sm max-w-[80px]"
+                    className="!mt-1 border !p-1 text-xs md:text-sm max-w-[80px]"
                     value={quantities[product._id]}
                     onChange={(e) =>
                       handleQuantityChange(product._id, Number(e.target.value))
@@ -698,7 +698,7 @@ const CheckoutPage = () => {
             ))}
 
             {/* Order Summary */}
-            <div className="space-y-2 pt-4 md:pt-6 border-t">
+            <div className="!space-y-2 !pt-4 md:!pt-6 border-t">
               <div className="flex justify-between text-sm md:text-base">
                 <p>Subtotal</p>
                 <p>₹{subtotal.toFixed(2)}</p>
@@ -713,7 +713,7 @@ const CheckoutPage = () => {
                   <p>-₹{discountAmount.toFixed(2)}</p>
                 </div>
               )}
-              <div className="flex justify-between font-semibold pt-2 border-t text-sm md:text-base">
+              <div className="flex justify-between font-semibold !pt-2 border-t text-sm md:text-base">
                 <p>Total</p>
                 <p>₹{total.toFixed(2)}</p>
               </div>

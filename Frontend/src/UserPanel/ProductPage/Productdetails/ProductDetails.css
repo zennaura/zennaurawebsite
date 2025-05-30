@@ -21,7 +21,7 @@
 .info-section {
   flex: 1;
   min-width: 50%;
-  padding: 30px;
+  padding: 1rem 2rem;
   max-width: 600px;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .price-label {
-  font-size: 14px;
+  font-size: 2rem;
   color: #666;
 }
 
@@ -104,13 +104,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #605d5d21;
+  /* border: 1px solid #605d5d21; */
 }
 
 .quantity-selector button {
   width: 30px;
   height: 30px;
-  border: 1px solid #ddd;
+  border: 1px solid #5a3a2e;
   background: #f9f9f9;
   font-size: 16px;
   cursor: pointer;
@@ -144,18 +144,31 @@
 .wishlist-button,
 .cart-button {
   background: white;
-  border: 1px solid #5a7247;
-  color: #5a7247;
+  width: 10rem;
+  border: 1px solid #5a3a2e;
+  color: #5a3a2e;
+  transition: all 0.8s;
 }
-
+.wishlist-button:hover{
+  background-color: #5a3a2e;
+  color: white;
+}
+.cart-button:hover{
+  background-color: #5a3a2e;
+  color: white;
+}
+/* #5a3a2e   #c49a6c */
 .buy-now-button {
-  width: 50%;
-  background: #a67c52;
+  width: 21rem;
+  background: #5a3a2e;
   color: white;
   border: none;
   margin-bottom: 25px;
 }
+.buy-now-button:hover{
+  background: #c49a6c;
 
+}
 /* Description */
 .description-container {
   margin-bottom: 25px;
@@ -176,7 +189,7 @@
 
 .description-text-knowmore-btn {
   width: 150px;
-  background: #a67c52;
+  background: #5a3a2e;
   color: white;
   border: none;
   margin-top: 25px;
@@ -186,6 +199,9 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
+}
+.description-text-knowmore-btn:hover{
+  background-color: #c49a6c;
 }
 /* Disclaimer */
 .Disclaimer-header {
@@ -220,8 +236,9 @@
 }
 
 .carousel-image-product {
-  width: 500px;
+  width: 600px;
   height: 400px;
+  padding: 0rem 2rem;
   object-fit: cover;
 }
 
@@ -236,6 +253,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1rem 5rem;
 }
 .disclaimer-container {
   width: 100%;

@@ -94,8 +94,15 @@ const BestSeller = () => {
                 title={product.data.title}
                 frontimage={product.data.frontImage}
                 backImage={product.data.backImage}
-                price={product.data.salePrice}
-                originalPrice={product.data.costPrice}
+                price={(
+                  product.data.salePrice +
+                  (product.data.salePrice * product.data.tax) / 100 -
+                  ((product.data.salePrice +
+                    (product.data.salePrice * product.data.tax) / 100) *
+                    product.data.discount) /
+                    100
+                ).toFixed(2)}
+                originalPrice={(product.data.salePrice + (product.data.salePrice * product.data.tax) / 100).toFixed(2)}
                 rating={product.data.rating}
                 isBestSeller={product.data.bestSeller}
                 onBuyNowClick={() => handleClick(product)}

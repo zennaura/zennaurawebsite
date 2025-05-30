@@ -76,6 +76,9 @@
   transform: translateX(-50%);
 }
 @media screen and (max-width: 1024px) {
+  .selfCare-container{
+    height: 45vh;
+  }
   .selfCare-content h2 {
     font-size: 2.8rem;
   }
@@ -95,6 +98,8 @@
   .selfCare-container {
     flex-direction: column;
     text-align: center;
+    height: 123vh;
+    border-bottom: 1px solid gray;
   }
   .selfCare-overlay {
     width: 100%;

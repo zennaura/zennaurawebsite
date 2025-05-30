@@ -65,7 +65,7 @@
 }
 
 .ExploreHandmadeSoap-button {
-    background-color: #3a0e0e;
+    background-color: #5a3a2e;
     color: white;
     border: none;
     padding: 20px 20px;
@@ -80,7 +80,7 @@
 }
 
 .ExploreHandmadeSoap-button:hover {
-    background-color: #5a2e2e;
+    background-color: #c49a6c;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

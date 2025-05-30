@@ -261,7 +261,7 @@ if (isFirstVariant) {
           </div>
 
           <div className="price-container" aria-label="Product pricing">
-            <p className="price-label">M.R.P.:</p>
+            <p className="price-label">M.R.P :</p>
             <div className="price-mrp-box">
               <p className="price-value">
                 ₹
@@ -302,7 +302,7 @@ if (isFirstVariant) {
 
           <div className="action-buttons">
             <button className="wishlist-button" aria-label="Add to wishlist">
-              <span>❤️</span>Add to wishlist
+              Add to wishlist
             </button>
             <button className="cart-button" aria-label="Add to cart">
               Add to cart
@@ -328,12 +328,12 @@ if (isFirstVariant) {
             </p>
             {product.description &&
               product.description.split(/\s+/).length > 50 && (
-                <button
+                <a href="#product-description"><button
                   className="description-text-knowmore-btn"
-                  onClick={toggleDescription}
+                  // onClick={toggleDescription}
                 >
-                  {showFullDescription ? "Show less" : "Know more"}
-                </button>
+                  Know More
+                </button></a>
               )}
           </div>
           <div className="Disclaimer-container">

@@ -7,7 +7,18 @@
 
 .ImageContainer-img img {
     width: 100%;
-    height: 500px;
+    height: 70vh;
     object-fit: fill;
     cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .ImageContainer-img img{
+        height: 40vh;
+    }
+}
+@media (max-width: 1024px) {
+    .ImageContainer-img img{
+        height: 25vh;
+    }
 }

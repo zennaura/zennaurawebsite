@@ -5,7 +5,7 @@ const ImageContainer = ({ Image }) => {
     return (
         <>
             <div className="ImageContainer-img">
-                <img src={Image} alt="Image" className="!h-auto" />
+                <img src={Image} alt="Image"  />
             </div>
         </>
     )

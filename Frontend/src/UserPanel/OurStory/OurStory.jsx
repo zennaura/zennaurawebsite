@@ -10,7 +10,7 @@ const slides = [
     content:
       "At Zenn Aura, we believe in the power of natural energy, reiki healing, Manifestation, and crystal therapy. Our journey started with a deep passion for spiritual healing, pure manifestation, and self-care rituals. ",
     quote: "From reiki-infused crystals to aromatherapy candles, chakra healing tools, and smudging rituals—Zenn Aura is your gateway to spiritual wellness.",
-    src:""
+    src:one
   },
   {
     title: "The Philosophy – Where Spirituality Meets Self-Care & Gifting",
@@ -18,6 +18,7 @@ const slides = [
       "Whether you seek rose quartz for love, citrine for money, amethyst for clarity, or black tourmaline for protection, each piece in our collection is designed to align your energy and amplify your intentions.",
     quote:
       "Perfect for gifting! Explore our crystal-infused candles, wedding gifts, and manifestation kits—meaningful gifts that bring luck, love, and positivity.",
+    src:two
   },
   {
     title: "The Mission – Elevate Your Spirit, Transform Your Life",
@@ -26,6 +27,7 @@ const slides = [
     - Manifest your dreams with reiki-infused crystals & candles
     - Enhance meditation & chakra healing with sacred tools.`,
     quote: "Zenn Aura represents a lifestyle that celebrates balance, harmony, and conscious self-care. Transform your space. Elevate your energy. Manifest your best life.",
+    src:three
   },
 ];
 
@@ -68,6 +70,7 @@ const OurStory = () => {
             <div
               key={index}
               className={`story-card ${index === currentSlide ? "active" : ""}`}
+              style={{ backgroundImage: `url(${slide.src})` }}
             >
               <div className="storycard-content">
                 <h3>{slide.title}</h3>

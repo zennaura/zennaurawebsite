@@ -125,7 +125,15 @@ html {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px){
+  .ourstory2-container{
+    height: 43vh;
+  }
+}
 @media (max-width: 768px) {
+  .ourstory2-container{
+    height: 50vh;
+  }
   .image-title {
     font-size: 14px;
   }
