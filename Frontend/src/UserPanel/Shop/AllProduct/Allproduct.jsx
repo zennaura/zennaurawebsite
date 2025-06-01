@@ -109,7 +109,13 @@ const ProductListingPage = ({ products }) => {
         variantname: variant.data.variantname,
         id: variant.id,
         salePrice: variant.data.salePrice,
-        frontImage: variant.data.frontImage
+        frontImage: variant.data.frontImage,
+        backImage: variant.data.backImage,
+        variantsimages: variant.data.variantsimages,
+        discount: variant.data.discount,
+        stock: variant.data.stock,
+        size: variant.data.size,
+        tax:variant.data.tax
       });
     });
     return map;

@@ -16,38 +16,140 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
   const FREE_SHIPPING_THRESHOLD = 699;
   const GIFT_WRAP_PRICE = 50;
 
-  useEffect(() => {
-    if (isOpen && user) {
-      fetchCartItems();
-    }
-  }, [isOpen, user]);
+  
+ // Updated fetchCartItems function for CartSidebar component
 
-  const fetchCartItems = async () => {
-    try {
-      setLoading(true);
+// Updated fetchCartItems function for CartSidebar component
+
+const fetchCartItems = async () => {
+  try {
+    setLoading(true);
+
+    if (user) {
+      // Logged-in user logic (unchanged)
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/fetchCartItems?userId=${user._id}`);
       setCartItems(response.data.items);
       updateCartCount(response.data.items.reduce((total, item) => total + item.quantity, 0));
 
-      // Initialize gift wrap state
       const initialGiftWrap = {};
       response.data.items.forEach(item => {
         initialGiftWrap[`${item.productId}-${item.variantId}`] = false;
       });
       setGiftWrapItems(initialGiftWrap);
-    } catch (error) {
-      console.error('Error fetching cart:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
+    } else {
+      // Guest user logic - fetch product details
+      const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+      
+      if (localCart.length === 0) {
+        setCartItems([]);
+        updateCartCount(0);
+        setGiftWrapItems({});
+        return;
+      }
+
+      console.log('Local cart items:', localCart); // Debug log
+
+      // Fetch product details for each item in guest cart
+      const cartItemsWithDetails = await Promise.all(
+        localCart.map(async (cartItem) => {
+          try {
+            console.log(`Fetching product: ${cartItem.productId}, variant: ${cartItem.variantId}`); // Debug log
+            
+            // Use the productId directly
+            const response = await axios.get(
+              `${import.meta.env.VITE_BACKEND_LINK}/api/products/${cartItem.productId}-${cartItem.variantId}`
+            );
+            
+            const product = response.data;
+            console.log('Product fetched:', product.name); 
+            console.log('Available variants:', product.variants); 
+            
+            // Find the specific variant by ID or index
+            let variant;
+            
+            if (cartItem.variantId === "0" || cartItem.variantId === 0) {
+              // If variant is "0", use the first variant (base variant)
+              variant = product.variants[0];
+              console.log('Using base variant (index 0):', variant);
+            } else {
+              // Try to find variant by _id first
+              variant = product.variants.find(v => v._id === cartItem.variantId);
+              
+              // If not found by _id, try by index
+              if (!variant) {
+                const variantIndex = parseInt(cartItem.variantId);
+                if (!isNaN(variantIndex) && product.variants[variantIndex]) {
+                  variant = product.variants[variantIndex];
+                  console.log(`Using variant by index ${variantIndex}:`, variant);
+                }
+              }
+            }
+            
+            // Fallback to first variant if none found
+            if (!variant) {
+              console.log('No specific variant found, using first variant');
+              variant = product.variants[0];
+            }
+            
+            return {
+              productId: cartItem.productId,
+              variantId: cartItem.variantId,
+              quantity: cartItem.quantity,
+              name: product.name,
+              title: product.title,
+              price: variant.salePrice,
+              originalPrice: variant.costPrice,
+              image: product.frontImage,
+              discount: variant.discount || 0
+            };
+          } catch (error) {
+            console.error(`Error fetching product details for ${cartItem.productId}:`, error);
+            console.error('Error details:', error.response?.data); // More detailed error logging
+            
+            // Return a fallback item if API call fails
+            return {
+              productId: cartItem.productId,
+              variantId: cartItem.variantId,
+              quantity: cartItem.quantity,
+              name: 'Product not found',
+              title: 'Please refresh and try again',
+              price: 0,
+              originalPrice: 0,
+              image: 'https://via.placeholder.com/80',
+              discount: 0
+            };
+          }
+        })
+      );
+
+      console.log('Cart items with details:', cartItemsWithDetails); // Debug log
+
+      setCartItems(cartItemsWithDetails);
+      updateCartCount(cartItemsWithDetails.reduce((total, item) => total + item.quantity, 0));
+
+      // Initialize gift wrap state for guest users
+      const initialGiftWrap = {};
+      cartItemsWithDetails.forEach(item => {
+        initialGiftWrap[`${item.productId}-${item.variantId}`] = false;
+      });
+      setGiftWrapItems(initialGiftWrap);
+    }
+
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+  
   const updateQuantity = async (productId, variantId, newQuantity) => {
     if (newQuantity < 1) return;
 
+    if (user) {
     try {
       await axios.put(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/updateQuantity`, {
-        userId: user._id || '',
+        userId: user._id,
         productId,
         variantId,
         quantity: newQuantity
@@ -56,9 +158,20 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
     } catch (error) {
       console.error('Error updating quantity:', error);
     }
+  } else {
+    const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+    const updatedCart = localCart.map(item =>
+      item.productId === productId && item.variantId === variantId
+        ? { ...item, quantity: newQuantity }
+        : item
+    );
+    localStorage.setItem("guestCart", JSON.stringify(updatedCart));
+    fetchCartItems();
+  }
   };
 
   const removeItem = async (productId, variantId) => {
+    if (user) {
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/removeItem`, {
         data: {
@@ -71,6 +184,14 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
     } catch (error) {
       console.error('Error removing item:', error);
     }
+  } else {
+    const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+    const updatedCart = localCart.filter(
+      item => !(item.productId === productId && item.variantId === variantId)
+    );
+    localStorage.setItem("guestCart", JSON.stringify(updatedCart));
+    fetchCartItems();
+  }
   };
 
   const toggleGiftWrap = (productId, variantId) => {
@@ -158,6 +279,13 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
       }
     });
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchCartItems();
+    }
+  }, [isOpen, user]);
+
 
   return (
     <>

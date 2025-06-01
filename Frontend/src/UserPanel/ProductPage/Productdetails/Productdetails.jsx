@@ -13,68 +13,6 @@ const ProductDetails = ({ product }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // useEffect(() => {
-  //   if (onVariantChange) {
-  //     onVariantChange(id);
-  //   }
-  // }, [id, onVariantChange]);
-  // const { id } = useParams(); // this is the variant id
-  // console.log(id);
-  // const [product, setProduct] = useState(null);
-  // const [variant, setVariant] = useState(null);
-
-  // useEffect(() => {
-  //   // Find the product that contains this variant
-  //   const foundProduct = allProducts.find(p =>
-  //     p.variants.some(v => v._id === id)
-  //   );
-
-  //   if (foundProduct) {
-  //     setProduct(foundProduct);
-  //     const foundVariant = foundProduct.variants.find(v => v._id === id);
-  //     setVariant(foundVariant);
-  //   }
-  // }, [id]);
-
-  // if (!product || !variant) return <div>Loading...</div>;
-
-  // const { id } = useParams(); // variant id from URL
-  //   const location = useLocation();
-  //   const [product, setProduct] = useState(location.state || null);
-
-  // useEffect(() => {
-  //   // if (location.state) {
-  //   //   setProduct(location.state); // update product if passed through navigation
-  //   // } else {
-  //     // fallback: fetch product by id if not in location.state
-  //     fetch(`/api/products/${id}`)
-  //       .then(res => res.json())
-  //       .then(data => setProduct(data))
-  //       .catch(err => console.error(err));
-  //   // }
-  // }, [id, location.state]); // run when id or location.state changes
-
-  //   useEffect(() => {
-  //   if (location.state?.selectedVariant && location.state?.product) {
-  //     // Override product variant if passed from navigation
-  //     const updatedProduct = {
-  //       ...location.state.product,
-  //       variantname: location.state.selectedVariant.variantname,
-  //       size: location.state.selectedVariant.size,
-  //       salePrice: location.state.selectedVariant.salePrice,
-  //       costPrice: location.state.selectedVariant.costPrice,
-  //       // Add other fields you expect to override
-  //     };
-  //     setProduct(updatedProduct);
-  //   } else {
-  //     // Fallback to API
-  //     fetch(`/api/products/${id}`)
-  //       .then(res => res.json())
-  //       .then(data => setProduct(data))
-  //       // .catch(err => console.error(err));
-  //   }
-  // }, [id, location.state]);
-  //   if (!product) return <p>Loading...</p>;
 
   const toggleDisclaimer = () => {
     setIsExpanded(!isExpanded);
@@ -111,25 +49,26 @@ const ProductDetails = ({ product }) => {
       addImage(img1, `${product.name} - Image top}`);
     }
 
-    addImage(product?.frontImage, product?.name);
-    // addImage(product?.backImage, product?.name);
-    const isFirstVariant =
-  product?.allVariants &&
-  product.allVariants.length > 0 &&
-  product.allVariants[0].id === product.id;
+    if (product?.variantsimages?.length > 0) {
+      addImage(product?.frontImage, product?.name);
+      // addImage(product?.backImage, product?.name);
+      const isFirstVariant =
+        product?.allVariants &&
+        product.allVariants.length > 0 &&
+        product.allVariants[0].id === product.id;
 
-if (isFirstVariant) {
-  addImage(product?.backImage, product?.name);
-}
+      // if (isFirstVariant) {
+        addImage(product?.backImage, product?.name);
+      // }
+    }
     product?.variantsimages?.forEach((variant, index) => {
       addImage(variant, `${product.name} - Variant ${index + 1}`);
     });
     if (product?.otherimages && product?.otherimages.length > 0) {
-   
       product?.otherimages.slice(1)?.forEach((img, index) => {
         addImage(img, `${product.name} - Image ${index + 1}`);
       });
- }
+    }
 
     addImage(
       product?.productDescriptions?.image,
@@ -148,7 +87,7 @@ if (isFirstVariant) {
 
     return images;
   }, [product]);
-  console.log("Product Data",product);
+  console.log("Product Data", product);
   // Carousel navigation handlers
   const nextSlide = useCallback(() => {
     setCarouselIndex((prev) => (prev + 1) % slides.length);
@@ -209,7 +148,7 @@ if (isFirstVariant) {
       },
     });
   };
-  console.log("All variants", product.variants)
+  console.log("All variants", product.variants);
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
   }
@@ -221,7 +160,7 @@ if (isFirstVariant) {
         {/* Product Info Section */}
         <div className="info-section">
           <h1 className="product-title" aria-label="Product title">
-            <span className="product-name">{product.variantname}</span> –{" "}
+            <p className="product-name">{product.variantname}</p>
             {product.title}
           </h1>
 
@@ -277,7 +216,11 @@ if (isFirstVariant) {
               <p className="price-note">Inclusive of all taxes</p>
             </div>
             <p className="price-original">
-              ₹{(product.salePrice + (product.salePrice * product.tax) / 100).toFixed(2)}
+              ₹
+              {(
+                product.salePrice +
+                (product.salePrice * product.tax) / 100
+              ).toFixed(2)}
             </p>
           </div>
 
@@ -328,12 +271,14 @@ if (isFirstVariant) {
             </p>
             {product.description &&
               product.description.split(/\s+/).length > 50 && (
-                <a href="#product-description"><button
-                  className="description-text-knowmore-btn"
-                  // onClick={toggleDescription}
-                >
-                  Know More
-                </button></a>
+                <a href="#product-description">
+                  <button
+                    className="description-text-knowmore-btn"
+                    // onClick={toggleDescription}
+                  >
+                    Know More
+                  </button>
+                </a>
               )}
           </div>
           <div className="Disclaimer-container">
@@ -390,7 +335,7 @@ if (isFirstVariant) {
                   translateY = 0;
                 } else if (distance === 1 || distance === slides.length - 1) {
                   scale = 1;
-                  opacity = 1; 
+                  opacity = 1;
                   zIndex = 4;
                   translateY = distance === 1 ? 450 : -450;
                 } else {

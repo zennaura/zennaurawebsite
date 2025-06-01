@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductTabs.css"; // Optional external CSS
 
 const ProductTabs = ({ productDescriptions, specifications, healingImage }) => {
   const [activeTab, setActiveTab] = useState("description");
-  const bulletPoints = productDescriptions.title.split('\n').filter(Boolean);
+  // const title = productDescriptions?.title;
+  const bulletPoints = productDescriptions?.title.split('\n').filter(Boolean);
+ useEffect(() =>  console.log("product des", productDescriptions), [productDescriptions])
+ 
   return (
     <div className="product-tabs-container">
       {/* Tab Headers */}
@@ -34,6 +37,7 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage }) => {
         {activeTab === "description" && productDescriptions && (
           <div className="product-tab-description">
             <ul>
+              {/* <li>{title}</li> */}
         {bulletPoints.map((point, index) => (
           <li key={index}>{point.trim()}</li>
         ))}

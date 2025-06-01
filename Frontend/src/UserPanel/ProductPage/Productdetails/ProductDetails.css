@@ -26,14 +26,16 @@
 }
 
 .product-title {
-  font-size: 24px;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 10px;
   color: #390611;
   font-family: "Inria Serif";
 }
-
+.product-name{
+  font-size: 1.8rem;
+}
 .rating-container {
   margin-bottom: 20px;
 }

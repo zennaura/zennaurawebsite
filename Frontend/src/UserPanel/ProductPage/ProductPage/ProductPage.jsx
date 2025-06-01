@@ -25,11 +25,11 @@ const ProductPage = () => {
 
   const location = useLocation();
   const { id } = useParams(); // Fallback if location.state isn't available
-  const initialProduct = location.state;
+  const initialProduct = location?.state;
   const [product, setProduct] = useState(initialProduct);
 
   useEffect(() => {
-    const state = location.state;
+    const state = location?.state;
 
     if (state?.product ) {
       // merge selected variant into product

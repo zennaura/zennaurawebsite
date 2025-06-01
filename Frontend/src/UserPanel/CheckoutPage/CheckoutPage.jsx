@@ -22,6 +22,7 @@ const CheckoutPage = () => {
 
   // Order processing states
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(null);
 
   // Address states
@@ -61,7 +62,14 @@ const CheckoutPage = () => {
   // Calculate order totals
   const subtotal = products.reduce((acc, product) => {
     const quantity = quantities[product._id] || 1;
-    const price = Number(product.salePrice);
+    const price = Number((
+                  product.salePrice +
+                  (product.salePrice * product.tax) / 100 -
+                  ((product.salePrice +
+                    (product.salePrice * product.tax) / 100) *
+                    product.discount) /
+                    100
+                ).toFixed(2));
     return acc + (isNaN(price) ? 0 : price * quantity);
   }, 0);
 
@@ -194,7 +202,14 @@ const CheckoutPage = () => {
             <li>
               ${product.name} (${product.size || "Standard"}) - 
               Quantity: ${quantities[product._id] || 1} - 
-              Price: ₹${(product.salePrice + (product.salePrice * product.tax) / 100).toFixed(2)}
+              Price: ₹${(
+                  product.salePrice +
+                  (product.salePrice * product.tax) / 100 -
+                  ((product.salePrice +
+                    (product.salePrice * product.tax) / 100) *
+                    product.discount) /
+                    100
+                ).toFixed(2)}
             </li>
           `
             )
@@ -373,6 +388,7 @@ const CheckoutPage = () => {
           orderId: response.data.order._id,
           total: total,
           couponUsed: appliedCoupon ? couponCode : null,
+          orderData
         },
       });
     } catch (error) {
@@ -386,6 +402,198 @@ const CheckoutPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Handle order submission
+  const handlePayment = async () => {
+    // Validate all required fields
+    const requiredFields = [
+      { value: address, field: "Address" },
+      { value: city, field: "City" },
+      { value: state, field: "State" },
+      { value: country, field: "Country" },
+      { value: postalCode, field: "Postal Code" },
+      { value: firstName, field: "First Name" },
+      { value: lastName, field: "Last Name" },
+      { value: email, field: "Email" },
+      { value: phone, field: "Phone" },
+    ];
+
+    const missingField = requiredFields.find((field) => !field.value);
+    if (missingField) {
+      setError(`Please fill in the ${missingField.field} field`);
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    // Validate phone number
+    if (phone.length < 10) {
+      setError("Please enter a valid phone number");
+      return;
+    }
+
+    // Validate products
+    if (!products || products.length === 0) {
+      setError("Your cart is empty");
+      return;
+    }
+
+    setIsSubmitted(true);
+    setError(null);
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onerror = () => {
+      alert("Failed to load Razorpay SDK. Are you online?");
+    };
+    script.onload = async () => {
+      // try {
+        
+      // } catch (error) {
+      //   console.error("Payment error:", error);
+      //   alert("Payment failed. Please try again.");
+      // }
+    };
+    document.body.appendChild(script);
+    setIsSubmitted(true)
+
+    try {
+      const result = await axios.post(
+          `http://localhost:5002/api/payment/create-order`,
+          {
+            amount: total, // ₹500
+          }
+        );
+
+        const { amount, id: order_id, currency } = result.data;
+
+        const options = {
+          key: "rzp_test_6Y9I9gygybVQZh", // Replace with your Razorpay Test Key
+          amount: amount.toString(),
+          currency,
+          name: "Test Corp",
+          description: "Test Payment",
+          order_id,
+          handler: function (response) {
+            // alert("Payment successful! ID: " + response.razorpay_payment_id);
+            
+            navigate("/thankyou-page", {
+              state: {
+                paymentId: response.razorpay_payment_id,
+                orderId: order_id,
+                total: total,
+              },
+            });
+            // You can verify payment on backend here
+          },
+          prefill: {
+            name: "Test User",
+            email: "test@example.com",
+            contact: "9999999999",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+          
+        };
+
+        const razor = new window.Razorpay(options);
+        razor.open();
+      // Mark coupon as used if applied
+      if (appliedCoupon && user?._id) {
+        await markCouponAsUsed();
+      }
+
+      // Prepare order items
+      const orderItems = products.map((product) => {
+        if (!product._id) throw new Error(`Product ${product.name} has no ID`);
+        const quantity = Number(quantities[product._id] || 1);
+        if (isNaN(quantity))
+          throw new Error(`Invalid quantity for ${product.name}`);
+        if (quantity < 1)
+          throw new Error(`Quantity must be at least 1 for ${product.name}`);
+        const price = Number(product.salePrice);
+        if (isNaN(price) || price <= 0)
+          throw new Error(`Invalid price for ${product.name}`);
+        return {
+          product: product._id,
+          quantity,
+          price,
+        };
+      });
+
+      // Prepare order data
+      const orderData = {
+        user: user?._id || null,
+        guestUser: !user?._id
+          ? {
+              firstName,
+              lastName,
+              email,
+              phone,
+            }
+          : null,
+        orderItems,
+        shippingAddress: `${address}, ${city}, ${state}, ${country}, ${postalCode}`,
+        paymentMethod: "UPI",
+        subtotal: parseFloat(subtotal.toFixed(2)),
+        shipping: parseFloat(shipping.toFixed(2)),
+        discount: parseFloat(discountAmount.toFixed(2)),
+        totalAmount: parseFloat(total.toFixed(2)),
+        appliedCoupon: appliedCoupon ? couponCode : null,
+        couponDetails: appliedCoupon
+          ? {
+              percentage: appliedCoupon.discount,
+              maxDiscount: appliedCoupon.maxDiscount,
+            }
+          : null,
+        
+      };
+
+      // Submit order
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/userorder/placeorder`,
+        orderData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.data.success) {
+        throw new Error(response.data.message || "Order failed");
+      }
+
+      // Send order confirmation email
+      await sendOrderConfirmationEmail();
+
+      // Navigate to thank you page
+      // navigate("/payment", {
+      //   state: {
+      //     products:products,
+      //     orderId: response.data.order._id,
+      //     total: total,
+      //     couponUsed: appliedCoupon ? couponCode : null,
+      //   },
+      // });
+    } catch (error) {
+      console.error("Order error:", error);
+      setError(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to place order. Please try again."
+      );
+    } finally {
+      setIsSubmitted(false);
+    }
+  };
+
   return (
     <>
       <ImageHead Title="Checkout" />
@@ -586,13 +794,22 @@ const CheckoutPage = () => {
           {/* Place Order Button */}
          <div className="!mt-6 md:!mt-8">
   <button
+    onClick={handlePayment}
+    disabled={isSubmitted}
+    className={`w-full border-2 border-[#45040F] text-[#45040F] !py-3 md:!py-4 !mb-2 text-lg font-semibold rounded-md hover:bg-[#45040F] cursor-pointer hover:text-white transition ${
+      isSubmitted ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+  >
+    {isSubmitted ? "Processing..." : "Proceed to Payment"}
+            </button>
+            <button
     onClick={handlePlaceOrder}
     disabled={isSubmitting}
-    className={`w-full border-2 border-[#45040F] text-[#45040F] !py-3 md:!py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] hover:text-white transition ${
+    className={`w-full border-2 border-[#45040F] text-[#45040F] !py-3 md:!py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] cursor-pointer hover:text-white transition ${
       isSubmitting ? "opacity-50 cursor-not-allowed" : ""
     }`}
   >
-    {isSubmitting ? "Processing..." : "Place Order"}
+    {isSubmitting ? "Processing..." : "Pay on Delivery"}
   </button>
   {error && (
     <p className="text-red-500 text-sm !mt-2 text-center">{error}</p>
@@ -692,7 +909,14 @@ const CheckoutPage = () => {
                   </select>
                 </div>
                 <p className="font-medium text-sm md:text-base whitespace-nowrap">
-                  ₹{product.salePrice}
+                  ₹{(
+                  product.salePrice +
+                  (product.salePrice * product.tax) / 100 -
+                  ((product.salePrice +
+                    (product.salePrice * product.tax) / 100) *
+                    product.discount) /
+                    100
+                ).toFixed(2)}
                 </p>
               </div>
             ))}
