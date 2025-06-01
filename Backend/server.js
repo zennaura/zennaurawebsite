@@ -17,7 +17,7 @@ const sendEmailRoute = require('./routes/EmailRoute');
 const reviewRoutes = require("./routes/Review-routes");
 const Coupon_Routes = require("./routes/Coupon_Routes");
 const contact_route = require('./routes/ContactQuery_Routes')
-
+const paymentRoutes = require("./routes/paymentRoutes");
 
 
 dotenv.config();
@@ -69,7 +69,7 @@ app.use('/api/email', sendEmailRoute);
 app.use("/api", reviewRoutes);
 app.use("/api/coupons", Coupon_Routes);
 app.use("/api/contact", contact_route);
-
+app.use('/api/payment', paymentRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5002;
