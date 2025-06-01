@@ -464,7 +464,7 @@ const CheckoutPage = () => {
 
     try {
       const result = await axios.post(
-          `http://localhost:5002/api/payment/create-order`,
+          `${VITE_BACKEND_LINK}/api/payment/create-order`,
           {
             amount: total, // ₹500
           }
