@@ -33,14 +33,16 @@ const Homepage = () => {
             <PosterSlider />
             <Carousel />
             <ImageContainer Image={Homepageposter} />
-            <LuxuryPage />
-            <SelfCare />
+            <ProductCard />
+            <Slider />
+             <OurStory />
+             
             <Journey />
             <Redefining />
-            <Slider />
-            <ProductCard />
             <OurCertifications />
-            <OurStory />
+            <LuxuryPage />
+           
+            {/* <SelfCare /> */}
             <OurClient2 />
             <Bemember />
             {/* <FollowUs /> */}
