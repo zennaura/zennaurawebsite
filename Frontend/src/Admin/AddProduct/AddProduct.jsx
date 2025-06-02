@@ -583,7 +583,7 @@ const AddProduct = () => {
               onChange={(e) => setProductDescription(e.target.value)}
               placeholder="Enter product description"
               className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              rows={4}
+              // rows={4}
             />
             <input
               type="file"

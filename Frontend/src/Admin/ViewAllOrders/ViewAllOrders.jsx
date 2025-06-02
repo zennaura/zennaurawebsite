@@ -191,10 +191,10 @@ const ViewAllOrders = () => {
         <AdminNavbar />
       </div>
       
-      <div className="flex-1 p-4 md:p-6">
+      <div className="flex-1 !p-4 !md:p-6">
         <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
           <div className="mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 relative pb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 relative !pb-2">
               Orders
               <span className="absolute bottom-0 left-0 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
             </h1>
@@ -247,7 +247,7 @@ const ViewAllOrders = () => {
           
           <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
             {/* Table Header - Hidden on mobile, shown on desktop */}
-            <div className="hidden md:grid md:grid-cols-12 bg-gray-50 px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider border-b border-gray-200">
+            <div className="hidden md:grid md:grid-cols-12 bg-gray-50 !px-4 !py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider border-b border-gray-200">
               <div className="col-span-2">Order ID</div>
               <div className="col-span-2">Customer</div>
               <div className="col-span-1">Phone</div>

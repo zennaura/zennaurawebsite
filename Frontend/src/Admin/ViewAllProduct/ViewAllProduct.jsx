@@ -5,7 +5,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ViewAllProduct.css';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
-import {useUser} from '../../components/AuthContext/AuthContext'
+import { useUser } from '../../components/AuthContext/AuthContext';
+import noImage from "../../assests/noImage.png";
 
 const ProductsManagement = () => {
   const { user } = useUser();
@@ -62,6 +63,7 @@ const ProductsManagement = () => {
     );
   });
 
+  console.log(products);
   if (loading) {
     return (
       <div className="main-container">
@@ -92,12 +94,12 @@ const ProductsManagement = () => {
   if (user?.userRole !== 'admin') {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h2>
-        <p className="text-gray-700 mb-4">This page is not accessible by you.</p>
+      <div className="bg-white !p-8 rounded-lg shadow-lg text-center">
+        <h2 className="text-2xl font-bold text-red-600 !mb-4">Access Denied</h2>
+        <p className="text-gray-700 !mb-4">This page is not accessible by you.</p>
         <button 
           onClick={() => navigate('/')}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700"
         >
           Go to Home
         </button>
@@ -144,16 +146,16 @@ const ProductsManagement = () => {
                 <div key={product._id || Math.random()} className="admin-product-card">
                   <div className="admin-product-image">
                     <img 
-                      src={product.frontImage || 'https://via.placeholder.com/150'} 
+                      src={product.variants[0].frontImage || noImage} 
                       alt={product.name || 'Product image'} 
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/150';
+                        e.target.src = noImage;
                       }}
                     />
                   </div>
                   <div className="admin-product-details">
                     {/* <h3 className="admin-product-name">{product.name || 'Unnamed Product'}</h3> */}
-                    <p className="admin-product-title">{product.title || 'No title'}</p>
+                    <p className="admin-product-title">{product.variants[0].variantname || 'No title'}</p>
                     <div className="admin-product-categories">
                       <span>{product.parentCategory || 'No category'}</span> &gt;
                       <span>{product.subCategory || 'No subcategory'}</span> &gt;
@@ -167,7 +169,7 @@ const ProductsManagement = () => {
                         product.variants.map((variant, index) => (
                           <div key={index} className="admin-product-variant">
                             <p>Size: {variant.size || 'N/A'}</p>
-                            <p>Price: ${(variant.saleprice || 0).toFixed(2)} ({(variant.discount || 0)}% off)</p>
+                            <p>Price: ₹ {(variant.salePrice || 0).toFixed(2)} ({(variant.discount || 0)}% off)</p>
                             <p>Stock: {variant.stock || 0}</p>
                           </div>
                         ))
