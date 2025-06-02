@@ -95,9 +95,49 @@ const handleAddToCart = async () => {
         }
       );
       alert("Product added to cart!");
-    } else {
+      console.log("response", response);
+    }
+  //    else {
+  //     // Guest cart logic (localStorage)
+  //     const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+
+  //     // Check if item already exists
+  //     const existingItemIndex = guestCart.findIndex(
+  //       item => item.productId === actualProductId && item.variantId === variantId
+  //     );
+
+  //     if (existingItemIndex > -1) {
+  //       // If item exists, increment quantity
+  //       guestCart[existingItemIndex].quantity += quantity;
+  //       alert('Product quantity updated in cart!');
+  //     } else {
+  //       // If item doesn't exist, add new item with actual product ID
+  //       guestCart.push({
+  //         productId: actualProductId,  // Store actual product ID
+  //         variantId,                   // Store variant ID (could be "0")
+  //         quantity
+  //       });
+  //       alert('Product added to guest cart!');
+  //     }
+
+  //     localStorage.setItem('guestCart', JSON.stringify(guestCart));
+  //     console.log('Updated guest cart:', JSON.parse(localStorage.getItem('guestCart'))); // Debug log
+  //   }
+  // } catch (error) {
+  //   console.error("Error:", error.response?.data?.error || error.message);
+  //   alert(error.response?.data?.error || "Failed to add to cart");
+      // }
+    else {
       // Guest cart logic (localStorage)
-      const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+      let guestCart = [];
+      
+      try {
+        const existingCart = localStorage.getItem('guestCart');
+        guestCart = existingCart ? JSON.parse(existingCart) : [];
+      } catch (parseError) {
+        console.error("Error parsing guest cart from localStorage:", parseError);
+        guestCart = []; // Reset to empty array if parsing fails
+      }
 
       // Check if item already exists
       const existingItemIndex = guestCart.findIndex(
@@ -109,21 +149,41 @@ const handleAddToCart = async () => {
         guestCart[existingItemIndex].quantity += quantity;
         alert('Product quantity updated in cart!');
       } else {
-        // If item doesn't exist, add new item with actual product ID
+        // If item doesn't exist, add new item
         guestCart.push({ 
-          productId: actualProductId,  // Store actual product ID
-          variantId,                   // Store variant ID (could be "0")
+          productId: actualProductId,
+          variantId,
           quantity 
         });
-        alert('Product added to guest cart!');
+        alert('Product added to cart!');
       }
 
-      localStorage.setItem('guestCart', JSON.stringify(guestCart));
-      console.log('Updated guest cart:', JSON.parse(localStorage.getItem('guestCart'))); // Debug log
+      // Save back to localStorage
+      try {
+        localStorage.setItem('guestCart', JSON.stringify(guestCart));
+        console.log('Updated guest cart:', guestCart);
+      } catch (storageError) {
+        console.error("Error saving to localStorage:", storageError);
+        alert("Failed to save cart. Please try again.");
+        return;
+      }
     }
+    
   } catch (error) {
-    console.error("Error:", error.response?.data?.error || error.message);
-    alert(error.response?.data?.error || "Failed to add to cart");
+    console.error("Error adding to cart:", error);
+    
+    // More specific error messages
+    if (error.response) {
+      // Server responded with error status
+      const errorMessage = error.response.data?.error || error.response.data?.message || "Server error occurred";
+      alert(`Failed to add to cart: ${errorMessage}`);
+    } else if (error.request) {
+      // Request made but no response received
+      alert("Network error. Please check your connection and try again.");
+    } else {
+      // Something else happened
+      alert(error.message || "Failed to add to cart");
+    }
   }
 };
   

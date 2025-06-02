@@ -593,6 +593,7 @@ const CheckoutPage = () => {
       setIsSubmitted(false);
     }
   };
+  console.log("products", products[0]);
 
   return (
     <>
@@ -909,14 +910,14 @@ const CheckoutPage = () => {
                   </select>
                 </div>
                 <p className="font-medium text-sm md:text-base whitespace-nowrap">
-                  ₹{(
+                  ₹{parseInt((
                   product.salePrice +
                   (product.salePrice * product.tax) / 100 -
                   ((product.salePrice +
                     (product.salePrice * product.tax) / 100) *
                     product.discount) /
                     100
-                ).toFixed(2)}
+                ).toFixed(2)) }
                 </p>
               </div>
             ))}

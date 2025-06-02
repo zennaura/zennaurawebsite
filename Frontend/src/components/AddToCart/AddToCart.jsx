@@ -6,6 +6,7 @@ import './CartSidebar.css';
 import { useUser } from '../AuthContext/AuthContext';
 import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import noImage from "../../assests/noImage.png";
 
 const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
   const navigate = useNavigate();
@@ -20,6 +21,129 @@ const CartSidebar = ({ isOpen, onClose, cartItemCount, updateCartCount }) => {
  // Updated fetchCartItems function for CartSidebar component
 
 // Updated fetchCartItems function for CartSidebar component
+
+// const fetchCartItems = async () => {
+//   try {
+//     setLoading(true);
+
+//     if (user) {
+//       // Logged-in user logic (unchanged)
+//       const response = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/cart/fetchCartItems?userId=${user._id}`);
+//       setCartItems(response.data.items);
+//       updateCartCount(response.data.items.reduce((total, item) => total + item.quantity, 0));
+
+//       const initialGiftWrap = {};
+//       response.data.items.forEach(item => {
+//         initialGiftWrap[`${item.productId}-${item.variantId}`] = false;
+//       });
+//       setGiftWrapItems(initialGiftWrap);
+
+//     } else {
+//       // Guest user logic - fetch product details
+//       const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+//       if (localCart.length === 0) {
+//         setCartItems([]);
+//         updateCartCount(0);
+//         setGiftWrapItems({});
+//         return;
+//       }
+
+//       console.log('Local cart items:', localCart); // Debug log
+
+//       // Fetch product details for each item in guest cart
+//       const cartItemsWithDetails = await Promise.all(
+//         localCart.map(async (cartItem) => {
+//           try {
+//             console.log(`Fetching product: ${cartItem.productId}, variant: ${cartItem.variantId}`); // Debug log
+
+//             // Use the productId directly
+//             const response = await axios.get(
+//               `${import.meta.env.VITE_BACKEND_LINK}/api/products/${cartItem.productId}`
+//             );
+//             console.log("res", response);
+//             const product = response.data;
+//             console.log('Product fetched:', product.name); 
+//             console.log('Available variants:', product.variants); 
+            
+//             // Find the specific variant by ID or index
+//             let variant;
+            
+//             if (cartItem.variantId === "0" || cartItem.variantId === 0) {
+//               // If variant is "0", use the first variant (base variant)
+//               variant = product.variants[0];
+//               console.log('Using base variant (index 0):', variant);
+//             } else {
+//               // Try to find variant by _id first
+//               variant = product.allVariants.find(v => v._id === cartItem.variantId);
+              
+//               // If not found by _id, try by index
+//               if (!variant) {
+//                 const variantIndex = parseInt(cartItem.variantId);
+//                 if (!isNaN(variantIndex) && product.allVariants[variantIndex]) {
+//                   variant = product.allVariants[variantIndex];
+//                   console.log(`Using variant by index ${variantIndex}:`, variant);
+//                 }
+//               }
+//             }
+            
+//             // Fallback to first variant if none found
+//             if (!variant) {
+//               console.log('No specific variant found, using first variant');
+//               variant = product.allVariants[0];
+//             }
+            
+//             return {
+//               productId: cartItem.productId,
+//               variantId: cartItem.variantId,
+//               quantity: cartItem.quantity,
+//               name: product.name,
+//               title: product.title,
+//               price: variant.salePrice,
+//               originalPrice: variant.costPrice,
+//               image: product.frontImage,
+//               discount: variant.discount || 0
+//             };
+//           } catch (error) {
+//             console.error(`Error fetching product details for ${cartItem.productId}:`, error);
+//             console.error('Error details:', error.response?.data); // More detailed error logging
+            
+//             // Return a fallback item if API call fails
+//             return {
+//               productId: cartItem.productId,
+//               variantId: cartItem.variantId,
+//               quantity: cartItem.quantity,
+//               name: cartItem.variantname,
+//               title: 'Please refresh and try again',
+//               price: 0,
+//               originalPrice: 0,
+//               image: 'https://via.placeholder.com/80',
+//               discount: 0
+//             };
+//           }
+//         })
+//       );
+
+//       console.log('Cart items with details:', cartItemsWithDetails); // Debug log
+
+//       setCartItems(cartItemsWithDetails);
+//       updateCartCount(cartItemsWithDetails.reduce((total, item) => total + item.quantity, 0));
+
+//       // Initialize gift wrap state for guest users
+//       const initialGiftWrap = {};
+//       cartItemsWithDetails.forEach(item => {
+//         initialGiftWrap[`${item.productId}-${item.variantId}`] = false;
+//       });
+//       setGiftWrapItems(initialGiftWrap);
+//     }
+
+//   } catch (error) {
+//     console.error('Error fetching cart:', error);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+  
+  // Fixed fetchCartItems function with proper validation and error handling
 
 const fetchCartItems = async () => {
   try {
@@ -48,64 +172,119 @@ const fetchCartItems = async () => {
         return;
       }
 
-      console.log('Local cart items:', localCart); // Debug log
+      console.log('Local cart items:', localCart);
 
       // Fetch product details for each item in guest cart
       const cartItemsWithDetails = await Promise.all(
         localCart.map(async (cartItem) => {
           try {
-            console.log(`Fetching product: ${cartItem.productId}, variant: ${cartItem.variantId}`); // Debug log
+            console.log(`Fetching product: ${cartItem.productId}, variant: ${cartItem.variantId}`);
             
-            // Use the productId directly
             const response = await axios.get(
-              `${import.meta.env.VITE_BACKEND_LINK}/api/products/${cartItem.productId}-${cartItem.variantId}`
+              `${import.meta.env.VITE_BACKEND_LINK}/api/products/${cartItem.productId}`
             );
             
             const product = response.data;
-            console.log('Product fetched:', product.name); 
-            console.log('Available variants:', product.variants); 
             
-            // Find the specific variant by ID or index
-            let variant;
+            // Add comprehensive logging to understand the product structure
+            console.log('Full product data:', product.product);
+            console.log('Product name:', product?.product.variants[cartItem.variantId].variantname);
+            console.log('Product variants:', product?.product.variants);
+            console.log('Variants type:', typeof product?.product.variants);
+            console.log('Variants length:', product?.product.variants?.length);
             
-            if (cartItem.variantId === "0" || cartItem.variantId === 0) {
-              // If variant is "0", use the first variant (base variant)
-              variant = product.variants[0];
-              console.log('Using base variant (index 0):', variant);
-            } else {
-              // Try to find variant by _id first
-              variant = product.variants.find(v => v._id === cartItem.variantId);
+            // Validate product data
+            if (!product) {
+              throw new Error('Product data is null or undefined');
+            }
+            
+            if (!product?.product.variants[cartItem.variantId].variantname) {
+              console.warn('Product name is missing:', product);
+            }
+            
+            // Handle variants with proper validation
+            let variant = null;
+
+            
+            // Check if variants exist and is an array
+            if (!product?.product.variants || !Array.isArray(product?.product.variants) || product?.product.variants.length === 0) {
+              console.warn('Product has no variants or variants is not an array:', product);
               
-              // If not found by _id, try by index
-              if (!variant) {
-                const variantIndex = parseInt(cartItem.variantId);
-                if (!isNaN(variantIndex) && product.variants[variantIndex]) {
-                  variant = product.variants[variantIndex];
-                  console.log(`Using variant by index ${variantIndex}:`, variant);
+              // Fallback: create a default variant from product data
+              variant = {
+                ...variant,
+                salePrice: product.product.salePrice || product.price || 0,
+                costPrice: product.costPrice || product.originalPrice || product.salePrice || product.price || 0,
+                discount: product.discount || 0,
+                _id: '0'
+              };
+              
+              console.log('Using fallback variant:', variant);
+            } else {
+              // Product has variants - find the correct one
+              // if (cartItem.variantId === "0" || cartItem.variantId === 0) {
+              //   // Use the first variant
+              //   variant = product.product.variants[0];
+              //   console.log('Using base variant (index 0):', variant);
+              // } else {
+              //   // Try to find variant by _id first
+              //   variant = product.variants.find(v => v._id === cartItem.variantId);
+                if (product?.product.variants[cartItem.variantId]) {
+              variant = product?.product.variants[cartItem.variantId];
+            }
+            console.log("variant", variant);
+                // If not found by _id, try by index
+                if (!variant) {
+                  const variantIndex = parseInt(cartItem.variantId);
+                  if (!isNaN(variantIndex) && product.product.variants[variantIndex]) {
+                    variant = product.product.variants[variantIndex];
+                    console.log(`Using variant by index ${variantIndex}:`, variant);
+                  }
+                // }
+                
+                // Fallback to first variant if none found
+                if (!variant) {
+                  console.log('No specific variant found, using first variant');
+                  variant = product.product.variants[0];
                 }
               }
             }
             
-            // Fallback to first variant if none found
+            // Final validation of variant
             if (!variant) {
-              console.log('No specific variant found, using first variant');
-              variant = product.variants[0];
+              throw new Error('Could not determine product variant');
             }
             
+            // Ensure variant has required price fields
+            const salePrice = variant.salePrice || variant.price || 0;
+            const costPrice = variant.costPrice || variant.originalPrice || salePrice;
+            const tax = 0;
             return {
               productId: cartItem.productId,
               variantId: cartItem.variantId,
               quantity: cartItem.quantity,
-              name: product.name,
-              title: product.title,
-              price: variant.salePrice,
-              originalPrice: variant.costPrice,
-              image: product.frontImage,
+              name: variant.variantname || 'Unknown Product',
+              title: product.product.title || product.product.description || '',
+              price: (
+                  salePrice +
+                  (salePrice * tax) / 100 -
+                  ((salePrice +
+                    (salePrice * tax) / 100) *
+                    variant.discount) /
+                    100
+                ).toFixed(2),
+              originalPrice: (
+                salePrice +
+                (salePrice * tax) / 100
+              ).toFixed(2),
+              image: variant.frontImage || product.image || noImage,
               discount: variant.discount || 0
             };
+            
           } catch (error) {
             console.error(`Error fetching product details for ${cartItem.productId}:`, error);
-            console.error('Error details:', error.response?.data); // More detailed error logging
+            console.error('Error details:', error.response?.data);
+            console.error('Full error object:', error);
             
             // Return a fallback item if API call fails
             return {
@@ -123,7 +302,7 @@ const fetchCartItems = async () => {
         })
       );
 
-      console.log('Cart items with details:', cartItemsWithDetails); // Debug log
+      console.log('Cart items with details:', cartItemsWithDetails);
 
       setCartItems(cartItemsWithDetails);
       updateCartCount(cartItemsWithDetails.reduce((total, item) => total + item.quantity, 0));
@@ -270,7 +449,8 @@ const fetchCartItems = async () => {
       size: item.variantId || 'Default',
       frontImage: item.image,
       quantity: item.quantity,
-      discount: item.discount || 0
+      discount: item.discount || 0,
+      tax:0,
     }));
 
     navigate("/checkout-page", {
@@ -367,9 +547,9 @@ const fetchCartItems = async () => {
                       <h4 className="item-title">{item.name}</h4>
                       <p className="item-subtitle">{item.title}</p>
                       <div className="item-cart-price">
-                        <div className="item-price">₹{item.price.toFixed(2)}</div>
+                        <div className="item-price">₹{(item.price)}</div>
                         {item.originalPrice > item.price && (
-                          <div className="item-originalPrice">₹{item.originalPrice.toFixed(2)}</div>
+                          <div className="item-originalPrice">₹{item.originalPrice}</div>
                         )}
                       </div>
                       <div className="item-variant">Variant: {item.variantId || 'Default'}</div>
