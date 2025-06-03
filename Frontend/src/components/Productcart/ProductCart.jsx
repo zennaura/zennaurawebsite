@@ -3,6 +3,7 @@ import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
 import axios from "axios";
 import { useUser } from "../../components/AuthContext/AuthContext";
 import "./productCard.css";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({
   id,
@@ -17,10 +18,11 @@ const ProductCard = ({
   rating,
   onBuyNowClick,
   isBestSeller,
+  discount
 }) => {
   const [liked, setLiked] = React.useState(false);
   const { user } = useUser();
-
+  const navigate = useNavigate();
   const productId = id.split("-")[0];
   const variantId = id.split("-")[1];
   const [hovered, setHovered] = useState(false);
@@ -72,121 +74,168 @@ const ProductCard = ({
   };
 
   // Updated handleAddToCart function for ProductCard component
-// Updated handleAddToCart function for ProductCard component
+  // Updated handleAddToCart function for ProductCard component
 
-const handleAddToCart = async () => {
-  // Split the combined ID properly
-  const actualProductId = id.split("-")[0];  // This is the real product ID
-  const variantId = id.split("-")[1] || "0"; // This is the variant ID, default to "0"
-  const quantity = 1;
+  const handleAddToCart = async () => {
+    // Split the combined ID properly
+    const actualProductId = id.split("-")[0]; // This is the real product ID
+    const variantId = id.split("-")[1] || "0"; // This is the variant ID, default to "0"
+    const quantity = 1;
 
-  console.log('Adding to cart:', { actualProductId, variantId, id }); // Debug log
+    console.log("Adding to cart:", { actualProductId, variantId, id }); // Debug log
 
-  try {
-    if (user) {
-      // Logged-in user cart logic
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_LINK}/api/cart/add`,
-        {
-          productId: actualProductId,  // Use actual product ID
-          variantId,
-          quantity,
-          userId: user._id,
-        }
-      );
-      alert("Product added to cart!");
-      console.log("response", response);
-    }
-  //    else {
-  //     // Guest cart logic (localStorage)
-  //     const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+    try {
+      if (user) {
+        // Logged-in user cart logic
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_LINK}/api/cart/add`,
+          {
+            productId: actualProductId, // Use actual product ID
+            variantId,
+            quantity,
+            userId: user._id,
+          }
+        );
+        alert("Product added to cart!");
+        console.log("response", response);
+      }
+      //    else {
+      //     // Guest cart logic (localStorage)
+      //     const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
 
-  //     // Check if item already exists
-  //     const existingItemIndex = guestCart.findIndex(
-  //       item => item.productId === actualProductId && item.variantId === variantId
-  //     );
+      //     // Check if item already exists
+      //     const existingItemIndex = guestCart.findIndex(
+      //       item => item.productId === actualProductId && item.variantId === variantId
+      //     );
 
-  //     if (existingItemIndex > -1) {
-  //       // If item exists, increment quantity
-  //       guestCart[existingItemIndex].quantity += quantity;
-  //       alert('Product quantity updated in cart!');
-  //     } else {
-  //       // If item doesn't exist, add new item with actual product ID
-  //       guestCart.push({
-  //         productId: actualProductId,  // Store actual product ID
-  //         variantId,                   // Store variant ID (could be "0")
-  //         quantity
-  //       });
-  //       alert('Product added to guest cart!');
-  //     }
+      //     if (existingItemIndex > -1) {
+      //       // If item exists, increment quantity
+      //       guestCart[existingItemIndex].quantity += quantity;
+      //       alert('Product quantity updated in cart!');
+      //     } else {
+      //       // If item doesn't exist, add new item with actual product ID
+      //       guestCart.push({
+      //         productId: actualProductId,  // Store actual product ID
+      //         variantId,                   // Store variant ID (could be "0")
+      //         quantity
+      //       });
+      //       alert('Product added to guest cart!');
+      //     }
 
-  //     localStorage.setItem('guestCart', JSON.stringify(guestCart));
-  //     console.log('Updated guest cart:', JSON.parse(localStorage.getItem('guestCart'))); // Debug log
-  //   }
-  // } catch (error) {
-  //   console.error("Error:", error.response?.data?.error || error.message);
-  //   alert(error.response?.data?.error || "Failed to add to cart");
+      //     localStorage.setItem('guestCart', JSON.stringify(guestCart));
+      //     console.log('Updated guest cart:', JSON.parse(localStorage.getItem('guestCart'))); // Debug log
+      //   }
+      // } catch (error) {
+      //   console.error("Error:", error.response?.data?.error || error.message);
+      //   alert(error.response?.data?.error || "Failed to add to cart");
       // }
-    else {
-      // Guest cart logic (localStorage)
-      let guestCart = [];
-      
-      try {
-        const existingCart = localStorage.getItem('guestCart');
-        guestCart = existingCart ? JSON.parse(existingCart) : [];
-      } catch (parseError) {
-        console.error("Error parsing guest cart from localStorage:", parseError);
-        guestCart = []; // Reset to empty array if parsing fails
+      else {
+        // Guest cart logic (localStorage)
+        let guestCart = [];
+
+        try {
+          const existingCart = localStorage.getItem("guestCart");
+          guestCart = existingCart ? JSON.parse(existingCart) : [];
+        } catch (parseError) {
+          console.error(
+            "Error parsing guest cart from localStorage:",
+            parseError
+          );
+          guestCart = []; // Reset to empty array if parsing fails
+        }
+
+        // Check if item already exists
+        const existingItemIndex = guestCart.findIndex(
+          (item) =>
+            item.productId === actualProductId && item.variantId === variantId
+        );
+
+        if (existingItemIndex > -1) {
+          // If item exists, increment quantity
+          guestCart[existingItemIndex].quantity += quantity;
+          alert("Product quantity updated in cart!");
+        } else {
+          // If item doesn't exist, add new item
+          guestCart.push({
+            productId: actualProductId,
+            variantId,
+            quantity,
+          });
+          alert("Product added to cart!");
+        }
+
+        // Save back to localStorage
+        try {
+          localStorage.setItem("guestCart", JSON.stringify(guestCart));
+          console.log("Updated guest cart:", guestCart);
+        } catch (storageError) {
+          console.error("Error saving to localStorage:", storageError);
+          alert("Failed to save cart. Please try again.");
+          return;
+        }
       }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
 
-      // Check if item already exists
-      const existingItemIndex = guestCart.findIndex(
-        item => item.productId === actualProductId && item.variantId === variantId
-      );
-
-      if (existingItemIndex > -1) {
-        // If item exists, increment quantity
-        guestCart[existingItemIndex].quantity += quantity;
-        alert('Product quantity updated in cart!');
+      // More specific error messages
+      if (error.response) {
+        // Server responded with error status
+        const errorMessage =
+          error.response.data?.error ||
+          error.response.data?.message ||
+          "Server error occurred";
+        alert(`Failed to add to cart: ${errorMessage}`);
+      } else if (error.request) {
+        // Request made but no response received
+        alert("Network error. Please check your connection and try again.");
       } else {
-        // If item doesn't exist, add new item
-        guestCart.push({ 
-          productId: actualProductId,
-          variantId,
-          quantity 
-        });
-        alert('Product added to cart!');
+        // Something else happened
+        alert(error.message || "Failed to add to cart");
       }
+    }
+  };
+// console.log("product",product)
+  // const handleBuyNow = async () => {
+  //   navigate("/checkout-page", {
+  //     state: {
+  //       products: [
+  //         {
+  //           ...product,
+  //           quantity: 1,
+  //         },
+  //       ],
+  //     },
+  //   });
+  // };
+  const handleBuyNow = async () => {
+  // Create product object from the props passed to the component
+  const product = {
+    id,
+    name,
+    title,
+    image: frontimage, // Make sure this matches what checkout expects
+    frontImage: frontimage,
+    backImage,
+    salePrice: Number(price), // Ensure price is a number
+    originalPrice: Number(originalPrice),
+    rating,
+    productId,
+    variantId,
+    discount
+  };
 
-      // Save back to localStorage
-      try {
-        localStorage.setItem('guestCart', JSON.stringify(guestCart));
-        console.log('Updated guest cart:', guestCart);
-      } catch (storageError) {
-        console.error("Error saving to localStorage:", storageError);
-        alert("Failed to save cart. Please try again.");
-        return;
-      }
-    }
-    
-  } catch (error) {
-    console.error("Error adding to cart:", error);
-    
-    // More specific error messages
-    if (error.response) {
-      // Server responded with error status
-      const errorMessage = error.response.data?.error || error.response.data?.message || "Server error occurred";
-      alert(`Failed to add to cart: ${errorMessage}`);
-    } else if (error.request) {
-      // Request made but no response received
-      alert("Network error. Please check your connection and try again.");
-    } else {
-      // Something else happened
-      alert(error.message || "Failed to add to cart");
-    }
-  }
+  navigate("/checkout-page", {
+    state: {
+      products: [
+        {
+          ...product,
+          quantity: 1,
+        },
+      ],
+    },
+  });
 };
-  
+
   return (
     <div className="product-card-container">
       {isBest ||
@@ -290,7 +339,9 @@ const handleAddToCart = async () => {
           >
             ADD TO CART
           </button>
-          <button className="product-card-buy-now">BUY NOW</button>
+          <button onClick={handleBuyNow} className="product-card-buy-now">
+            BUY NOW
+          </button>
         </div>
       </div>
     </div>

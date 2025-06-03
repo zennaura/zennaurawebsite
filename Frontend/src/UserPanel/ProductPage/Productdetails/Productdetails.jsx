@@ -72,7 +72,7 @@ const ProductDetails = ({ product }) => {
 
     addImage(
       product?.productDescriptions?.image,
-      `${product.name} - Description`
+      `${product?.name} - Description`
     );
 
     product?.stoneUsedImage?.forEach((stone, index) => {
@@ -261,7 +261,7 @@ const ProductDetails = ({ product }) => {
       },
     });
   };
-  console.log("All variants", product.allVariants);
+  console.log("All variants", product?.allVariants);
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
   }
@@ -273,8 +273,8 @@ const ProductDetails = ({ product }) => {
         {/* Product Info Section */}
         <div className="info-section">
           <h1 className="product-title" aria-label="Product title">
-            <p className="product-name">{product.variantname}</p>
-            {product.title}
+            <p className="product-name">{product?.variantname}</p>
+            {product?.title}
           </h1>
 
           <div className="rating-container" aria-label="Product rating">
@@ -294,12 +294,12 @@ const ProductDetails = ({ product }) => {
           </div> */}
           {/* Here are other varient names */}
           <div className="specs-container">
-            {product.allVariants?.map((variant, index) => (
+            {product?.allVariants?.map((variant, index) => (
               <p
                 className="specs-p"
-                aria-label={`Product variant: ${variant.variantname}`}
+                aria-label={`Product variant: ${variant?.variantname}`}
                 onClick={() => {
-                  navigate(`/productdetails/${variant.id}`, {
+                  navigate(`/productdetails/${variant?.id}`, {
                     state: {
                       product: product, // full product
                       selectedVariant: variant, // newly selected variant
@@ -307,7 +307,7 @@ const ProductDetails = ({ product }) => {
                   });
                 }}
               >
-                {variant.variantname}
+                {variant?.variantname}
               </p>
             ))}
           </div>
@@ -318,11 +318,11 @@ const ProductDetails = ({ product }) => {
               <p className="price-value">
                 ₹
                 {(
-                  product.salePrice +
-                  (product.salePrice * product.tax) / 100 -
-                  ((product.salePrice +
-                    (product.salePrice * product.tax) / 100) *
-                    product.discount) /
+                  product?.salePrice +
+                  (product?.salePrice * product?.tax) / 100 -
+                  ((product?.salePrice +
+                    (product?.salePrice * product?.tax) / 100) *
+                    product?.discount) /
                     100
                 ).toFixed(2)}{" "}
               </p>
@@ -331,8 +331,8 @@ const ProductDetails = ({ product }) => {
             <p className="price-original">
               ₹
               {(
-                product.salePrice +
-                (product.salePrice * product.tax) / 100
+                product?.salePrice +
+                (product?.salePrice * product?.tax) / 100
               ).toFixed(2)}
             </p>
           </div>
@@ -379,11 +379,11 @@ const ProductDetails = ({ product }) => {
             <h2 className="section-title">Description</h2>
             <p className="description-text">
               {showFullDescription
-                ? product.description
-                : truncateDescription(product.description, 50)}
+                ? product?.description
+                : truncateDescription(product?.description, 50)}
             </p>
-            {product.description &&
-              product.description.split(/\s+/).length > 50 && (
+            {product?.description &&
+              product?.description?.split(/\s+/)?.length > 50 && (
                 <a href="#product-description">
                   <button
                     className="description-text-knowmore-btn"

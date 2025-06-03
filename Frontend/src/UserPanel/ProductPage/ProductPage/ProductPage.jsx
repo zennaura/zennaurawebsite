@@ -52,23 +52,23 @@ const ProductPage = () => {
   // console.log("initial",initialProduct);
   return (
     <div>
-      <ImageHead Title={product.variantname} />
+      <ImageHead Title={product?.variantname} />
       <Productdetails product={product} />
       <ProductIcon />
-      <StoneUsed image={product.stoneUsedImage} />
+      <StoneUsed image={product?.stoneUsedImage} />
       <ProductTabs
-        productDescriptions={product.productDescriptions}
-        specifications={product.specifications}
-        healingImage={product.healingImage}
+        productDescriptions={product?.productDescriptions}
+        specifications={product?.specifications}
+        healingImage={product?.healingImage}
       />
       {/* All so like this product */}
       <AllsoLike />
    <div className="productposter-container">
   {/* Benefits Poster */}
-  {product.benefits && product.benefits.length > 0 && (
+  {product?.benefits && product?.benefits?.length > 0 && (
     <div className="productposter benefits-poster">
       <img 
-        src={product.benefits} 
+        src={product?.benefits} 
         alt="Benefits" 
         className="poster-image"
       />
@@ -76,10 +76,10 @@ const ProductPage = () => {
   )}
   
   {/* Why Choose Poster */}
-  {product.whyChoose && product.whyChoose.length > 0 && (
+  {product?.whyChoose && product?.whyChoose?.length > 0 && (
     <div className="productposter whychoose-poster">
       <img 
-        src={product.whyChoose} 
+        src={product?.whyChoose} 
         alt="Why Choose" 
         className="poster-image"
       />
@@ -87,10 +87,10 @@ const ProductPage = () => {
   )}
   
   {/* Ways to Cleanse Poster */}
-  {product.waysToClean && product.waysToClean.length > 0 && (
+  {product?.waysToClean && product?.waysToClean?.length > 0 && (
     <div className="productposter waystocleanse-poster">
       <img 
-        src={product.waysToClean} 
+        src={product?.waysToClean} 
         alt="Ways to Cleanse" 
         className="poster-image"
       />
@@ -98,10 +98,10 @@ const ProductPage = () => {
   )}
   
   {/* Who Wear Poster */}
-  {product.whoWear && product.whoWear.length > 0 && (
+  {product?.whoWear && product?.whoWear?.length > 0 && (
     <div className="productposter whowear-poster">
       <img 
-        src={product.whoWear} 
+        src={product?.whoWear} 
         alt="Who Wear" 
         className="poster-image"
       />
@@ -109,10 +109,10 @@ const ProductPage = () => {
   )}
   
   {/* How and Where Wear Poster */}
-  {product.whereHowWear && product.whereHowWear.length > 0 && (
+  {product?.whereHowWear && product?.whereHowWear?.length > 0 && (
     <div className="productposter howwherewear-poster">
       <img 
-        src={product.whereHowWear} 
+        src={product?.whereHowWear} 
         alt="How and Where to Wear" 
         className="poster-image"
       />
@@ -123,8 +123,8 @@ const ProductPage = () => {
       {/* ShippingTab */}
       <ShippingTab />
       {/* Reviews and FQA */}
-      <ReviewsPage ProductId={product._id}
-        VarientId={product.__v}
+      <ReviewsPage ProductId={product?._id}
+        VarientId={product?.__v}
         product={product}
       />
       <FQApage />

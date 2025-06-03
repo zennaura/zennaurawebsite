@@ -118,7 +118,7 @@ const UserDashboardWishlist = () => {
                 image={mainImage}
                 price={variant.salePrice || variant.price || 0}
                 originalPrice={variant.costPrice || variant.salePrice || variant.price || 0}
-                discount={variant.discount}
+                discount={variant.discount || product?.discount}
                 isBest={variant.bestSeller || false}
                 isFeatured={variant.featureProduct || false}
                 rating={product.rating || 0}

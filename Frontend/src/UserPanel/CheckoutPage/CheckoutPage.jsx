@@ -4,6 +4,7 @@ import ImageHead from "../../components/ImageHead/ImageHead";
 import { useUser } from "../../components/AuthContext/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import noImage from "../../assests/noImage.png";
 
 
 const CheckoutPage = () => {
@@ -69,11 +70,11 @@ const CheckoutPage = () => {
                     (product.salePrice * product.tax) / 100) *
                     product.discount) /
                     100
-                ).toFixed(2));
+                ).toFixed(2)) || product.salePrice;
     return acc + (isNaN(price) ? 0 : price * quantity);
   }, 0);
 
-  const shipping = 100;
+  const shipping = 50;
 
   // Calculate discount based on percentage
   const calculateDiscount = () => {
@@ -321,7 +322,7 @@ const CheckoutPage = () => {
 
       // Prepare order items
       const orderItems = products.map((product) => {
-        if (!product._id) throw new Error(`Product ${product.name} has no ID`);
+        if (!product?.productId || !product?._id ) throw new Error(`Product ${product.name} has no ID`);
         const quantity = Number(quantities[product._id] || 1);
         if (isNaN(quantity))
           throw new Error(`Invalid quantity for ${product.name}`);
@@ -331,7 +332,7 @@ const CheckoutPage = () => {
         if (isNaN(price) || price <= 0)
           throw new Error(`Invalid price for ${product.name}`);
         return {
-          product: product._id,
+          product: product._id || product.productId,
           quantity,
           price,
         };
@@ -464,7 +465,7 @@ const CheckoutPage = () => {
 
     try {
       const result = await axios.post(
-          `${VITE_BACKEND_LINK}/api/payment/create-order`,
+          `${import.meta.env.VITE_BACKEND_LINK}/api/payment/create-order`,
           {
             amount: total, // ₹500
           }
@@ -511,7 +512,7 @@ const CheckoutPage = () => {
 
       // Prepare order items
       const orderItems = products.map((product) => {
-        if (!product._id) throw new Error(`Product ${product.name} has no ID`);
+        if (!product._id || !product.productId) throw new Error(`Product ${product.name} has no ID`);
         const quantity = Number(quantities[product._id] || 1);
         if (isNaN(quantity))
           throw new Error(`Invalid quantity for ${product.name}`);
@@ -521,7 +522,7 @@ const CheckoutPage = () => {
         if (isNaN(price) || price <= 0)
           throw new Error(`Invalid price for ${product.name}`);
         return {
-          product: product._id,
+          product: product?.productId || product?._id,
           quantity,
           price,
         };
@@ -886,12 +887,12 @@ const CheckoutPage = () => {
                 className="flex items-center gap-3 md:!gap-4"
               >
                 <img
-                  src={product.frontImage}
+                  src={product?.frontImage || product?.backImage || noImage}
                   alt={product.name}
                   className="bg-gray-200 !h-14 md:!h-16 !w-14 md:!w-16 object-cover rounded"
                 />
                 <div className="flex flex-col flex-grow">
-                  <p className="font-medium text-sm md:text-base">{product.name}</p>
+                  <p className="font-medium text-sm md:text-base">{product?.name || product?.variantname}</p>
                   <p className="text-xs md:!text-sm text-gray-500">{product.size}</p>
                   <select
                     className="!mt-1 border !p-1 text-xs md:text-sm max-w-[80px]"
@@ -917,7 +918,7 @@ const CheckoutPage = () => {
                     (product.salePrice * product.tax) / 100) *
                     product.discount) /
                     100
-                ).toFixed(2)) }
+                ).toFixed(2)) || product.salePrice.toFixed(2)}
                 </p>
               </div>
             ))}

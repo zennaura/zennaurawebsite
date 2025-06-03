@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const BestSeller = () => {
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [currentPage, setCurrentPage] = useState(0);
   const sliderRef = useRef(null);
@@ -26,13 +27,16 @@ const BestSeller = () => {
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
+            productId: product._id,
             data: {
               ...product,
               ...variant,
             },
           }))
-        ).filter(product => product.data.bestSeller);
-        setBestSellerProducts(flattened);
+        )
+        setAllProducts(flattened);
+        const bestSellerOnly = flattened.filter((product) => product.data.bestSeller);
+        setBestSellerProducts(bestSellerOnly);
       } catch (err) {
         console.error("Error fetching best seller products:", err);
       }
@@ -42,19 +46,26 @@ const BestSeller = () => {
 
   const handleClick = (product) => {
     // Find all variants of this product
-    const productVariants = bestSellerProducts
-      .filter(p => p.data._id === product.data._id)
+    const productId = product.productId;
+    const productVariants = allProducts
+      .filter(p =>  p.productId === productId)
       .map(v => ({
         variantname: v.data.variantname,
         id: v.id,
         frontImage: v.data.frontImage,
-        salePrice: v.data.salePrice
+        backImage: v.data.backImage,
+        salePrice: v.data.salePrice,
+        originalPrice: v.data.originalPrice,
+        discount: v.data.discount,
+        tax: v.data.tax,
+        stock: v.data.stock,
       }));
     
     navigate(`/productdetails/${product.id}`, {
       state: {
         ...product.data,
-        allVariants: productVariants
+        allVariants: productVariants,
+        selectedVariantId: product.id,
       },
     });
   };

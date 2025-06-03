@@ -5,8 +5,8 @@ import ReviewFormModal from "./ReviewFormModal";
 
 const ReviewsPage = ({ ProductId, VarientId ,product}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("Product Data:", product.__v);
-    console.log("Product Data:", product._id);
+  console.log("Product Data:", product?.__v);
+    console.log("Product Data:", product?._id);
 
     return (
         <div div className="reviews-page">
