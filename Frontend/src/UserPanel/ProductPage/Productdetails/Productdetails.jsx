@@ -37,9 +37,10 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
         images.push({ image: src, title, loading: true });
       }
     };
-
-    if (displayVariant.frontImage) addImage(displayVariant.frontImage, product.name);
-    if (displayVariant.backImage) addImage(displayVariant.backImage, product.name);
+    if (!displayVariant.variantsimages) {
+      if (displayVariant.frontImage) addImage(displayVariant.frontImage, product.name);
+      if (displayVariant.backImage) addImage(displayVariant.backImage, product.name);
+    }
     (displayVariant.variantsimages || []).forEach((img, idx) =>
       addImage(img, `${product.name} - Variant ${idx + 1}`)
     );
