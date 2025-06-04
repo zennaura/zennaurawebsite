@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import "./ProductDetails.css";
 import Carouselimg5 from "../../../assests/Carouselimg5.png";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { useUser } from "../../../components/AuthContext/AuthContext";
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -12,83 +14,47 @@ const ProductDetails = ({ product }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const { id } = useParams();
+  // console.log("id", id);
 
+  // console.log("product", product);
+  // console.log("var", selectedVariant);
+  // Use selectedVariant or fallback to first variant
+  const displayVariant = selectedVariant || product?.variants?.[0] || {};
 
-  const toggleDisclaimer = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  // Function to truncate description to 50 words
-  const truncateDescription = (text, wordCount) => {
-    if (!text) return "";
-    const words = text.split(/\s+/);
-    if (words.length <= wordCount) return text;
-    return words.slice(0, wordCount).join(" ") + "...";
-  };
-
-  const toggleDescription = () => {
-    setShowFullDescription(!showFullDescription);
+  // Variant selection handler
+  const handleVariantChange = (variant) => {
+    if (onVariantSelect) {
+      onVariantSelect(variant);
+    }
   };
 
   // Memoize the product images to prevent unnecessary recalculations
   const slides = useMemo(() => {
     const images = [];
-
     const addImage = (src, title) => {
       if (src) {
-        images.push({
-          image: src,
-          title: title,
-          loading: true,
-        });
+        images.push({ image: src, title, loading: true });
       }
     };
 
-    if (product?.otherimages && product.otherimages.length > 0) {
-      const img1 = product.otherimages[0];
-      addImage(img1, `${product.name} - Image top}`);
-    }
-
-    if (product?.variantsimages?.length > 0) {
-      addImage(product?.frontImage, product?.name);
-      // addImage(product?.backImage, product?.name);
-      const isFirstVariant =
-        product?.allVariants &&
-        product.allVariants.length > 0 &&
-        product.allVariants[0].id === product.id;
-
-      // if (isFirstVariant) {
-        addImage(product?.backImage, product?.name);
-      // }
-    }
-    product?.variantsimages?.forEach((variant, index) => {
-      addImage(variant, `${product.name} - Variant ${index + 1}`);
-    });
-    if (product?.otherimages && product?.otherimages.length > 0) {
-      product?.otherimages.slice(1)?.forEach((img, index) => {
-        addImage(img, `${product.name} - Image ${index + 1}`);
-      });
-    }
-
-    addImage(
-      product?.productDescriptions?.image,
-      `${product?.name} - Description`
+    if (displayVariant.frontImage) addImage(displayVariant.frontImage, product.name);
+    if (displayVariant.backImage) addImage(displayVariant.backImage, product.name);
+    (displayVariant.variantsimages || []).forEach((img, idx) =>
+      addImage(img, `${product.name} - Variant ${idx + 1}`)
     );
-
-    product?.stoneUsedImage?.forEach((stone, index) => {
-      if (stone.image) {
-        addImage(stone.image, `${product.name} - Stone ${index + 1}`);
-      }
-    });
-
-    if (images.length === 0) {
-      addImage(Carouselimg5, "No image available");
-    }
-
+    (product.otherimages || []).forEach((img, idx) =>
+      addImage(img, `${product.name} - Other ${idx + 1}`)
+    );
+    if (product?.productDescriptions?.image)
+      addImage(product.productDescriptions.image, `${product.name} - Description`);
+    (product.stoneUsedImage || []).forEach((stone, idx) =>
+      addImage(stone.image, `${product.name} - Stone ${idx + 1}`)
+    );
+    if (images.length === 0) addImage(Carouselimg5, "No image available");
     return images;
-  }, [product]);
-  console.log("Product Data", product);
-  // Carousel navigation handlers
+  }, [displayVariant, product]);
+
   const nextSlide = useCallback(() => {
     setCarouselIndex((prev) => (prev + 1) % slides.length);
   }, [slides.length]);
@@ -101,29 +67,23 @@ const ProductDetails = ({ product }) => {
     setCarouselIndex(slideIndex);
   }, []);
 
-  // Handle window resize
   const handleResize = useCallback(() => {
     setIsMobile(window.innerWidth <= 768);
   }, []);
 
-  // Auto-rotate carousel effect
   useEffect(() => {
     if (slides.length <= 1) return;
-
     const interval = setInterval(() => {
       nextSlide();
     }, 3000);
-
     return () => clearInterval(interval);
   }, [slides.length, nextSlide]);
 
-  // Set up resize listener
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
-  // Check if we need to reset carousel index when slides change
   useEffect(() => {
     if (carouselIndex >= slides.length) {
       setCarouselIndex(0);
@@ -131,152 +91,153 @@ const ProductDetails = ({ product }) => {
     setIsLoading(false);
   }, [slides, carouselIndex]);
 
-  const handleImageLoad = (index) => {
-    // Update loading state for the specific image
-    // Could implement this with a more sophisticated state management
+  const handleImageLoad = (index) => {};
+
+  const toggleDisclaimer = () => {
+    setIsExpanded(!isExpanded);
   };
 
-  const handleAddToCart = async () => {
-  // // Split the combined ID properly
-  // const actualProductId = product.id;  // This is the real product ID
-  // const variantId = 0; // This is the variant ID, default to "0"
-  // const quantity = 1;
+  const truncateDescription = (text, wordCount) => {
+    if (!text) return "";
+    const words = text.split(/\s+/);
+    if (words.length <= wordCount) return text;
+    return words.slice(0, wordCount).join(" ") + "...";
+  };
 
-  // console.log('Adding to cart:', { actualProductId, variantId }); // Debug log
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
 
-  // try {
-  //   if (user) {
-  //     // Logged-in user cart logic
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_BACKEND_LINK}/api/cart/add`,
-  //       {
-  //         productId: actualProductId,  // Use actual product ID
-  //         variantId,
-  //         quantity,
-  //         userId: user._id,
-  //       }
-  //     );
-  //     alert("Product added to cart!");
-  //     console.log("response", response);
-  //   }
-  // //    else {
-  // //     // Guest cart logic (localStorage)
-  // //     const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+  const { user } = useUser();
+   const handleAddToCart = async () => {
+    // Split the combined ID properly
+    const actualProductId = id.split("-")[0]; // This is the real product ID
+     // const variantId = displayVariant.id || displayVariant._id || "0"; // Use the selected variant's ID
+     const variantId = id.split("-")[1];
+    console.log("Adding to cart:", { actualProductId, variantId, id }); // Debug log
 
-  // //     // Check if item already exists
-  // //     const existingItemIndex = guestCart.findIndex(
-  // //       item => item.productId === actualProductId && item.variantId === variantId
-  // //     );
+     
+    try {
+      if (user) {
+        // Logged-in user cart logic
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_LINK}/api/cart/add`,
+          {
+            productId: actualProductId,
+            variantId,
+            quantity,
+            userId: user._id,
+            price: displayVariant.salePrice
+          }
+        );
+        alert("Product added to cart!");
+        console.log("response", response);
+      }
+      else {
+        // Guest cart logic (localStorage)
+        let guestCart = [];
 
-  // //     if (existingItemIndex > -1) {
-  // //       // If item exists, increment quantity
-  // //       guestCart[existingItemIndex].quantity += quantity;
-  // //       alert('Product quantity updated in cart!');
-  // //     } else {
-  // //       // If item doesn't exist, add new item with actual product ID
-  // //       guestCart.push({
-  // //         productId: actualProductId,  // Store actual product ID
-  // //         variantId,                   // Store variant ID (could be "0")
-  // //         quantity
-  // //       });
-  // //       alert('Product added to guest cart!');
-  // //     }
+        try {
+          const existingCart = localStorage.getItem("guestCart");
+          guestCart = existingCart ? JSON.parse(existingCart) : [];
+        } catch (parseError) {
+          console.error(
+            "Error parsing guest cart from localStorage:",
+            parseError
+          );
+          guestCart = []; // Reset to empty array if parsing fails
+        }
 
-  // //     localStorage.setItem('guestCart', JSON.stringify(guestCart));
-  // //     console.log('Updated guest cart:', JSON.parse(localStorage.getItem('guestCart'))); // Debug log
-  // //   }
-  // // } catch (error) {
-  // //   console.error("Error:", error.response?.data?.error || error.message);
-  // //   alert(error.response?.data?.error || "Failed to add to cart");
-  //     // }
-  //   else {
-  //     // Guest cart logic (localStorage)
-  //     let guestCart = [];
-      
-  //     try {
-  //       const existingCart = localStorage.getItem('guestCart');
-  //       guestCart = existingCart ? JSON.parse(existingCart) : [];
-  //     } catch (parseError) {
-  //       console.error("Error parsing guest cart from localStorage:", parseError);
-  //       guestCart = []; // Reset to empty array if parsing fails
-  //     }
+        // Check if item already exists
+        const existingItemIndex = guestCart.findIndex(
+          (item) =>
+            item.productId === actualProductId && item.variantId === variantId
+        );
 
-  //     // Check if item already exists
-  //     const existingItemIndex = guestCart.findIndex(
-  //       item => item.productId === actualProductId && item.variantId === variantId
-  //     );
+        if (existingItemIndex > -1) {
+          // If item exists, increment quantity
+          guestCart[existingItemIndex].quantity += quantity;
+          alert("Product quantity updated in cart!");
+        } else {
+          // If item doesn't exist, add new item
+          guestCart.push({
+            productId: actualProductId,
+            variantId,
+            quantity,
+            price: displayVariant.salePrice
+          });
+          alert("Product added to cart!");
+        }
 
-  //     if (existingItemIndex > -1) {
-  //       // If item exists, increment quantity
-  //       guestCart[existingItemIndex].quantity += quantity;
-  //       alert('Product quantity updated in cart!');
-  //     } else {
-  //       // If item doesn't exist, add new item
-  //       guestCart.push({ 
-  //         productId: actualProductId,
-  //         variantId,
-  //         quantity 
-  //       });
-  //       alert('Product added to cart!');
-  //     }
+        // Save back to localStorage
+        try {
+          localStorage.setItem("guestCart", JSON.stringify(guestCart));
+          console.log("Updated guest cart:", guestCart);
+        } catch (storageError) {
+          console.error("Error saving to localStorage:", storageError);
+          alert("Failed to save cart. Please try again.");
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
 
-  //     // Save back to localStorage
-  //     try {
-  //       localStorage.setItem('guestCart', JSON.stringify(guestCart));
-  //       console.log('Updated guest cart:', guestCart);
-  //     } catch (storageError) {
-  //       console.error("Error saving to localStorage:", storageError);
-  //       alert("Failed to save cart. Please try again.");
-  //       return;
-  //     }
-  //   }
-    
-  // } catch (error) {
-  //   console.error("Error adding to cart:", error);
-    
-  //   // More specific error messages
-  //   if (error.response) {
-  //     // Server responded with error status
-  //     const errorMessage = error.response.data?.error || error.response.data?.message || "Server error occurred";
-  //     alert(`Failed to add to cart: ${errorMessage}`);
-  //   } else if (error.request) {
-  //     // Request made but no response received
-  //     alert("Network error. Please check your connection and try again.");
-  //   } else {
-  //     // Something else happened
-  //     alert(error.message || "Failed to add to cart");
-  //   }
-  // }
-};
+      // More specific error messages
+      if (error.response) {
+        // Server responded with error status
+        const errorMessage =
+          error.response.data?.error ||
+          error.response.data?.message ||
+          "Server error occurred";
+        alert(`Failed to add to cart: ${errorMessage}`);
+      } else if (error.request) {
+        // Request made but no response received
+        alert("Network error. Please check your connection and try again.");
+      } else {
+        // Something else happened
+        alert(error.message || "Failed to add to cart");
+      }
+    }
+  };
 
   const handlebuyitnow = () => {
+    // Split the combined ID properly
+    const actualProductId = id.split("-")[0]; // This is the real product ID
+    const variantId = id.split("-")[1]; // Use the selected variant's ID
+    console.log("vid", variantId);
     navigate("/checkout-page", {
       state: {
         products: [
           {
             ...product,
+            _id: actualProductId, // Add the product ID
+            productId: actualProductId, // Add the product ID as productId too
+            variantId: variantId, // Add the variant ID
             quantity: quantity,
+            price: displayVariant.salePrice,
+            salePrice: displayVariant.salePrice,
+            name: displayVariant.variantname || product.title,
+            variant: displayVariant,
+            tax: displayVariant.tax || 0,
+            discount: displayVariant.discount || 0
           },
         ],
       },
     });
   };
-  console.log("All variants", product?.allVariants);
+
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
   }
-  // console.log(product.allVariants);
 
   return (
     <div className="product-page">
       <div className="product-container">
-        {/* Product Info Section */}
         <div className="info-section">
           <h1 className="product-title" aria-label="Product title">
-            <p className="product-name">{product?.variantname}</p>
+            <p className="product-name">{selectedVariant?.variantname}</p>
             {product?.title}
           </h1>
-
           <div className="rating-container" aria-label="Product rating">
             <span className="review-count">20 Reviews</span>
           </div>
@@ -285,58 +246,43 @@ const ProductDetails = ({ product }) => {
             <strong>Size:</strong>{" "}
             <span className="product-size">{product.size}</span>
           </p> */}
-          {/* Here are the tags */}
-          {/* <div className="specs-container">
-            {product.tags?.map((tag, index) => (
-              <p key={index} className="specs-p" aria-label={`Product tag: ${tag}`}>{tag}</p>
-            ))}
-              
-          </div> */}
-          {/* Here are other varient names */}
+          {/* Show all variants as clickable elements */}
           <div className="specs-container">
             {product?.allVariants?.map((variant, index) => (
               <p
-                className="specs-p"
+                className={`specs-p ${selectedVariant?.id === variant.id ? 'selected' : ''}`}
                 aria-label={`Product variant: ${variant?.variantname}`}
-                onClick={() => {
-                  navigate(`/productdetails/${variant?.id}`, {
-                    state: {
-                      product: product, // full product
-                      selectedVariant: variant, // newly selected variant
-                    },
-                  });
-                }}
+                onClick={() => handleVariantChange(variant)}
+                key={variant.id || index}
               >
                 {variant?.variantname}
               </p>
             ))}
           </div>
-
-          <div className="price-container" aria-label="Product pricing">
+          <div className="price-container">
             <p className="price-label">M.R.P :</p>
             <div className="price-mrp-box">
               <p className="price-value">
                 ₹
                 {(
-                  product?.salePrice +
-                  (product?.salePrice * product?.tax) / 100 -
-                  ((product?.salePrice +
-                    (product?.salePrice * product?.tax) / 100) *
-                    product?.discount) /
+                  displayVariant.salePrice +
+                  (displayVariant.salePrice * displayVariant.tax) / 100 -
+                  ((displayVariant.salePrice +
+                    (displayVariant.salePrice * displayVariant.tax) / 100) *
+                    displayVariant.discount) /
                     100
-                ).toFixed(2)}{" "}
+                ).toFixed(2)}
               </p>
               <p className="price-note">Inclusive of all taxes</p>
             </div>
             <p className="price-original">
               ₹
               {(
-                product?.salePrice +
-                (product?.salePrice * product?.tax) / 100
+                displayVariant.salePrice +
+                (displayVariant.salePrice * displayVariant.tax) / 100
               ).toFixed(2)}
             </p>
           </div>
-
           <div className="quantity-container" aria-label="Quantity selector">
             <p className="quantity-label">Net Quantity:</p>
             <div className="quantity-selector">
@@ -355,7 +301,6 @@ const ProductDetails = ({ product }) => {
               </button>
             </div>
           </div>
-
           <div className="action-buttons">
             <button className="wishlist-button" aria-label="Add to wishlist">
               Add to wishlist
@@ -364,9 +309,7 @@ const ProductDetails = ({ product }) => {
               Add to cart
             </button>
           </div>
-
           <div className="divider-line"></div>
-
           <button
             className="buy-now-button"
             onClick={handlebuyitnow}
@@ -374,7 +317,6 @@ const ProductDetails = ({ product }) => {
           >
             Buy it now
           </button>
-
           <div className="description-container">
             <h2 className="section-title">Description</h2>
             <p className="description-text">
@@ -408,7 +350,6 @@ const ProductDetails = ({ product }) => {
             )}
           </div>
         </div>
-
         {/* Carousel Gallery Section */}
         <div className="gallery-section">
           <div className="vertical">
@@ -416,8 +357,6 @@ const ProductDetails = ({ product }) => {
               const distance =
                 (i - carouselIndex + slides.length) % slides.length;
               let scale, opacity, zIndex, translateY;
-
-              // Calculate styles based on distance and device type
               if (isMobile) {
                 if (distance === 0) {
                   scale = 1;
@@ -458,7 +397,6 @@ const ProductDetails = ({ product }) => {
                   translateY = distance < slides.length / 2 ? 1000 : -1000;
                 }
               }
-
               return (
                 <motion.div
                   key={`${slide.image}-${i}`}
@@ -487,37 +425,6 @@ const ProductDetails = ({ product }) => {
               );
             })}
           </div>
-          {/* controll the slider  */}
-          {/* {slides.length > 1 && (
-            <div className="carousel-controls" aria-label="Carousel controls">
-              <button
-                className="carousel-prev"
-                onClick={prevSlide}
-                aria-label="Previous image"
-              >
-                &lt;
-              </button>
-
-              <div className="carousel-dots">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goToSlide(i)}
-                    className={`carousel-dot ${i === carouselIndex ? 'active' : ''}`}
-                    aria-label={`Go to image ${i + 1}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                className="carousel-next"
-                onClick={nextSlide}
-                aria-label="Next image"
-              >
-                &gt;
-              </button>
-            </div>
-          )} */}
         </div>
       </div>
     </div>

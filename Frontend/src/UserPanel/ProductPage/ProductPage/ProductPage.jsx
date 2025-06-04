@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import ImageHead from '../../../components/ImageHead/ImageHead'
 import Productdetails from '../Productdetails/Productdetails'
 import StoneUsed from '../StoneUsed/StoneUsed'
@@ -24,36 +24,59 @@ const ProductPage = () => {
   // };
 
   const location = useLocation();
-  const { id } = useParams(); // Fallback if location.state isn't available
+  const navigate = useNavigate();
+  const { id } = useParams();
   const initialProduct = location?.state;
   const [product, setProduct] = useState(initialProduct);
+  const [selectedVariant, setSelectedVariant] = useState(
+    initialProduct?.selectedVariant || initialProduct?.variants?.[0] || null
+  );
 
   useEffect(() => {
-    const state = location?.state;
-
-    if (state?.product ) {
-      // merge selected variant into product
-      const updatedProduct = {
-        ...state.product,
-        ...state.selectedVariant,
-      };
-      setProduct(updatedProduct);
-    } else {
-      // fallback: fetch from backend
-      fetch(`/api/products/${id}`)
+    // If we have state from navigation, use it
+    if (location.state?.selectedVariant) {
+      setSelectedVariant(location.state.selectedVariant);
+    }
+    
+    // Only fetch if we don't have product data
+    if (!product && !initialProduct) {
+      fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${id}`)
         .then(res => res.json())
         .then(data => {
-          if (data.success) setProduct(data.product);
-        });
+          if (data.success) {
+            setProduct(data.product);
+            // Only set default variant if we don't have a selected variant
+            if (!selectedVariant) {
+              setSelectedVariant(data.product.variants?.[0] || null);
+            }
+          }
+        })
+        .catch(err => console.error('Error fetching product:', err));
     }
-  }, [location.state?.selectedVariant, id]);
+  }, [id, product, initialProduct, location.state, selectedVariant]);
+
+  const handleVariantSelect = (variant) => {
+    setSelectedVariant(variant);
+    // Update the URL with the new variant ID
+    navigate(`/productdetails/${variant.id}`, {
+      state: {
+        ...product,
+        selectedVariant: variant
+      },
+      replace: true
+    });
+  };
 
   console.log("Product Data:", product);
   // console.log("initial",initialProduct);
   return (
     <div>
-      <ImageHead Title={product?.variantname} />
-      <Productdetails product={product} />
+      <ImageHead Title={selectedVariant?.variantname || product?.variantname} />
+      <Productdetails
+        product={product}
+        selectedVariant={selectedVariant}
+        onVariantSelect={handleVariantSelect}
+      />
       <ProductIcon />
       <StoneUsed image={product?.stoneUsedImage} />
       <ProductTabs

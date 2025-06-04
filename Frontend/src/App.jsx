@@ -39,6 +39,7 @@ import EditCoupon from './Admin/Coupon/EditCoupon/EditCoupon';
 import ContactUs from './components/ContactUs/ContactUs';
 import ContactQueryList from './Admin/ContactQueryList/ContactQueryList';
 import ViewAllUsers from './Admin/ViewAllUsers/ViewAllUsers';
+// import Payment from "./components/Payment/Payment";
 
 function App() {
   const { user } = useUser();
@@ -74,7 +75,7 @@ function App() {
         <Route path="/resetpasswordvarification" element={<VerificationCodeforgotpassword />} />
         <Route path="/resetpassword" element={<SetNewPassword />} />
         <Route path="/contactus" element={<ContactUs />} />
-
+        {/* <Route path="/payment" element={<Payment />} /> */}
         <Route path="/addproduct" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
         <Route path="/manageproducts" element={<ProtectedRoute><ManageProducts /></ProtectedRoute>} />
         <Route path="/admin-homepage" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />

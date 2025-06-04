@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import './shop.css';
-import { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 
 // Import Components
@@ -27,25 +26,64 @@ const Shop = () => {
   const location = useLocation();
   const { autoSelects } = location.state || {};
   const [autoSelectsState, setAutoSelectsState] = useState(autoSelects || []);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const allCategoriesRef = useRef([]);
 
+  // Fetch all categories on mount and set as default
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
+        const data = await res.json();
+        // Flatten all subCategory values
+        const allSubCategories = data.flatMap(parent =>
+          parent.subCategories.flatMap(sub => sub.subCategory)
+        );
+        allCategoriesRef.current = allSubCategories;
+        setProductCategories(allSubCategories);
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      }
+    };
+    fetchCategories();
     setAutoSelectsState(autoSelects || []);
   }, [location.state]);
 
-
   const fetchProducts = async (filters = {}) => {
     try {
-      const { productCategories = [], concerns = [], intents = [] } = filters;
-      const hasFilters = productCategories.length || concerns.length || intents.length;
+      let {
+        productCategories,
+        concerns = [],
+        intents = [],
+        minPrice = 0,
+        maxPrice = 1000,
+        rating = ''
+      } = filters;
+
+      // If productCategories is empty, use all categories by default
+      if (!productCategories || productCategories.length === 0) {
+        productCategories = allCategoriesRef.current;
+      }
 
       let url = `${import.meta.env.VITE_BACKEND_LINK}/api/products`;
+      const params = new URLSearchParams();
 
-      if (hasFilters) {
-        const params = new URLSearchParams();
-        if (productCategories.length)
-          params.append("subCategory", JSON.stringify(productCategories));
-        if (concerns.length) params.append("concerns", JSON.stringify(concerns));
-        if (intents.length) params.append("intents", JSON.stringify(intents));
+      if (productCategories.length)
+        params.append("subCategory", JSON.stringify(productCategories));
+      if (concerns.length) params.append("concerns", JSON.stringify(concerns));
+      if (intents.length) params.append("intents", JSON.stringify(intents));
+      params.append("minPrice", minPrice);
+      params.append("maxPrice", maxPrice);
+      if (rating) params.append("rating", rating);
+
+      if (
+        productCategories.length ||
+        concerns.length ||
+        intents.length ||
+        minPrice !== 0 ||
+        maxPrice !== 1000 ||
+        rating
+      ) {
         url += `?${params.toString()}`;
       }
 
@@ -72,7 +110,29 @@ const Shop = () => {
     fetchProducts(); // initial fetch without filters
   }, []);
 
+  // const handleFilterChange = (type, value) => {
+  //   const stateMap = {
+  //     productCategories: [productCategories, setProductCategories],
+  //     concerns: [concerns, setConcerns],
+  //     intents: [intents, setIntents],
+  //   };
+  //   const [state, setter] = stateMap[type];
+  //   const newState = state.includes(value)
+  //     ? state.filter((item) => item !== value)
+  //     : [...state, value];
+
+  //   setter(newState);
+
+  //   fetchProducts({
+  //     productCategories: type === "productCategories" ? newState : productCategories,
+  //     concerns: type === "concerns" ? newState : concerns,
+  //     intents: type === "intents" ? newState : intents,
+  //   });
+  // };
+
   const handleFilterChange = (type, value) => {
+  // Handle individual checkbox changes (existing logic)
+  if (typeof value === 'string') {
     const stateMap = {
       productCategories: [productCategories, setProductCategories],
       concerns: [concerns, setConcerns],
@@ -82,16 +142,34 @@ const Shop = () => {
     const newState = state.includes(value)
       ? state.filter((item) => item !== value)
       : [...state, value];
-
+     
     setter(newState);
-
+     
     fetchProducts({
       productCategories: type === "productCategories" ? newState : productCategories,
       concerns: type === "concerns" ? newState : concerns,
       intents: type === "intents" ? newState : intents,
     });
-  };
-
+  }
+  // Handle batch filter operations (new logic for price, rating, filter/clear buttons)
+  else if (type === 'fetchProducts' && typeof value === 'object') {
+    // Update your state variables if needed
+     setPriceRange([value.minPrice || 0, value.maxPrice || 1000]);
+    setProductCategories(value.productCategories || []);
+    setConcerns(value.concerns || []);
+    setIntents(value.intents || []);
+    
+    // Call fetchProducts with all filter data including price and rating
+    fetchProducts({
+      productCategories: value.productCategories || [],
+      concerns: value.concerns || [],
+      intents: value.intents || [],
+      minPrice: value.minPrice || 0,
+      maxPrice: value.maxPrice || 1000,
+      rating: value.rating || ''
+    });
+  }
+};
   return (
     <div className="shop-page">
       <ImageHead Title="Shop" />
@@ -112,7 +190,7 @@ const Shop = () => {
         <MobileFilterControls />
 
         {/* Main Product Listing */}
-        <Allproduct products={products} />
+        <Allproduct products={products} priceRange={priceRange}/>
       </div>
 
       <ImageContainer Image={NewEnerzies} />

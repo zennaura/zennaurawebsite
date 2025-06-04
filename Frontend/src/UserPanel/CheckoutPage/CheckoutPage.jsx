@@ -16,7 +16,7 @@ const CheckoutPage = () => {
   // Product quantities state
   const [quantities, setQuantities] = useState(
     products.reduce((acc, product) => {
-      acc[product._id] = product.quantity || 1;
+      acc[product.productId] = product.quantity || 1;
       return acc;
     }, {})
   );
@@ -62,7 +62,7 @@ const CheckoutPage = () => {
 
   // Calculate order totals
   const subtotal = products.reduce((acc, product) => {
-    const quantity = quantities[product._id] || 1;
+    const quantity = quantities[product.productId] || 1;
     const price = Number((
                   product.salePrice +
                   (product.salePrice * product.tax) / 100 -
@@ -202,7 +202,7 @@ const CheckoutPage = () => {
               (product) => `
             <li>
               ${product.name} (${product.size || "Standard"}) - 
-              Quantity: ${quantities[product._id] || 1} - 
+              Quantity: ${quantities[product.productId] || 1} - 
               Price: ₹${(
                   product.salePrice +
                   (product.salePrice * product.tax) / 100 -
@@ -322,8 +322,11 @@ const CheckoutPage = () => {
 
       // Prepare order items
       const orderItems = products.map((product) => {
-        if (!product?.productId || !product?._id ) throw new Error(`Product ${product.name} has no ID`);
-        const quantity = Number(quantities[product._id] || 1);
+        // Get the product ID, preferring productId over _id
+        const productId = product.productId || product._id;
+        if (!productId) throw new Error(`Product ${product.name} has no ID`);
+        
+        const quantity = Number(quantities[productId] || 1);
         if (isNaN(quantity))
           throw new Error(`Invalid quantity for ${product.name}`);
         if (quantity < 1)
@@ -332,7 +335,7 @@ const CheckoutPage = () => {
         if (isNaN(price) || price <= 0)
           throw new Error(`Invalid price for ${product.name}`);
         return {
-          product: product._id || product.productId,
+          product: productId,
           quantity,
           price,
         };
@@ -512,8 +515,11 @@ const CheckoutPage = () => {
 
       // Prepare order items
       const orderItems = products.map((product) => {
-        if (!product._id || !product.productId) throw new Error(`Product ${product.name} has no ID`);
-        const quantity = Number(quantities[product._id] || 1);
+        // Get the product ID, preferring productId over _id
+        const productId = product.productId || product._id;
+        if (!productId) throw new Error(`Product ${product.name} has no ID`);
+        
+        const quantity = Number(quantities[productId] || 1);
         if (isNaN(quantity))
           throw new Error(`Invalid quantity for ${product.name}`);
         if (quantity < 1)
@@ -522,7 +528,7 @@ const CheckoutPage = () => {
         if (isNaN(price) || price <= 0)
           throw new Error(`Invalid price for ${product.name}`);
         return {
-          product: product?.productId || product?._id,
+          product: productId,
           quantity,
           price,
         };
@@ -896,9 +902,9 @@ const CheckoutPage = () => {
                   <p className="text-xs md:!text-sm text-gray-500">{product.size}</p>
                   <select
                     className="!mt-1 border !p-1 text-xs md:text-sm max-w-[80px]"
-                    value={quantities[product._id]}
+                    value={quantities[product.productId]}
                     onChange={(e) =>
-                      handleQuantityChange(product._id, Number(e.target.value))
+                      handleQuantityChange(product.productId, Number(e.target.value))
                     }
                   >
                     {[...Array(Math.min(10, product.stock || 10)).keys()].map(

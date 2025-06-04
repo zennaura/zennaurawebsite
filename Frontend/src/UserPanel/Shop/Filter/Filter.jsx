@@ -1,21 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Slider, Box, Typography } from '@mui/material';
 import './Filter.css';
 
 const Filter = ({ productCategories, concerns, intents, onFilterChange, autoCheck = [], }) => {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100);
-  // const [productCategories, setProductCategories] = useState([]);
-  // const [intents, setIntents] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
   const [rating, setRating] = useState('');
-  // const [concerns, setConcerns] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [availableConcerns, setAvailableConcerns] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
-  const [selectedProductCategories, setSelectedProductCategories] = useState([]);
+  const [selectedProductCategories, setSelectedProductCategories] = useState(
+    Array.isArray(productCategories) && productCategories.length > 0
+      ? productCategories
+      : []
+  );
   const [selectedConcerns, setSelectedConcerns] = useState([]);
   const [selectedIntents, setSelectedIntents] = useState([]);
 
   const prevAutoCheckRef = useRef([]);
+
+  // Only set all categories as selected by default on mount or when productCategories first becomes available
+  useEffect(() => {
+    if (
+      Array.isArray(productCategories) &&
+      productCategories.length > 0 &&
+      selectedProductCategories.length === 0
+    ) {
+      setSelectedProductCategories(productCategories);
+    }
+    // eslint-disable-next-line
+  }, [productCategories]);
 
   useEffect(() => {
     // Only update states if autoCheck changed (shallow compare)
@@ -74,6 +87,26 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
     fetchIntents();
   }, []);
 
+  // Apply filters whenever any value changes
+  useEffect(() => {
+    // Call fetchProducts with current filter state
+    if (onFilterChange) {
+      onFilterChange('fetchProducts', {
+        productCategories: selectedProductCategories,
+        concerns: selectedConcerns,
+        intents: selectedIntents,
+        minPrice: priceRange[0],
+        maxPrice: priceRange[1],
+        rating: rating
+      });
+    }
+  }, [priceRange, selectedProductCategories, selectedConcerns, selectedIntents, rating]);
+
+  // Handle price range change
+  const handlePriceChange = (event, newValue) => {
+    setPriceRange(newValue);
+  };
+
   const handleCheckboxChange = (e, type) => {
     const value = e.target.value;
     const isChecked = e.target.checked;
@@ -83,7 +116,10 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
         ? [...current, value]
         : current.filter((v) => v !== value);
       setState(newValues);
-      onFilterChange(type, value);
+      // Call parent's original handleFilterChange for individual items
+      if (onFilterChange) {
+        onFilterChange(type, value);
+      }
     };
 
     if (type === 'productCategories') {
@@ -95,6 +131,44 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
     }
   };
 
+  // Handle filter application
+  const handleFilter = () => {
+    // Trigger a fresh fetch with all current filters
+
+    
+    if (onFilterChange) {
+      onFilterChange('fetchProducts', {
+        productCategories: selectedProductCategories,
+        concerns: selectedConcerns,
+        intents: selectedIntents,
+        minPrice: priceRange[0],
+        maxPrice: priceRange[1],
+        rating: rating
+      });
+    }
+  };
+
+  // Handle clearing all filters
+  const handleClear = () => {
+    setPriceRange([0, 1000]);
+    setSelectedProductCategories([]);
+    setSelectedConcerns([]);
+    setSelectedIntents([]);
+    setRating('');
+    
+    // Fetch products with cleared filters
+    if (onFilterChange) {
+      onFilterChange('fetchProducts', {
+        productCategories: [],
+        concerns: [],
+        intents: [],
+        minPrice: 0,
+        maxPrice: 1000,
+        rating: ''
+      });
+    }
+  };
+
   return (
     <div className="filter-container md:hidden lg:block">
       <h1 className="filter-heading">Filter</h1>
@@ -103,24 +177,31 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
         {/* Price */}
         <div className="filter-price">
           <h2>Price</h2>
-          <div className="price-range">
-            <span>₹{minPrice}</span>
-            <input
-              type="range"
-              min="0"
-              max="1000"
-              value={minPrice}
-              onChange={(e) => setMinPrice(Number(e.target.value))}
+          <Box sx={{ px: 2 }}>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              ₹{priceRange[0]} - ₹{priceRange[1]}
+            </Typography>
+            <Slider
+              value={priceRange}
+              onChange={handlePriceChange}
+              valueLabelDisplay="auto"
+              valueLabelFormat={(value) => `₹${value}`}
+              min={0}
+              max={1000}
+              sx={{
+                color: '#593039',
+                '& .MuiSlider-thumb': {
+                  backgroundColor: '#593039',
+                },
+                '& .MuiSlider-track': {
+                  backgroundColor: '#593039',
+                },
+                '& .MuiSlider-rail': {
+                  backgroundColor: '#593039',
+                },
+              }}
             />
-            {/* <input
-              type="range"
-              min="0"
-              max="1000"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-            /> */}
-            {/* <span>₹{maxPrice}</span> */}
-          </div>
+          </Box>
         </div>
 
         {/* Product Categories */}
@@ -139,6 +220,7 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
                         value={sub.subCategory}
                         checked={selectedProductCategories.includes(sub.subCategory)}
                         onChange={(e) => handleCheckboxChange(e, 'productCategories')}
+                        style={{accentColor:"#593039"}}
                       />
                       <label htmlFor={`${sub.subCategory}-${category}`}>
                         {sub.subCategory}
@@ -150,7 +232,6 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
             )}
           </div>
         </div>
-
 
         {/* Concern */}
         <div className="filter-concern">
@@ -216,18 +297,10 @@ const Filter = ({ productCategories, concerns, intents, onFilterChange, autoChec
 
         {/* Buttons */}
         <div className="filter-btn">
-          <button className="filter-button">Filter</button>
-          <button
-            className="clear-button"
-            onClick={() => {
-              setMinPrice(0);
-              setMaxPrice(100);
-              setProductCategories([]);
-              setConcerns([]);
-              setIntents([]);
-              setRating('');
-            }}
-          >
+          <button className="filter-button" onClick={handleFilter}>
+            Filter
+          </button>
+          <button className="clear-button" onClick={handleClear}>
             Clear
           </button>
         </div>

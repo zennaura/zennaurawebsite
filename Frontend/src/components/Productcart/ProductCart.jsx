@@ -99,36 +99,6 @@ const ProductCard = ({
         alert("Product added to cart!");
         console.log("response", response);
       }
-      //    else {
-      //     // Guest cart logic (localStorage)
-      //     const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
-
-      //     // Check if item already exists
-      //     const existingItemIndex = guestCart.findIndex(
-      //       item => item.productId === actualProductId && item.variantId === variantId
-      //     );
-
-      //     if (existingItemIndex > -1) {
-      //       // If item exists, increment quantity
-      //       guestCart[existingItemIndex].quantity += quantity;
-      //       alert('Product quantity updated in cart!');
-      //     } else {
-      //       // If item doesn't exist, add new item with actual product ID
-      //       guestCart.push({
-      //         productId: actualProductId,  // Store actual product ID
-      //         variantId,                   // Store variant ID (could be "0")
-      //         quantity
-      //       });
-      //       alert('Product added to guest cart!');
-      //     }
-
-      //     localStorage.setItem('guestCart', JSON.stringify(guestCart));
-      //     console.log('Updated guest cart:', JSON.parse(localStorage.getItem('guestCart'))); // Debug log
-      //   }
-      // } catch (error) {
-      //   console.error("Error:", error.response?.data?.error || error.message);
-      //   alert(error.response?.data?.error || "Failed to add to cart");
-      // }
       else {
         // Guest cart logic (localStorage)
         let guestCart = [];

@@ -91,6 +91,7 @@ const AllProduct = () => {
             price={variant.data.salePrice}
             originalPrice={variant.data.originalPrice}
             rating={variant.data.rating}
+            discount={variant.data.discount}
           />
         </div>
       ))}

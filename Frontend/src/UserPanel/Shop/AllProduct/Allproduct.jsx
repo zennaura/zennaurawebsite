@@ -6,101 +6,51 @@ import { useNavigate } from "react-router-dom";
 import SortDropdown from "../Filter/Sort";
 import PopupFilter from "../Filter/SmallFilter";
 
-const ProductListingPage = ({ products }) => {
-  // const [products, setProducts] = useState([]);
+const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("default");
   const [viewMode, setViewMode] = useState('grid-3');
   const productsPerPage = 12;
   const navigate = useNavigate();
 
+  // Filter by price
+  const filteredProducts = useMemo(() => {
+    return products.filter(
+      (variant) =>
+        variant.data.salePrice >= priceRange[0] &&
+        variant.data.salePrice <= priceRange[1]
+    );
+  }, [products, priceRange]);
+
+  // Group products by baseId (for display)
   const groupedProducts = useMemo(() => {
-  const productMap = new Map();
+    const productMap = new Map();
+    filteredProducts.forEach((variant) => {
+      const baseId = variant.id.split("-")[0];
+      if (!productMap.has(baseId)) {
+        productMap.set(baseId, variant); // Only keep the first variant
+      }
+    });
+    return Array.from(productMap.values());
+  }, [filteredProducts]);
 
-  products.forEach((variant) => {
-    const baseId = variant.id.split("-")[0];
-
-    if (!productMap.has(baseId)) {
-      productMap.set(baseId, variant); // Only keep the first variant
-    }
-  });
-
-  return Array.from(productMap.values());
-}, [products]);
-
+  // Sorting
   const sortedProducts = useMemo(() => {
-  const toSort = [...groupedProducts];
-
-  switch (sortOption) {
-    case "price-low-high":
-      return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
-    case "price-high-low":
-      return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
-    default:
-      return toSort;
-  }
-}, [groupedProducts, sortOption]);
-
-
-  useEffect(() => {
-    //   const fetchProducts = async () => {
-    //     try {
-    //       const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
-    //       const productsData = await res.json();
-
-    //       const flattened = productsData.flatMap((product) =>
-    //         product.variants.map((variant, index) => ({
-    //           id: `${product._id}-${index}`,
-    //           data: {
-    //             _id: product._id,
-    //             name: product.name,
-    //             title: product.title,
-    //             description: product.description,
-    //             sku: product.sku,
-    //             tags: product.tags,
-    //             stoneUsedImage: product.stoneUsedImage,
-    //             rating: product.rating,
-    //             frontImage: product.frontImage,
-    //             otherimages: product.otherimages,
-    //             healingImage: product.healingImage,
-    //             benefits: product.benefits,
-    //             whyChoose: product.whyChoose,
-    //             waysToClean: product.waysToClean,
-    //             whoWear: product.whoWear,
-    //             whereHowWear: product.whereHowWear,
-    //             productDescriptions: product.productDescriptions,
-    //             ...variant,
-    //           },
-    //         }))
-    //       );
-
-    //       setProducts(flattened);
-    //     } catch (err) {
-    //       console.error('Error fetching products:', err);
-    //     }
-    //   };
-
-    //   fetchProducts();
-  }, []);
-
-  // Sorting logic
-  // const sortedProducts = useMemo(() => {
-  //   const productsToSort = [...products];
-  //   switch (sortOption) {
-  //     case "price-low-high":
-  //       return productsToSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
-  //     case "price-high-low":
-  //       return productsToSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
-  //     default:
-  //       return productsToSort;
-  //   }
-  // }, [products, sortOption]);
+    const toSort = [...groupedProducts];
+    switch (sortOption) {
+      case "price-low-high":
+        return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
+      case "price-high-low":
+        return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
+      default:
+        return toSort;
+    }
+  }, [groupedProducts, sortOption]);
 
   // Create a map of product base IDs to all their variants
   const productVariantsMap = useMemo(() => {
     const map = {};
     products.forEach(variant => {
-      // Extract the base product ID (before the hyphen)
       const baseId = variant.id.split('-')[0];
       if (!map[baseId]) {
         map[baseId] = [];
@@ -122,13 +72,10 @@ const ProductListingPage = ({ products }) => {
   }, [products]);
 
   const handleClick = (variant) => {
-    // Extract base product ID
     const baseId = variant.id.split('-')[0];
-
     navigate(`/productdetails/${variant.id}`, {
       state: {
         ...variant.data,
-        // Include all variants for this product
         allVariants: productVariantsMap[baseId] || []
       }
     });
@@ -137,7 +84,7 @@ const ProductListingPage = ({ products }) => {
   // Pagination logic
   useEffect(() => {
     setCurrentPage(1); // Reset to first page when sorting changes
-  }, [sortOption]);
+  }, [sortOption, priceRange]);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -168,7 +115,6 @@ const ProductListingPage = ({ products }) => {
                 <option value="price-high-low">Price: High to Low</option>
               </select>
             </div>
-
             <div className="view-options">
               <button
                 className={`ViewList-option ${viewMode === 'grid-3' ? 'active' : ''}`}
@@ -192,11 +138,9 @@ const ProductListingPage = ({ products }) => {
                 <span></span>
               </button>
             </div>
-
           </div>
         </div>
       </header>
-
       {/* Product Grid */}
       <div className={`product-grid ${viewMode}`}>
         {currentProducts.map((variant) => (
@@ -223,7 +167,6 @@ const ProductListingPage = ({ products }) => {
           />
         ))}
       </div>
-
       {/* Pagination */}
       {sortedProducts.length > 0 && (
         <footer className="pagination">
