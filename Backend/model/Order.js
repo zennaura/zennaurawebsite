@@ -40,6 +40,24 @@ const orderSchema = new mongoose.Schema({
       required: true,
       min: [0, 'Price cannot be negative']
     },
+    name: {
+      type: String,
+      required: true,
+      default: "Unknown Product"
+    },
+    image: {
+      type: String,
+      required: true,
+      default: "https://via.placeholder.com/50"
+    },
+    size: {
+      type: String,
+      default: null
+    },
+    color: {
+      type: String,
+      default: null
+    }
   }],
 
   // Shipping information (required)

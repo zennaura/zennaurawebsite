@@ -17,6 +17,15 @@ router.post('/placeorder', async (req, res) => {
       totalAmount
     } = req.body;
 
+    console.log("Received order data:", {
+      user,
+      guestUser,
+      orderItems,
+      shippingAddress,
+      paymentMethod,
+      totalAmount
+    });
+
     // Validate order items
     if (!orderItems || orderItems.length === 0) {
       return res.status(400).json({
@@ -24,6 +33,30 @@ router.post('/placeorder', async (req, res) => {
         message: "Your cart is empty"
       });
     }
+
+    // Validate each order item
+    const validatedOrderItems = orderItems.map(item => {
+      if (!item.product) {
+        throw new Error("Product ID is required for each order item");
+      }
+      if (!item.quantity || item.quantity < 1) {
+        throw new Error("Valid quantity is required for each order item");
+      }
+      if (!item.price || item.price <= 0) {
+        throw new Error("Valid price is required for each order item");
+      }
+      return {
+        product: item.product,
+        quantity: item.quantity,
+        price: item.price,
+        name: item.name || "Unknown Product",
+        image: item.image || "https://via.placeholder.com/50",
+        size: item.size || null,
+        color: item.color || null
+      };
+    });
+
+    console.log("Validated order items:", validatedOrderItems);
 
     // Validate required fields for guest checkout
     if (!user) {
@@ -48,11 +81,7 @@ router.post('/placeorder', async (req, res) => {
     const order = new Order({
       user: user || null,
       guestUser: !user ? guestUser : null,
-      orderItems: orderItems.map(item => ({
-        product: item.product,
-        quantity: item.quantity,
-        price: item.price
-      })),
+      orderItems: validatedOrderItems,
       shippingAddress,
       paymentMethod,
       totalAmount,
@@ -60,7 +89,11 @@ router.post('/placeorder', async (req, res) => {
       isGuestOrder: !user
     });
 
+    console.log("Created order:", order);
+
     await order.save();
+
+    console.log("Saved order:", order);
 
     res.status(201).json({
       success: true,
