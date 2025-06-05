@@ -50,7 +50,7 @@ router.post('/placeorder', async (req, res) => {
         quantity: item.quantity,
         price: item.price,
         name: item.name || "Unknown Product",
-        image: item.image || "https://via.placeholder.com/50",
+        image: item.image || "https://res.cloudinary.com/drd5i2llh/image/upload/v1749135539/noImage_aezjuu.png",
         size: item.size || null,
         color: item.color || null
       };
