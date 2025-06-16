@@ -35,12 +35,14 @@ const Homepage = () => {
             <ImageContainer Image={Homepageposter} />
             <ProductCard />
             <Slider />
-             <OurStory />
-             
-            <Journey />
             <Redefining />
             <OurCertifications />
-            <LuxuryPage />
+             <OurStory />
+             
+            {/* <Journey /> */}
+            {/* <Redefining /> */}
+            {/* <OurCertifications /> */}
+            {/* <LuxuryPage /> */}
            
             {/* <SelfCare /> */}
             <OurClient2 />

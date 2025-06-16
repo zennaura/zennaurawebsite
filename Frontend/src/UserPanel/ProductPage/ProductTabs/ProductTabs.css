@@ -30,8 +30,8 @@
   padding: 15px;
   /* border: 1px solid #ddd; */
   border-radius: 8px;
-  /* min-height: 10vh; */
-  height: 450px;
+  min-height: 40vh;
+  /* height: 450px; */
   display: flex;
   align-items: center;
   justify-content: center;

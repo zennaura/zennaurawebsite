@@ -77,13 +77,13 @@ const EditCoupon = () => {
 
   if (user?.userRole !== 'admin') {
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full">
-          <h2 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h2>
-          <p className="text-gray-700 mb-6">This page is not accessible by you.</p>
+      <div className="flex justify-center !items-center !h-screen bg-gray-100">
+        <div className="bg-white !p-8 rounded-lg shadow-lg text-center !max-w-md !w-full">
+          <h2 className="text-2xl font-bold text-red-600 !mb-4">Access Denied</h2>
+          <p className="text-gray-700 !mb-6">This page is not accessible by you.</p>
           <button 
             onClick={() => navigate('/')}
-            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 text-white !px-6 !py-2 !rounded-md hover:bg-blue-700 transition-colors"
           >
             Go to Home
           </button>
@@ -95,52 +95,52 @@ const EditCoupon = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full !h-12 !w-12 !border-t-2 !border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto">
+    <div className="!min-h-screen bg-gray-50 !py-8 !px-4 sm:!px-6 lg:!px-8">
+      <div className="!max-w-md mx-auto">
         {/* Back Button */}
         <button
           onClick={() => navigate('/allcoupons')}
-          className="flex items-center text-blue-600 hover:text-blue-800 mb-6 transition-colors"
+          className="flex items-center text-blue-600 hover:text-blue-800 !mb-6 transition-colors"
         >
-          <FaArrowLeft className="mr-2" /> Back to Coupons
+          <FaArrowLeft className="!mr-2" /> Back to Coupons
         </button>
 
         {/* Form Card */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-800 !p-6 text-center">
             <h2 className="text-2xl font-bold text-white">Edit Coupon</h2>
           </div>
 
           {/* Messages */}
-          <div className="px-6 pt-4">
+          <div className="!px-6 !pt-4">
             {message && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+              <div className="bg-green-100 border border-green-400 text-green-700 !px-4 !py-3 rounded !mb-4">
                 {message}
               </div>
             )}
             {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <div className="bg-red-100 border border-red-400 text-red-700 !px-4 !py-3 rounded !mb-4">
                 {error}
               </div>
             )}
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <form onSubmit={handleSubmit} className="!p-6 !space-y-6">
             {/* Coupon Code */}
-            <div className="space-y-2">
+            <div className="!space-y-2">
               <label htmlFor="code" className="block text-sm font-medium text-gray-700">
                 Coupon Code
               </label>
               <div className="relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 !pl-3 flex items-center pointer-events-none">
                   <FaTag className="text-gray-400" />
                 </div>
                 <input
@@ -149,7 +149,7 @@ const EditCoupon = () => {
                   type="text"
                   value={coupon.code}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"
+                  className="focus:ring-blue-500 focus:border-blue-500 block !w-full !pl-10 !pr-3 !py-2 !border border-gray-300 rounded-md"
                   placeholder="SUMMER20"
                   required
                 />
@@ -157,12 +157,12 @@ const EditCoupon = () => {
             </div>
 
             {/* Discount Percentage */}
-            <div className="space-y-2">
+            <div className="!space-y-2">
               <label htmlFor="discount" className="block text-sm font-medium text-gray-700">
                 Discount Percentage
               </label>
               <div className="relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 !pl-3 flex items-center pointer-events-none">
                   <FaPercentage className="text-gray-400" />
                 </div>
                 <input
@@ -173,7 +173,7 @@ const EditCoupon = () => {
                   max="100"
                   value={coupon.discount}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"
+                  className="focus:ring-blue-500 focus:border-blue-500 block !w-full !pl-10 !pr-3 !py-2 border border-gray-300 rounded-md"
                   placeholder="20"
                   required
                 />
@@ -181,12 +181,12 @@ const EditCoupon = () => {
             </div>
 
             {/* Expiry Date */}
-            <div className="space-y-2">
+            <div className="!space-y-2">
               <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700">
                 Expiry Date
               </label>
               <div className="relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 !pl-3 flex items-center pointer-events-none">
                   <FaCalendarAlt className="text-gray-400" />
                 </div>
                 <input
@@ -195,17 +195,17 @@ const EditCoupon = () => {
                   type="date"
                   value={coupon.expiryDate}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"
+                  className="focus:ring-blue-500 focus:border-blue-500 block !w-full !pl-10 !pr-3 !py-2 border border-gray-300 rounded-md"
                   required
                 />
               </div>
             </div>
 
             {/* Submit Button */}
-            <div className="pt-4">
+            <div className="!pt-4">
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 px-4 rounded-md shadow-md hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                className="!w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white !py-3 !px-4 rounded-md shadow-md hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
               >
                 Update Coupon
               </button>

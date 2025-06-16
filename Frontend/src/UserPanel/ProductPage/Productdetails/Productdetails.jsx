@@ -20,7 +20,20 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
   // console.log("product", product);
   // console.log("var", selectedVariant);
   // Use selectedVariant or fallback to first variant
-  const displayVariant = selectedVariant || product?.variants?.[0] || {};
+  const displayVariant = useMemo(() => {
+    if (selectedVariant) return selectedVariant;
+    if (product?.variants?.[0]) return product.variants[0];
+    // If no variant is available, create a default one with product data
+    return {
+      ...product,
+      salePrice: product.salePrice || product.price || 0,
+      tax: product.tax || 0,
+      discount: product.discount || 0,
+      variantname: product.name || product.title || "Default Variant",
+      frontImage: product.frontImage || product.image || Carouselimg5,
+      backImage: product.backImage || product.image || Carouselimg5
+    };
+  }, [selectedVariant, product]);
 
   // Variant selection handler
   const handleVariantChange = (variant) => {
@@ -211,16 +224,22 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
         products: [
           {
             ...product,
-            _id: actualProductId, // Add the product ID
-            productId: actualProductId, // Add the product ID as productId too
-            variantId: variantId, // Add the variant ID
+            _id: actualProductId,
+            productId: actualProductId,
+            variantId: variantId,
             quantity: quantity,
             price: displayVariant.salePrice,
             salePrice: displayVariant.salePrice,
             name: displayVariant.variantname || product.title,
+            variantname: displayVariant.variantname || product.title,
+            frontImage: displayVariant.frontImage || product.frontImage || product.image,
+            backImage: displayVariant.backImage || product.backImage || product.image,
+            image: product.image,
             variant: displayVariant,
             tax: displayVariant.tax || 0,
-            discount: displayVariant.discount || 0
+            discount: displayVariant.discount || 0,
+            size: displayVariant.size || product.size,
+            color: displayVariant.color || product.color
           },
         ],
       },
@@ -266,22 +285,19 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
               <p className="price-value">
                 ₹
                 {(
-                  displayVariant.salePrice +
-                  (displayVariant.salePrice * displayVariant.tax) / 100 -
-                  ((displayVariant.salePrice +
-                    (displayVariant.salePrice * displayVariant.tax) / 100) *
-                    displayVariant.discount) /
-                    100
-                ).toFixed(2)}
+                  displayVariant?.salePrice +
+                  (displayVariant?.salePrice * displayVariant?.tax) / 100 -
+                  ((displayVariant?.salePrice +
+                    (displayVariant?.salePrice * displayVariant?.tax) / 100) *
+                    displayVariant?.discount) /
+                  100).toFixed(2)}
               </p>
               <p className="price-note">Inclusive of all taxes</p>
             </div>
             <p className="price-original">
               ₹
-              {(
-                displayVariant.salePrice +
-                (displayVariant.salePrice * displayVariant.tax) / 100
-              ).toFixed(2)}
+              {(displayVariant?.salePrice +
+                (displayVariant?.salePrice * displayVariant?.tax) / 100) } 
             </p>
           </div>
           <div className="quantity-container" aria-label="Quantity selector">

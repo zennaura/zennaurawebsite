@@ -240,11 +240,12 @@ li a {
 
 .aurajewels-category h3,
 .aurajewels-intent h3 {
-  width: 50%;
+  width: 100%;
   border-bottom: 1px solid #333;
   font-size: 1rem;
   padding-bottom: 5px;
   margin-left: 3rem;
+  /* margin-right: 1px; */
   margin-bottom: 1.7rem;
 /* width: 100%; */
 }
@@ -269,10 +270,12 @@ li a {
 }
 
 .right-section {
-  width: 60%;
+  width: 10rem;
   flex: 2;
   display: grid;
   margin-right: 7.5rem;
+  /* align-items: center; */
+  justify-items: center;
   /* grid-template-columns: repeat(2, 1fr); */
   grid-template-rows: auto auto;
   gap: 20px;
@@ -281,6 +284,7 @@ li a {
 .promo {
   background-color: #ddd;
   /* height: 120px; */
+  width: 30rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,7 +303,7 @@ li a {
   padding-right: 50px;
 }
 .promo3 {
-  grid-column: span 2;
+  grid-column: 1 2;
   /* height: 100px; */
 }
 

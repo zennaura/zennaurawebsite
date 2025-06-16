@@ -25,9 +25,9 @@ const AboutUs = () => {
     <ImageContainer Image = {Readytoexpe}/>
     <HandMadeLove/>
     <WhyZenn/>
-    <ImageContainer Image = {Spiritualjourneyimg}/>
+    {/* <ImageContainer Image = {Spiritualjourneyimg}/> */}
     <MakeDifferent/>
-    <OurCertifications/>
+    {/* <OurCertifications/> */}
     <FollowUs/>
     <UptoDate/>
     </>

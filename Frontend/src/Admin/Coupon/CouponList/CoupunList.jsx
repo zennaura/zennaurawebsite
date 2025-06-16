@@ -102,35 +102,35 @@
     }
 
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex !min-h-screen bg-gray-50">
         {/* Admin Navbar */}
-        <div className="w-64 bg-gray-800 text-white">
+        <div className="!w-64 bg-gray-800 text-white">
           <AdminNavbar />
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="flex-1 !p-6">
+          <div className="bg-white rounded-lg shadow-md !p-6">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">Coupon Management</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center !mb-6">
+              <h2 className="!text-2xl font-bold text-gray-800 mb-4 sm:!mb-0">Coupon Management</h2>
               <button
                 onClick={handleGenerate}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white !px-4 !py-2 rounded-md transition-colors"
               >
                 <FaPlusCircle /> Generate New Coupon
               </button>
             </div>
 
             {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <div className="bg-red-100 border border-red-400 text-red-700 !px-4 !py-3 rounded !mb-4">
                 {error}
               </div>
             )}
 
             {/* Coupons Grid */}
             {coupons.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
+              <div className="text-center !py-12 text-gray-500">
                 No coupons found. Generate your first coupon!
               </div>
             ) : (
@@ -138,39 +138,39 @@
                 {coupons.map((coupon) => (
                   <div key={coupon._id} className="border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow relative">
                     {/* Coupon Status Badge */}
-                    <div className={`absolute -top-2 -right-2 px-2 py-1 rounded-full text-xs font-medium ${
+                    <div className={`absolute -top-2 -right-2 !px-2 !py-1 rounded-full text-xs font-medium ${
                       coupon.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                     }`}>
                       {coupon.isActive ? 'Active' : 'Inactive'}
                     </div>
 
                     {/* Coupon Content */}
-                    <div className="p-4">
+                    <div className="!p-4">
                       {/* Coupon Code */}
-                      <div className="flex items-center mb-3">
-                        <FaTag className="text-blue-500 mr-2" />
+                      <div className="flex items-center !mb-3">
+                        <FaTag className="text-blue-500 !mr-2" />
                         <h3 className="text-lg font-semibold text-gray-800 truncate">{coupon.code}</h3>
                       </div>
 
                       {/* Discount */}
-                      <div className="flex items-center mb-2">
-                        <FaPercent className="text-green-500 mr-2" />
+                      <div className="flex items-center !mb-2">
+                        <FaPercent className="text-green-500 !mr-2" />
                         <span className="text-gray-600">{coupon.discount}% Discount</span>
                       </div>
 
                       {/* Expiry Date */}
-                      <div className="flex items-center mb-4">
-                        <FaCalendarAlt className="text-purple-500 mr-2" />
+                      <div className="flex items-center !mb-4">
+                        <FaCalendarAlt className="text-purple-500 !mr-2" />
                         <span className="text-gray-600">
                           Expires: {new Date(coupon.expiryDate).toLocaleDateString()}
                         </span>
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex justify-between items-center border-t pt-3">
+                      <div className="flex justify-between items-center border-t !pt-3">
                         <button
                           onClick={() => toggleCouponStatus(coupon._id, coupon.isActive)}
-                          className={`flex items-center gap-1 px-3 py-1 rounded text-sm ${
+                          className={`flex items-center gap-1 !px-3 !py-1 rounded text-sm ${
                             coupon.isActive 
                               ? 'bg-red-100 text-red-700 hover:bg-red-200' 
                               : 'bg-green-100 text-green-700 hover:bg-green-200'
@@ -183,14 +183,14 @@
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEdit(coupon)}
-                            className="text-blue-500 hover:text-blue-700 p-1 rounded-full hover:bg-blue-50 transition-colors"
+                            className="text-blue-500 hover:text-blue-700 !p-1 !rounded-full hover:bg-blue-50 transition-colors"
                             title="Edit"
                           >
                             <FaEdit size={16} />
                           </button>
                           <button
                             onClick={() => handleDelete(coupon._id)}
-                            className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50 transition-colors"
+                            className="text-red-500 hover:text-red-700 !p-1 rounded-full hover:bg-red-50 transition-colors"
                             title="Delete"
                           >
                             <FaTrash size={16} />

@@ -22,7 +22,7 @@ const SacredRituals = () => {
         <ShopByConcern/>
         <BestSeller/>
         <ImageContainer Image = {ShopRitual}/>
-        <Bemember/>
+        {/* <Bemember/> */}
         <OurCertifications/>
         <FollowUs/>
         <UptoDate/>

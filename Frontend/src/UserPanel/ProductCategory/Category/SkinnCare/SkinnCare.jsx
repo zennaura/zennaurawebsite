@@ -22,7 +22,7 @@ const SkinnCare = () => {
         <ShopByConcern/>
         <BestSeller/>
         <ExploreHandmadeSoap/>
-        <Bemember/>
+        {/* <Bemember/> */}
         <OurCertifications/>
         <FollowUs/>
         <UptoDate/>

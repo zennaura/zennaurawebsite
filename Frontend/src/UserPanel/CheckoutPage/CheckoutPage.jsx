@@ -334,12 +334,23 @@ const CheckoutPage = () => {
         const price = Number(product.salePrice);
         if (isNaN(price) || price <= 0)
           throw new Error(`Invalid price for ${product.name}`);
-        return {
+
+        // Ensure we have all required fields with fallbacks
+        const orderItem = {
           product: productId,
+          name: product?.variantname || product?.name || product?.title || "Unknown Product",
+          image: product?.frontImage || product?.backImage || product?.image || "https://via.placeholder.com/50",
           quantity,
           price,
+          size: product?.size || null,
+          color: product?.color || null
         };
+
+        console.log("Created order item:", orderItem);
+        return orderItem;
       });
+
+      console.log("All order items:", orderItems);
 
       // Prepare order data
       const orderData = {
@@ -355,18 +366,10 @@ const CheckoutPage = () => {
         orderItems,
         shippingAddress: `${address}, ${city}, ${state}, ${country}, ${postalCode}`,
         paymentMethod: "COD",
-        subtotal: parseFloat(subtotal.toFixed(2)),
-        shipping: parseFloat(shipping.toFixed(2)),
-        discount: parseFloat(discountAmount.toFixed(2)),
-        totalAmount: parseFloat(total.toFixed(2)),
-        appliedCoupon: appliedCoupon ? couponCode : null,
-        couponDetails: appliedCoupon
-          ? {
-              percentage: appliedCoupon.discount,
-              maxDiscount: appliedCoupon.maxDiscount,
-            }
-          : null,
+        totalAmount: parseFloat(total.toFixed(2))
       };
+
+      console.log("Sending order data:", orderData);
 
       // Submit order
       const response = await axios.post(
@@ -529,11 +532,16 @@ const CheckoutPage = () => {
           throw new Error(`Invalid price for ${product.name}`);
         return {
           product: productId,
+          name: product?.variantname || product?.name || product?.title || "Product",
+          image: product?.frontImage || product?.backImage || product?.image || noImage,
           quantity,
           price,
+          variant: product?.variant || null,
+          size: product?.size || null,
+          color: product?.color || null
         };
       });
-
+console.log("order items", orderItems);
       // Prepare order data
       const orderData = {
         user: user?._id || null,
@@ -600,7 +608,7 @@ const CheckoutPage = () => {
       setIsSubmitted(false);
     }
   };
-  console.log("products", products[0]);
+  console.log("products", products);
 
   return (
     <>

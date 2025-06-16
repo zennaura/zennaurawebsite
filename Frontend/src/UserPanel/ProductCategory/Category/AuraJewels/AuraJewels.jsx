@@ -22,7 +22,7 @@ const AuraJewels = () => {
         <ShopByConcern />
         <BestSeller />
         <ImageContainer Image={WearYourEnergy} /> 
-        <Bemember />
+        {/* <Bemember /> */}
         <OurCertifications />
         <FollowUs />
         <UptoDate />

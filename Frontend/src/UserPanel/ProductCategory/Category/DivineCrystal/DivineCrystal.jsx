@@ -14,14 +14,14 @@ import CrystalEnergyImg from "../../../../assests/CrystalEnergy.png"
 const DivineCrystal = () => {
     return(
         <>
-        <ImageHead Title= "Divine Crystal"/>
+        <ImageHead Title= "Divine Crystals"/>
         <DivineCrystalRange/>
         <JustIn/>
         <NourishBody/>
         <ShopByConcern/>
         <BestSeller/>
         <ImageContainer Image = {CrystalEnergyImg}/>
-        <Bemember/>
+        {/* <Bemember/> */}
         <OurCertifications/>
         <FollowUs/>
         <UptoDate/>

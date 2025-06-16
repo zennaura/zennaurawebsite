@@ -20,7 +20,7 @@ const Search = ({closeSide}) => {
 
             const flattenedResults = response.data.flatMap((product) =>
                 product.variants.map((variant, index) => ({
-                    id: `${product._id}-${index}`,
+                    id: `${product._id}-${variant._id}`,
                     productId: product._id,
                     name: product.name,
                     title: product.title,

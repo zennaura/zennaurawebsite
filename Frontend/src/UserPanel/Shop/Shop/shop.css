@@ -1,7 +1,9 @@
 /* Shop Page Layout */
+
 .shop-allproduct {
     display: flex;
     gap: 20px;
+    background-color: #f9f9f9;
     position: relative;
   }
   
@@ -76,3 +78,46 @@
       display: none;
     }
   }
+
+
+  /* Styles for the loading indicator container */
+.loading-indicator {
+  display: flex;
+  flex-direction: column; /* Stack spinner and text vertically */
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  padding: 50px; /* Add some space around it */
+  font-size: 1.1em; /* Make the text a bit larger */
+  color: #593039; /* Use your brand color for the text */
+  min-height: 200px; /* Ensure it takes up some vertical space even when empty */
+}
+
+/* Styles for the rotating spinner */
+.loading-spinner {
+  border: 5px solid rgba(89, 48, 57, 0.2); /* Light transparent border for the circle background */
+  border-top: 5px solid #593039; /* Solid border for the rotating part, use your brand color */
+  border-radius: 50%; /* Makes it a perfect circle */
+  width: 40px; /* Size of the spinner */
+  height: 40px; /* Size of the spinner */
+  animation: spin 1s linear infinite; /* Apply the rotation animation */
+  margin-bottom: 15px; /* Space between spinner and text */
+}
+
+/* The rotation animation keyframes */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Optional: Style for when no products are found */
+.no-products-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  font-size: 1.1em;
+  color: #777; /* A slightly softer color */
+  min-height: 200px;
+  text-align: center;
+}
