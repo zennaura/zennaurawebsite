@@ -13,7 +13,7 @@ import ToggleContent from '../ToggleContent/ToggleContent';
 import Bemember from '../../BeMember/Bemember';
 import FollowUs from '../../FollowUs/FollowUs';
 import OurCertifications from '../../OurCertifications/OurCertifications';
-import UptoDate from '../../UpToDate/UpToDate';
+import UptoDate from '../../UpToDate/UptoDate.jsx';
 import ImageContainer from '../../ProductCategory/ImageContainer/ImageContainer';
 import NewEnerzies from '../../../assests/newenergies.png';
 // import JustIn from '../../ProductCategory/JustIn/JustIn'; // Commented out as in your snippet
