@@ -12,7 +12,7 @@ import ReviewsPage from '../ReviewsPage/ReviewsPage';
 import FQApage from '../FQA/FQA';
 import './ProductPage.css';
 import whyChoose from "../../../assests/whyChoose.png";
-import CrystalClean from "../../../assests/CrystalClean.png";
+import CrystalClean from "../../../assests/crystalClean.png";
 
 const ProductPage = () => {
   // const location = useLocation();
