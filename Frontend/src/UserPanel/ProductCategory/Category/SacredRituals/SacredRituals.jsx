@@ -10,21 +10,22 @@ import UptoDate from "../../../UpToDate/UptoDate";
 import SacredRitualsRange from "./SacredRitualsRange/SacredRitualsRange";
 import ShopByConcern from "../../ShopByConcern/ShopByConcern";
 import ImageContainer from "../../ImageContainer/ImageContainer";
-import ShopRitual from "../../../../assests/ShopRitual.png"
+import ShopRitual from "../../../../assests/ShopRitual.png";
+import Sacred from "../../../../assests/sacred.png";
 
 const SacredRituals = () => {
     return(
         <>
         <ImageHead Title= "Sacred Rituals"/>
         <SacredRitualsRange/>
-        <JustIn/>
+        <BestSeller/>
+        {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>
-        <BestSeller/>
-        <ImageContainer Image = {ShopRitual}/>
+        <ImageContainer Image = {Sacred}/>
         {/* <Bemember/> */}
-        <OurCertifications/>
-        <FollowUs/>
+        {/* <OurCertifications/> */}
+        {/* <FollowUs/> */}
         <UptoDate/>
         </>
     );

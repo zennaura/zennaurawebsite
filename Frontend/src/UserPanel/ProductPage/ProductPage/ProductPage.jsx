@@ -11,6 +11,8 @@ import ShippingTab from '../ShippingTab/ShippingTab';
 import ReviewsPage from '../ReviewsPage/ReviewsPage';
 import FQApage from '../FQA/FQA';
 import './ProductPage.css';
+import whyChoose from "../../../assests/whyChoose.png";
+import CrystalClean from "../../../assests/CrystalClean.png";
 
 const ProductPage = () => {
   // const location = useLocation();
@@ -31,6 +33,7 @@ const ProductPage = () => {
   const [selectedVariant, setSelectedVariant] = useState(
     initialProduct?.selectedVariant || initialProduct?.variants?.[0] || null
   );
+
 
   useEffect(() => {
     // If we have state from navigation, use it
@@ -68,6 +71,9 @@ const ProductPage = () => {
   };
 
   console.log("Product Data:", product);
+  if(product?.specifications?.material === "Crystals"){
+          
+  }
   // console.log("initial",initialProduct);
   return (
     <div>
@@ -100,26 +106,37 @@ const ProductPage = () => {
   )}
   
   {/* Why Choose Poster */}
-  {product?.whyChoose && product?.whyChoose?.length > 0 && (
+  {product?.whyChoose && product?.whyChoose?.length > 0 ?(
     <div className="productposter whychoose-poster">
       <img 
-        src={product?.whyChoose} 
+        src={product.whyChoose  }
         alt="Why Choose" 
         className="poster-image"
       />
     </div>
-  )}
-  
-  {/* Ways to Cleanse Poster */}
-  {product?.waysToClean && product?.waysToClean?.length > 0 && (
-    <div className="productposter waystocleanse-poster">
+  ):<div className="productposter whychoose-poster">
       <img 
-        src={product?.waysToClean} 
-        alt="Ways to Cleanse" 
+        src={whyChoose  }
+        alt="Why Choose" 
         className="poster-image"
       />
+    </div>}
+        {/* {
+          
+  } */}
+  {/* Ways to Cleanse Poster */}
+  {/* {product?.waysToClean && product?.waysToClean?.length > 0 && (
+    <div className="productposter waystocleanse-poster">
+      
     </div>
-  )}
+  )} */}
+        {
+          product?.specifications.material === "Crystals"?(<img 
+        src={CrystalClean} 
+        alt="Ways to Cleanse" 
+        className="poster-image"
+      />):""
+        }
   
   {/* Who Wear Poster */}
   {product?.whoWear && product?.whoWear?.length > 0 && (

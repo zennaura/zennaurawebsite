@@ -43,7 +43,7 @@ const Footer = () => {
           <FooterSection title="Shop">
             <ul className="footer-list">
               <li> <Link to='/shop'>All Products</Link> </li>
-              <li> <Link to='/skincare'>Skin Care</Link> </li>
+              <li> <Link to='/skincare'>Body Soap</Link> </li>
               <li> <Link to='/divinecrystals'>Divine Crystals</Link> </li>
               <li> <Link to='/sacredrituals'>Sacred Rituals</Link> </li>
               <li> <Link to='/aurajewels'>Aura Jewels</Link> </li>

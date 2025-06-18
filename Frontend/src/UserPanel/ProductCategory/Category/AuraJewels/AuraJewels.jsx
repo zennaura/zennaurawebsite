@@ -11,20 +11,21 @@ import AuraJewelsRange from "./AuraJewelsRange/AuraJewelsRange";
 import ShopByConcern from "../../ShopByConcern/ShopByConcern";
 import ImageContainer from "../../ImageContainer/ImageContainer"; 
 import WearYourEnergy from "../../../../assests/WearYourEnergy.png"; 
+import Jewels from "../../../../assests/jewels.png";
 
 const AuraJewels = () => {
     return(
         <>
         <ImageHead Title="Aura Jewels" />
         <AuraJewelsRange />
-        <JustIn />
+        <BestSeller />
+        {/* <JustIn /> */}
         <NourishBody />
         <ShopByConcern />
-        <BestSeller />
-        <ImageContainer Image={WearYourEnergy} /> 
+        <ImageContainer Image={Jewels} /> 
         {/* <Bemember /> */}
-        <OurCertifications />
-        <FollowUs />
+        {/* <OurCertifications /> */}
+        {/* <FollowUs /> */}
         <UptoDate />
         </>
     );

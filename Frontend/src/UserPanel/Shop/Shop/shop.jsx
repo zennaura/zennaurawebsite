@@ -16,6 +16,8 @@ import OurCertifications from '../../OurCertifications/OurCertifications';
 import UptoDate from '../../UpToDate/UptoDate.jsx';
 import ImageContainer from '../../ProductCategory/ImageContainer/ImageContainer';
 import NewEnerzies from '../../../assests/newenergies.png';
+import AboutShop from "../../../assests/aboutShop.png";
+
 // import JustIn from '../../ProductCategory/JustIn/JustIn'; // Commented out as in your snippet
 
 const Shop = () => {
@@ -210,7 +212,7 @@ const Shop = () => {
         )}
       </div>
 
-      <ImageContainer Image={NewEnerzies} />
+      <ImageContainer Image={AboutShop} />
       <ToggleContent />
       <FollowUs />
       <UptoDate />

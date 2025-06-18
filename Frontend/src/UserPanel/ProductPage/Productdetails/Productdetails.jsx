@@ -6,7 +6,11 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../../../components/AuthContext/AuthContext";
 
-const ProductDetails = ({ product: initialProduct, selectedVariant: initialVariant, onVariantSelect }) => {
+const ProductDetails = ({
+  product: initialProduct,
+  selectedVariant: initialVariant,
+  onVariantSelect,
+}) => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -26,20 +30,20 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const [productId, variantIndex] = id.split('-');
+        const [productId, variantIndex] = id.split("-");
         console.log("Fetching product:", { productId, variantIndex });
-        
+
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_LINK}/api/products/${productId}`
         );
-        
+
         const data = response.data;
         console.log("Fetched product:", data);
-        
+
         // Get the variant using the index
         const variant = data.variants[parseInt(variantIndex)];
         console.log("Selected variant:", variant);
-        
+
         setProductData(data);
         setSelectedVariant(variant);
         setIsLoading(false);
@@ -66,7 +70,7 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
       discount: productData?.discount || 0,
       variantname: productData?.name || productData?.title || "Default Variant",
       frontImage: productData?.frontImage || productData?.image || Carouselimg5,
-      backImage: productData?.backImage || productData?.image || Carouselimg5
+      backImage: productData?.backImage || productData?.image || Carouselimg5,
     };
   }, [selectedVariant, productData]);
 
@@ -88,8 +92,10 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
     };
 
     if (!displayVariant.variantsimages) {
-      if (displayVariant.frontImage) addImage(displayVariant.frontImage, productData?.name);
-      if (displayVariant.backImage) addImage(displayVariant.backImage, productData?.name);
+      if (displayVariant.frontImage)
+        addImage(displayVariant.frontImage, productData?.name);
+      if (displayVariant.backImage)
+        addImage(displayVariant.backImage, productData?.name);
     }
     (displayVariant.variantsimages || []).forEach((img, idx) =>
       addImage(img, `${productData?.name} - Variant ${idx + 1}`)
@@ -98,7 +104,10 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
       addImage(img, `${productData?.name} - Other ${idx + 1}`)
     );
     if (productData?.productDescriptions?.image)
-      addImage(productData.productDescriptions.image, `${productData?.name} - Description`);
+      addImage(
+        productData.productDescriptions.image,
+        `${productData?.name} - Description`
+      );
     (productData?.stoneUsedImage || []).forEach((stone, idx) =>
       addImage(stone.image, `${productData?.name} - Stone ${idx + 1}`)
     );
@@ -131,8 +140,8 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
   }, [slides.length, nextSlide]);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // window.addEventListener("resize", handleResize);
+    // return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
   useEffect(() => {
@@ -160,14 +169,13 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
   };
 
   const { user } = useUser();
-   const handleAddToCart = async () => {
+  const handleAddToCart = async () => {
     // Split the combined ID properly
     const actualProductId = id.split("-")[0]; // This is the real product ID
-     // const variantId = displayVariant.id || displayVariant._id || "0"; // Use the selected variant's ID
-     const variantId = id.split("-")[1];
+    // const variantId = displayVariant.id || displayVariant._id || "0"; // Use the selected variant's ID
+    const variantId = id.split("-")[1];
     console.log("Adding to cart:", { actualProductId, variantId, id }); // Debug log
 
-     
     try {
       if (user) {
         // Logged-in user cart logic
@@ -178,13 +186,12 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
             variantId,
             quantity,
             userId: user._id,
-            price: displayVariant.salePrice
+            price: displayVariant.salePrice,
           }
         );
         alert("Product added to cart!");
         console.log("response", response);
-      }
-      else {
+      } else {
         // Guest cart logic (localStorage)
         let guestCart = [];
 
@@ -215,7 +222,7 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
             productId: actualProductId,
             variantId,
             quantity,
-            price: displayVariant.salePrice
+            price: displayVariant.salePrice,
           });
           alert("Product added to cart!");
         }
@@ -269,14 +276,20 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
             salePrice: displayVariant.salePrice,
             name: displayVariant.variantname || productData.title,
             variantname: displayVariant.variantname || productData.title,
-            frontImage: displayVariant.frontImage || productData.frontImage || productData.image,
-            backImage: displayVariant.backImage || productData.backImage || productData.image,
+            frontImage:
+              displayVariant.frontImage ||
+              productData.frontImage ||
+              productData.image,
+            backImage:
+              displayVariant.backImage ||
+              productData.backImage ||
+              productData.image,
             image: productData.image,
             variant: displayVariant,
             tax: displayVariant.tax || 0,
             discount: displayVariant.discount || 0,
             size: displayVariant.size || productData.size,
-            color: displayVariant.color || productData.color
+            color: displayVariant.color || productData.color,
           },
         ],
       },
@@ -292,7 +305,9 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
       <div className="product-container">
         <div className="info-section">
           <h1 className="product-title" aria-label="Product title">
-            <p className="product-name">{selectedVariant?.variantname || productData?.name}</p>
+            <p className="product-name">
+              {selectedVariant?.variantname || productData?.name}
+            </p>
             {productData?.title}
           </h1>
           <div className="rating-container" aria-label="Product rating">
@@ -307,7 +322,9 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
           <div className="specs-container">
             {productData?.variants?.map((variant, index) => (
               <p
-                className={`specs-p ${selectedVariant?._id === variant._id ? 'selected' : ''}`}
+                className={`specs-p ${
+                  selectedVariant?._id === variant._id ? "selected" : ""
+                }`}
                 aria-label={`Product variant: ${variant?.variantname}`}
                 onClick={() => handleVariantChange(variant)}
                 key={variant._id || index}
@@ -317,24 +334,32 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
             ))}
           </div>
           <div className="price-container">
-            <p className="price-label">M.R.P :</p>
+            <p className="price-label">M.R.P:</p>
             <div className="price-mrp-box">
               <p className="price-value">
                 ₹
-                {(
+                {/* {(
                   displayVariant?.salePrice +
                   (displayVariant?.salePrice * displayVariant?.tax) / 100 -
                   ((displayVariant?.salePrice +
                     (displayVariant?.salePrice * displayVariant?.tax) / 100) *
                     displayVariant?.discount) /
-                  100).toFixed(2)}
+                  100).toFixed(2)} */}
+                {(
+                  displayVariant?.salePrice +
+                  (displayVariant?.salePrice * displayVariant?.tax) / 100
+                ).toFixed(2)}
               </p>
               <p className="price-note">Inclusive of all taxes</p>
             </div>
             <p className="price-original">
-              ₹
-              {Number(displayVariant?.salePrice +
-                (displayVariant?.salePrice * displayVariant?.tax) / 100).toFixed(2) } 
+              ₹    
+              {/* {Number(displayVariant?.salePrice +
+                (displayVariant?.salePrice * displayVariant?.tax) / 100).toFixed(2) }  */}
+              { Number(displayVariant?.costPrice).toFixed(2)}
+            </p>
+            <p className="price-discount">
+              ({(((displayVariant?.costPrice - displayVariant?.salePrice)/(displayVariant?.costPrice))*100).toFixed(1)}% OFF)
             </p>
           </div>
           <div className="quantity-container" aria-label="Quantity selector">
@@ -359,7 +384,11 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
             <button className="wishlist-button" aria-label="Add to wishlist">
               Add to wishlist
             </button>
-            <button onClick={handleAddToCart} className="cart-button" aria-label="Add to cart">
+            <button
+              onClick={handleAddToCart}
+              className="cart-button"
+              aria-label="Add to cart"
+            >
               Add to cart
             </button>
           </div>
@@ -400,7 +429,9 @@ const ProductDetails = ({ product: initialProduct, selectedVariant: initialVaria
               </span>
             </div>
             {isExpanded && (
-              <div className="Disclaimer-content">{productData.description}</div>
+              <div className="Disclaimer-content">
+                {productData.description}
+              </div>
             )}
           </div>
         </div>

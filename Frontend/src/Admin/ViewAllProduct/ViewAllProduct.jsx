@@ -146,7 +146,7 @@ const ProductsManagement = () => {
                 <div key={product._id || Math.random()} className="admin-product-card">
                   <div className="admin-product-image">
                     <img 
-                      src={product.variants[0].frontImage || noImage} 
+                      src={product?.variants[0]?.frontImage || noImage} 
                       alt={product.name || 'Product image'} 
                       onError={(e) => {
                         e.target.src = noImage;
@@ -155,7 +155,7 @@ const ProductsManagement = () => {
                   </div>
                   <div className="admin-product-details">
                     {/* <h3 className="admin-product-name">{product.name || 'Unnamed Product'}</h3> */}
-                    <p className="admin-product-title">{product.variants[0].variantname || 'No title'}</p>
+                    <p className="admin-product-title">{product?.variants[0]?.variantname || 'No title'}</p>
                     <div className="admin-product-categories">
                       <span>{product.parentCategory || 'No category'}</span> &gt;
                       <span>{product.subCategory || 'No subcategory'}</span> &gt;

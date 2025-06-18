@@ -69,17 +69,30 @@
 .price-container {
   display: flex;
   gap: 1rem;
+  align-items: center;
   margin-bottom: 25px;
 }
 
 .price-label {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #666;
 }
-
-.price-value,
-.price-original {
-  font-size: 26px;
+.price-value{
+  margin-top: 1rem;
+  /* word-spacing: 0.2rem; */
+  /* letter-spacing: 0.1rem; */
+}
+.price-value {
+  font-size: 1.8rem;
+}
+.price-original{
+  margin-left: -16px;
+  /* margin-right: 0.5rem; */
+  font-size: 1.4rem;
+}
+.price-discount{
+  font-size: 1.2rem;
+  color: red;
 }
 .price-original {
   text-decoration: line-through;

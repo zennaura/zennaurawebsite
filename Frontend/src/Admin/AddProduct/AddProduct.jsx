@@ -412,7 +412,7 @@ const AddProduct = () => {
           </label>
 
           {/* Product SKU */}
-          <label className="block">
+          {/* <label className="block">
             <span className="text-gray-700">Product SKU</span>
             <input
               type="text"
@@ -422,7 +422,7 @@ const AddProduct = () => {
               }
               className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
-          </label>
+          </label> */}
         </div>
         <div>
           <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-2">Product Chakra Tags</h2>
@@ -478,10 +478,9 @@ const AddProduct = () => {
           </div>
         </div>
         {/* <!-- Concern Tags --> */}
-        <div>
+        {/* <div>
           <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Concern Tags</h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            {/* Tag Input Field */}
             <input
               type="text"
               onKeyDown={(e) => {
@@ -494,7 +493,6 @@ const AddProduct = () => {
               className="flex-1 border border-gray-300 rounded-md !p-2 md:p-3 text-sm md:text-base"
             />
 
-            {/* Add Tag Button */}
             <button
               type="button"
               onClick={() => {
@@ -510,18 +508,18 @@ const AddProduct = () => {
             </button>
           </div>
 
-          {/* List of Added Tags */}
+   
           <div id="tagList" className="mt-2 flex gap-2 flex-wrap">
             {tags.map((tag, index) => (
               <span
                 key={index}
                 className="bg-blue-100 text-blue-800 text-sm font-medium !mr-2 !px-2.5 !py-0.5 rounded-full flex items-center gap-2"
               >
-                {tag} {/* Display the tag */}
+                {tag} 
                 <button
                   type="button"
                   onClick={() => {
-                    setTags(tags.filter((_, i) => i !== index)); // Remove the tag
+                    setTags(tags.filter((_, i) => i !== index)); 
                   }}
                   className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                 >
@@ -530,7 +528,7 @@ const AddProduct = () => {
               </span>
             ))}
           </div>
-        </div>
+        </div> */}
         {/* <!--Intent  Tags --> */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Intent Tags</h2>
@@ -810,7 +808,7 @@ const AddProduct = () => {
                   className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* Size */}
-                <input
+                {/* <input
                   type="number"
                   value={variant.size}
                   onChange={(e) =>
@@ -818,7 +816,7 @@ const AddProduct = () => {
                   }
                   placeholder="Size in mm"
                   className="border border-gray-300 rounded-md !p-2"
-                />
+                /> */}
                 {/* Tax */}
                 <input
                   type="number"
@@ -859,7 +857,7 @@ const AddProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(index, 'costPrice', e.target.value)
                   }
-                  placeholder="Cost Price"
+                  placeholder="M.R.P"
                   className="border border-gray-300 rounded-md !p-2"
                 />
 
@@ -921,7 +919,7 @@ const AddProduct = () => {
                   className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* beadSize */}
-                <input
+                {/* <input
                   type="text"
                   value={variant.specifications.beadSize}
                   onChange={(e) =>
@@ -933,7 +931,7 @@ const AddProduct = () => {
                   }
                   placeholder="Bead Size"
                   className="border border-gray-300 rounded-md !p-2"
-                />
+                /> */}
 
                 {/* Product Type */}
                 <input

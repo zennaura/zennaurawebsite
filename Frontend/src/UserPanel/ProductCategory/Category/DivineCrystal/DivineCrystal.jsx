@@ -11,19 +11,20 @@ import DivineCrystalRange from "./DivineCrystalRange/DivineCrystalRange"
 import ShopByConcern from "../../ShopByConcern/ShopByConcern";
 import ImageContainer from "../../ImageContainer/ImageContainer"; 
 import CrystalEnergyImg from "../../../../assests/CrystalEnergy.png"
+import Divine from "../../../../assests/divine.png"
 const DivineCrystal = () => {
     return(
         <>
         <ImageHead Title= "Divine Crystals"/>
         <DivineCrystalRange/>
-        <JustIn/>
+        <BestSeller/>
+        {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>
-        <BestSeller/>
-        <ImageContainer Image = {CrystalEnergyImg}/>
+        <ImageContainer Image = {Divine}/>
         {/* <Bemember/> */}
-        <OurCertifications/>
-        <FollowUs/>
+        {/* <OurCertifications/> */}
+        {/* <FollowUs/> */}
         <UptoDate/>
         </>
     );

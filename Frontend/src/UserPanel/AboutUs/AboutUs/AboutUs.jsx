@@ -14,6 +14,7 @@ import OurCertifications from "../../OurCertifications/OurCertifications";
 import FollowUs from "../../FollowUs/FollowUs";
 import UptoDate from "../../UpToDate/UptoDate";
 import Spiritualjourneyimg from "../../../assests/Spiritualjourneyimg.png"
+import AboutShop from "../../../assests/aboutShop.png";
 const AboutUs = () => {
   return (
     <>
@@ -22,7 +23,7 @@ const AboutUs = () => {
     <ImageContainer Image = {AboutUs1}/>
     <WhyWeStarted/>
     <OurValues/>
-    <ImageContainer Image = {Readytoexpe}/>
+    <ImageContainer Image = {AboutShop}/>
     <HandMadeLove/>
     <WhyZenn/>
     {/* <ImageContainer Image = {Spiritualjourneyimg}/> */}

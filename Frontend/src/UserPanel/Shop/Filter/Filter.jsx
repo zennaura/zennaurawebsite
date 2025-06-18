@@ -130,7 +130,7 @@ const Filter = ({
         parent.subCategories.map((sub) => sub.subCategory)
       );
       const unique = [...new Set(allSubcategories)].filter(
-        (sub) => sub.trim() !== ""
+        (sub) => sub !== ""
       );
       setUniqueSubcategories(unique);
       console.log("Filter.jsx: Unique Subcategories loaded:", unique);
@@ -298,10 +298,10 @@ const Filter = ({
 
         {/* Concern */}
         <div className="filter-concern">
-          <h2>Concern</h2>
+          <h2>Chakra</h2>
           <div className="filter-option-group">
             {isLoadingConcerns ? (
-              <p>Loading concerns...</p>
+              <p>Loading Chakra...</p>
             ) : availableConcerns.length > 0 ? (
               availableConcerns.map((concern) => (
                 <div key={concern} className="filter-option">
@@ -316,7 +316,7 @@ const Filter = ({
                 </div>
               ))
             ) : (
-              <p>No concerns available.</p>
+              <p>No Chakra available.</p>
             )}
           </div>
         </div>

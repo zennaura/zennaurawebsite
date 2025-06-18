@@ -286,7 +286,7 @@ const Navbar = () => {
     { path: "/", label: "Home" },
     { path: "/aboutus", label: "About Us" },
     { path: "/shop", label: "Shop" },
-    { path: "/skincare", label: "Skin Care", dropdownKey: "skincare" },
+    { path: "/skincare", label: "Body Soap", dropdownKey: "skincare" },
     { path: "/aurajewels", label: "Aura Jewels", dropdownKey: "aurajewels" },
     {
       path: "/divinecrystals",

@@ -638,7 +638,7 @@ const UpdateProduct = () => {
             />
           </label>
 
-          <label className="block">
+          {/* <label className="block">
             <span className="text-gray-700">Product SKU</span>
             <input
               type="text"
@@ -649,7 +649,7 @@ const UpdateProduct = () => {
               className="!mt-1 block !w-full border border-gray-300 rounded-md !p-2"
               required
             />
-          </label>
+          </label> */}
         </div>
 
         <div>
@@ -709,7 +709,7 @@ const UpdateProduct = () => {
 
 
         {/*Concern Tags */}
-        <div>
+        {/* <div>
           <h2 className="!text-xl font-semibold text-gray-800 !mb-2">
             Product Concern Tags
           </h2>
@@ -762,7 +762,7 @@ const UpdateProduct = () => {
               </span>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/*Intent Tags */}
         <div>
@@ -1171,7 +1171,7 @@ const UpdateProduct = () => {
                   placeholder="Varient Name"
                   className="border border-gray-300 rounded-md !p-2"
                 />
-                <input
+                {/* <input
                   type="number"
                   value={variant.size}
                   onChange={(e) =>
@@ -1179,7 +1179,7 @@ const UpdateProduct = () => {
                   }
                   placeholder="Size"
                   className="border border-gray-300 rounded-md !p-2"
-                />
+                /> */}
                 {/* Tax */}
                 <input
                   type="number"
@@ -1216,7 +1216,7 @@ const UpdateProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(index, "costPrice", e.target.value)
                   }
-                  placeholder="Cost Price"
+                  placeholder="M.R.P"
                   className="border border-gray-300 rounded-md !p-2"
                 />
 
@@ -1368,7 +1368,7 @@ const UpdateProduct = () => {
                   placeholder="Material"
                   className="border border-gray-300 rounded-md !p-2"
                 />
-                <input
+                {/* <input
                   type="text"
                   value={variant.specifications.beadSize}
                   onChange={(e) =>
@@ -1380,7 +1380,7 @@ const UpdateProduct = () => {
                   }
                   placeholder="Bead Size"
                   className="border border-gray-300 rounded-md !p-2"
-                />
+                /> */}
 
                 <input
                   type="text"
