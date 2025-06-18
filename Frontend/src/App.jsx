@@ -40,7 +40,7 @@ import ContactUs from './components/ContactUs/ContactUs';
 import ContactQueryList from './Admin/ContactQueryList/ContactQueryList';
 import ViewAllUsers from './Admin/ViewAllUsers/ViewAllUsers';
 // import Payment from "./components/Payment/Payment";
-
+import HealingLayout from "./Admin/AddProduct/HealingLayout.jsx";
 function App() {
   const { user } = useUser();
   const location = useLocation();
@@ -56,6 +56,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route path="/healing" element={<HealingLayout />} />
        
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/policies" element={<Policies />} />

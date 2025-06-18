@@ -165,7 +165,7 @@ const Navbar = () => {
           name: variant.variantname,
           title: product.title,
           description: product.description,
-          image: variant.frontImage|| variant.backImage || noImage,
+          image: variant.frontImage || variant.backImage || noImage,
           price: (
             variant.salePrice +
             (variant.salePrice * variant.tax) / 100 -
@@ -468,7 +468,21 @@ const Navbar = () => {
                     )}
                   </div>
                   <div className="aurajewels-intent">
-                    <h3>Shop by Intent</h3>
+                    <h3>Shop by Intent/Concern</h3>
+                    <ul>
+                      {skinCareIntents.map((intent) => (
+                        <Link
+                          to="/shop"
+                          state={{ autoSelects: intent }}
+                          key={intent}
+                        >
+                          <li key={intent + "Skin Care"}>{intent}</li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="aurajewels-chakra">
+                    <h3>Shop by Chakra</h3>
                     <ul>
                       {skinCareIntents.map((intent) => (
                         <Link
@@ -484,7 +498,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="right-section">
-                  <div className="promo promo1">Crystal Bracelets</div>
+                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
                   <div className="promo promo2">Crystal Wearables</div>
                   <div className="promo promo3">
                     Check Out Our Wide Range of Crystal Bracelets!!
@@ -557,7 +571,7 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                  <div className="aurajewels-intent">
+                  <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
                       {auraIntents.map((intent) => (
@@ -642,6 +656,16 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
+                  <div className="aurajewels-chakra">
+                    <h3>Shop by Chakra</h3>
+                    <ul>
+                      {divineIntents.map((intent) => (
+                        <Link to="/shop" state={{ autoSelects: intent }}>
+                          <li key={intent + "Divine Crystals"}>{intent}</li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="right-section right-section-divinecrystals">
@@ -697,7 +721,17 @@ const Navbar = () => {
                     )}
                   </div>
                   <div className="aurajewels-intent">
-                    <h3>Shop by Intent</h3>
+                    <h3>Shop by Intent/Concern</h3>
+                    <ul>
+                      {sacredIntents.map((intent) => (
+                        <Link to="/shop" state={{ autoSelects: intent }}>
+                          <li key={intent + "Sacred Rituals"}>{intent}</li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="aurajewels-chakra">
+                    <h3>Shop by Chakra</h3>
                     <ul>
                       {sacredIntents.map((intent) => (
                         <Link to="/shop" state={{ autoSelects: intent }}>
@@ -709,7 +743,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="right-section">
-                  <div className="promo promo1">Crystal Bracelets</div>
+                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
                   <div className="promo promo2">Crystal Wearables</div>
                   <div className="promo promo3">
                     Check Out Our Wide Range of Crystal Bracelets!!

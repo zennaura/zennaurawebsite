@@ -71,7 +71,7 @@ const ProductPage = () => {
   // console.log("initial",initialProduct);
   return (
     <div>
-      <ImageHead Title={selectedVariant?.variantname || product?.variantname} />
+      <ImageHead Title={selectedVariant?.variantname || product?.variantname } />
       <Productdetails
         product={product}
         selectedVariant={selectedVariant}
@@ -83,6 +83,7 @@ const ProductPage = () => {
         productDescriptions={product?.productDescriptions}
         specifications={product?.specifications}
         healingImage={product?.healingImage}
+        healingProperties={product?.healingProperties}
       />
       {/* All so like this product */}
       <AllsoLike />

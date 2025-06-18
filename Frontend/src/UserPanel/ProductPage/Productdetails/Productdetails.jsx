@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../../../components/AuthContext/AuthContext";
 
-const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
+const ProductDetails = ({ product: initialProduct, selectedVariant: initialVariant, onVariantSelect }) => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -15,28 +15,64 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams();
+  const [productData, setProductData] = useState(initialProduct);
+  const [selectedVariant, setSelectedVariant] = useState(initialVariant);
+
   // console.log("id", id);
 
   // console.log("product", product);
   // console.log("var", selectedVariant);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const [productId, variantIndex] = id.split('-');
+        console.log("Fetching product:", { productId, variantIndex });
+        
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_LINK}/api/products/${productId}`
+        );
+        
+        const data = response.data;
+        console.log("Fetched product:", data);
+        
+        // Get the variant using the index
+        const variant = data.variants[parseInt(variantIndex)];
+        console.log("Selected variant:", variant);
+        
+        setProductData(data);
+        setSelectedVariant(variant);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        setIsLoading(false);
+      }
+    };
+
+    if (id && !initialProduct) {
+      fetchProduct();
+    }
+  }, [id, initialProduct]);
+
   // Use selectedVariant or fallback to first variant
   const displayVariant = useMemo(() => {
     if (selectedVariant) return selectedVariant;
-    if (product?.variants?.[0]) return product.variants[0];
+    if (productData?.variants?.[0]) return productData.variants[0];
     // If no variant is available, create a default one with product data
     return {
-      ...product,
-      salePrice: product.salePrice || product.price || 0,
-      tax: product.tax || 0,
-      discount: product.discount || 0,
-      variantname: product.name || product.title || "Default Variant",
-      frontImage: product.frontImage || product.image || Carouselimg5,
-      backImage: product.backImage || product.image || Carouselimg5
+      ...productData,
+      salePrice: productData?.salePrice || productData?.price || 0,
+      tax: productData?.tax || 0,
+      discount: productData?.discount || 0,
+      variantname: productData?.name || productData?.title || "Default Variant",
+      frontImage: productData?.frontImage || productData?.image || Carouselimg5,
+      backImage: productData?.backImage || productData?.image || Carouselimg5
     };
-  }, [selectedVariant, product]);
+  }, [selectedVariant, productData]);
 
   // Variant selection handler
   const handleVariantChange = (variant) => {
+    setSelectedVariant(variant);
     if (onVariantSelect) {
       onVariantSelect(variant);
     }
@@ -50,24 +86,25 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
         images.push({ image: src, title, loading: true });
       }
     };
+
     if (!displayVariant.variantsimages) {
-      if (displayVariant.frontImage) addImage(displayVariant.frontImage, product.name);
-      if (displayVariant.backImage) addImage(displayVariant.backImage, product.name);
+      if (displayVariant.frontImage) addImage(displayVariant.frontImage, productData?.name);
+      if (displayVariant.backImage) addImage(displayVariant.backImage, productData?.name);
     }
     (displayVariant.variantsimages || []).forEach((img, idx) =>
-      addImage(img, `${product.name} - Variant ${idx + 1}`)
+      addImage(img, `${productData?.name} - Variant ${idx + 1}`)
     );
-    (product.otherimages || []).forEach((img, idx) =>
-      addImage(img, `${product.name} - Other ${idx + 1}`)
+    (productData?.otherimages || []).forEach((img, idx) =>
+      addImage(img, `${productData?.name} - Other ${idx + 1}`)
     );
-    if (product?.productDescriptions?.image)
-      addImage(product.productDescriptions.image, `${product.name} - Description`);
-    (product.stoneUsedImage || []).forEach((stone, idx) =>
-      addImage(stone.image, `${product.name} - Stone ${idx + 1}`)
+    if (productData?.productDescriptions?.image)
+      addImage(productData.productDescriptions.image, `${productData?.name} - Description`);
+    (productData?.stoneUsedImage || []).forEach((stone, idx) =>
+      addImage(stone.image, `${productData?.name} - Stone ${idx + 1}`)
     );
     if (images.length === 0) addImage(Carouselimg5, "No image available");
     return images;
-  }, [displayVariant, product]);
+  }, [displayVariant, productData]);
 
   const nextSlide = useCallback(() => {
     setCarouselIndex((prev) => (prev + 1) % slides.length);
@@ -223,23 +260,23 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
       state: {
         products: [
           {
-            ...product,
+            ...productData,
             _id: actualProductId,
             productId: actualProductId,
             variantId: variantId,
             quantity: quantity,
             price: displayVariant.salePrice,
             salePrice: displayVariant.salePrice,
-            name: displayVariant.variantname || product.title,
-            variantname: displayVariant.variantname || product.title,
-            frontImage: displayVariant.frontImage || product.frontImage || product.image,
-            backImage: displayVariant.backImage || product.backImage || product.image,
-            image: product.image,
+            name: displayVariant.variantname || productData.title,
+            variantname: displayVariant.variantname || productData.title,
+            frontImage: displayVariant.frontImage || productData.frontImage || productData.image,
+            backImage: displayVariant.backImage || productData.backImage || productData.image,
+            image: productData.image,
             variant: displayVariant,
             tax: displayVariant.tax || 0,
             discount: displayVariant.discount || 0,
-            size: displayVariant.size || product.size,
-            color: displayVariant.color || product.color
+            size: displayVariant.size || productData.size,
+            color: displayVariant.color || productData.color
           },
         ],
       },
@@ -255,8 +292,8 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
       <div className="product-container">
         <div className="info-section">
           <h1 className="product-title" aria-label="Product title">
-            <p className="product-name">{selectedVariant?.variantname}</p>
-            {product?.title}
+            <p className="product-name">{selectedVariant?.variantname || productData?.name}</p>
+            {productData?.title}
           </h1>
           <div className="rating-container" aria-label="Product rating">
             <span className="review-count">20 Reviews</span>
@@ -268,12 +305,12 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
           </p> */}
           {/* Show all variants as clickable elements */}
           <div className="specs-container">
-            {product?.allVariants?.map((variant, index) => (
+            {productData?.variants?.map((variant, index) => (
               <p
-                className={`specs-p ${selectedVariant?.id === variant.id ? 'selected' : ''}`}
+                className={`specs-p ${selectedVariant?._id === variant._id ? 'selected' : ''}`}
                 aria-label={`Product variant: ${variant?.variantname}`}
                 onClick={() => handleVariantChange(variant)}
-                key={variant.id || index}
+                key={variant._id || index}
               >
                 {variant?.variantname}
               </p>
@@ -296,8 +333,8 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
             </div>
             <p className="price-original">
               ₹
-              {(displayVariant?.salePrice +
-                (displayVariant?.salePrice * displayVariant?.tax) / 100) } 
+              {Number(displayVariant?.salePrice +
+                (displayVariant?.salePrice * displayVariant?.tax) / 100).toFixed(2) } 
             </p>
           </div>
           <div className="quantity-container" aria-label="Quantity selector">
@@ -338,11 +375,11 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
             <h2 className="section-title">Description</h2>
             <p className="description-text">
               {showFullDescription
-                ? product?.description
-                : truncateDescription(product?.description, 50)}
+                ? productData?.description
+                : truncateDescription(productData?.description, 50)}
             </p>
-            {product?.description &&
-              product?.description?.split(/\s+/)?.length > 50 && (
+            {productData?.description &&
+              productData?.description?.split(/\s+/)?.length > 50 && (
                 <a href="#product-description">
                   <button
                     className="description-text-knowmore-btn"
@@ -363,7 +400,7 @@ const ProductDetails = ({ product, selectedVariant, onVariantSelect }) => {
               </span>
             </div>
             {isExpanded && (
-              <div className="Disclaimer-content">{product.description}</div>
+              <div className="Disclaimer-content">{productData.description}</div>
             )}
           </div>
         </div>

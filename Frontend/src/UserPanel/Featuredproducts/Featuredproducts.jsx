@@ -34,32 +34,9 @@ const FeaturedProducts = () => {
         if (!res.ok) throw new Error("Failed to fetch products");
 
         const productsData = await res.json();
-        console.log(" products:", productsData);
+        console.log("Fetched products:", productsData);
 
-        // const flattened = productsData.flatMap((product) =>
-        //   product.variants.map((variant, index) => ({
-        //     id: `${product._id}-${index}`,
-        //     data: {
-        //       _id: product._id,
-        //       title: product.title,
-        //       description: product.description,
-        //       sku: product.sku,
-        //       tags: product.tags,
-        //       stoneUsedImage: product.stoneUsedImage,
-        //       rating: product.rating,
-        //       // frontImage: product.frontImage,
-        //       otherimages: product.otherimages,
-        //       healingImage: product.healingImage,
-        //       benefits: product.benefits,
-        //       whyChoose: product.whyChoose,
-        //       waysToClean: product.waysToClean,
-        //       whoWear: product.whoWear,
-        //       whereHowWear: product.whereHowWear,
-        //       productDescriptions: product.productDescriptions,
-        //       ...variant,
-        //     },
-        //   }))
-        // ).filter(product => product.data.featureProduct);
+        // Flatten products and their variants
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
@@ -72,7 +49,7 @@ const FeaturedProducts = () => {
               tags: product.tags,
               stoneUsedImage: product.stoneUsedImage,
               rating: product.rating,
-              frontImage: variant.frontImage || product.frontImage, // ensure fallback
+              frontImage: variant.frontImage || product.frontImage,
               backImage: variant.backImage || product.backImage,
               otherimages: product.otherimages,
               healingImage: product.healingImage,
@@ -83,16 +60,18 @@ const FeaturedProducts = () => {
               whereHowWear: product.whereHowWear,
               productDescriptions: product.productDescriptions,
               featureProduct: product.featureProduct,
-              ...variant, // place this after fixed fields to prevent overwriting
+              ...variant,
             },
           }))
         );
 
         setAllProducts(flattened);
 
+        // Filter featured products
         const featuredOnly = flattened.filter(
           (product) => product.data.featureProduct
         );
+        console.log("Featured products:", featuredOnly);
         setFeaturedProducts(featuredOnly);
         setLoading(false);
       } catch (err) {

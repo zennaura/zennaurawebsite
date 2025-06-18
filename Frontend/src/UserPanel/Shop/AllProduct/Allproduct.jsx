@@ -24,27 +24,27 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
 
   // Group products by baseId (for display)
   const groupedProducts = useMemo(() => {
-    const productMap = new Map();
+  const productMap = new Map();
     filteredProducts.forEach((variant) => {
-      const baseId = variant.id.split("-")[0];
-      if (!productMap.has(baseId)) {
-        productMap.set(baseId, variant); // Only keep the first variant
-      }
-    });
-    return Array.from(productMap.values());
+    const baseId = variant.id.split("-")[0];
+    if (!productMap.has(baseId)) {
+      productMap.set(baseId, variant); // Only keep the first variant
+    }
+  });
+  return Array.from(productMap.values());
   }, [filteredProducts]);
 
   // Sorting
   const sortedProducts = useMemo(() => {
-    const toSort = [...groupedProducts];
-    switch (sortOption) {
-      case "price-low-high":
-        return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
-      case "price-high-low":
-        return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
-      default:
-        return toSort;
-    }
+  const toSort = [...groupedProducts];
+  switch (sortOption) {
+    case "price-low-high":
+      return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
+    case "price-high-low":
+      return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
+    default:
+      return toSort;
+  }
   }, [groupedProducts, sortOption]);
 
   // Create a map of product base IDs to all their variants

@@ -34,6 +34,9 @@
 .total-reviews{
     width: 100%;
 }
+.reviews-page-stars1,.reviews-page-stars2,.reviews-page-stars3,.reviews-page-stars4,.reviews-page-stars5{
+    font-size: 1.4rem;
+}
 .reviews-star{
     font-size: 1.5rem;
     color: goldenrod;

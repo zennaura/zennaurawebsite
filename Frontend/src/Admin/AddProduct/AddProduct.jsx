@@ -58,6 +58,10 @@ const AddProduct = () => {
 
   // Product Description and Images State
   const [productDescription, setProductDescription] = useState("");
+  const [healingFirst, setHealingFirst] = useState("");
+  const [healingSecond, setHealingSecond] = useState("");
+  const [healingThird, setHealingThird] = useState("");
+  const [healingFourth, setHealingFourth] = useState("");
   const [images, setImages] = useState({
     descriptionImage: null,
 
@@ -234,7 +238,12 @@ const AddProduct = () => {
         title: productDescription,
         image: images.descriptionImage || null,
       },
-
+      healingProperties: {
+        first: healingFirst,
+        second: healingSecond,
+        third: healingThird,
+        fourth: healingFourth
+      },
       variants: variants.map((variant) => ({
         ...variant,
         variantname: variant.variantname,
@@ -609,6 +618,38 @@ const AddProduct = () => {
           </div>
         </div>
 
+        <div>
+            <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-3">Healing Properties</h2>
+
+            <textarea
+              value={healingFirst}
+              onChange={(e) => setHealingFirst(e.target.value)}
+              placeholder="Enter first box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+          />
+          <textarea
+              value={healingSecond}
+              onChange={(e) => setHealingSecond(e.target.value)}
+              placeholder="Enter second box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+          />
+          <textarea
+              value={healingThird}
+              onChange={(e) => setHealingThird(e.target.value)}
+              placeholder="Enter third box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+          />
+          <textarea
+              value={healingFourth}
+              onChange={(e) => setHealingFourth(e.target.value)}
+              placeholder="Enter fourth box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+            />
+          </div>
         {/* <!-- Posters --> */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 !mb-2">Posters</h2>
@@ -873,7 +914,7 @@ const AddProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(index, 'specifications.color', e.target.value)
                   }
-                  placeholder="Color"
+                  placeholder="SKU"
                   className="border border-gray-300 rounded-md !p-2"
                 />
                 {/* Weight */}

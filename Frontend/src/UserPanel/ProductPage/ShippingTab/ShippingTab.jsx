@@ -71,7 +71,7 @@ const ShippingTabs = () => {
                         </div>
 
                         <div className="delivery-time-info">
-                            <h3>ESTIMATED DELIVERY TIME</h3>
+                            <h3>Estimated Delivery Time</h3>
                             <p>Please Allow Up To 1-2 Working Days For Order Processing.</p>
 
                             <ul className="delivery-times">

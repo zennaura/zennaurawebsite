@@ -36,6 +36,10 @@ const UpdateProduct = () => {
   const [stoneImage, setStoneImage] = useState(null);
   const [stones, setStones] = useState([]);
   const [productDescription, setProductDescription] = useState("");
+  const [healingFirst, setHealingFirst] = useState("");
+    const [healingSecond, setHealingSecond] = useState("");
+    const [healingThird, setHealingThird] = useState("");
+    const [healingFourth, setHealingFourth] = useState("");
 
   const [images, setImages] = useState({
     descriptionImage: null,
@@ -74,6 +78,10 @@ const UpdateProduct = () => {
       setIntenttags(Array.isArray(productData.Intenttags) ? productData.Intenttags : []);
       setStones(Array.isArray(productData.stoneUsedImage) ? productData.stoneUsedImage : []);
       setProductDescription(productData.productDescriptions?.title || "");
+      setHealingFirst(productData.healingProperties?.first || "");
+      setHealingSecond(productData.healingProperties?.second || "");
+      setHealingThird(productData.healingProperties?.third || "");
+      setHealingFourth(productData.healingProperties?.fourth || "");
 
       setImages({
         descriptionImage: productData.productDescriptions?.image || null,
@@ -411,6 +419,12 @@ const UpdateProduct = () => {
       productDescriptions: {
         title: productDescription,
         image: images.descriptionImage,
+      },
+      healingProperties: {
+        first:healingFirst,
+          second:healingSecond,
+        third:healingThird,
+        fourth:healingFourth
       },
       variants: variants.map((variant) => ({
         ...variant,
@@ -811,7 +825,7 @@ const UpdateProduct = () => {
           {/* Product Images */}
           <div>
             <h2 className="text-xl font-semibold text-gray-800 !mb-2">
-              Product Comman Images
+              Product Common Images
             </h2>
 
             {/* Other Images */}
@@ -842,6 +856,39 @@ const UpdateProduct = () => {
             </div>
           </div>
         </div>
+
+          <div>
+            <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-3">Healing Properties</h2>
+
+            <textarea
+              value={healingFirst}
+              onChange={(e) => setHealingFirst(e.target.value)}
+              placeholder="Enter first box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+          />
+          <textarea
+              value={healingSecond}
+              onChange={(e) => setHealingSecond(e.target.value)}
+              placeholder="Enter second box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+          />
+          <textarea
+              value={healingThird}
+              onChange={(e) => setHealingThird(e.target.value)}
+              placeholder="Enter third box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+          />
+          <textarea
+              value={healingFourth}
+              onChange={(e) => setHealingFourth(e.target.value)}
+              placeholder="Enter fourth box"
+              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+              // rows={4}
+            />
+          </div>
 
         {/* Posters */}
         <div>
@@ -1256,7 +1303,7 @@ const UpdateProduct = () => {
                       e.target.value
                     )
                   }
-                  placeholder="Color"
+                  placeholder="SKU"
                   className="border border-gray-300 rounded-md !p-2"
                 />
                 <input
