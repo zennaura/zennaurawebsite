@@ -492,6 +492,15 @@ router.get('/concerns', async (req, res) => {
   }
 });
 
+router.get('/chakra', async (req, res) => {
+  try {
+    const chakra = await Product.distinct('Chakratags');
+    res.json(chakra);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch chakra tags' });
+  }
+});
+
 // GET: Unique Intents
 router.get('/intents', async (req, res) => {
   try {
@@ -514,10 +523,27 @@ const getUniqueIntents = (parentCategory) => async (req, res) => {
   }
 };
 
+const getUniqueChakra = (parentCategory) => async (req, res) => {
+  try {
+    const products = await Product.find({ parentCategory }, 'Chakratags');
+    const allChakra = products.flatMap(p => p.Chakratags || []);
+    const uniqueChakra = [...new Set(allChakra)];
+    res.json(uniqueChakra);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 // Routes
 router.get('/intents/skin-care', getUniqueIntents('Skin Care'));
 router.get('/intents/aura-jewels', getUniqueIntents('Aura Jewels'));
 router.get('/intents/divine-crystals', getUniqueIntents('Divine Crystals'));
 router.get('/intents/sacred-rituals', getUniqueIntents('Sacred Rituals'));
+
+router.get('/chakra/skin-care', getUniqueChakra('Skin Care'));
+router.get('/chakra/aura-jewels', getUniqueChakra('Aura Jewels'));
+router.get('/chakra/divine-crystals', getUniqueChakra('Divine Crystals'));
+router.get('/chakra/sacred-rituals', getUniqueChakra('Sacred Rituals'));
+
 
 module.exports = router;

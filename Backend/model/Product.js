@@ -42,6 +42,7 @@ const ProductSchema = new mongoose.Schema({
   // .concern add in 
   tags: [String],
   Intenttags: [String],
+  Chakratags:[String],
   stoneUsedImage: [
     {
       title: String,
@@ -63,7 +64,7 @@ const ProductSchema = new mongoose.Schema({
     title: String,
     image: String
   },
-  
+
   healingProperties: {
     first: String,
     second: String,
