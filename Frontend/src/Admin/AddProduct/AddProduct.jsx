@@ -27,6 +27,7 @@ const AddProduct = () => {
   const [tags, setTags] = useState([]);
   // Intent Tags State
   const [Intenttags, setIntenttags] = useState([]);
+  const [Chakratags, setChakratags] = useState([]);
   const [tagInput, setTagInput] = useState(""); // New state for tag input
 
   // Stones Used
@@ -216,9 +217,9 @@ const AddProduct = () => {
       title: basicDetails.title,
       description: basicDetails.description,
       sku: basicDetails.sku,
-
       tags,
       Intenttags,
+      Chakratags,
       stoneUsedImage: stones.map((stone) => ({
         title: stone.title,
         image: stone.image,
@@ -422,6 +423,59 @@ const AddProduct = () => {
               className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
+        </div>
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-2">Product Chakra Tags</h2>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            {/* Tag Input Field */}
+            <input
+              type="text"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                  setChakratags([...Chakratags, e.target.value.trim()]);
+                  e.target.value = ''; // Clear the input field
+                }
+              }}
+              placeholder="Enter a tag"
+              className="flex-1 border border-gray-300 rounded-md !p-2 md:p-3 text-sm md:text-base"
+            />
+
+            {/* Add Tag Button */}
+            <button
+              type="button"
+              onClick={() => {
+                const inputField = document.querySelector('input[placeholder="Enter a tag"]');
+                if (inputField && inputField.value.trim() !== '') {
+                  setChakratags([...Chakratags, inputField.value.trim()]);
+                  inputField.value = ''; // Clear the input field
+                }
+              }}
+              className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 text-sm md:text-base cursor-pointer"
+            >
+              Add
+            </button>
+          </div>
+
+          {/* List of Added Tags */}
+          <div id="tagList" className="mt-2 flex gap-2 flex-wrap">
+            {Chakratags.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-blue-100 text-blue-800 text-sm font-medium !mr-2 !px-2.5 !py-0.5 rounded-full flex items-center gap-2"
+              >
+                {tag} {/* Display the tag */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setChakratags(Chakratags.filter((_, i) => i !== index)); // Remove the tag
+                  }}
+                  className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
+                >
+                  x
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
         {/* <!-- Concern Tags --> */}
         <div>

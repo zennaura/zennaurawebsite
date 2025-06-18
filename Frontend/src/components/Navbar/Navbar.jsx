@@ -38,10 +38,15 @@ const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState("main");
   const [categoryData, setCategoryData] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
+  const [availableChakra, setAvailableChakra] = useState([]);
   const [auraIntents, setAuraIntents] = useState([]);
+  const [auraChakra, setAuraChakra] = useState([]);
   const [skinCareIntents, setSkinCareIntent] = useState([]);
+  const [skinCareChakra, setSkinCareChakra] = useState([]);
   const [divineIntents, setDivineIntents] = useState([]);
+  const [divineChakra, setDivineChakra] = useState([]);
   const [sacredIntents, setSacredIntent] = useState([]);
+  const [sacredChakra, setSacredChakra] = useState([]);
 
   // Function to fetch intents
   const fetchAuraJewelIntents = async () => {
@@ -88,6 +93,52 @@ const Navbar = () => {
     }
   };
 
+
+  // Function to fetch Chakra
+  const fetchAuraJewelChakra = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/chakra/aura-jewels`
+      );
+      setAuraChakra(res.data);
+    } catch (error) {
+      console.error("Failed to fetch intents:", error);
+    }
+  };
+
+  const fetchSkinCareChakra = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/chakra/skin-care`
+      );
+      setSkinCareChakra(res.data);
+    } catch (error) {
+      console.error("Failed to fetch intents:", error);
+    }
+  };
+
+  const fetchDivineChakra= async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/chakra/divine-crystals`
+      );
+      setDivineChakra(res.data);
+    } catch (error) {
+      console.error("Failed to fetch intents:", error);
+    }
+  };
+
+  const fetchSacredChakra = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/chakra/sacred-rituals`
+      );
+      setSacredChakra(res.data);
+    } catch (error) {
+      console.error("Failed to fetch intents:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -113,12 +164,29 @@ const Navbar = () => {
       }
     };
 
+    const fetchChakra = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_LINK}/api/chakra`
+        );
+        const data = await res.json();
+        setAvailableChakra(data);
+      } catch (err) {
+        console.error("Failed to fetch intents:", err);
+      }
+    };
+
     fetchCategories();
     fetchIntents();
+    fetchChakra();
     fetchAuraJewelIntents();
     fetchSkinCareIntents();
     fetchDivineIntents();
     fetchSacredIntents();
+    fetchAuraJewelChakra();
+    fetchSkinCareChakra();
+    fetchDivineChakra();
+    fetchSacredChakra();
   }, []);
 
   useEffect(() => {
@@ -484,13 +552,13 @@ const Navbar = () => {
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
-                      {skinCareIntents.map((intent) => (
+                      {skinCareChakra.map((chakra) => (
                         <Link
                           to="/shop"
-                          state={{ autoSelects: intent }}
-                          key={intent}
+                          state={{ autoSelects: chakra }}
+                          key={chakra}
                         >
-                          <li key={intent + "Skin Care"}>{intent}</li>
+                          <li key={chakra + "Skin Care"}>{chakra}</li>
                         </Link>
                       ))}
                     </ul>
@@ -562,7 +630,7 @@ const Navbar = () => {
                           key={intent}
                         >
                           <li
-                            key={intent + "Skin Care"}
+                            key={intent + "Aura Jewels"}
                             style={{ paddingBottom: "8px" }}
                           >
                             {intent}
@@ -574,17 +642,17 @@ const Navbar = () => {
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
-                      {auraIntents.map((intent) => (
+                      {auraChakra.map((chakra) => (
                         <Link
                           to="/shop"
-                          state={{ autoSelects: intent }}
-                          key={intent}
+                          state={{ autoSelects: chakra }}
+                          key={chakra}
                         >
                           <li
-                            key={intent + "Skin Care"}
+                            key={chakra + "Aura Jewels"}
                             style={{ paddingBottom: "8px" }}
                           >
-                            {intent}
+                            {chakra}
                           </li>
                         </Link>
                       ))}
@@ -659,9 +727,9 @@ const Navbar = () => {
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
-                      {divineIntents.map((intent) => (
-                        <Link to="/shop" state={{ autoSelects: intent }}>
-                          <li key={intent + "Divine Crystals"}>{intent}</li>
+                      {divineChakra.map((chakra) => (
+                        <Link to="/shop" state={{ autoSelects: chakra }}>
+                          <li key={chakra + "Divine Crystals"}>{chakra}</li>
                         </Link>
                       ))}
                     </ul>
@@ -733,9 +801,9 @@ const Navbar = () => {
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
-                      {sacredIntents.map((intent) => (
-                        <Link to="/shop" state={{ autoSelects: intent }}>
-                          <li key={intent + "Sacred Rituals"}>{intent}</li>
+                      {sacredChakra.map((chakra) => (
+                        <Link to="/shop" state={{ autoSelects: chakra }}>
+                          <li key={chakra + "Sacred Rituals"}>{chakra}</li>
                         </Link>
                       ))}
                     </ul>

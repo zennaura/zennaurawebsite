@@ -190,36 +190,36 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
         {activeTab === "healing" && healingImage && (
           <div className="product-tab-healing">
             {/* <img src={healingImage} alt="Healing properties" /> */}
-            <div className="max-w-6xl mx-auto">
+            <div className="!max-w-8xl mx-auto">
         <div className="grid grid-cols-2 gap-1 bg-gray-800 p-1 rounded-lg mb-8">
           {/* Top Left */}
-          <div className="bg-white p-12 rounded-tl-lg flex flex-col items-center justify-center text-center min-h-80">
+          <div className="bg-white p-12 rounded-tl-lg flex flex-col items-center justify-center text-center min-h-50">
             {/* <div className="text-6xl mb-6">{content.topLeft.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs">
+            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
               {healingProperties?.first || " "}
             </p>
           </div>
           
           {/* Top Right */}
-          <div className="bg-white p-12 rounded-tr-lg flex flex-col items-center justify-center text-center min-h-80">
+          <div className="bg-white p-12 rounded-tr-lg flex flex-col items-center justify-center text-center min-h-50">
             {/* <div className="text-6xl mb-6">{content.topRight.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs">
+            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
               {healingProperties?.second || " "}
             </p>
           </div>
           
           {/* Bottom Left */}
-          <div className="bg-white p-12 rounded-bl-lg flex flex-col items-center justify-center text-center min-h-80">
+          <div className="bg-white p-12 rounded-bl-lg flex flex-col items-center justify-center text-center min-h-50">
             {/* <div className="text-6xl mb-6">{content.bottomLeft.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs">
+            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
               {healingProperties?.third || " "}
             </p>
           </div>
           
           {/* Bottom Right */}
-          <div className="bg-white p-12 rounded-br-lg flex flex-col items-center justify-center text-center min-h-80">
+          <div className="bg-white p-12 rounded-br-lg flex flex-col items-center justify-center text-center min-h-50">
             {/* <div className="text-6xl mb-6">{content.bottomRight.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs">
+            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
               {healingProperties?.fourth || " "}
             </p>
           </div>

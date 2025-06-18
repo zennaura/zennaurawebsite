@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {useUser} from '../../components/AuthContext/AuthContext'
+import { useUser } from "../../components/AuthContext/AuthContext";
 
 const UpdateProduct = () => {
   const { user } = useUser();
@@ -12,8 +12,8 @@ const UpdateProduct = () => {
   const [error, setError] = useState(null);
 
   // Cloudinary configuration
-  const CLOUD_NAME = 'zennaura';
-  const UPLOAD_PRESET = 'ml_default';
+  const CLOUD_NAME = "zennaura";
+  const UPLOAD_PRESET = "ml_default";
 
   // Form state
   const [category, setCategory] = useState({
@@ -32,14 +32,16 @@ const UpdateProduct = () => {
 
   const [tags, setTags] = useState([]);
   const [Intenttags, setIntenttags] = useState([]);
+  const [Chakratags, setChakratags] = useState([]);
+
   const [stoneName, setStoneName] = useState("");
   const [stoneImage, setStoneImage] = useState(null);
   const [stones, setStones] = useState([]);
   const [productDescription, setProductDescription] = useState("");
   const [healingFirst, setHealingFirst] = useState("");
-    const [healingSecond, setHealingSecond] = useState("");
-    const [healingThird, setHealingThird] = useState("");
-    const [healingFourth, setHealingFourth] = useState("");
+  const [healingSecond, setHealingSecond] = useState("");
+  const [healingThird, setHealingThird] = useState("");
+  const [healingFourth, setHealingFourth] = useState("");
 
   const [images, setImages] = useState({
     descriptionImage: null,
@@ -64,19 +66,26 @@ const UpdateProduct = () => {
         parent: productData.parentCategory || "",
         sub: productData.subCategory || "",
         subSub: productData.subSubCategory || "",
-        category: productData.category || ""
+        category: productData.category || "",
       });
 
       setBasicDetails({
         name: productData.name || "",
         title: productData.title || "",
         description: productData.description || "",
-        sku: productData.sku || ""
+        sku: productData.sku || "",
       });
 
       setTags(Array.isArray(productData.tags) ? productData.tags : []);
-      setIntenttags(Array.isArray(productData.Intenttags) ? productData.Intenttags : []);
-      setStones(Array.isArray(productData.stoneUsedImage) ? productData.stoneUsedImage : []);
+      setIntenttags(
+        Array.isArray(productData.Intenttags) ? productData.Intenttags : []
+      );
+      setChakratags(Array.isArray(productData.Chakratags) ? productData.Chakratags : [])
+      setStones(
+        Array.isArray(productData.stoneUsedImage)
+          ? productData.stoneUsedImage
+          : []
+      );
       setProductDescription(productData.productDescriptions?.title || "");
       setHealingFirst(productData.healingProperties?.first || "");
       setHealingSecond(productData.healingProperties?.second || "");
@@ -85,7 +94,9 @@ const UpdateProduct = () => {
 
       setImages({
         descriptionImage: productData.productDescriptions?.image || null,
-        otherimages: Array.isArray(productData.otherimages) ? productData.otherimages : []
+        otherimages: Array.isArray(productData.otherimages)
+          ? productData.otherimages
+          : [],
       });
 
       setPosters({
@@ -94,35 +105,35 @@ const UpdateProduct = () => {
         whyChoose: productData.whyChoose || null,
         waysToClean: productData.waysToClean || null,
         whoWear: productData.whoWear || null,
-        howToWear: productData.whereHowWear || null
+        howToWear: productData.whereHowWear || null,
       });
 
       setVariants(
         Array.isArray(productData.variants)
-          ? productData.variants.map(v => ({
-            ...v,
-            variantname: String(v.variantname || ""),
-            size: String(v.size || ""),
-            tax: String(v.tax || ""),
-            salePrice: String(v.salePrice || ""),
-            discount: String(v.discount || ""),
-            costPrice: String(v.costPrice || ""),
-            stock: String(v.stock || ""),
-            frontImage: v.frontImage || null,
-            backImage: v.backImage || null,
-            images: Array.isArray(v.variantsimages) ? v.variantsimages : [],
-            specifications: {
-              material: v.specifications?.material || "",
-              productType: v.specifications?.productType || "",
-              beadSize: v.specifications?.beadSize || "",
-              size: v.specifications?.size || "",
-              color: v.specifications?.color || "",
-              weight: v.specifications?.weight || "",
-              packaging: v.specifications?.packaging || ""
-            },
-            featureProduct: Boolean(v.featureProduct),
-            bestSeller: Boolean(v.bestSeller)
-          }))
+          ? productData.variants.map((v) => ({
+              ...v,
+              variantname: String(v.variantname || ""),
+              size: String(v.size || ""),
+              tax: String(v.tax || ""),
+              salePrice: String(v.salePrice || ""),
+              discount: String(v.discount || ""),
+              costPrice: String(v.costPrice || ""),
+              stock: String(v.stock || ""),
+              frontImage: v.frontImage || null,
+              backImage: v.backImage || null,
+              images: Array.isArray(v.variantsimages) ? v.variantsimages : [],
+              specifications: {
+                material: v.specifications?.material || "",
+                productType: v.specifications?.productType || "",
+                beadSize: v.specifications?.beadSize || "",
+                size: v.specifications?.size || "",
+                color: v.specifications?.color || "",
+                weight: v.specifications?.weight || "",
+                packaging: v.specifications?.packaging || "",
+              },
+              featureProduct: Boolean(v.featureProduct),
+              bestSeller: Boolean(v.bestSeller),
+            }))
           : []
       );
 
@@ -130,7 +141,7 @@ const UpdateProduct = () => {
     } else {
       setError("No product data received");
       setLoading(false);
-      navigate('/admin-view-products');
+      navigate("/admin-view-products");
     }
   }, [productData, navigate]);
 
@@ -164,18 +175,24 @@ const UpdateProduct = () => {
     if (!url) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/cloudnaryimg/delete-img`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ imageUrl: url }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/cloudnaryimg/delete-img`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ imageUrl: url }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Backend deletion error:", errorData);
-        return { success: false, error: errorData.error || "Failed to delete image" };
+        return {
+          success: false,
+          error: errorData.error || "Failed to delete image",
+        };
       }
 
       return await response.json();
@@ -230,8 +247,8 @@ const UpdateProduct = () => {
         // Only after successful upload, delete old images
         if (images.otherimages && images.otherimages.length > 0) {
           await Promise.all(
-            images.otherimages.map(url =>
-              deleteFromCloudinary(url).catch(e => null)
+            images.otherimages.map((url) =>
+              deleteFromCloudinary(url).catch((e) => null)
             )
           );
         }
@@ -241,7 +258,7 @@ const UpdateProduct = () => {
         const url = await uploadToCloudinary(files[0]);
         // Only after successful upload, delete old image
         if (images[fieldName]) {
-          await deleteFromCloudinary(images[fieldName]).catch(e => null);
+          await deleteFromCloudinary(images[fieldName]).catch((e) => null);
         }
         setImages({ ...images, [fieldName]: url });
       }
@@ -261,7 +278,7 @@ const UpdateProduct = () => {
       const url = await uploadToCloudinary(file);
       // Only after successful upload, delete old poster
       if (posters[fieldName]) {
-        await deleteFromCloudinary(posters[fieldName]).catch(e => null);
+        await deleteFromCloudinary(posters[fieldName]).catch((e) => null);
       }
       setPosters({ ...posters, [fieldName]: url });
     } catch (error) {
@@ -273,32 +290,32 @@ const UpdateProduct = () => {
   // Variant handlers
   const handleAddVariant = () => {
     // In the useEffect initialization:
-    setVariants(prevVariants => [
-    ...prevVariants,
-    {
-      variantname: "",
-      size: "",
-      tax: "",
-      salePrice: "",
-      discount: "",
-      costPrice: "",
-      stock: "",
-      frontImage: null,
-      backImage: null,
-      variantsimages: [],
-      specifications: {
-        material: "",
-        productType: "",
-        beadSize: "",
+    setVariants((prevVariants) => [
+      ...prevVariants,
+      {
+        variantname: "",
         size: "",
-        color: "",
-        weight: "",
-        packaging: "",
+        tax: "",
+        salePrice: "",
+        discount: "",
+        costPrice: "",
+        stock: "",
+        frontImage: null,
+        backImage: null,
+        variantsimages: [],
+        specifications: {
+          material: "",
+          productType: "",
+          beadSize: "",
+          size: "",
+          color: "",
+          weight: "",
+          packaging: "",
+        },
+        featureProduct: false,
+        bestSeller: false,
       },
-      featureProduct: false,
-      bestSeller: false,
-    }
-  ]);
+    ]);
   };
 
   const handleRemoveVariant = (index) => {
@@ -340,9 +357,8 @@ const UpdateProduct = () => {
       // Clean up old images (fire and forget)
       if (oldImages.length > 0) {
         Promise.all(
-          oldImages.map(url =>
-            deleteFromCloudinary(url).catch(e => null)
-          ));
+          oldImages.map((url) => deleteFromCloudinary(url).catch((e) => null))
+        );
       }
     } catch (error) {
       console.error("Variant image upload error:", error);
@@ -387,7 +403,11 @@ const UpdateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!basicDetails.description || !basicDetails.sku || variants.length === 0) {
+    if (
+      !basicDetails.description ||
+      !basicDetails.sku ||
+      variants.length === 0
+    ) {
       alert("Please fill in all required fields and add at least one variant.");
       return;
     }
@@ -405,6 +425,7 @@ const UpdateProduct = () => {
 
       tags,
       Intenttags,
+      Chakratags,
       stoneUsedImage: stones,
 
       otherimages: images.otherimages,
@@ -421,10 +442,10 @@ const UpdateProduct = () => {
         image: images.descriptionImage,
       },
       healingProperties: {
-        first:healingFirst,
-          second:healingSecond,
-        third:healingThird,
-        fourth:healingFourth
+        first: healingFirst,
+        second: healingSecond,
+        third: healingThird,
+        fourth: healingFourth,
       },
       variants: variants.map((variant) => ({
         ...variant,
@@ -437,18 +458,21 @@ const UpdateProduct = () => {
         variantsimages: variant.variantsimages || [], // Fixed field name
         specifications: variant.specifications,
         featureProduct: variant.featureProduct,
-        bestSeller: variant.bestSeller
+        bestSeller: variant.bestSeller,
       })),
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${productData._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProductData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/products/${productData._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProductData),
+        }
+      );
 
       if (response.ok) {
         setSuccess(true);
@@ -484,23 +508,26 @@ const UpdateProduct = () => {
     );
   }
 
-  
-  if (user?.userRole !== 'admin') {
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h2>
-        <p className="text-gray-700 mb-4">This page is not accessible by you.</p>
-        <button 
-          onClick={() => navigate('/')}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Go to Home
-        </button>
+  if (user?.userRole !== "admin") {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">
+            Access Denied
+          </h2>
+          <p className="text-gray-700 mb-4">
+            This page is not accessible by you.
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          >
+            Go to Home
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
   return (
     <div className="bg-gray-50 flex justify-center items-center !p-6">
       {success && (
@@ -545,7 +572,9 @@ const UpdateProduct = () => {
             <input
               type="text"
               value={category.sub}
-              onChange={(e) => setCategory({ ...category, sub: e.target.value })}
+              onChange={(e) =>
+                setCategory({ ...category, sub: e.target.value })
+              }
               className="!mt-1 block !w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
@@ -560,7 +589,6 @@ const UpdateProduct = () => {
               className="!mt-1 block !w-full border border-gray-300 rounded-md !p-2"
             />
           </label>
-
         </div>
 
         {/* Basic Details */}
@@ -588,7 +616,10 @@ const UpdateProduct = () => {
               type="text"
               value={basicDetails.description}
               onChange={(e) =>
-                setBasicDetails({ ...basicDetails, description: e.target.value })
+                setBasicDetails({
+                  ...basicDetails,
+                  description: e.target.value,
+                })
               }
               className="!mt-1 block !w-full border border-gray-300 rounded-md !p-2"
               required
@@ -620,6 +651,62 @@ const UpdateProduct = () => {
             />
           </label>
         </div>
+
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">
+            Product Chakra Tags
+          </h2>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <input
+              type="text"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && e.target.value.trim() !== "") {
+                  setChakratags([...Chakratags, e.target.value.trim()]);
+                  e.target.value = "";
+                }
+              }}
+              placeholder="Enter a tag"
+              className="flex-1 border border-gray-300 rounded-md !p-2 md:!p-3 !text-sm md:text-base"
+            />
+
+            <button
+              type="button"
+              onClick={() => {
+                const inputField = document.querySelector(
+                  'input[placeholder="Enter a tag"]'
+                );
+                if (inputField && inputField.value.trim() !== "") {
+                  setChakratags([...Chakratags, inputField.value.trim()]);
+                  inputField.value = "";
+                }
+              }}
+              className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 !text-sm md:text-base"
+            >
+              Add
+            </button>
+          </div>
+
+          <div id="tagList" className="!mt-2 flex !gap-2 flex-wrap">
+            {Chakratags.map((Chakratag, index) => (
+              <span
+                key={index}
+                className="bg-blue-100 text-blue-800 text-sm font-medium !mr-2 !px-2.5 !py-0.5 rounded-full flex items-center gap-2"
+              >
+                {Chakratag}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setChakratags(Chakratags.filter((_, i) => i !== index));
+                  }}
+                  className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
+                >
+                  x
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
+
 
         {/*Concern Tags */}
         <div>
@@ -764,7 +851,10 @@ const UpdateProduct = () => {
 
           <div id="stoneList" className="!mt-2 flex 1gap-2 flex-wrap">
             {stones.map((stone, index) => (
-              <div key={index} className="flex items-center !gap-2 bg-blue-100 rounded-full !px-3 !py-1">
+              <div
+                key={index}
+                className="flex items-center !gap-2 bg-blue-100 rounded-full !px-3 !py-1"
+              >
                 {stone.image && (
                   <img
                     src={stone.image}
@@ -814,7 +904,9 @@ const UpdateProduct = () => {
                 />
                 <button
                   type="button"
-                  onClick={() => setImages({ ...images, descriptionImage: null })}
+                  onClick={() =>
+                    setImages({ ...images, descriptionImage: null })
+                  }
                   className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                 >
                   Remove
@@ -857,45 +949,49 @@ const UpdateProduct = () => {
           </div>
         </div>
 
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-3">Healing Properties</h2>
+        <div>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-3">
+            Healing Properties
+          </h2>
 
-            <textarea
-              value={healingFirst}
-              onChange={(e) => setHealingFirst(e.target.value)}
-              placeholder="Enter first box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
+          <textarea
+            value={healingFirst}
+            onChange={(e) => setHealingFirst(e.target.value)}
+            placeholder="Enter first box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
           />
           <textarea
-              value={healingSecond}
-              onChange={(e) => setHealingSecond(e.target.value)}
-              placeholder="Enter second box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
+            value={healingSecond}
+            onChange={(e) => setHealingSecond(e.target.value)}
+            placeholder="Enter second box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
           />
           <textarea
-              value={healingThird}
-              onChange={(e) => setHealingThird(e.target.value)}
-              placeholder="Enter third box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
+            value={healingThird}
+            onChange={(e) => setHealingThird(e.target.value)}
+            placeholder="Enter third box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
           />
           <textarea
-              value={healingFourth}
-              onChange={(e) => setHealingFourth(e.target.value)}
-              placeholder="Enter fourth box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
-            />
-          </div>
+            value={healingFourth}
+            onChange={(e) => setHealingFourth(e.target.value)}
+            placeholder="Enter fourth box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
+          />
+        </div>
 
         {/* Posters */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 !mb-2">Posters</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             <div className="flex flex-col items-center !space-y-2">
-              <label className="text-sm font-medium text-gray-700">Healing</label>
+              <label className="text-sm font-medium text-gray-700">
+                Healing
+              </label>
               <input
                 type="file"
                 onChange={(e) => handlePosterUpload(e, "healing")}
@@ -920,7 +1016,9 @@ const UpdateProduct = () => {
             </div>
 
             <div className="flex flex-col items-center !space-y-2">
-              <label className="text-sm font-medium text-gray-700">Benefits</label>
+              <label className="text-sm font-medium text-gray-700">
+                Benefits
+              </label>
               <input
                 type="file"
                 onChange={(e) => handlePosterUpload(e, "benefits")}
@@ -945,7 +1043,9 @@ const UpdateProduct = () => {
             </div>
 
             <div className="flex flex-col items-center !space-y-2">
-              <label className="text-sm font-medium text-gray-700">Why Choose</label>
+              <label className="text-sm font-medium text-gray-700">
+                Why Choose
+              </label>
               <input
                 type="file"
                 onChange={(e) => handlePosterUpload(e, "whyChoose")}
@@ -970,7 +1070,9 @@ const UpdateProduct = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-2">
-              <label className="text-sm font-medium text-gray-700">Ways to Clean</label>
+              <label className="text-sm font-medium text-gray-700">
+                Ways to Clean
+              </label>
               <input
                 type="file"
                 onChange={(e) => handlePosterUpload(e, "waysToClean")}
@@ -985,7 +1087,9 @@ const UpdateProduct = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => setPosters({ ...posters, waysToClean: null })}
+                    onClick={() =>
+                      setPosters({ ...posters, waysToClean: null })
+                    }
                     className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                   >
                     x
@@ -995,7 +1099,9 @@ const UpdateProduct = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-2">
-              <label className="text-sm font-medium text-gray-700">Who Wear</label>
+              <label className="text-sm font-medium text-gray-700">
+                Who Wear
+              </label>
               <input
                 type="file"
                 onChange={(e) => handlePosterUpload(e, "whoWear")}
@@ -1020,7 +1126,9 @@ const UpdateProduct = () => {
             </div>
 
             <div className="flex flex-col items-center !space-y-2">
-              <label className="text-sm font-medium text-gray-700">How to Wear</label>
+              <label className="text-sm font-medium text-gray-700">
+                How to Wear
+              </label>
               <input
                 type="file"
                 onChange={(e) => handlePosterUpload(e, "howToWear")}
@@ -1058,7 +1166,7 @@ const UpdateProduct = () => {
                   type="text"
                   value={variant.variantname}
                   onChange={(e) =>
-                    handleVariantChange(index, 'variantname', e.target.value)
+                    handleVariantChange(index, "variantname", e.target.value)
                   }
                   placeholder="Varient Name"
                   className="border border-gray-300 rounded-md !p-2"
@@ -1077,7 +1185,7 @@ const UpdateProduct = () => {
                   type="number"
                   value={variant.tax}
                   onChange={(e) =>
-                    handleVariantChange(index, 'tax', e.target.value)
+                    handleVariantChange(index, "tax", e.target.value)
                   }
                   placeholder="Tax on product"
                   className="border border-gray-300 rounded-md !p-2"
@@ -1131,10 +1239,12 @@ const UpdateProduct = () => {
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (file) {
-                      uploadToCloudinary(file).then(url => {
+                      uploadToCloudinary(file).then((url) => {
                         const updatedVariants = [...variants];
                         if (updatedVariants[index].frontImage) {
-                          deleteFromCloudinary(updatedVariants[index].frontImage);
+                          deleteFromCloudinary(
+                            updatedVariants[index].frontImage
+                          );
                         }
                         updatedVariants[index].frontImage = url;
                         setVariants(updatedVariants);
@@ -1174,10 +1284,12 @@ const UpdateProduct = () => {
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (file) {
-                      uploadToCloudinary(file).then(url => {
+                      uploadToCloudinary(file).then((url) => {
                         const updatedVariants = [...variants];
                         if (updatedVariants[index].backImage) {
-                          deleteFromCloudinary(updatedVariants[index].backImage);
+                          deleteFromCloudinary(
+                            updatedVariants[index].backImage
+                          );
                         }
                         updatedVariants[index].backImage = url;
                         setVariants(updatedVariants);
@@ -1219,7 +1331,10 @@ const UpdateProduct = () => {
                 />
                 <div className="flex gap-2 !mt-2">
                   {variant.images?.map((img, imgIndex) => (
-                    <div key={imgIndex} className="relative flex items-center gap-2">
+                    <div
+                      key={imgIndex}
+                      className="relative flex items-center gap-2"
+                    >
                       <img
                         src={img}
                         alt={`Variant ${index} image ${imgIndex}`}
@@ -1227,7 +1342,9 @@ const UpdateProduct = () => {
                       />
                       <button
                         type="button"
-                        onClick={() => handleRemoveVariantImage(index, imgIndex)}
+                        onClick={() =>
+                          handleRemoveVariantImage(index, imgIndex)
+                        }
                         className="bg-red-500 text-white !px-2 !py-1 rounded-md hover:bg-red-600"
                       >
                         x
@@ -1348,9 +1465,11 @@ const UpdateProduct = () => {
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${variant.featureProduct ? "bg-blue-600" : "bg-gray-300"
-                    } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.featureProduct ? "after:!translate-x-5" : ""
-                    }`}
+                  className={`relative inline-block w-10 h-5 rounded-full transition duration-200 ease-in-out ${
+                    variant.featureProduct ? "bg-blue-600" : "bg-gray-300"
+                  } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${
+                    variant.featureProduct ? "after:!translate-x-5" : ""
+                  }`}
                 ></span>
                 <span className="!text-sm text-gray-700">Feature Product</span>
               </label>
@@ -1360,18 +1479,16 @@ const UpdateProduct = () => {
                   type="checkbox"
                   checked={variant.bestSeller}
                   onChange={(e) =>
-                    handleVariantChange(
-                      index,
-                      "bestSeller",
-                      e.target.checked
-                    )
+                    handleVariantChange(index, "bestSeller", e.target.checked)
                   }
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${variant.bestSeller ? "bg-blue-600" : "bg-gray-300"
-                    } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.bestSeller ? "after:!translate-x-5" : ""
-                    }`}
+                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${
+                    variant.bestSeller ? "bg-blue-600" : "bg-gray-300"
+                  } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${
+                    variant.bestSeller ? "after:!translate-x-5" : ""
+                  }`}
                 ></span>
                 <span className="!text-sm text-gray-700">Best Seller</span>
               </label>
