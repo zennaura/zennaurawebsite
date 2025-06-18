@@ -63,7 +63,13 @@ const ProductSchema = new mongoose.Schema({
     title: String,
     image: String
   },
-
+  
+  healingProperties: {
+    first: String,
+    second: String,
+    third: String,
+    fourth:String
+  },
 
   otherimages: [String], // 3 images
 
