@@ -48,12 +48,13 @@ router.post("/products", async (req, res) => {
 // Get all products
 router.get('/products', async (req, res) => {
   try {
-    const { subCategory, concerns, intents } = req.query;
+    const { subCategory, concerns, intents,chakra } = req.query;
 
     const query = {};
 
     if (subCategory) query.subCategory = { $in: JSON.parse(subCategory) };
     if (concerns) query.tags = { $in: JSON.parse(concerns) };
+    if (chakra) query.Chakratags = { $in: JSON.parse(chakra) };
     if (intents) query.Intenttags = { $in: JSON.parse(intents) };
 
     const products = await Product.find(query); // if query is empty, returns all
