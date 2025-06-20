@@ -4,8 +4,10 @@ import "./Filter.css"; // Make sure this path is correct
 
 const Filter = ({
   productCategories, // These are now props, representing selected categories from Shop.jsx
+  categories = [], // <-- new prop
   concerns, // These are now props
   intents, // These are now props
+  chakra,
   priceRange, // This is now a prop from Shop.jsx
   rating, // This is now a prop from Shop.jsx
   onFilterChange,
@@ -14,16 +16,19 @@ const Filter = ({
   // Internal states for fetched filter options
   const [categoryData, setCategoryData] = useState([]);
   const [availableConcerns, setAvailableConcerns] = useState([]);
+  const [availableChakra, setAvailableChakra] = useState([]);
   const [availableIntents, setAvailableIntents] = useState([]);
 
   // Internal states for checkboxes, which will be synchronized by props from Shop.jsx
   // These still manage their own 'checked' status based on the props received.
   const [selectedConcerns, setSelectedConcerns] = useState(concerns); // Initialize from prop
+  const [selectedChakra, setSelectedChakra] = useState(chakra || []); // Initialize from prop
   const [selectedIntents, setSelectedIntents] = useState(intents); // Initialize from prop
 
   // Loading states for filter options
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isLoadingConcerns, setIsLoadingConcerns] = useState(true);
+  const [isLoadingChakra, setIsLoadingChakra] = useState(true);
   const [isLoadingIntents, setIsLoadingIntents] = useState(true);
 
   const prevAutoCheckRef = useRef([]);
@@ -33,6 +38,9 @@ const Filter = ({
   useEffect(() => {
     setSelectedConcerns(concerns);
   }, [concerns]);
+  useEffect(() => {
+    setSelectedChakra(chakra);
+  }, [chakra]);
 
   useEffect(() => {
     setSelectedIntents(intents);
@@ -43,7 +51,7 @@ const Filter = ({
     const prev = prevAutoCheckRef.current;
     const changed =
       autoCheck.length !== prev.length ||
-      autoCheck.some((val) => !prev.includes(val));
+      Array.isArray(autoCheck) && autoCheck.some((val) => !prev.includes(val));
 
     if (changed) {
       // For productCategories, we need to merge with existing selected ones from prop
@@ -53,6 +61,7 @@ const Filter = ({
       onFilterChange("fetchProducts", {
         productCategories: [...new Set([...productCategories, ...autoCheck])],
         concerns: [...new Set([...selectedConcerns, ...autoCheck])], // This might need refinement based on autoCheck content
+        chakra: [...new Set([...selectedChakra, ...autoCheck])], // This might need refinement based on autoCheck content
         intents: [...new Set([...selectedIntents, ...autoCheck])], // This might need refinement based on autoCheck content
         minPrice: priceRange[0],
         maxPrice: priceRange[1],
@@ -65,6 +74,7 @@ const Filter = ({
     onFilterChange,
     productCategories,
     selectedConcerns,
+    selectedChakra,
     selectedIntents,
     priceRange,
     rating,
@@ -102,6 +112,21 @@ const Filter = ({
       }
     };
 
+    const fetchChakra = async () => {
+      try {
+        setIsLoadingChakra(true);
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_LINK}/api/chakra`
+        );
+        const data = await res.json();
+        setAvailableChakra(data);
+      } catch (err) {
+        console.error("Failed to fetch Chakra:", err);
+      } finally {
+        setIsLoadingChakra(false);
+      }
+    };
+
     const fetchIntents = async () => {
       try {
         setIsLoadingIntents(true);
@@ -119,6 +144,7 @@ const Filter = ({
 
     fetchCategories();
     fetchConcerns();
+    fetchChakra();
     fetchIntents();
   }, []); // Empty dependency array means this runs once on mount
 
@@ -129,12 +155,28 @@ const Filter = ({
       const allSubcategories = categoryData.flatMap((parent) =>
         parent.subCategories.map((sub) => sub.subCategory)
       );
+      console.log("all sub categories", allSubcategories);
       const unique = [...new Set(allSubcategories)].filter(
-        (sub) => sub !== ""
+        (sub) => (sub || " ").trim() !== ""
       );
       setUniqueSubcategories(unique);
       console.log("Filter.jsx: Unique Subcategories loaded:", unique);
     }
+  }, [categoryData]);
+
+  // Helper: Map category to subcategory for quick lookup
+  const categoryToSubcategory = React.useMemo(() => {
+    const map = {};
+    categoryData.forEach((parent) => {
+      (parent.subCategories || []).forEach((sub) => {
+        (sub.categories || []).forEach((cat) => {
+          if ((cat || '').trim() !== '' && (sub.subCategory || '').trim() !== '') {
+            map[cat] = sub.subCategory;
+          }
+        });
+      });
+    });
+    return map;
   }, [categoryData]);
 
   // --- Handlers for Filter Changes ---
@@ -143,6 +185,7 @@ const Filter = ({
     onFilterChange("fetchProducts", {
       productCategories: productCategories, // Use prop for current categories
       concerns: selectedConcerns,
+      chakra:selectedChakra,
       intents: selectedIntents,
       minPrice: newValue[0],
       maxPrice: newValue[1],
@@ -156,6 +199,7 @@ const Filter = ({
     onFilterChange("fetchProducts", {
       productCategories: productCategories, // Use prop
       concerns: selectedConcerns,
+      chakra:selectedChakra,
       intents: selectedIntents,
       minPrice: priceRange[0], // Use prop
       maxPrice: priceRange[1], // Use prop
@@ -169,6 +213,7 @@ const Filter = ({
 
     let newSelectedProductCategories = [...productCategories]; // Start with prop value
     let newSelectedConcerns = [...selectedConcerns];
+    let newSelectedChakra = [...selectedChakra];
     let newSelectedIntents = [...selectedIntents];
 
     // Update the relevant selected array based on type
@@ -181,6 +226,11 @@ const Filter = ({
         ? [...newSelectedConcerns, value]
         : newSelectedConcerns.filter((v) => v !== value);
       setSelectedConcerns(newSelectedConcerns); // Update internal state for concerns
+    }else if (type === "chakra") {
+      newSelectedChakra = isChecked
+        ? [...newSelectedChakra, value]
+        : newSelectedChakra.filter((v) => v !== value);
+      setSelectedChakra(newSelectedChakra); // Update internal state for chakra
     } else if (type === "intents") {
       newSelectedIntents = isChecked
         ? [...newSelectedIntents, value]
@@ -192,10 +242,50 @@ const Filter = ({
     onFilterChange("fetchProducts", {
       productCategories: newSelectedProductCategories,
       concerns: newSelectedConcerns,
+      chakra:newSelectedChakra,
       intents: newSelectedIntents,
       minPrice: priceRange[0], // Use prop
       maxPrice: priceRange[1], // Use prop
       rating: rating, // Use prop
+    });
+  };
+
+  // New handler for category checkboxes
+  const handleCategoryCheckboxChange = (e, cat, subName, allCatsInSub) => {
+    const isChecked = e.target.checked;
+    let newSelectedProductCategories = [...productCategories];
+    let newSelectedCategories = [...categories];
+    if (isChecked) {
+      // Add parent subcategory if not present
+      if (!newSelectedProductCategories.includes(subName)) {
+        newSelectedProductCategories.push(subName);
+      }
+      // Add category
+      if (!newSelectedCategories.includes(cat)) {
+        newSelectedCategories.push(cat);
+      }
+    } else {
+      // Remove category
+      newSelectedCategories = newSelectedCategories.filter((v) => v !== cat);
+      // If no other categories under this subcategory are checked, remove subcategory
+      const checkedOtherCats = allCatsInSub.some(
+        (otherCat) =>
+          otherCat !== cat &&
+          newSelectedCategories.includes(otherCat)
+      );
+      if (!checkedOtherCats) {
+        newSelectedProductCategories = newSelectedProductCategories.filter((v) => v !== subName);
+      }
+    }
+    onFilterChange("fetchProducts", {
+      productCategories: newSelectedProductCategories,
+      categories: newSelectedCategories,
+      concerns: selectedConcerns,
+      chakra: selectedChakra,
+      intents: selectedIntents,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
+      rating: rating,
     });
   };
 
@@ -205,6 +295,7 @@ const Filter = ({
     onFilterChange("fetchProducts", {
       productCategories: productCategories, // Use prop
       concerns: selectedConcerns,
+      chakra:selectedChakra,
       intents: selectedIntents,
       minPrice: priceRange[0], // Use prop
       maxPrice: priceRange[1], // Use prop
@@ -218,6 +309,7 @@ const Filter = ({
     onFilterChange("fetchProducts", {
       productCategories: [],
       concerns: [],
+      chakra:[],
       intents: [],
       minPrice: 0,
       maxPrice: 1000,
@@ -225,6 +317,8 @@ const Filter = ({
     });
   };
 
+  console.log("category dataa", categoryData);
+  console.log("unique category dataa", uniqueSubcategories);
   return (
     <div className="filter-container md:hidden lg:block">
       <h1 className="filter-heading">Filter</h1>
@@ -272,24 +366,53 @@ const Filter = ({
           <div className="filter-option-group">
             {isLoadingCategories ? (
               <p>Loading categories...</p>
-            ) : uniqueSubcategories.length > 0 ? (
-              uniqueSubcategories.map((subCategory) => (
-                <div key={subCategory} className="filter-option">
-                  <input
-                    type="checkbox"
-                    id={`subCategory-${subCategory}`}
-                    value={subCategory}
-                    checked={productCategories.includes(subCategory)} // Checked based on prop
-                    onChange={(e) =>
-                      handleCheckboxChange(e, "productCategories")
-                    }
-                    style={{ accentColor: "#593039" }}
-                  />
-                  <label htmlFor={`subCategory-${subCategory}`}>
-                    {subCategory}
-                  </label>
-                </div>
-              ))
+            ) : categoryData.length > 0 ? (
+              (() => {
+                const subCategoryMap = {};
+                categoryData.forEach((parent) => {
+                  (parent.subCategories || []).forEach((sub) => {
+                    const subName = (sub.subCategory || "").trim();
+                    if (!subName) return;
+                    if (!subCategoryMap[subName]) subCategoryMap[subName] = new Set();
+                    (sub.categories || []).forEach((cat) => {
+                      const catName = (cat || "").trim();
+                      if (catName) subCategoryMap[subName].add(catName);
+                    });
+                  });
+                });
+                return Object.entries(subCategoryMap).map(([subName, catSet]) => (
+                  <div key={subName}>
+                    <div className="filter-option">
+                      <input
+                        type="checkbox"
+                        id={`subCategory-${subName}`}
+                        value={subName}
+                        checked={productCategories.includes(subName)}
+                        onChange={(e) => handleCheckboxChange(e, "productCategories")}
+                        style={{ accentColor: "#593039" }}
+                      />
+                      <label htmlFor={`subCategory-${subName}`}>{subName}</label>
+                    </div>
+                    {catSet.size > 0 && (
+                      <div className="filter-category-group">
+                        {[...catSet].map((cat) => (
+                          <div key={cat} className="filter-category-option">
+                            <input
+                              type="checkbox"
+                              id={`category-${cat}`}
+                              value={cat}
+                              checked={categories.includes(cat)}
+                              onChange={(e) => handleCategoryCheckboxChange(e, cat, subName, [...catSet])}
+                              style={{ accentColor: "#593039" }}
+                            />
+                            <label htmlFor={`category-${cat}`}>{cat}</label>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ));
+              })()
             ) : (
               <p>No categories available.</p>
             )}
@@ -300,19 +423,19 @@ const Filter = ({
         <div className="filter-concern">
           <h2>Chakra</h2>
           <div className="filter-option-group">
-            {isLoadingConcerns ? (
+            {isLoadingChakra ? (
               <p>Loading Chakra...</p>
-            ) : availableConcerns.length > 0 ? (
-              availableConcerns.map((concern) => (
-                <div key={concern} className="filter-option">
+            ) : availableChakra.length > 0 ? (
+              availableChakra.map((chakraa) => (
+                <div key={chakraa} className="filter-option">
                   <input
                     type="checkbox"
-                    id={concern}
-                    value={concern}
-                    checked={selectedConcerns.includes(concern)} // Checked based on internal state (synced with prop)
-                    onChange={(e) => handleCheckboxChange(e, "concerns")}
+                    id={chakraa}
+                    value={chakraa}
+                    checked={selectedChakra.includes(chakraa)} // Checked based on internal state (synced with prop)
+                    onChange={(e) => handleCheckboxChange(e, "chakra")}
                   />
-                  <label htmlFor={concern}>{concern}</label>
+                  <label htmlFor={chakraa}>{chakraa}</label>
                 </div>
               ))
             ) : (
@@ -355,7 +478,7 @@ const Filter = ({
             value={rating} // Controlled by prop
             onChange={handleRatingChange}
             disabled={
-              isLoadingCategories || isLoadingConcerns || isLoadingIntents
+              isLoadingCategories || isLoadingConcerns || isLoadingChakra || isLoadingIntents
             }
           >
             <option value="">Select Rating</option>
@@ -372,7 +495,7 @@ const Filter = ({
             className="filter-button"
             onClick={handleFilter}
             disabled={
-              isLoadingCategories || isLoadingConcerns || isLoadingIntents
+              isLoadingCategories || isLoadingConcerns || isLoadingChakra || isLoadingIntents
             }
           >
             Filter
@@ -381,7 +504,7 @@ const Filter = ({
             className="clear-button"
             onClick={handleClear}
             disabled={
-              isLoadingCategories || isLoadingConcerns || isLoadingIntents
+              isLoadingCategories || isLoadingConcerns || isLoadingChakra || isLoadingIntents
             }
           >
             Clear

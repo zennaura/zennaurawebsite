@@ -28,7 +28,9 @@ const Shop = () => {
   // Centralized current filters state - the single source of truth
   const [currentFilters, setCurrentFilters] = useState({
     productCategories: [], // Initialize as empty, will be populated by fetchAllCategoriesForRef or autoSelects
+    categories: [],
     concerns: [],
+    chakra:[],
     intents: [],
     minPrice: 0,
     maxPrice: 1000,
@@ -54,13 +56,16 @@ const Shop = () => {
         setCurrentFilters(prevFilters => {
           const initialProductCategories = autoSelects?.length > 0
             ? autoSelects
-            : allSubCategories; // Use autoSelects if available, otherwise all categories
+            : []; // Use autoSelects if available, otherwise all categories
 
           // Also merge autoSelects into other filter types if they apply to them
           // This part assumes autoSelects might contain concerns/intents too
           const initialConcerns = autoSelects?.length > 0
             ? [...new Set([...prevFilters.concerns, ...autoSelects])]
             : prevFilters.concerns;
+           const initialChakra = autoSelects?.length > 0
+            ? [...new Set([...prevFilters.chakra, ...autoSelects])]
+            : prevFilters.chakra;
           const initialIntents = autoSelects?.length > 0
             ? [...new Set([...prevFilters.intents, ...autoSelects])]
             : prevFilters.intents;
@@ -70,6 +75,7 @@ const Shop = () => {
             ...prevFilters,
             productCategories: initialProductCategories,
             concerns: initialConcerns,
+            chakra:initialChakra,
             intents: initialIntents,
             // Price and rating remain their default values unless autoSelects specifically sets them.
             // If autoSelects can set minPrice/maxPrice/rating, you'd add logic here.
@@ -94,7 +100,9 @@ const Shop = () => {
     try {
       let {
         productCategories,
+        categories = [],
         concerns = [],
+        chakra =[],
         intents = [],
         minPrice = 0,
         maxPrice = 1000,
@@ -110,9 +118,12 @@ const Shop = () => {
       let url = `${import.meta.env.VITE_BACKEND_LINK}/api/products`;
       const params = new URLSearchParams();
 
-      if (productCategories && productCategories.length) // Check for null/undefined before length
+      if (productCategories && productCategories.length)
         params.append("subCategory", JSON.stringify(productCategories));
+      if (categories && categories.length)
+        params.append("category", JSON.stringify(categories));
       if (concerns.length) params.append("concerns", JSON.stringify(concerns));
+      if (chakra.length) params.append("chakra", JSON.stringify(chakra));
       if (intents.length) params.append("intents", JSON.stringify(intents));
       params.append("minPrice", minPrice);
       params.append("maxPrice", maxPrice);
@@ -121,7 +132,9 @@ const Shop = () => {
       // Only append query params if at least one filter is active
       if (
         (productCategories && productCategories.length > 0) ||
+        (categories && categories.length > 0) ||
         concerns.length > 0 ||
+        chakra.length >0 || 
         intents.length > 0 ||
         minPrice !== 0 ||
         maxPrice !== 1000 ||
@@ -184,7 +197,9 @@ const Shop = () => {
         {/* Desktop Filter */}
         <Filter
           productCategories={currentFilters.productCategories} // Pass current selected categories
+          categories={currentFilters.categories}
           concerns={currentFilters.concerns}                   // Pass current selected concerns
+          chakra={currentFilters.chakra}                   // Pass current selected chakra
           intents={currentFilters.intents}                     // Pass current selected intents
           priceRange={[currentFilters.minPrice, currentFilters.maxPrice]} // Pass current price range
           rating={currentFilters.rating}                       // Pass current rating
@@ -206,7 +221,7 @@ const Shop = () => {
           ) : (
               <div className="loading-indicator">
           <div className="loading-spinner"></div> {/* This is the new spinner element */}
-          Products will be fetched soon...
+          Loading Products...
       </div>
 
         )}

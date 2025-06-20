@@ -9,8 +9,8 @@ const NourishBody = () => {
             </div> */}
         <div className="nourishbody-content">
           <iframe
-            width="1600"
-            height="500"
+            width="100%"
+            height="720"
             src="https://www.youtube.com/embed/QL-jTNToD7A?si=CeYhUNjBstSnTMEx"
             title="YouTube video player"
             frameborder="0"

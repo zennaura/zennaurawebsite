@@ -75,11 +75,20 @@ const ProductDetails = ({
   }, [selectedVariant, productData]);
 
   // Variant selection handler
-  const handleVariantChange = (variant) => {
+  const handleVariantChange = (variantIndex) => {
+    const variant = productData.variants[variantIndex];
     setSelectedVariant(variant);
     if (onVariantSelect) {
       onVariantSelect(variant);
     }
+    // Update the URL to /productdetails/productid-variantindex
+    navigate(`/productdetails/${productData._id}-${variantIndex}`, {
+      state: {
+        ...productData,
+        selectedVariant: variant
+      },
+      replace: true
+    });
   };
 
   // Memoize the product images to prevent unnecessary recalculations
@@ -326,7 +335,7 @@ const ProductDetails = ({
                   selectedVariant?._id === variant._id ? "selected" : ""
                 }`}
                 aria-label={`Product variant: ${variant?.variantname}`}
-                onClick={() => handleVariantChange(variant)}
+                onClick={() => handleVariantChange(index)}
                 key={variant._id || index}
               >
                 {variant?.variantname}

@@ -57,11 +57,11 @@ const ProductPage = () => {
         .catch(err => console.error('Error fetching product:', err));
     }
   }, [id, product, initialProduct, location.state, selectedVariant]);
-
+ const [productId, variantIndex] = id.split("-");
   const handleVariantSelect = (variant) => {
     setSelectedVariant(variant);
     // Update the URL with the new variant ID
-    navigate(`/productdetails/${variant.id}`, {
+    navigate(`/productdetails/${product._id}-${variantIndex}`, {
       state: {
         ...product,
         selectedVariant: variant
@@ -87,7 +87,7 @@ const ProductPage = () => {
       <StoneUsed image={product?.stoneUsedImage} />
       <ProductTabs
         productDescriptions={product?.productDescriptions}
-        specifications={product?.specifications}
+        specifications={selectedVariant?.specifications ?? product?.specifications}
         healingImage={product?.healingImage}
         healingProperties={product?.healingProperties}
       />

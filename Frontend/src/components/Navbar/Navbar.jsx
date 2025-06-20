@@ -301,6 +301,7 @@ const Navbar = () => {
     { path: "#", label: "Gifting" },
   ];
   console.log("results of search", searchResults);
+  console.log("cate data", categoryData);
   return (
     <>
       <nav className={`navbar-mobile ${isMenuOpen ? `openNav` : ``}`}>
@@ -500,39 +501,35 @@ const Navbar = () => {
                   <div className="aurajewels-category">
                     <h3>Shop by category</h3>
                     {categoryData.map((parent) =>
-                      parent.subCategories.map((sub) => (
-                        <ul
-                          key={`${parent.parentCategory}-${sub.subCategory}-${(
-                            sub.categories || []
-                          ).join("-")}`}
-                        >
-                          {(sub.categories || []).map(
-                            (category) =>
-                              parent.parentCategory === "Skin Care" && (
-                                <div key={parent.subCategories + `Hello`}>
-                                  <Link
-                                    to="/shop"
-                                    state={{ autoSelects: sub.subCategory }}
-                                  >
-                                    <li key={`${sub.subCategories}`}>
-                                      {sub.subCategory}
-                                    </li>
+                      parent.parentCategory === "Skin Care" && (() => {
+                        // Build subCategory -> Set of categories map
+                        const subCategoryMap = {};
+                        parent.subCategories.forEach((sub) => {
+                          const subName = (sub.subCategory || "").trim();
+                          if (!subName) return;
+                          if (!subCategoryMap[subName]) subCategoryMap[subName] = new Set();
+                          (sub.categories || []).forEach((cat) => {
+                            const catName = (cat || "").trim();
+                            if (catName) subCategoryMap[subName].add(catName);
+                          });
+                        });
+                        return Object.entries(subCategoryMap).map(([subName, catSet]) => (
+                          <div key={subName}>
+                            <Link to="/shop" state={{ autoSelects: subName }}>
+                              <li>{subName}</li>
+                            </Link>
+                            {catSet.size > 0 && (
+                              <ul style={{ marginTop: "0.3rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                                {[...catSet].map((cat) => (
+                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                    <li>{`>  ${cat}`}</li>
                                   </Link>
-                                  <ul
-                                    key={`${parent.parentCategory}-${sub.subCategory}-${category}`}
-                                    style={{
-                                      marginTop: "1rem",
-                                      fontSize: "0.7rem",
-                                      marginLeft: "-1rem",
-                                    }}
-                                  >
-                                    <li>{category}</li>
-                                  </ul>
-                                </div>
-                              )
-                          )}
-                        </ul>
-                      ))
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ));
+                      })()
                     )}
                   </div>
                   <div className="aurajewels-intent">
@@ -582,42 +579,34 @@ const Navbar = () => {
                   <div className="aurajewels-category">
                     <h3>Shop by category</h3>
                     {categoryData.map((parent) =>
-                      parent.subCategories.map((sub) => (
-                        <ul
-                          key={`${parent.parentCategory}-${sub.subCategory}-${(
-                            sub.categories || []
-                          ).join("-")}`}
-                        >
-                          {(sub.categories || []).map(
-                            (category) =>
-                              parent.parentCategory === "Aura Jewels" && (
-                                <div key={parent.subCategories + `Hello`}>
-                                  <Link
-                                    to="/shop"
-                                    state={{ autoSelects: sub.subCategory }}
-                                  >
-                                    <li key={`${sub.subCategories}`}>
-                                      {sub.subCategory}
-                                    </li>
+                      parent.parentCategory === "Aura Jewels" && (() => {
+                        const subCategoryMap = {};
+                        parent.subCategories.forEach((sub) => {
+                          const subName = (sub.subCategory || "").trim();
+                          if (!subName) return;
+                          if (!subCategoryMap[subName]) subCategoryMap[subName] = new Set();
+                          (sub.categories || []).forEach((cat) => {
+                            const catName = (cat || "").trim();
+                            if (catName) subCategoryMap[subName].add(catName);
+                          });
+                        });
+                        return Object.entries(subCategoryMap).map(([subName, catSet]) => (
+                          <div key={subName}>
+                            <Link to="/shop" state={{ autoSelects: subName }}>
+                              <li>{subName}</li>
+                            </Link>
+                            {catSet.size > 0 && (
+                              <ul style={{ marginTop: "1rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                                {[...catSet].map((cat) => (
+                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                    <li>{`>  ${cat}`}</li>
                                   </Link>
-                                  <ul
-                                    key={`${parent.parentCategory}-${sub.subCategory}-${category}`}
-                                    style={{
-                                      marginTop: "1rem",
-                                      fontSize: "0.7rem",
-                                      marginLeft: "-1rem",
-                                    }}
-                                  >
-                                    <li>
-                                      {category === "" ? "" : `>  `}
-                                      {category}
-                                    </li>
-                                  </ul>
-                                </div>
-                              )
-                          )}
-                        </ul>
-                      ))
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ));
+                      })()
                     )}
                   </div>
                   <div className="aurajewels-intent">
@@ -677,41 +666,34 @@ const Navbar = () => {
                   <div className="aurajewels-category divinecrystals-category">
                     <h3>Shop by category</h3>
                     {categoryData.map((parent) =>
-                      parent.subCategories.map((sub) => (
-                        <ul
-                          key={`${parent.parentCategory}-${sub.subCategory}-${(
-                            sub.categories || []
-                          ).join("-")}`}
-                        >
-                          {(sub.categories || []).map(
-                            (category) =>
-                              parent.parentCategory === "Divine Crystals" && (
-                                <div key={parent.subCategories + `Hello`}>
-                                  <Link
-                                    to="/shop"
-                                    state={{ autoSelects: sub.subCategory }}
-                                  >
-                                    <li key={`${sub.subCategories}`}>
-                                      {sub.subCategory}
-                                    </li>
+                      parent.parentCategory === "Divine Crystals" && (() => {
+                        const subCategoryMap = {};
+                        parent.subCategories.forEach((sub) => {
+                          const subName = (sub.subCategory || "").trim();
+                          if (!subName) return;
+                          if (!subCategoryMap[subName]) subCategoryMap[subName] = new Set();
+                          (sub.categories || []).forEach((cat) => {
+                            const catName = (cat || "").trim();
+                            if (catName) subCategoryMap[subName].add(catName);
+                          });
+                        });
+                        return Object.entries(subCategoryMap).map(([subName, catSet]) => (
+                          <div key={subName}>
+                            <Link to="/shop" state={{ autoSelects: subName }}>
+                              <li>{subName}</li>
+                            </Link>
+                            {catSet.size > 0 && (
+                              <ul style={{ marginTop: "1rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                                {[...catSet].map((cat) => (
+                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                    <li>{`>  ${cat}`}</li>
                                   </Link>
-                                  <ul
-                                    key={`${parent.parentCategory}-${sub.subCategory}-${category}`}
-                                    style={{
-                                      marginTop: "1rem",
-                                      fontSize: "0.7rem",
-                                      marginLeft: "-1rem",
-                                    }}
-                                  >
-                                    <li>
-                                      {category === "" ? "" : `>  `} {category}
-                                    </li>
-                                  </ul>
-                                </div>
-                              )
-                          )}
-                        </ul>
-                      ))
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ));
+                      })()
                     )}
                   </div>
                   <div className="aurajewels-intent">
@@ -750,42 +732,34 @@ const Navbar = () => {
                   <div className="aurajewels-category">
                     <h3>Shop by category</h3>
                     {categoryData.map((parent) =>
-                      parent.subCategories.map((sub) => (
-                        <ul
-                          key={`${parent.parentCategory}-${sub.subCategory}-${(
-                            sub.categories || []
-                          ).join("-")}`}
-                        >
-                          {(sub.categories || []).map(
-                            (category) =>
-                              parent.parentCategory === "Sacred Rituals" && (
-                                <div key={parent.subCategories + `Hello`}>
-                                  <Link
-                                    to="/shop"
-                                    state={{ autoSelects: sub.subCategory }}
-                                  >
-                                    <li key={`${sub.subCategories}`}>
-                                      {sub.subCategory}
-                                    </li>
+                      parent.parentCategory === "Sacred Rituals" && (() => {
+                        const subCategoryMap = {};
+                        parent.subCategories.forEach((sub) => {
+                          const subName = (sub.subCategory || "").trim();
+                          if (!subName) return;
+                          if (!subCategoryMap[subName]) subCategoryMap[subName] = new Set();
+                          (sub.categories || []).forEach((cat) => {
+                            const catName = (cat || "").trim();
+                            if (catName) subCategoryMap[subName].add(catName);
+                          });
+                        });
+                        return Object.entries(subCategoryMap).map(([subName, catSet]) => (
+                          <div key={subName}>
+                            <Link to="/shop" state={{ autoSelects: subName }}>
+                              <li>{subName}</li>
+                            </Link>
+                            {catSet.size > 0 && (
+                              <ul style={{ marginTop: "1rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                                {[...catSet].map((cat) => (
+                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                    <li>{`>  ${cat}`}</li>
                                   </Link>
-                                  <ul
-                                    key={`${parent.parentCategory}-${sub.subCategory}-${category}`}
-                                    style={{
-                                      marginTop: "1rem",
-                                      fontSize: "0.7rem",
-                                      marginLeft: "-1rem",
-                                    }}
-                                  >
-                                    <li>
-                                      {category === "" ? "" : `>  `}
-                                      {category}
-                                    </li>
-                                  </ul>
-                                </div>
-                              )
-                          )}
-                        </ul>
-                      ))
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        ));
+                      })()
                     )}
                   </div>
                   <div className="aurajewels-intent">

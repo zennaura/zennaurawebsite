@@ -5,6 +5,7 @@
     gap: 20px;
     background-color: #f9f9f9;
     position: relative;
+    align-items: flex-start;
   }
   
   /* Mobile Styles */
@@ -120,4 +121,19 @@
   color: #777; /* A slightly softer color */
   min-height: 200px;
   text-align: center;
+}
+
+.filter-container {
+  padding: 2rem 2rem 2rem 2rem;
+  background-color: #e7e6e6;
+  width: 20%;
+  font-family: 'Poppins', sans-serif;
+  color: #390611;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  border-radius: 10px; /* Rounded corners for smooth edges */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+  margin-left: 1rem;
+  margin-top: 2rem;
+  /* overflow-y: hidden; */
+  /* overflow-y: auto; */
 }

@@ -42,34 +42,20 @@ const FeaturedProducts = () => {
             id: `${product._id}-${index}`,
             productId: product._id,
             data: {
-              _id: product._id,
-              title: product.title,
-              description: product.description,
-              sku: product.sku,
-              tags: product.tags,
-              stoneUsedImage: product.stoneUsedImage,
-              rating: product.rating,
+              ...product,
+              ...variant, // variant fields (like variantname, featureProduct) overwrite product fields
               frontImage: variant.frontImage || product.frontImage,
               backImage: variant.backImage || product.backImage,
-              otherimages: product.otherimages,
-              healingImage: product.healingImage,
-              benefits: product.benefits,
-              whyChoose: product.whyChoose,
-              waysToClean: product.waysToClean,
-              whoWear: product.whoWear,
-              whereHowWear: product.whereHowWear,
-              productDescriptions: product.productDescriptions,
-              featureProduct: product.featureProduct,
-              ...variant,
+              // ...other fields as needed
             },
           }))
         );
 
         setAllProducts(flattened);
 
-        // Filter featured products
+        // Filter featured products by variant's featureProduct property
         const featuredOnly = flattened.filter(
-          (product) => product.data.featureProduct
+          (product) => product.data.featureProduct === true
         );
         console.log("Featured products:", featuredOnly);
         setFeaturedProducts(featuredOnly);
