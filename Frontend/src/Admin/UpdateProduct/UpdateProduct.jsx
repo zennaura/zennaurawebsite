@@ -32,6 +32,7 @@ const UpdateProduct = () => {
 
   const [tags, setTags] = useState([]);
   const [Intenttags, setIntenttags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
   const [Chakratags, setChakratags] = useState([]);
 
   const [stoneName, setStoneName] = useState("");
@@ -143,7 +144,7 @@ const UpdateProduct = () => {
       setLoading(false);
       navigate("/admin-view-products");
     }
-  }, [productData, navigate]);
+  }, [productData?.id, navigate]);
 
   // Cloudinary Upload Function
   const uploadToCloudinary = async (file, folderName = "products") => {
@@ -772,10 +773,12 @@ const UpdateProduct = () => {
           <div className="flex flex-col md:flex-row items-center gap-4">
             <input
               type="text"
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && e.target.value.trim() !== "") {
                   setIntenttags([...Intenttags, e.target.value.trim()]);
-                  e.target.value = "";
+                  setTagInput("");
                 }
               }}
               placeholder="Enter a tag"
@@ -785,12 +788,9 @@ const UpdateProduct = () => {
             <button
               type="button"
               onClick={() => {
-                const inputField = document.querySelector(
-                  'input[placeholder="Enter a tag"]'
-                );
-                if (inputField && inputField.value.trim() !== "") {
-                  setIntenttags([...Intenttags, inputField.value.trim()]);
-                  inputField.value = "";
+                if (tagInput.trim() !== "") {
+                  setIntenttags([...Intenttags, tagInput.trim()]);
+                  setTagInput("");
                 }
               }}
               className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 !text-sm md:text-base"
@@ -836,6 +836,7 @@ const UpdateProduct = () => {
 
             <input
               type="file"
+              key={stoneImage ? 'has-file' : 'no-file'}
               onChange={(e) => setStoneImage(e.target.files[0])}
               className="!w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600"
             />
@@ -843,7 +844,7 @@ const UpdateProduct = () => {
             <button
               type="button"
               onClick={handleAddStone}
-              className="bg-blue-600 text-white !px-4 1py-2 rounded-md hover:bg-blue-700 !w-fit"
+              className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 !w-fit"
             >
               Add Stone
             </button>
@@ -1182,7 +1183,8 @@ const UpdateProduct = () => {
                 /> */}
                 {/* Tax */}
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.tax}
                   onChange={(e) =>
                     handleVariantChange(index, "tax", e.target.value)
@@ -1191,17 +1193,20 @@ const UpdateProduct = () => {
                   className="border border-gray-300 rounded-md !p-2"
                 />
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.salePrice}
                   onChange={(e) =>
                     handleVariantChange(index, "salePrice", e.target.value)
                   }
+                   
                   placeholder="Sale Price"
                   className="border border-gray-300 rounded-md !p-2"
                 />
 
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.discount}
                   onChange={(e) =>
                     handleVariantChange(index, "discount", e.target.value)
@@ -1211,7 +1216,8 @@ const UpdateProduct = () => {
                 />
 
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.costPrice}
                   onChange={(e) =>
                     handleVariantChange(index, "costPrice", e.target.value)
@@ -1221,7 +1227,8 @@ const UpdateProduct = () => {
                 />
 
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*"
                   value={variant.stock}
                   onChange={(e) =>
                     handleVariantChange(index, "stock", e.target.value)

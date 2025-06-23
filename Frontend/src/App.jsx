@@ -19,6 +19,7 @@ import DivineCrystal from "./UserPanel/ProductCategory/Category/DivineCrystal/Di
 import SacreDrituals from "./UserPanel/ProductCategory/Category/SacredRituals/SacredRituals";
 import ProductDetails from "./UserPanel/ProductPage/ProductPage/ProductPage";
 import UserDashboard from "./UserPanel/UserDashboard/UserDashboardMain/UserDashboardMain";
+import SearchResults from "./components/Navbar/Searchresult";
 
 import AdminDashboard from "./Admin/Dashboard/Dashboard";
 import AddProduct from "./Admin/AddProduct/AddProduct";
@@ -82,6 +83,7 @@ function App() {
         <Route path="/divinecrystals" element={<DivineCrystal />} />
         <Route path="/sacredrituals" element={<SacreDrituals />} />
         <Route path="/productdetails/:id" element={<ProductDetails />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route
           path="/userdashboard"
           element={

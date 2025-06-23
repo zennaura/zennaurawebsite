@@ -18,7 +18,7 @@ const SacredRituals = () => {
         <>
         <ImageHead Title= "Sacred Rituals"/>
         <SacredRitualsRange/>
-        <BestSeller/>
+        <BestSeller category="Sacred Rituals"/>
         {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>

@@ -8,11 +8,13 @@ const Search = ({closeSide}) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSearchOne = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
 
+        setIsLoading(true);
         try {
             const response = await axios.get(
                 `${import.meta.env.VITE_BACKEND_LINK}/api/search?query=${encodeURIComponent(searchQuery)}`
@@ -20,18 +22,31 @@ const Search = ({closeSide}) => {
 
             const flattenedResults = response.data.flatMap((product) =>
                 product.variants.map((variant, index) => ({
-                    id: `${product._id}-${variant._id}`,
+                    id: `${product._id}-${index}`,
                     productId: product._id,
-                    name: product.name,
+                    name: variant.variantname,
                     title: product.title,
                     description: product.description,
-                    image: product.frontImage,
-                    price: variant.salePrice,
-                    originalPrice: variant.costPrice,
-                    variantName: variant.name,
+                    image: variant.frontImage || variant.backImage,
+                    price: (
+                        variant.salePrice +
+                        (variant.salePrice * variant.tax) / 100 -
+                        ((variant.salePrice + (variant.salePrice * variant.tax) / 100) *
+                          variant.discount) /
+                          100
+                    ).toFixed(2),
+                    originalPrice: (
+                        variant.salePrice +
+                        (variant.salePrice * variant.tax) / 100
+                    ).toFixed(2),
+                    variantName: variant.variantname,
                     variantId: variant._id,
-                    sku: variant.sku,
+                    sku: product.sku,
                     category: product.category,
+                    // Store the complete product data for navigation
+                    completeProduct: product,
+                    selectedVariant: variant,
+                    variantIndex: index
                 }))
             );
 
@@ -76,7 +91,11 @@ const Search = ({closeSide}) => {
                         <Link
                             key={`${result.productId}-${result.variantId}`}
                             to={`/productdetails/${result.id}`}
-                            state={result}
+                            state={{
+                                ...result.completeProduct,
+                                selectedVariant: result.selectedVariant,
+                                variantIndex: result.variantIndex
+                            }}
                             className="search-result-item"
                             onClick={() => {
                                 closeSide()
@@ -84,7 +103,7 @@ const Search = ({closeSide}) => {
                                 setSearchResults([]);
                             }}
                         >
-                            <img src="https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg" alt={result.name} className="search-result-image" />
+                            <img src={result.image} alt={result.name} className="search-result-image" />
                             <div className="search-result-info">
                                 <h4>{result.name}</h4>
                                 <p>{result.title}</p>

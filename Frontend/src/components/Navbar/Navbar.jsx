@@ -249,6 +249,9 @@ const Navbar = () => {
           variantId: variant._id,
           sku: product.sku,
           category: product.category,
+          completeProduct: product,
+          selectedVariant: variant,
+          variantIndex: index
         }))
       );
       console.log("flattened", flattenedResults);
@@ -390,7 +393,11 @@ const Navbar = () => {
                         <Link
                           key={`${result.productId}-${result.variantId}`}
                           to={`/productdetails/${result.id}`}
-                          state={result}
+                          state={{
+                            ...result.completeProduct,
+                            selectedVariant: result.selectedVariant,
+                            variantIndex: result.variantIndex
+                          }}
                           className="search-result-item"
                           onClick={() => {
                             setIsSearchOpen(false);

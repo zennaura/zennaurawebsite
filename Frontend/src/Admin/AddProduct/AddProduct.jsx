@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {useUser} from '../../components/AuthContext/AuthContext'
+import { useUser } from "../../components/AuthContext/AuthContext";
 const AddProduct = () => {
   const { user } = useUser();
   const navigate = useNavigate(); // ✅ Add this inside your component
@@ -163,11 +163,16 @@ const AddProduct = () => {
   // Handle Variant Image Upload
   const handleVariantImageUpload = async (index, event) => {
     const files = Array.from(event.target.files);
-    const urls = await Promise.all(files.map(file => uploadToCloudinary(file)));
+    const urls = await Promise.all(
+      files.map((file) => uploadToCloudinary(file))
+    );
 
     const updatedVariants = [...variants];
     // Use 'variantsimages' instead of 'images'
-    updatedVariants[index].variantsimages = [...(updatedVariants[index].variantsimages || []), ...urls];
+    updatedVariants[index].variantsimages = [
+      ...(updatedVariants[index].variantsimages || []),
+      ...urls,
+    ];
     setVariants(updatedVariants);
   };
 
@@ -203,7 +208,11 @@ const AddProduct = () => {
     e.preventDefault();
 
     // Basic validation (customize as needed)
-    if (!basicDetails.description || !basicDetails.sku || variants.length === 0) {
+    if (
+      !basicDetails.description ||
+      !basicDetails.sku ||
+      variants.length === 0
+    ) {
       alert("Please fill in all required fields and add at least one variant.");
       return;
     }
@@ -243,7 +252,7 @@ const AddProduct = () => {
         first: healingFirst,
         second: healingSecond,
         third: healingThird,
-        fourth: healingFourth
+        fourth: healingFourth,
       },
       variants: variants.map((variant) => ({
         ...variant,
@@ -259,14 +268,17 @@ const AddProduct = () => {
         variantsimages: variant.variantsimages || [], // Changed from variant.images
       })),
     };
-    console.log('Sending Product Data:', productData);
+    console.log("Sending Product Data:", productData);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(productData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/products`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(productData),
+        }
+      );
 
       if (response.ok) {
         setSuccess(true); // Show success message
@@ -276,31 +288,35 @@ const AddProduct = () => {
         }, 3000); // Delay can be adjusted or removed
       } else {
         const errorData = await response.json();
-        console.error('Backend Error:', errorData);
-        throw new Error(errorData.message || 'Failed to add product.');
+        console.error("Backend Error:", errorData);
+        throw new Error(errorData.message || "Failed to add product.");
       }
     } catch (error) {
-      console.error('❌ Error:', error);
-      alert('Something went wrong. Check the console for more details.');
+      console.error("❌ Error:", error);
+      alert("Something went wrong. Check the console for more details.");
     }
   };
 
-  if (user?.userRole !== 'admin') {
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h2>
-        <p className="text-gray-700 mb-4">This page is not accessible by you.</p>
-        <button 
-          onClick={() => navigate('/')}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Go to Home
-        </button>
+  if (user?.userRole !== "admin") {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">
+            Access Denied
+          </h2>
+          <p className="text-gray-700 mb-4">
+            This page is not accessible by you.
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          >
+            Go to Home
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   return (
     <div className="bg-gray-50 flex justify-center items-center p-6">
@@ -313,12 +329,13 @@ const AddProduct = () => {
       <form
         style={{ padding: "20px" }}
         onSubmit={handleSubmit}
-        className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 space-y-8">
+        className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 space-y-8"
+      >
         {/* <!-- Product Category --> */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <h2
-            className="col-span-full text-xl font-semibold text-gray-800">Product
-            Category</h2>
+          <h2 className="col-span-full text-xl font-semibold text-gray-800">
+            Product Category
+          </h2>
           <label className="block">
             <span className="text-gray-700">Parent Category</span>
             <input
@@ -390,7 +407,10 @@ const AddProduct = () => {
             <textarea
               value={basicDetails.description}
               onChange={(e) =>
-                setBasicDetails({ ...basicDetails, description: e.target.value })
+                setBasicDetails({
+                  ...basicDetails,
+                  description: e.target.value,
+                })
               }
               className="!mt-1 block w-full border border-gray-300 rounded-md !p-2 !h-24" // Adjust height as needed
               rows={4} // Optional: Sets the number of visible rows
@@ -425,15 +445,17 @@ const AddProduct = () => {
           </label> */}
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-2">Product Chakra Tags</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-2">
+            Product Chakra Tags
+          </h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             {/* Tag Input Field */}
             <input
               type="text"
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                if (e.key === "Enter" && e.target.value.trim() !== "") {
                   setChakratags([...Chakratags, e.target.value.trim()]);
-                  e.target.value = ''; // Clear the input field
+                  e.target.value = ""; // Clear the input field
                 }
               }}
               placeholder="Enter a tag"
@@ -444,10 +466,12 @@ const AddProduct = () => {
             <button
               type="button"
               onClick={() => {
-                const inputField = document.querySelector('input[placeholder="Enter a tag"]');
-                if (inputField && inputField.value.trim() !== '') {
+                const inputField = document.querySelector(
+                  'input[placeholder="Enter a tag"]'
+                );
+                if (inputField && inputField.value.trim() !== "") {
                   setChakratags([...Chakratags, inputField.value.trim()]);
-                  inputField.value = ''; // Clear the input field
+                  inputField.value = ""; // Clear the input field
                 }
               }}
               className="bg-blue-600 text-white !px-4 !py-2 rounded-md hover:bg-blue-700 text-sm md:text-base cursor-pointer"
@@ -531,7 +555,9 @@ const AddProduct = () => {
         </div> */}
         {/* <!--Intent  Tags --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Intent Tags</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">
+            Product Intent Tags
+          </h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             {/* Tag Input Field (Controlled) */}
             <input
@@ -539,7 +565,7 @@ const AddProduct = () => {
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && tagInput.trim() !== '') {
+                if (e.key === "Enter" && tagInput.trim() !== "") {
                   setIntenttags([...Intenttags, tagInput.trim()]);
                   setTagInput(""); // Clear input using state
                 }
@@ -552,7 +578,7 @@ const AddProduct = () => {
             <button
               type="button"
               onClick={() => {
-                if (tagInput.trim() !== '') {
+                if (tagInput.trim() !== "") {
                   setIntenttags([...Intenttags, tagInput.trim()]);
                   setTagInput(""); // Clear input using state
                 }
@@ -586,7 +612,9 @@ const AddProduct = () => {
         </div>
         {/* <!-- Stone Used --> */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 !mb-2">Stone Used</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2">
+            Stone Used
+          </h2>
           <div className="flex flex-col !gap-2">
             {/* Stone Name Input */}
             <input
@@ -600,6 +628,7 @@ const AddProduct = () => {
             {/* Stone Image Upload */}
             <input
               type="file"
+              key={stoneImage ? 'has-file' : 'no-file'}
               onChange={(e) => setStoneImage(e.target.files[0])}
               className="!w-full cursor-pointer border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600"
             />
@@ -638,7 +667,9 @@ const AddProduct = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Product Description */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Description</h2>
+            <h2 className="text-xl font-semibold text-gray-800 !mb-2">
+              Product Description
+            </h2>
             <textarea
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
@@ -648,22 +679,22 @@ const AddProduct = () => {
             />
             <input
               type="file"
-              onChange={(e) => handleFileUpload(e, 'descriptionImage')}
+              onChange={(e) => handleFileUpload(e, "descriptionImage")}
               className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
             />
           </div>
 
           {/* Product Images */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 !mb-2">Product Common Images</h2>
-
-
+            <h2 className="text-xl font-semibold text-gray-800 !mb-2">
+              Product Common Images
+            </h2>
 
             {/* Other Images */}
             <label className="block !mb-2">Other Images</label>
             <input
               type="file"
-              onChange={(e) => handleFileUpload(e, 'otherImages')}
+              onChange={(e) => handleFileUpload(e, "otherImages")}
               className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               multiple
             />
@@ -671,115 +702,135 @@ const AddProduct = () => {
         </div>
 
         <div>
-            <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-3">Healing Properties</h2>
+          <h2 className="text-xl font-semibold text-gray-800 !mb-2 !mt-3">
+            Healing Properties
+          </h2>
 
-            <textarea
-              value={healingFirst}
-              onChange={(e) => setHealingFirst(e.target.value)}
-              placeholder="Enter first box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
+          <textarea
+            value={healingFirst}
+            onChange={(e) => setHealingFirst(e.target.value)}
+            placeholder="Enter first box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
           />
           <textarea
-              value={healingSecond}
-              onChange={(e) => setHealingSecond(e.target.value)}
-              placeholder="Enter second box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
+            value={healingSecond}
+            onChange={(e) => setHealingSecond(e.target.value)}
+            placeholder="Enter second box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
           />
           <textarea
-              value={healingThird}
-              onChange={(e) => setHealingThird(e.target.value)}
-              placeholder="Enter third box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
+            value={healingThird}
+            onChange={(e) => setHealingThird(e.target.value)}
+            placeholder="Enter third box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
           />
           <textarea
-              value={healingFourth}
-              onChange={(e) => setHealingFourth(e.target.value)}
-              placeholder="Enter fourth box"
-              className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
-              // rows={4}
-            />
-          </div>
+            value={healingFourth}
+            onChange={(e) => setHealingFourth(e.target.value)}
+            placeholder="Enter fourth box"
+            className="!mb-2 block w-full border border-gray-300 rounded-md !p-2"
+            // rows={4}
+          />
+        </div>
         {/* <!-- Posters --> */}
         <div>
           <h2 className="text-xl font-semibold text-gray-800 !mb-2">Posters</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {/* Healing Poster */}
             <div className="flex flex-col items-center !space-y-2">
-              <label htmlFor="healing" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="healing"
+                className="text-sm font-medium text-gray-700"
+              >
                 Healing
               </label>
               <input
                 type="file"
                 id="healing"
-                onChange={(e) => handlePosterUpload(e, 'healing')}
+                onChange={(e) => handlePosterUpload(e, "healing")}
                 className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* Benefits Poster */}
             <div className="flex flex-col items-center !space-y-2">
-              <label htmlFor="benefits" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="benefits"
+                className="text-sm font-medium text-gray-700"
+              >
                 Benefits
               </label>
               <input
                 type="file"
                 id="benefits"
-                onChange={(e) => handlePosterUpload(e, 'benefits')}
+                onChange={(e) => handlePosterUpload(e, "benefits")}
                 className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* Why Choose Poster */}
             <div className="flex flex-col items-center !space-y-2">
-              <label htmlFor="why-choose" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="why-choose"
+                className="text-sm font-medium text-gray-700"
+              >
                 Why Choose
               </label>
               <input
                 type="file"
                 id="why-choose"
-                onChange={(e) => handlePosterUpload(e, 'whyChoose')}
+                onChange={(e) => handlePosterUpload(e, "whyChoose")}
                 className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 !cursor-pointer"
               />
             </div>
 
             {/* Ways to Clean Poster */}
             <div className="flex flex-col items-center !space-y-2">
-              <label htmlFor="ways-to-clean" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="ways-to-clean"
+                className="text-sm font-medium text-gray-700"
+              >
                 Ways to Clean
               </label>
               <input
                 type="file"
                 id="ways-to-clean"
-                onChange={(e) => handlePosterUpload(e, 'waysToClean')}
+                onChange={(e) => handlePosterUpload(e, "waysToClean")}
                 className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* Who Wear Poster */}
             <div className="flex flex-col items-center !space-y-2">
-              <label htmlFor="who-wear" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="who-wear"
+                className="text-sm font-medium text-gray-700"
+              >
                 Who Wear
               </label>
               <input
                 type="file"
                 id="who-wear"
-                onChange={(e) => handlePosterUpload(e, 'whoWear')}
+                onChange={(e) => handlePosterUpload(e, "whoWear")}
                 className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
 
             {/* How to Wear Poster */}
             <div className="flex flex-col items-center !space-y-2">
-              <label htmlFor="how-to-wear" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="how-to-wear"
+                className="text-sm font-medium text-gray-700"
+              >
                 How to Wear
               </label>
               <input
                 type="file"
                 id="how-to-wear"
-                onChange={(e) => handlePosterUpload(e, 'howToWear')}
+                onChange={(e) => handlePosterUpload(e, "howToWear")}
                 className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:!p-2 hover:file:bg-blue-600 cursor-pointer"
               />
             </div>
@@ -789,8 +840,8 @@ const AddProduct = () => {
         {/* <!-- Variants --> */}
         <div
           style={{ padding: "10px", marginTop: "20px" }}
-
-          className="!space-y-4 border-t !pt-4">
+          className="!space-y-4 border-t !pt-4"
+        >
           <h2 className="text-xl font-semibold text-gray-800">Variants</h2>
 
           {/* Render Each Variant Dynamically */}
@@ -802,7 +853,7 @@ const AddProduct = () => {
                   type="text"
                   value={variant.variantname}
                   onChange={(e) =>
-                    handleVariantChange(index, 'variantname', e.target.value)
+                    handleVariantChange(index, "variantname", e.target.value)
                   }
                   placeholder="Varient Name"
                   className="border border-gray-300 rounded-md !p-2"
@@ -819,10 +870,11 @@ const AddProduct = () => {
                 /> */}
                 {/* Tax */}
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.tax}
                   onChange={(e) =>
-                    handleVariantChange(index, 'tax', e.target.value)
+                    handleVariantChange(index, "tax", e.target.value)
                   }
                   placeholder="Tax on product"
                   className="border border-gray-300 rounded-md !p-2"
@@ -830,10 +882,11 @@ const AddProduct = () => {
 
                 {/* Sale Price */}
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.salePrice}
                   onChange={(e) =>
-                    handleVariantChange(index, 'salePrice', e.target.value)
+                    handleVariantChange(index, "salePrice", e.target.value)
                   }
                   placeholder="Sale Price"
                   className="border border-gray-300 rounded-md !p-2"
@@ -841,10 +894,11 @@ const AddProduct = () => {
 
                 {/* Discount */}
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.discount}
                   onChange={(e) =>
-                    handleVariantChange(index, 'discount', e.target.value)
+                    handleVariantChange(index, "discount", e.target.value)
                   }
                   placeholder="Discount"
                   className="border border-gray-300 rounded-md !p-2"
@@ -852,10 +906,11 @@ const AddProduct = () => {
 
                 {/* Cost Price */}
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*\.?[0-9]*"
                   value={variant.costPrice}
                   onChange={(e) =>
-                    handleVariantChange(index, 'costPrice', e.target.value)
+                    handleVariantChange(index, "costPrice", e.target.value)
                   }
                   placeholder="M.R.P"
                   className="border border-gray-300 rounded-md !p-2"
@@ -863,10 +918,11 @@ const AddProduct = () => {
 
                 {/* Stock */}
                 <input
-                  type="number"
+                  type="text"
+                  pattern="[0-9]*"
                   value={variant.stock}
                   onChange={(e) =>
-                    handleVariantChange(index, 'stock', e.target.value)
+                    handleVariantChange(index, "stock", e.target.value)
                   }
                   placeholder="Stock"
                   className="border border-gray-300 rounded-md !p-2"
@@ -879,7 +935,9 @@ const AddProduct = () => {
                 <label className="block !mb-2">Product Front Image</label>
                 <input
                   type="file"
-                  onChange={(e) => handleVariantSingleImageUpload(index, 'frontImage', e)}
+                  onChange={(e) =>
+                    handleVariantSingleImageUpload(index, "frontImage", e)
+                  }
                   className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600 cursor-pointer"
                 />
 
@@ -887,7 +945,9 @@ const AddProduct = () => {
                 <label className="block !mb-2">Product Back Image</label>
                 <input
                   type="file"
-                  onChange={(e) => handleVariantSingleImageUpload(index, 'backImage', e)}
+                  onChange={(e) =>
+                    handleVariantSingleImageUpload(index, "backImage", e)
+                  }
                   className="w-full border border-gray-300 rounded-md !p-2 text-sm text-gray-500 file:border-0 file:bg-blue-500 file:text-white file:rounded-md file:p-2 hover:file:bg-blue-600 cursor-pointer"
                 />
                 {/* Varient Image */}
@@ -903,7 +963,10 @@ const AddProduct = () => {
               </div>
 
               {/* Specifications */}
-              <div style={{ padding: "20px" }} className="grid grid-cols-2 !mb-5 !mt-5 !pt-5 md:grid-cols-3 gap-4">
+              <div
+                style={{ padding: "20px" }}
+                className="grid grid-cols-2 !mb-5 !mt-5 !pt-5 md:grid-cols-3 gap-4"
+              >
                 {/* Material */}
                 <input
                   type="text"
@@ -911,7 +974,7 @@ const AddProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(
                       index,
-                      'specifications.material',
+                      "specifications.material",
                       e.target.value
                     )
                   }
@@ -940,7 +1003,7 @@ const AddProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(
                       index,
-                      'specifications.productType',
+                      "specifications.productType",
                       e.target.value
                     )
                   }
@@ -953,7 +1016,11 @@ const AddProduct = () => {
                   type="text"
                   value={variant.specifications.size}
                   onChange={(e) =>
-                    handleVariantChange(index, 'specifications.size', e.target.value)
+                    handleVariantChange(
+                      index,
+                      "specifications.size",
+                      e.target.value
+                    )
                   }
                   placeholder="Size"
                   className="border border-gray-300 rounded-md !p-2"
@@ -964,7 +1031,11 @@ const AddProduct = () => {
                   type="text"
                   value={variant.specifications.color}
                   onChange={(e) =>
-                    handleVariantChange(index, 'specifications.color', e.target.value)
+                    handleVariantChange(
+                      index,
+                      "specifications.color",
+                      e.target.value
+                    )
                   }
                   placeholder="SKU"
                   className="border border-gray-300 rounded-md !p-2"
@@ -974,7 +1045,11 @@ const AddProduct = () => {
                   type="text"
                   value={variant.specifications.weight}
                   onChange={(e) =>
-                    handleVariantChange(index, 'specifications.weight', e.target.value)
+                    handleVariantChange(
+                      index,
+                      "specifications.weight",
+                      e.target.value
+                    )
                   }
                   placeholder="Weight"
                   className="border border-gray-300 rounded-md !p-2"
@@ -986,7 +1061,7 @@ const AddProduct = () => {
                   onChange={(e) =>
                     handleVariantChange(
                       index,
-                      'specifications.packaging',
+                      "specifications.packaging",
                       e.target.value
                     )
                   }
@@ -1001,16 +1076,27 @@ const AddProduct = () => {
                   type="checkbox"
                   checked={variant.featureProduct}
                   onChange={(e) =>
-                    handleVariantChange(index, 'featureProduct', e.target.checked)
+                    handleVariantChange(
+                      index,
+                      "featureProduct",
+                      e.target.checked
+                    )
                   }
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${variant.featureProduct ? 'bg-blue-600' : 'bg-gray-300'
-                    } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.featureProduct ? 'after:translate-x-5' : ''
-                    }`}
+                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${
+                    variant.featureProduct ? "bg-blue-600" : "bg-gray-300"
+                  } after:absolute after:top-0.5 after:left-0.5 after:!w-4 after:!h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${
+                    variant.featureProduct ? "after:translate-x-5" : ""
+                  }`}
                 ></span>
-                <span className="text-sm text-gray-700" style={{marginRight:"8px"}}>Feature Product</span>
+                <span
+                  className="text-sm text-gray-700"
+                  style={{ marginRight: "8px" }}
+                >
+                  Feature Product
+                </span>
               </label>
 
               {/* Best Seller Toggle */}
@@ -1019,14 +1105,16 @@ const AddProduct = () => {
                   type="checkbox"
                   checked={variant.bestSeller}
                   onChange={(e) =>
-                    handleVariantChange(index, 'bestSeller', e.target.checked)
+                    handleVariantChange(index, "bestSeller", e.target.checked)
                   }
                   className="hidden"
                 />
                 <span
-                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${variant.bestSeller ? 'bg-blue-600' : 'bg-gray-300'
-                    } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${variant.bestSeller ? 'after:!translate-x-5' : ''
-                    }`}
+                  className={`relative inline-block !w-10 !h-5 rounded-full transition duration-200 ease-in-out ${
+                    variant.bestSeller ? "bg-blue-600" : "bg-gray-300"
+                  } after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition after:duration-200 after:ease-in-out ${
+                    variant.bestSeller ? "after:!translate-x-5" : ""
+                  }`}
                 ></span>
                 <span className="text-sm text-gray-700">Best Seller</span>
               </label>
@@ -1036,7 +1124,7 @@ const AddProduct = () => {
           {/* Add Variant Button */}
           <button
             type="button"
-            style={{ padding: "10px",cursor:"pointer" }}
+            style={{ padding: "10px", cursor: "pointer" }}
             onClick={handleAddVariant}
             className="bg-green-600 text-white !px-4 !py-2  rounded-md hover:bg-green-700"
           >
@@ -1046,8 +1134,7 @@ const AddProduct = () => {
           {/* Remove Variant Button */}
           <button
             type="button"
-            style={{ padding: "10px", marginLeft: "10px",cursor:"pointer" }}
-
+            style={{ padding: "10px", marginLeft: "10px", cursor: "pointer" }}
             onClick={handleRemoveVariant}
             className="bg-red-600 text-white !px-4 !py-2 rounded-md hover:bg-red-700 cursor-pointer"
           >
@@ -1061,11 +1148,9 @@ const AddProduct = () => {
         >
           Add Product
         </button>
-
       </form>
-
     </div>
-  )
-}
+  );
+};
 
-export default AddProduct
+export default AddProduct;

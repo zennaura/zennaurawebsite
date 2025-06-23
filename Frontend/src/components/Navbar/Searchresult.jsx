@@ -1,11 +1,12 @@
 // SearchResults.jsx
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProductCart from '../Productcart/ProductCart';
 
 const SearchResults = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const query = new URLSearchParams(location.search).get('query');
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -14,23 +15,36 @@ const SearchResults = () => {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_LINK}/api/products/search?query=${encodeURIComponent(query)}`
+          `${import.meta.env.VITE_BACKEND_LINK}/api/search?query=${encodeURIComponent(query)}`
         );
         
         const flattened = response.data.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
             productId: product._id,
-            name: product.name,
+            name: variant.variantname,
             title: product.title,
             description: product.description,
-            image: product.frontImage,
-            price: variant.salePrice,
-            originalPrice: variant.costPrice,
-            variantName: variant.name,
+            image: variant.frontImage || variant.backImage,
+            price: (
+              variant.salePrice +
+              (variant.salePrice * variant.tax) / 100 -
+              ((variant.salePrice + (variant.salePrice * variant.tax) / 100) *
+                variant.discount) /
+                100
+            ).toFixed(2),
+            originalPrice: (
+              variant.salePrice +
+              (variant.salePrice * variant.tax) / 100
+            ).toFixed(2),
+            variantName: variant.variantname,
             variantId: variant._id,
-            sku: variant.sku,
+            sku: product.sku,
             category: product.category,
+            // Store the complete product data for navigation
+            completeProduct: product,
+            selectedVariant: variant,
+            variantIndex: index
           }))
         );
         
@@ -46,6 +60,16 @@ const SearchResults = () => {
       fetchResults();
     }
   }, [query]);
+
+  const handleProductClick = (product) => {
+    navigate(`/productdetails/${product.id}`, {
+      state: {
+        ...product.completeProduct,
+        selectedVariant: product.selectedVariant,
+        variantIndex: product.variantIndex
+      }
+    });
+  };
 
   if (isLoading) {
     return <div className="loading-spinner">Loading...</div>;
@@ -64,10 +88,11 @@ const SearchResults = () => {
               id={product.id}
               name={product.name}
               title={product.title}
-              image={product.image}
+              frontimage={product.image}
+              backImage={product.image}
               price={product.price}
               originalPrice={product.originalPrice}
-              onBuyNowClick={() => navigate(`/productdetails/${product.id}`, { state: product })}
+              onBuyNowClick={() => handleProductClick(product)}
             />
           ))}
         </div>

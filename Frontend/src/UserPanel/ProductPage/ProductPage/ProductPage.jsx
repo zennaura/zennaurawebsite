@@ -33,6 +33,8 @@ const ProductPage = () => {
   const [selectedVariant, setSelectedVariant] = useState(
     initialProduct?.selectedVariant || initialProduct?.variants?.[0] || null
   );
+  const [isLoading, setIsLoading] = useState(!initialProduct);
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -43,6 +45,8 @@ const ProductPage = () => {
     
     // Only fetch if we don't have product data
     if (!product && !initialProduct) {
+      setIsLoading(true);
+      setError(null);
       fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${id}`)
         .then(res => res.json())
         .then(data => {
@@ -52,9 +56,19 @@ const ProductPage = () => {
             if (!selectedVariant) {
               setSelectedVariant(data.product.variants?.[0] || null);
             }
+          } else {
+            setError('Product not found');
           }
         })
-        .catch(err => console.error('Error fetching product:', err));
+        .catch(err => {
+          console.error('Error fetching product:', err);
+          setError('Failed to load product');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else if (initialProduct) {
+      setIsLoading(false);
     }
   }, [id, product, initialProduct, location.state, selectedVariant]);
  const [productId, variantIndex] = id.split("-");
@@ -71,10 +85,70 @@ const ProductPage = () => {
   };
 
   console.log("Product Data:", product);
-  if(product?.specifications?.material === "Crystals"){
-          
-  }
+  console.log("Selected Variant:", selectedVariant);
+  
+  // Check if the selected variant has specifications
+  const variantSpecifications = selectedVariant?.specifications || product?.specifications;
+  const isCrystalProduct = variantSpecifications?.material === "Crystals";
+  
   // console.log("initial",initialProduct);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '50vh',
+        fontSize: '1.2rem'
+      }}>
+        Loading product details...
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '50vh',
+        fontSize: '1.2rem',
+        color: 'red'
+      }}>
+        {error}
+      </div>
+    );
+  }
+
+  // Show message if no product data
+  if (!product) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '50vh',
+        fontSize: '1.2rem'
+      }}>
+        Product not found
+      </div>
+    );
+  }
+
+  // Debug logging
+  console.log("Rendering ProductPage with:", {
+    productId: product._id,
+    productName: product.name,
+    selectedVariant: selectedVariant?.variantname,
+    hasSpecifications: !!selectedVariant?.specifications,
+    variantSpecifications: selectedVariant?.specifications,
+    isCrystalProduct
+  });
+
   return (
     <div>
       <ImageHead Title={selectedVariant?.variantname || product?.variantname } />
@@ -131,7 +205,7 @@ const ProductPage = () => {
     </div>
   )} */}
         {
-          product?.specifications.material === "Crystals"?(<img 
+          isCrystalProduct?(<img 
         src={CrystalClean} 
         alt="Ways to Cleanse" 
         className="poster-image"

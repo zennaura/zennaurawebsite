@@ -17,7 +17,7 @@ const DivineCrystal = () => {
         <>
         <ImageHead Title= "Divine Crystals"/>
         <DivineCrystalRange/>
-        <BestSeller/>
+        <BestSeller category="Divine Crystals"/>
         {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>

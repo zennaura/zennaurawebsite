@@ -3,7 +3,7 @@ import "./BestSeller.css";
 import ProductCart from "../../../components/Productcart/ProductCart";
 import { useNavigate } from "react-router-dom";
 
-const BestSeller = () => {
+const BestSeller = ({ category }) => {
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -35,14 +35,23 @@ const BestSeller = () => {
           }))
         )
         setAllProducts(flattened);
-        const bestSellerOnly = flattened.filter((product) => product.data.bestSeller);
+        
+        // Filter by both bestSeller and category if provided
+        let bestSellerOnly = flattened.filter((product) => product.data.bestSeller);
+        
+        if (category) {
+          bestSellerOnly = bestSellerOnly.filter((product) => 
+            product.data.parentCategory === category
+          );
+        }
+        
         setBestSellerProducts(bestSellerOnly);
       } catch (err) {
         console.error("Error fetching best seller products:", err);
       }
     };
     fetchBestSellerProducts();
-  }, []);
+  }, [category]);
 
   const handleClick = (product) => {
     // Find all variants of this product

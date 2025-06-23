@@ -19,7 +19,7 @@ const SkinnCare = () => {
         <>
         <ImageHead Title= "Body Soap"/>
         <DiscoverSkin/>
-            <BestSeller />
+            <BestSeller category="Skin Care" />
         {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>
