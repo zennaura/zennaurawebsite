@@ -93,6 +93,7 @@ li a {
   /* Hamburger Menu */
   .menu-btn {
     display: block;
+    margin-left:1rem;
   }
 
   /* Hide Nav Links Initially */

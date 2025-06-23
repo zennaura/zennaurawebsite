@@ -63,6 +63,19 @@
 }
 
 /* Responsive Breakpoints */
+
+@media (max-width: 1024px){
+  .follow-us-container{
+    height: 35vh;
+    /* height: 53vh; */
+  }
+  .background-image{
+    height: 100%;
+  }
+  .content-overlay{
+    height: 100%;
+  }
+}
 @media (max-width: 768px) {
   .follow-us-container {
     height: 50vh; /* Slightly shorter on tablets */

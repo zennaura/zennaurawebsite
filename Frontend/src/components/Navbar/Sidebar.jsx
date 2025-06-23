@@ -12,7 +12,7 @@ const menuItems = [
     { label: 'Aura Jewels', hasArrow: true, link: '/aurajewels', goTo: 'auraJewel' },
     { label: 'Divine Crystals', hasArrow: true, link: '/divinecrystals', goTo: 'divineCrystal' },
     { label: 'Sacred Rituals', hasArrow: true, link: '/sacredrituals', goTo: 'sacredRituals' },
-    { label: 'Gifting', link: '/' },
+    { label: 'Contact', link: '/contactus' },
 ];
 
 const SidebarMenu = ({ goToSubMenu, closeMenu }) => {

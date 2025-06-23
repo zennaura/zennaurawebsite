@@ -10,7 +10,7 @@ const NourishBody = () => {
         <div className="nourishbody-content">
           <iframe
             width="100%"
-            height="720"
+            
             src="https://www.youtube.com/embed/QL-jTNToD7A?si=CeYhUNjBstSnTMEx"
             title="YouTube video player"
             frameborder="0"

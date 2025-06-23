@@ -43,6 +43,7 @@ import ViewAllUsers from "./Admin/ViewAllUsers/ViewAllUsers";
 // import Payment from "./components/Payment/Payment";
 import HealingLayout from "./Admin/AddProduct/HealingLayout.jsx";
 import { FaWhatsapp } from "react-icons/fa";
+// import whatsapp_icon from "./assests/whatsapp_icon.png";
 function App() {
   const { user } = useUser();
   const location = useLocation();
@@ -61,11 +62,14 @@ function App() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FaWhatsapp
+        <div>
+          <FaWhatsapp
           size={40}
-          color="green"
-          className=" fixed right-7 bottom-16 z-50 bg-white rounded-lg cursor-pointer"
+          color="white"
+          className=" fixed w-14 h-14 right-7 bottom-16 z-50 bg-green-500 rounded-full cursor-pointer"
         />
+        </div>
+
       </a>
       <Routes>
         {/* Public Routes */}

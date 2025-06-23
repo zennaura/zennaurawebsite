@@ -10,7 +10,7 @@ const Handmadelove = () => {
       <div className="Handmadelove-content">
         <div className="Handmadelove-div Handmadelove-div-left">
           <div className="Handmadelove-textdiv">
-            <h1>If You Can Eat It,It's save for your Skin</h1>
+            <h1>If You Can Eat It, It's save for your Skin</h1>
             <p>
               Our skincare is chemical & preservative free, made from real,
               edible ingredients.
@@ -32,7 +32,7 @@ const Handmadelove = () => {
         <div className="Handmadelove-div Handmadelove-div-left">
           <div className="Handmadelove-textdiv">
             <h1>
-              Handpicked Crystals for Energy & Balance
+              Handpicked Crystals for Energy
             </h1>
             <p>
               We deliver hand-selected healing crystals that bring harmony to

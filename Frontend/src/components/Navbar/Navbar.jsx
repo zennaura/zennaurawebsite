@@ -301,7 +301,7 @@ const Navbar = () => {
       label: "Sacred Rituals",
       dropdownKey: "sacredrituals",
     },
-    { path: "#", label: "Gifting" },
+    { path: "/contactus", label: "Contact" },
   ];
   console.log("results of search", searchResults);
   console.log("cate data", categoryData);

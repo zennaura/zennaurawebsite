@@ -40,6 +40,7 @@
     padding: 0;
     margin: 0;
     padding: 2rem;
+    padding-top: 0;
 }
 
 .menu-itemm {
@@ -122,12 +123,16 @@
 }
 
 .section-title-sub {
-    font-size: 14px;
+    font-size: 1.5rem;
     color: #333;
     font-weight: bold;
     margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
+}
+.section-sub>ul>a>li{
+    font-size: 1.05rem;
+    margin-top: 1rem;
 }
 
 .menu-item-sub {

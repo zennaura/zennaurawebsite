@@ -121,10 +121,10 @@
 /* For very small screens */
 @media (max-width: 480px) {
   .slider-container{
-    height: 90vh;
+    height: 75vh;
   }
   .slider-image{
-    margin-top: 15rem;
+    margin-top: 8rem;
   }
   .slider-big-image{
     position: absolute;
@@ -133,14 +133,15 @@
   .slider-small-image{
     position: relative;
     top: 13rem;
-    height: 70vh;
+    height: 50vh;
   }
   .slider-image img {
-    width: 150px;
+    width: 175px;
     height: 220px;
   }
 
   .slider-arrow {
+    margin-top: -1rem;
     gap: 1rem;
   }
 
@@ -151,17 +152,25 @@
 }
 @media (max-width:395px) {
   .slider-container{
-    height: 100vh;
+    height: 80vh;
   }
   .slider-image{
-    margin-top: 15rem;
+    margin-top: 6rem;
+  }
+  .slider-arrow {
+    margin-top: 0rem;
+    gap: 1rem;
   }
 }
 @media (max-width:380px) {
   .slider-container{
-    height: 110vh;
+    height: 90vh;
+  }
+  .slider-arrow {
+    margin-top: -1rem;
+    gap: 1rem;
   }
   .slider-image{
-    margin-top: 10rem;
+    margin-top: 1rem;
   }
 }

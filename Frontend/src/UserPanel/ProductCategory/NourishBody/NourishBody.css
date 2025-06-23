@@ -26,3 +26,10 @@
   background: black;
   /* object-fit: cover; */
 }
+
+@media (max-width: 1024px){
+.nourishbody-content>iframe{
+  width: 100vw;
+  height: 55vw;
+}
+}

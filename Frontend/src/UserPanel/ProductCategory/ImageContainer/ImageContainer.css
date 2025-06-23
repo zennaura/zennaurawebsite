@@ -14,11 +14,11 @@
 
 @media (max-width: 1024px) {
     .ImageContainer-img img{
-        height: 40vh;
+        height: 30vh;
     }
 }
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
     .ImageContainer-img img{
         height: 25vh;
     }
-}
+} */

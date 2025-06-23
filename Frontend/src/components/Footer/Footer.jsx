@@ -76,12 +76,13 @@ const Footer = () => {
           </FooterSection>
 
           {/* Contact Section */}
-          <FooterSection title="Contact">
-            <div className="footerContactM">
+          {/* <FooterSection title="Contact"> */}
+          <div className="footerContactM">
+            <h3>Contact</h3>
               <p>Email: connect@zennaura.in</p>
               <p>Phone: +91 93551-88066</p>
             </div>
-          </FooterSection>
+          {/* </FooterSection> */}
 
           <div className="follow">
             <h3 className="footer-follow-title">Follow</h3>

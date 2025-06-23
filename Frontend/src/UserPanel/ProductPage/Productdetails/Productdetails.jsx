@@ -26,8 +26,14 @@ const ProductDetails = ({
 
   // console.log("product", product);
   // console.log("var", selectedVariant);
-
+  const location = useLocation();
   useEffect(() => {
+    if (location.state) {
+      // Use the passed state data
+      const { selectedVariant, variantIndex, ...productData } = location.state;
+      // Handle the product data
+    }
+
     const fetchProduct = async () => {
       try {
         const [productId, variantIndex] = id.split("-");

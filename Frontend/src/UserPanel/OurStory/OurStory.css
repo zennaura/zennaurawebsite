@@ -251,7 +251,7 @@
 
   .our-story h2 {
     font-size: 26px;
-    margin-bottom: 15px;
+    margin-bottom: 1.5rem;
   }
 
   .story-card {
@@ -287,7 +287,7 @@
   .dot {
     width: 30px;
     height: 5px;
-    margin: 0 4px;
+    margin-top: 1.5rem;
   }
 }
 

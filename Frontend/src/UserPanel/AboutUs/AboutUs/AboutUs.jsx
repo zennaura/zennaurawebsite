@@ -15,21 +15,23 @@ import FollowUs from "../../FollowUs/FollowUs";
 import UptoDate from "../../UpToDate/UptoDate";
 import Spiritualjourneyimg from "../../../assests/Spiritualjourneyimg.png"
 import AboutShop from "../../../assests/aboutShop.png";
+import NourishBody from "../../ProductCategory/NourishBody/NourishBody";
 const AboutUs = () => {
   return (
     <>
     <ImageHead Title = "About Us"/>
     {/* <OurPhilosophy /> */}
     <ImageContainer Image = {AboutUs1}/>
-    <WhyWeStarted/>
+    {/* <WhyWeStarted/> */}
+    <NourishBody/>
     <OurValues/>
     <ImageContainer Image = {AboutShop}/>
     <HandMadeLove/>
     <WhyZenn/>
     {/* <ImageContainer Image = {Spiritualjourneyimg}/> */}
-    <MakeDifferent/>
+    {/* <MakeDifferent/> */}
     {/* <OurCertifications/> */}
-    <FollowUs/>
+    {/* <FollowUs/> */}
     <UptoDate/>
     </>
   );

@@ -22,18 +22,26 @@ const slides = [
   },
   {
     title: "The Mission – Elevate Your Spirit, Transform Your Life",
-    content: `Our mission is to provide handcrafted, high-quality spiritual products that help you:
-    - Cleanse negative energy with sage & Palo Santo
-    - Manifest your dreams with reiki-infused crystals & candles
-    - Enhance meditation & chakra healing with sacred tools.`,
-    quote: "Zenn Aura represents a lifestyle that celebrates balance, harmony, and conscious self-care. Transform your space. Elevate your energy. Manifest your best life.",
+    content: `Our mission is to provide high-quality spiritual products that help you Cleanse negative energy, Manifest your dreams with reiki-infused crystal candles and Enhance meditation with sacred tools.`,
+    quote: "Zenn Aura represents a lifestyle that celebrates balance, harmony, and conscious self-care. Elevate your energy. Manifest your best life.",
     src:three
   },
 ];
 
+// Our mission is to provide handcrafted, high-quality spiritual products that help you:
+//     - Cleanse negative energy with sage & Palo Santo
+//     - Manifest your dreams with reiki-infused crystals & candles
+//     - Enhance meditation & chakra healing with sacred tools.
+// for mobile
+// Transform your space.
+// Our mission is to provide high-quality spiritual products that help you Cleanse negative energy, Manifest your dreams with reiki-infused crystal candles and Enhance meditation & chakra healing with sacred tools.
+    // 
+    // - Manifest your dreams with reiki-infused crystals & candles
+    // - Enhance meditation & chakra healing with sacred tools.
+
 const OurStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const [onMouseEnter, setOnMouseEnter] = useState(0);
   // Function to go to the next slide
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
@@ -46,7 +54,8 @@ const OurStory = () => {
 
   // Automatically move to the next slide every 3000ms (3 seconds)
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
+    let interval = setInterval(nextSlide, 5000);
+    
 
     // Cleanup the interval when the component unmounts
     return () => clearInterval(interval);
@@ -90,6 +99,7 @@ const OurStory = () => {
               key={index}
               className={`dot ${index === currentSlide ? "active" : ""}`}
               onClick={() => setCurrentSlide(index)}
+              onMouseEnter={()=>setOnMouseEnter(index)}
             ></span>
           ))}
         </div>
