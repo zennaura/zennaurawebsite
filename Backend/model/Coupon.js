@@ -20,6 +20,14 @@ const couponSchema = new mongoose.Schema({
     type: Boolean, 
     default: true 
   },
+  oneTimePerUser: {
+    type: Boolean,
+    default: false
+  },
+  minCartValue: {
+    type: Number,
+    default: 0
+  },
   usedByUsers: [{ 
     type: mongoose.Schema.Types.ObjectId, 
     ref: "User",

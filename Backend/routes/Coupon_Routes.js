@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/generate", async (req, res) => {
   try {
-    const { code, discount, expiryDate } = req.body;
+    const { code, discount, expiryDate, oneTimePerUser, minCartValue } = req.body;
 
 
     if (!code || !discount || !expiryDate) {
@@ -21,6 +21,8 @@ router.post("/generate", async (req, res) => {
       code,
       discount,
       expiryDate,
+      oneTimePerUser: oneTimePerUser || false,
+      minCartValue: minCartValue || 0
     });
 
     const savedCoupon = await coupon.save();
@@ -46,7 +48,7 @@ router.get('/allcoupons', async (req, res) => {
 // Search and validate coupon
 router.get('/searchcoupon', async (req, res) => {
   try {
-    const { code, userId } = req.query;
+    const { code, userId, cartValue } = req.query;
 
     if (!code) {
       return res.status(400).json({ message: 'Coupon code is required' });
@@ -77,7 +79,19 @@ router.get('/searchcoupon', async (req, res) => {
     }
 
     // Check if user has already used this coupon
-    const alreadyUsed = coupon.usedByUsers?.includes(userId);
+    let alreadyUsed = false;
+    if (coupon.oneTimePerUser) {
+      alreadyUsed = coupon.usedByUsers?.includes(userId);
+    }
+
+    // Check minCartValue
+    if (typeof coupon.minCartValue === 'number' && Number(cartValue) < coupon.minCartValue) {
+      return res.status(400).json({
+        message: `Cart value must be at least ${coupon.minCartValue} to use this coupon`,
+        minCartValue: coupon.minCartValue,
+        isValid: false
+      });
+    }
 
     res.status(200).json({
       code: coupon.code,
@@ -112,7 +126,7 @@ router.put('/use', async (req, res) => {
     }
 
     // Check if already used by this user
-    if (coupon.usedByUsers?.includes(userId)) {
+    if (coupon.oneTimePerUser && coupon.usedByUsers?.includes(userId)) {
       return res.status(400).json({ message: 'Coupon already used by this user' });
     }
 
@@ -128,7 +142,9 @@ router.put('/use', async (req, res) => {
     }
 
     // Add userId to usedByUsers
-    coupon.usedByUsers.push(userId);
+    if (coupon.oneTimePerUser) {
+      coupon.usedByUsers.push(userId);
+    }
     await coupon.save();
 
     res.status(200).json({ 
