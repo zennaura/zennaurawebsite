@@ -9,16 +9,17 @@
 
 .welcomezenn-intro {
     font-family: 'Inria Serif';
-    font-size: 28px;
+    font-size: 1.2rem;
     font-weight: 525;
-    margin-bottom: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     text-align: left;
 }
 
 .welcomezenn-policy-list {
     list-style-type: none;
     font-family: 'Poppins';
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
 }
 

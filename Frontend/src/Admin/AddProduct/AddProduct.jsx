@@ -317,11 +317,13 @@ const AddProduct = () => {
     );
   }
 
+  console.log("category", category);
+
   return (
     <div className="bg-gray-50 flex justify-center items-center p-6">
       {success && (
         <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white !px-6 !py-3 rounded-lg shadow-lg transition-all duration-300 animate-bounce z-50">
-          ✅ Product Added Successfully!
+          Product Added Successfully!
         </div>
       )}
 
@@ -350,9 +352,9 @@ const AddProduct = () => {
             <span className="text-gray-700">Category</span>
             <input
               type="text"
-              value={category.sub}
+              value={category.category}
               onChange={(e) =>
-                setCategory({ ...category, sub: e.target.value })
+                setCategory({ ...category, category: e.target.value })
               }
               className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
@@ -361,9 +363,9 @@ const AddProduct = () => {
             <span className="text-gray-700">Sub Category</span>
             <input
               type="text"
-              value={category.subSub}
+              value={category.sub}
               onChange={(e) =>
-                setCategory({ ...category, subSub: e.target.value })
+                setCategory({ ...category, sub: e.target.value })
               }
               className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />
@@ -372,9 +374,9 @@ const AddProduct = () => {
             <span className="text-gray-700">SubSub Category</span>
             <input
               type="text"
-              value={category.category}
+              value={category.subSub}
               onChange={(e) =>
-                setCategory({ ...category, category: e.target.value })
+                setCategory({ ...category, subSub: e.target.value })
               }
               className="!mt-1 block w-full border border-gray-300 rounded-md !p-2"
             />

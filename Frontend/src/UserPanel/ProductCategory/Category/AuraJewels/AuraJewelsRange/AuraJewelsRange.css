@@ -156,31 +156,49 @@
   /* Phones */
   @media (max-width: 480px) {
     .DiscoverSkin-container {
-      padding: 20px 0;
+      padding: 20px 0px;
     }
   
     .DiscoverSkin-heading {
       font-size: 22px;
     }
   
-    .DiscoverSkin-items-container {
+    /* .DiscoverSkin-items-container {
       gap: 10px;
-    }
+    } */
   
-    .DiscoverSkin-item {
+    /* .DiscoverSkin-item {
       min-width: 60px;
       flex: 0 0 70px;
-    }
+    } */
   
-    .DiscoverSkin-item-image {
+    /* .DiscoverSkin-item-image {
       width: clamp(30px, 12vw, 70px);
       height: clamp(30px, 12vw, 70px);
-    }
+    } */
   
-    .DiscoverSkin-item-title {
+    /* .DiscoverSkin-item-title {
       font-size: 13px;
       width: 40px;
       word-break: break-word;
+    } */
+    .AuraJewelsRange-item-title {
+      text-align: center;
+      font-size: 13px;
+      /* width: 120% !important; */
+  
+    }
+  
+    .AuraJewelsRange-items-container {
+       flex-wrap: wrap !important;
+      /* width: 90vw !important; */
+      gap: 2.5rem !important;
+    }
+  
+    .AuraJewelsRange-item {
+      /* min-width: 60px; */
+      /* flex: 0 0 70px; */
+      flex-wrap: wrap !important;
     }
   }
   

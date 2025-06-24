@@ -123,23 +123,33 @@
   }
 
   .Handmadelove-title {
-    font-size: 36px;
+    padding-top: 2rem;
+    font-size: 2rem;
   }
 
   .Handmadelove-content {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
   .Handmadelove-div {
     width: 100%;
     height: fit-content;
     display: flex;
   }
-  .Handmadelove-div-left {
-    justify-content: flex-start;
+  .Handmadelove-div-left{
+    width: 90vw;
+    margin: auto;
+    /* text-align: center; */
+    /* height: 30vw; */
+    /* margin-right: 15rem; */
   }
-  .Handmadelove-div-right {
-    justify-content: flex-end;
+  .Handmadelove-div-right{
+    width: 90vw;
+    margin: auto;
+    /* height: 30vw; */
+    /* margin-left: 15rem; */
   }
 
   .Handmadelove-textdiv {
@@ -148,16 +158,18 @@
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .Handmadelove-textdiv h1 {
     font-size: 18px;
-    text-align: right;
+    text-align: center;
     margin-bottom: 0px;
   }
   .Handmadelove-div-right h1 {
-    text-align: left;
+    text-align: center;
   }
 
   .Handmadelove-textdiv p {

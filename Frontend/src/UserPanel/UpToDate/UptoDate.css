@@ -134,7 +134,9 @@ input[type="checkbox"] {
     accent-color: #c49a6c; /* Match the warm brown color */
     width: 20px;
     height: 20px;
-    padding-left: 20px;
+    margin-top: -1rem;
+    margin-right: 0.5rem;
+    /* padding-left: 20px; */
     /* margin-right: 10px; */
   }
   .btn-uptodate {
@@ -142,7 +144,7 @@ input[type="checkbox"] {
     width: 50%; /* Full width on very small screens */
   }
   .upto-date-permission-para {
-    font-size: 10.6px; /* Smaller text for very small screens */
+    font-size: 12px; /* Smaller text for very small screens */
   }
 }
 @media screen and (max-width: 400px) {

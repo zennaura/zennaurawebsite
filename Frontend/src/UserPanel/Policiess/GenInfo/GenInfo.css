@@ -39,7 +39,7 @@
 
 .gen-info-title {
     font-family: 'Inria Serif', serif;
-    font-size: 40px;
+    font-size: 16px;
     font-weight: 600;
     margin-bottom: 30px;
     color: #390611;
@@ -47,7 +47,7 @@
 
 .gen-info-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 25px;
+    font-size: 14px;
     font-weight: 300;
     color: #390611;
     padding-bottom: 7px;
@@ -97,12 +97,12 @@
 
 @media (max-width: 480px) {
     .gen-info-title {
-        font-size: 28px;
+        font-size: 1.3rem;
         margin-bottom: 40px;
-        text-align: center;
+        text-align: start;
     }
     .gen-info-text {
-        font-size: 20px;
+        font-size: 1rem;
     }
     .gen-info-oddcontent,
     .gen-info-evencontent {

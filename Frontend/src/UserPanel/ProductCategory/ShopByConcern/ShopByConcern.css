@@ -74,7 +74,7 @@
 .ShopByConcern-slider-item h3 {
     width: 80%;
     font-family: "Inria Serif", serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     margin-top: 10px;
     /* margin-bottom: 25px; */
@@ -139,7 +139,7 @@
 .concern-title {
     font-family: 'Inria Serif', serif;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 32px;
 }
 
 .concern-title-content {
@@ -252,5 +252,12 @@
         flex: 0 0 auto;
         min-width: 280px;
         max-width: 280px;
+    }
+}
+
+@media (max-width: 500px){
+    .ShopByConcern-slider-item{
+        width: 70%;
+        /* height: ; */
     }
 }

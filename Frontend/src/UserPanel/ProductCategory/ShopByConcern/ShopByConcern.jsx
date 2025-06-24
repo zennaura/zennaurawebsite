@@ -162,7 +162,7 @@ const ShopByConcern = () => {
                                 src={product.src} alt={product.alt} />
 
                             <h3>{product.title}</h3>
-                            <p>{product.description}</p>
+                            {/* <p>{product.description}</p> */}
                         </div>
                     ))}
 

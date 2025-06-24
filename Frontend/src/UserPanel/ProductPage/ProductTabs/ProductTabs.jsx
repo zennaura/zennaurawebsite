@@ -187,13 +187,13 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
           </div>
         )}
 
-        {activeTab === "healing" && healingImage && (
+        {activeTab === "healing" && (
           <div className="product-tab-healing">
             {/* <img src={healingImage} alt="Healing properties" /> */}
-            <div className="!max-w-8xl mx-auto">
-        <div className="grid grid-cols-2 gap-1 bg-gray-800 p-1 rounded-lg mb-8">
+            <div className="mx-auto" style={{width:"60vw"}}>
+        <div className="grid grid-cols-2 gap-0.5 bg-gray-800 p-1 rounded-lg mb-8">
           {/* Top Left */}
-          <div className="bg-white p-12 rounded-tl-lg flex flex-col items-center justify-center text-center min-h-50">
+          <div className=" p-12 rounded-tl-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
             {/* <div className="text-6xl mb-6">{content.topLeft.icon}</div> */}
             <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
               {healingProperties?.first || " "}
@@ -201,7 +201,7 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
           </div>
           
           {/* Top Right */}
-          <div className="bg-white p-12 rounded-tr-lg flex flex-col items-center justify-center text-center min-h-50">
+          <div className=" p-12 rounded-tr-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
             {/* <div className="text-6xl mb-6">{content.topRight.icon}</div> */}
             <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
               {healingProperties?.second || " "}
@@ -209,7 +209,7 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
           </div>
           
           {/* Bottom Left */}
-          <div className="bg-white p-12 rounded-bl-lg flex flex-col items-center justify-center text-center min-h-50">
+          <div className=" p-12 rounded-bl-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
             {/* <div className="text-6xl mb-6">{content.bottomLeft.icon}</div> */}
             <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
               {healingProperties?.third || " "}
@@ -217,7 +217,7 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
           </div>
           
           {/* Bottom Right */}
-          <div className="bg-white p-12 rounded-br-lg flex flex-col items-center justify-center text-center min-h-50">
+          <div className=" p-12 rounded-br-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
             {/* <div className="text-6xl mb-6">{content.bottomRight.icon}</div> */}
             <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
               {healingProperties?.fourth || " "}

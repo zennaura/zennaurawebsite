@@ -79,7 +79,7 @@
 
   .OurValue-row {
     flex-direction: column; /* Stack vertically */
-    margin-bottom: 40px;
+    margin-bottom: 3rem !important;
   }
 
   .OurValue-text {
@@ -112,7 +112,11 @@
 /* Small mobile devices */
 @media (max-width: 480px) {
   .OurValue-title {
-    margin-bottom: 40px;
+    margin-bottom: 0.1rem;
+    /* margin-bottom: 40px; */
+  }
+  .OurValue-value-detail{
+    padding: 0 0.3rem;
   }
 
   .OurValue-divider {

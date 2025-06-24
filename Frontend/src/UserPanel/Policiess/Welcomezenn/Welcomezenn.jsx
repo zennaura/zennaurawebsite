@@ -11,7 +11,7 @@ const Welcomezenn = () =>{
               purchasing our products/services. By accessing this website, you agree to comply with these terms.
             </p>
             
-            <ul className="welcomezenn-policy-list">
+            {/* <ul className="welcomezenn-policy-list">
               <li className="welcomezenn-policy-item"><span>◆</span>  General Information</li>
               <li className="welcomezenn-policy-item"><span>◆</span>  Eligibility to Use</li>
               <li className="welcomezenn-policy-item"><span>◆</span>  Pricing & Payment</li>
@@ -24,7 +24,7 @@ const Welcomezenn = () =>{
               <li className="welcomezenn-policy-item"><span>◆</span>  Liability Disclaimer</li>
               <li className="welcomezenn-policy-item"><span>◆</span>  Governing Law</li>
               <li className="welcomezenn-policy-item"><span>◆</span>  Contact Us</li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         </>

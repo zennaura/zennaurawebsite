@@ -9,7 +9,7 @@ const Termsandcondition = () => {
   return (
     <>
       <ImageHead Title = "Terms and Conditions"/>
-      <Terms />
+      {/* <Terms /> */}
       <Condition />
     </>
   )

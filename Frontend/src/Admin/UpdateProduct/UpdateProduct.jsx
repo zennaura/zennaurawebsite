@@ -533,7 +533,7 @@ const UpdateProduct = () => {
     <div className="bg-gray-50 flex justify-center items-center !p-6">
       {success && (
         <div className="fixed top-5 !left-1/2 transform !-translate-x-1/2 bg-green-500 text-white !px-6 !py-3 rounded-lg shadow-lg transition-all duration-300 animate-bounce z-50">
-          ✅ Product Updated Successfully!
+          Product Updated Successfully!
         </div>
       )}
 

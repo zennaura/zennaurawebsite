@@ -36,7 +36,7 @@
 
 .conditions-title {
     font-family: 'Inria Serif', serif;
-    font-size: 16x;
+    font-size: 16px;
     /* font-weight: 600; */
     margin-bottom: 20px;
     color: #390611;
@@ -94,12 +94,12 @@
 
 @media (max-width: 480px) {
     .conditions-title {
-        font-size: 28px;
+        font-size: 1.3rem;
         margin-bottom: 40px;
-        text-align: center;
+        text-align: start;
     }
     .conditions-text {
-        font-size: 20px;
+        font-size: 1rem;
     }
     .conditions-oddcontent,
     .conditions-evencontent {

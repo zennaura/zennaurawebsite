@@ -4,7 +4,12 @@ import './Conditions.css'
 const Condition = () => {
     return(
         <>      
-          <div className="conditions-container">
+            <div className="conditions-container">
+                <p className="terms-greet">
+        Welcome to Zen Aura Skin Care. By accessing or using our website and
+        services, you agree to comply with the following terms and conditions.
+        Please read them carefully.
+      </p>
             <div className="conditions-oddcontent">
                 <h2 className="conditions-title">
                     Privacy

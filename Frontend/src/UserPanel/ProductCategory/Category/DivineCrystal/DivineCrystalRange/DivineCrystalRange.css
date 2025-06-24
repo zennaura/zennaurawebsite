@@ -84,11 +84,11 @@
 
 /* Small screens (phones) */
 @media (max-width: 480px) {
-    .DivineCrystalRange-container {
-        padding: 20px 0px;
+    .DivineCrystalRange-items-container {
+        padding: 20px 0px !important;
     }
 
-    .DivineCrystalRange-item-title {
+    /* .DivineCrystalRange-item-title {
         text-align: center;
         font-size: 13px;
         width: 40px;
@@ -102,10 +102,30 @@
     .DivineCrystalRange-item {
         min-width: 60px;
         flex: 0 0 70px;
-    }
+    } */
 
-    .DivineCrystalRange-item-image {
+    /* .DivineCrystalRange-item-image {
         width: clamp(30px, 12vw, 80px);
         height: clamp(30px, 12vw, 80px);
+    } */
+
+    .DivineCrystalRange-item-title {
+      text-align: center;
+      font-size: 13px;
+      width: 120% !important;
+  
+    }
+  
+    .DivineCrystalRange-items-container {
+       flex-wrap: wrap !important;
+      width: 100vw !important;
+      /* gap: 2.5rem !important; */
+    }
+  
+    .DivineCrystalRange-item {
+      /* min-width: 60px; */
+      /* flex: 0 0 70px; */
+      /* width: 30% !important; */
+      flex-wrap: wrap !important;
     }
 }
