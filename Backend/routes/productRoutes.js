@@ -8,6 +8,7 @@ const upload = require("../config/multerConfig"); // should be using memoryStora
 const { Types } = require('mongoose');
 const _ = require('lodash');
 const router = express.Router();
+const Review = require('../model/Review');
 
 
 // Upload images to Cloudinary
@@ -89,6 +90,10 @@ router.get("/products/:id", async (req, res) => {
         suggestedAction: "Verify the product ID or check if it was deleted"
       });
     }
+
+    // Fetch reviews for this product from the Review collection
+    const reviews = await Review.find({ productId: req.params.id });
+    product.reviews = reviews;
 
     // 3. Transform the data (your existing transformation is good)
     const transformedProduct = {
