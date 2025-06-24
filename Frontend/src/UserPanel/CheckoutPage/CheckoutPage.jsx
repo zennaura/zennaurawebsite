@@ -111,9 +111,9 @@ const CheckoutPage = () => {
 
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_LINK}/api/coupons/searchcoupon`,
-        { params: { code: couponCode, userId: user._id } }
+        { params: { code: couponCode, userId: user._id, cartValue: subtotal } }
       );
-
+      console.log("coupons", response);
       if (!response.data.isValid) {
         setCouponMessage(response.data.message || "Invalid coupon code");
         return;
@@ -134,8 +134,8 @@ const CheckoutPage = () => {
         return;
       }
 
-      if (subtotal < (coupon.minOrder || 0)) {
-        setCouponMessage(`Minimum order of ₹${coupon.minOrder} required`);
+      if (subtotal < coupon.minCartValue) {
+        setCouponMessage(`cart value is less than ${cartValue}`);
         return;
       }
 
@@ -856,7 +856,7 @@ console.log("order items", orderItems);
                       value={couponCode}
                       placeholder="Enter coupon code"
                       className="flex-1 border !p-2 rounded-md"
-                      onChange={(e) => setCouponCode(e.target.value)}
+                      onChange={(e) => setCouponCode(e.target.value = e.target.value.toUpperCase())}
                       disabled={!!appliedCoupon}
                     />
                     {appliedCoupon ? (

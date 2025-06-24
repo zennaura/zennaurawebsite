@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ReviewFormModal.css";
+import axios from "axios"
 
 const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
   const [rating, setRating] = useState(0);
@@ -51,12 +52,15 @@ const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
         mediaUrls, // array of uploaded image/video URLs
       };
 
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reviewData),
       });
-
+      // const response = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/reviews`,{
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(reviewData),
+      // })
       if (response.ok) {
         alert("Review submitted successfully!");
         onClose();
@@ -139,7 +143,7 @@ const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
         />
 
         <p className="review-policy">
-          How we use your data: We’ll contact you about the review you left, and only if necessary.
+          How we use your data: We'll contact you about the review you left, and only if necessary.
           By submitting your review, you agree to our terms, privacy, and content policies.
         </p>
 

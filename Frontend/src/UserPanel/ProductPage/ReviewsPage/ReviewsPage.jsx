@@ -15,7 +15,7 @@ const ReviewsPage = ({ ProductId, VarientId ,product}) => {
             </div>
             <div className="reviews-page-container">
                 <div className="reviews-page-summary">
-                    <span className="total-reviews"><span className="reviews-star">★★★★★★ </span> 47.5 out of 5</span>
+                    <span className="total-reviews"><span className="reviews-star">★★★★★★ </span> 4.75 out of 5</span>
                     <span> Based on 47 reviews</span>
                 </div>
                 <div className="reviews-page-rating-bars">

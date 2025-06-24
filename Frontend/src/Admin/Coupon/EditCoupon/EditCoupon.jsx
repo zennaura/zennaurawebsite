@@ -12,7 +12,9 @@ const EditCoupon = () => {
   const [coupon, setCoupon] = useState({
     code: '',
     discount: '',
-    expiryDate: ''
+    expiryDate: '',
+    oneTimePerUser: false,
+    minCartValue: 0
   });
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -29,11 +31,13 @@ const EditCoupon = () => {
             }
           }
         );
-        const { code, discount, expiryDate } = response.data;
+        const { code, discount, expiryDate, oneTimePerUser, minCartValue } = response.data;
         setCoupon({
           code,
           discount,
-          expiryDate: new Date(expiryDate).toISOString().split('T')[0]
+          expiryDate: new Date(expiryDate).toISOString().split('T')[0],
+          oneTimePerUser: oneTimePerUser || false,
+          minCartValue: minCartValue || 0
         });
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch coupon details');
@@ -46,8 +50,11 @@ const EditCoupon = () => {
   }, [couponId]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCoupon(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setCoupon(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -58,7 +65,9 @@ const EditCoupon = () => {
         {
           code: coupon.code,
           discount: Number(coupon.discount),
-          expiryDate: new Date(coupon.expiryDate)
+          expiryDate: new Date(coupon.expiryDate),
+          oneTimePerUser: coupon.oneTimePerUser,
+          minCartValue: coupon.minCartValue ? Number(coupon.minCartValue) : 0
         },
         {
           headers: {
@@ -199,6 +208,38 @@ const EditCoupon = () => {
                   required
                 />
               </div>
+            </div>
+
+            {/* Minimum Cart Value */}
+            <div className="!space-y-2">
+              <label htmlFor="minCartValue" className="block text-sm font-medium text-gray-700">
+                Minimum Cart Value (₹)
+              </label>
+              <input
+                id="minCartValue"
+                name="minCartValue"
+                type="number"
+                min="0"
+                value={coupon.minCartValue}
+                onChange={handleChange}
+                className="focus:ring-blue-500 focus:border-blue-500 block !w-full !px-4 !py-2 border border-gray-300 rounded-md"
+                placeholder="e.g. 500"
+              />
+            </div>
+
+            {/* One Time Per User */}
+            <div className="flex items-center space-x-2">
+              <input
+                id="oneTimePerUser"
+                name="oneTimePerUser"
+                type="checkbox"
+                checked={coupon.oneTimePerUser}
+                onChange={handleChange}
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label htmlFor="oneTimePerUser" className="block text-sm font-medium text-gray-700">
+                One time use per user
+              </label>
             </div>
 
             {/* Submit Button */}

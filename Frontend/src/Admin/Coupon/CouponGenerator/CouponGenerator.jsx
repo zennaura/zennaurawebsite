@@ -9,6 +9,8 @@ const CouponGenerator = () => {
   const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
+  const [oneTimePerUser, setOneTimePerUser] = useState(false);
+  const [minCartValue, setMinCartValue] = useState('');
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -19,6 +21,8 @@ const CouponGenerator = () => {
       code: couponCode,
       discount: Number(discount),
       expiryDate: new Date(expiryDate),
+      oneTimePerUser: oneTimePerUser,
+      minCartValue: minCartValue ? Number(minCartValue) : 0
     };
 
     try {
@@ -39,6 +43,8 @@ const CouponGenerator = () => {
       setCouponCode('');
       setDiscount('');
       setExpiryDate('');
+      setOneTimePerUser(false);
+      setMinCartValue('');
     } catch (err) {
       console.error('Error creating coupon:', err);
       toast.error(err.response?.data?.message || 'Failed to generate coupon');
@@ -114,6 +120,34 @@ const CouponGenerator = () => {
               className="!w-full !px-4 !py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
             />
+          </div>
+
+          <div className="!space-y-2">
+            <label htmlFor="minCartValue" className="block text-sm font-medium text-gray-700">
+              Minimum Cart Value (₹)
+            </label>
+            <input
+              id="minCartValue"
+              type="number"
+              min="0"
+              value={minCartValue}
+              onChange={(e) => setMinCartValue(e.target.value)}
+              className="!w-full !px-4 !py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="e.g. 500"
+            />
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              id="oneTimePerUser"
+              type="checkbox"
+              checked={oneTimePerUser}
+              onChange={(e) => setOneTimePerUser(e.target.checked)}
+              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label htmlFor="oneTimePerUser" className="block text-sm font-medium text-gray-700">
+              One time use per user
+            </label>
           </div>
 
           <div className="!pt-4">
