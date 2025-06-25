@@ -152,7 +152,7 @@
 }
 @media (max-width:395px) {
   .slider-container{
-    height: 80vh;
+    height: 90vh;
   }
   .slider-image{
     margin-top: 6rem;
@@ -164,11 +164,12 @@
 }
 @media (max-width:380px) {
   .slider-container{
-    height: 100vh;
+    height: 110vh !important;
   }
   .slider-arrow {
     margin-top: -1rem;
     gap: 1rem;
+    padding-bottom: 5rem !important;
   }
   .slider-image{
     margin-top: 1rem;
