@@ -151,3 +151,9 @@ html {
     height: 5px;
   }
 }
+@media (max-width: 400px) {
+  .ourstory2-container{
+    height: 65vh;
+  }
+ 
+}
