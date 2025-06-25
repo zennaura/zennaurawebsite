@@ -82,7 +82,6 @@ const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
       <div className="review-modal">
         <button className="review-modal-close" onClick={onClose}>←</button>
         <h2>Write a Review</h2>
-        <h4> {productId}  {variantId}</h4>
         <div className="review-stars">
           {[...Array(5)].map((_, index) => {
             const starValue = index + 1;
@@ -100,13 +99,13 @@ const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
           })}
         </div>
 
-        <input
+        {/* <input
           type="text"
           placeholder="Give your review a title"
           maxLength="100"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-        />
+        /> */}
         <textarea
           placeholder="Write your reviews here"
           value={reviewText}

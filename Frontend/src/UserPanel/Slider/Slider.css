@@ -164,7 +164,7 @@
 }
 @media (max-width:380px) {
   .slider-container{
-    height: 90vh;
+    height: 100vh;
   }
   .slider-arrow {
     margin-top: -1rem;
