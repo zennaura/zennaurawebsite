@@ -30,6 +30,7 @@ const allowedOrigins = [
   "https://zennaurawebsite.vercel.app",
   "http://localhost:5173",
   "https://www.zennaura.in",
+  "https://zennaura.in",
   "http://192.168.224.77:5173"
 ];
 
