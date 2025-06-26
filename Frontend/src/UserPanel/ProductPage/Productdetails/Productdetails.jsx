@@ -91,9 +91,9 @@ const ProductDetails = ({
     navigate(`/productdetails/${productData._id}-${variantIndex}`, {
       state: {
         ...productData,
-        selectedVariant: variant
+        selectedVariant: variant,
       },
-      replace: true
+      replace: true,
     });
   };
 
@@ -106,6 +106,13 @@ const ProductDetails = ({
       }
     };
 
+    const otherImages = productData?.otherimages || [];
+
+    if (otherImages.length > 0) {
+      // Handle first image separately
+      addImage(otherImages[0], `${productData?.name} - Other 1`);
+    }
+
     if (displayVariant.variantsimages) {
       if (displayVariant.frontImage)
         addImage(displayVariant.frontImage, productData?.name);
@@ -115,9 +122,12 @@ const ProductDetails = ({
     (displayVariant.variantsimages || []).forEach((img, idx) =>
       addImage(img, `${productData?.name} - Variant ${idx + 1}`)
     );
-    (productData?.otherimages || []).forEach((img, idx) =>
-      addImage(img, `${productData?.name} - Other ${idx + 1}`)
-    );
+    otherImages
+      .slice(1)
+      .forEach((img, idx) =>
+        addImage(img, `${productData?.name} - Other ${idx + 2}`)
+      );
+
     if (productData?.productDescriptions?.image)
       addImage(
         productData.productDescriptions.image,
@@ -237,12 +247,16 @@ const ProductDetails = ({
             productId: actualProductId,
             variantId,
             quantity,
-            name: displayVariant.variantname || productData?.name || productData?.title,
+            name:
+              displayVariant.variantname ||
+              productData?.name ||
+              productData?.title,
             title: productData?.title || "",
             price: displayVariant.salePrice,
-            originalPrice: displayVariant.costPrice || displayVariant.originalPrice || 0,
+            originalPrice:
+              displayVariant.costPrice || displayVariant.originalPrice || 0,
             image: displayVariant.frontImage || productData?.frontImage || "",
-            discount: displayVariant.discount || 0
+            discount: displayVariant.discount || 0,
           });
           alert("Product added to cart!");
         }
@@ -373,13 +387,19 @@ const ProductDetails = ({
               <p className="price-note">Inclusive of all taxes</p>
             </div>
             <p className="price-original">
-              ₹    
+              ₹
               {/* {Number(displayVariant?.salePrice +
                 (displayVariant?.salePrice * displayVariant?.tax) / 100).toFixed(2) }  */}
-              { Number(displayVariant?.costPrice).toFixed(2)}
+              {Number(displayVariant?.costPrice).toFixed(2)}
             </p>
             <p className="price-discount">
-              ({(((displayVariant?.costPrice - displayVariant?.salePrice)/(displayVariant?.costPrice))*100).toFixed(1)}% OFF)
+              (
+              {(
+                ((displayVariant?.costPrice - displayVariant?.salePrice) /
+                  displayVariant?.costPrice) *
+                100
+              ).toFixed(1)}
+              % OFF)
             </p>
           </div>
           <div className="quantity-container" aria-label="Quantity selector">
