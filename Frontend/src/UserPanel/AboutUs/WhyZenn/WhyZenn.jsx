@@ -1,9 +1,9 @@
 import React from "react";
 import './WhyZenn.css';
 
-import leftArrow from "../../../assests/LeftArrow.png";
+import leftArrow from "../../../assests/arrow.png";
 import zennLogo from "../../../assests/logo.png";
-import rightArrow from "../../../assests/RightArrow.png";
+import rightArrow from "../../../assests/arrow.png";
 
 const WhyZenn = () => {
     return (

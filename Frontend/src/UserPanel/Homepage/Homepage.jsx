@@ -14,14 +14,18 @@ import FollowUs from '../FollowUs/FollowUs';
 import Bemember from '../BeMember/Bemember';
 import ImageContainer from "../ProductCategory/ImageContainer/ImageContainer";
 import Homepageposter from '../../assests/awaken.png';
+import HomepageposterM from '../../assests/mobile_1.png';
 import OurClient2 from '../OurClient/OurClient2.jsx';
 import { useUser } from '../../components/AuthContext/AuthContext';
 import PosterSlider from './posterSlider'
+import {useMediaQuery} from "react-responsive"
 
 
 const Homepage = () => {
 
     const { user } = useUser();
+
+    const isMobile = useMediaQuery({query: '(max-width: 500px)' })
 
     // console.log("received data through context" , user)
 
@@ -32,7 +36,7 @@ const Homepage = () => {
 
             <PosterSlider />
             <Carousel />
-            <ImageContainer Image={Homepageposter} />
+            <ImageContainer Image={isMobile?HomepageposterM :Homepageposter} />
             <ProductCard />
             <Slider />
             <Redefining />

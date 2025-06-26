@@ -140,6 +140,9 @@ html {
 }
 
 @media (max-width: 480px) {
+  .ourclient_heading{
+    font-size: 1.5rem;
+  }
   .ourstory2 {
     height: 300px;
   }

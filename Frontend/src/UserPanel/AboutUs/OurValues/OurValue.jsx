@@ -11,8 +11,7 @@ const OurValue = () => {
             <h2 className="OurValue-value-title">Purity You Can See & Trust</h2>
             <p className="OurValue-value-detail">
               We Don't Just Claim Purity—We Prove It. From Our Ingredient
-              Sourcing To Our Advertisements And Product Transparency, Every
-              Step Reflects The Authenticity We Promise.
+              Sourcing To Our Advertisements And Product Transparency.
             </p>
           </div>
           <div className="OurValue-divider"></div>

@@ -5,7 +5,7 @@ const Handmadelove = () => {
   return (
     <div className="Handmadelove-container">
       <h1 className="Handmadelove-title">
-        "Nature’s Touch, Handmade with Love"
+        What Makes Us Different?
       </h1>
       <div className="Handmadelove-content">
         <div className="Handmadelove-div Handmadelove-div-left">

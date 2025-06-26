@@ -85,12 +85,14 @@
   .OurValue-text {
     width: 100%;
     padding: 20px 0;
+
   }
 
   .OurValue-divider {
     width: 100%;
     height: 150px; /* Reduced height for mobile */
     margin: 20px 0;
+    box-sizing: border-box;
     position: absolute;
     z-index: 1;
   }
@@ -112,6 +114,7 @@
 /* Small mobile devices */
 @media (max-width: 480px) {
   .OurValue-title {
+    font-size: 1.5rem;
     margin-bottom: 0.1rem;
     /* margin-bottom: 40px; */
   }
@@ -119,10 +122,12 @@
     padding: 0 0.3rem;
   }
 
-  .OurValue-divider {
+  .OurValue-divider{
+    
     height: 200px;
   }
-
+  
+  
   .OurValue-row {
     margin-bottom: 30px;
   }

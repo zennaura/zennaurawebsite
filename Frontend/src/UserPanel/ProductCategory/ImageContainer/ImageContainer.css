@@ -19,6 +19,6 @@
 }
 @media (max-width: 500px) {
     .ImageContainer-img img{
-        height: 20vh;
+        height: 100%;
     }
 }

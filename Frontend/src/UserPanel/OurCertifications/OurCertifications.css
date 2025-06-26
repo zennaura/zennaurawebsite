@@ -56,7 +56,7 @@
 
 @media screen and (max-width: 480px) {
     .certifications h2 {
-        font-size: 30px;
+        font-size: 1.5rem;
     }
 
     .cert-image {
