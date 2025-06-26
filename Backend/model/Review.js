@@ -4,7 +4,7 @@ const ReviewSchema = new mongoose.Schema({
   productId: { type: String, required: true },
   variantId: { type: String },
   rating: { type: Number, required: true },
-  title: { type: String, required: true },
+  title: { type: String},
   reviewText: { type: String, required: true },
   youtubeURL: { type: String },
   name: { type: String, required: true },

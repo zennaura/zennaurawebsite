@@ -48,7 +48,10 @@ router.post("/reviews", async (req, res) => {
         user: name,
         comment: reviewText,
         rating: rating,
-        date: new Date()
+        date: new Date(),
+        mediaUrls: mediaUrls || [],
+        title: title || '',
+        youtubeURL: youtubeURL || ''
       });
       await product.calculateAverageRating();
       await product.save();

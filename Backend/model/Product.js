@@ -56,7 +56,10 @@ const ProductSchema = new mongoose.Schema({
       user: String,
       comment: String,
       rating: Number,
-      date: { type: Date, default: Date.now }
+      date: { type: Date, default: Date.now },
+      mediaUrls: [String],
+      title: String,
+      youtubeURL: String
     }
   ],
 
