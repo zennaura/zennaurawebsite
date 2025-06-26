@@ -149,17 +149,16 @@
   .WhyZenn-leftarrowimg img,
   .WhyZenn-rightarrowimg img {
     margin: 0;
-    /* object-fit: cover; */
     margin-top: 50px;
     width: 100%;
     height: 40px;
   }
-  .WhyZenn-leftarrowimg img {
+  /* .WhyZenn-leftarrowimg img {
     transform: rotate(-25deg);
   }
   .WhyZenn-rightarrowimg img {
     transform: rotate(25deg);
-  }
+  } */
 
   .WhyZenn-definition h2 {
     font-size: 14px;

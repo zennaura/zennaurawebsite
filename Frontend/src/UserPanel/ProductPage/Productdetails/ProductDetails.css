@@ -38,6 +38,16 @@
 }
 .rating-container {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-details-stars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.1rem;
 }
 
 .review-count {

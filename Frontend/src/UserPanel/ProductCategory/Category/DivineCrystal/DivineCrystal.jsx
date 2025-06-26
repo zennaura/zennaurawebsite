@@ -11,8 +11,11 @@ import DivineCrystalRange from "./DivineCrystalRange/DivineCrystalRange"
 import ShopByConcern from "../../ShopByConcern/ShopByConcern";
 import ImageContainer from "../../ImageContainer/ImageContainer"; 
 import CrystalEnergyImg from "../../../../assests/CrystalEnergy.png"
-import Divine from "../../../../assests/divine.png"
+import Divine from "../../../../assests/divine.png";
+import DivineM from "../../../../assests/mobile_6.png";
+import { useMediaQuery } from "react-responsive";
 const DivineCrystal = () => {
+    const isMobile = useMediaQuery({query:"(max-width:500px)"})
     return(
         <>
         <ImageHead Title= "Divine Crystals"/>
@@ -21,7 +24,7 @@ const DivineCrystal = () => {
         {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>
-        <ImageContainer Image = {Divine}/>
+        <ImageContainer Image = {isMobile?DivineM:Divine}/>
         {/* <Bemember/> */}
         {/* <OurCertifications/> */}
         {/* <FollowUs/> */}

@@ -11,10 +11,14 @@ import FollowUs from "../../../FollowUs/FollowUs";
 import UptoDate from "../../../UpToDate/UptoDate";
 import ShopByConcern from "../../ShopByConcern/ShopByConcern";
 import Soap from "../../../../assests/soap.png";
+import SoapM from "../../../../assests/mobile_7.png";
 import ImageContainer from "../../ImageContainer/ImageContainer";
+import { useMediaQuery } from "react-responsive";
 
 
 const SkinnCare = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
     return(
         <>
         <ImageHead Title= "Body Soap"/>
@@ -23,7 +27,7 @@ const SkinnCare = () => {
         {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>
-            <ImageContainer Image={Soap} />
+            <ImageContainer Image={isMobile?SoapM:Soap} />
         {/* <ExploreHandmadeSoap/> */}
         {/* <Bemember/> */}
         {/* <OurCertifications/> */}

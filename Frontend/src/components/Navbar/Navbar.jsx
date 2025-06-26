@@ -390,16 +390,17 @@ const Navbar = () => {
                   {searchResults.length > 0 && (
                     <div className="search-results-dropdown">
                       {searchResults.slice(0, 5).map((result) => (
-                        <Link
+                        <div
                           key={`${result.productId}-${result.variantId}`}
-                          to={`/productdetails/${result.id}`}
-                          state={{
-                            ...result.completeProduct,
-                            selectedVariant: result.selectedVariant,
-                            variantIndex: result.variantIndex
-                          }}
                           className="search-result-item"
                           onClick={() => {
+                            navigate(`/productdetails/${result.id}`, {
+                              state: {
+                                ...result.completeProduct,
+                                selectedVariant: result.selectedVariant,
+                                variantIndex: result.variantIndex
+                              }
+                            });
                             setIsSearchOpen(false);
                             setSearchQuery("");
                             setSearchResults([]);
@@ -422,7 +423,7 @@ const Navbar = () => {
                               )}
                             </div>
                           </div>
-                        </Link>
+                        </div>
                       ))}
                       {searchResults.length > 5 && (
                         <Link

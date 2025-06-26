@@ -106,7 +106,7 @@ const ProductDetails = ({
       }
     };
 
-    if (!displayVariant.variantsimages) {
+    if (displayVariant.variantsimages) {
       if (displayVariant.frontImage)
         addImage(displayVariant.frontImage, productData?.name);
       if (displayVariant.backImage)
@@ -158,7 +158,7 @@ const ProductDetails = ({
     // window.addEventListener("resize", handleResize);
     // return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
-
+  console.log("display var:", displayVariant);
   useEffect(() => {
     if (carouselIndex >= slides.length) {
       setCarouselIndex(0);
@@ -232,12 +232,17 @@ const ProductDetails = ({
           guestCart[existingItemIndex].quantity += quantity;
           alert("Product quantity updated in cart!");
         } else {
-          // If item doesn't exist, add new item
+          // If item doesn't exist, add new item with all display info
           guestCart.push({
             productId: actualProductId,
             variantId,
             quantity,
+            name: displayVariant.variantname || productData?.name || productData?.title,
+            title: productData?.title || "",
             price: displayVariant.salePrice,
+            originalPrice: displayVariant.costPrice || displayVariant.originalPrice || 0,
+            image: displayVariant.frontImage || productData?.frontImage || "",
+            discount: displayVariant.discount || 0
           });
           alert("Product added to cart!");
         }

@@ -23,8 +23,14 @@
   /* height: 100vh;  */
   /* overflow: hidden; */
   /* position: relative; */
-  background: black;
+  background: white;
+  display: flex;
+  justify-content: center;
   /* object-fit: cover; */
+}
+.nourishbody-content>iframe{
+  height: 70vh;
+  width: 70vw;
 }
 
 @media (max-width: 1024px){

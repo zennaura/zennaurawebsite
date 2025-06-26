@@ -5,6 +5,7 @@
 }
 .StoneUsed-collection {
   display: flex;
+  padding-left: 5rem;
 }
 .StoneUsed-container h1 {
   font-family: "Inria Serif";

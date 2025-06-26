@@ -17,6 +17,9 @@ import UptoDate from '../../UpToDate/UptoDate.jsx';
 import ImageContainer from '../../ProductCategory/ImageContainer/ImageContainer';
 import NewEnerzies from '../../../assests/newenergies.png';
 import AboutShop from "../../../assests/aboutShop.png";
+import AboutShopM from "../../../assests/mobile_3.png";
+import { useMediaQuery } from "react-responsive";
+
 
 // import JustIn from '../../ProductCategory/JustIn/JustIn'; // Commented out as in your snippet
 
@@ -24,6 +27,7 @@ const Shop = () => {
   const location = useLocation();
   const { autoSelects } = location.state || {}; // Ensure autoSelects is handled, default to empty object/array
   const [autoSelectsState, setAutoSelectsState] = useState(autoSelects || []);
+   const isMobile = useMediaQuery({query: '(max-width: 500px)' })
 
   // Centralized current filters state - the single source of truth
   const [currentFilters, setCurrentFilters] = useState({
@@ -227,7 +231,7 @@ const Shop = () => {
         )}
       </div>
 
-      <ImageContainer Image={AboutShop} />
+      <ImageContainer Image={isMobile?AboutShopM:AboutShop} />
       <ToggleContent />
       <FollowUs />
       <UptoDate />

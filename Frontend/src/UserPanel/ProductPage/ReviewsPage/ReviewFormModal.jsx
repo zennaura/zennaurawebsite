@@ -32,6 +32,11 @@ const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
   };
 
   const handleSubmit = async () => {
+    // Basic validation for required fields
+    if (!title.trim() || !reviewText.trim() || !name.trim() || !email.trim() || !rating) {
+      alert("Please fill in all required fields, including title, rating, review, name, and email.");
+      return;
+    }
     try {
       // Upload all files to Cloudinary
       const mediaUrls = [];
@@ -99,13 +104,14 @@ const ReviewFormModal = ({ isOpen, onClose, productId, variantId }) => {
           })}
         </div>
 
-        {/* <input
+        <input
           type="text"
           placeholder="Give your review a title"
           maxLength="100"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-        /> */}
+          required
+        />
         <textarea
           placeholder="Write your reviews here"
           value={reviewText}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
+import { FaHeart, FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import axios from "axios";
 import { useUser } from "../../components/AuthContext/AuthContext";
 import "./productCard.css";
@@ -125,11 +125,17 @@ const ProductCard = ({
           guestCart[existingItemIndex].quantity += quantity;
           alert("Product quantity updated in cart!");
         } else {
-          // If item doesn't exist, add new item
+          // If item doesn't exist, add new item with all display info
           guestCart.push({
             productId: actualProductId,
             variantId,
             quantity,
+            name,
+            title,
+            price,
+            originalPrice,
+            image: frontimage,
+            discount
           });
           alert("Product added to cart!");
         }
@@ -291,11 +297,14 @@ const ProductCard = ({
         </div>
 
         <div className="product-card-rating">
-          {[...Array(Math.floor(rating))].map((_, index) => (
+          {Array.from({ length: Math.floor(rating) }).map((_, index) => (
             <FaStar key={index} className="product-card-star-filled" />
           ))}
-          {rating % 1 !== 0 && (
-            <FaRegStar className="product-card-star-filled" />
+          {rating % 1 >= 0.25 && rating % 1 < 0.75 && (
+            <FaStarHalfAlt className="product-card-star-half" />
+          )}
+          {rating % 1 >= 0.75 && (
+            <FaStar className="product-card-star-filled" />
           )}
           {Array.from({ length: 5 - Math.ceil(rating) }).map((_, index) => (
             <FaRegStar key={index} className="product-card-star-empty" />

@@ -162,157 +162,17 @@ const fetchCartItems = async () => {
       setGiftWrapItems(initialGiftWrap);
 
     } else {
-      // Guest user logic - fetch product details
+      // Guest user logic - use localStorage data directly
       const localCart = JSON.parse(localStorage.getItem("guestCart")) || [];
-      
-      if (localCart.length === 0) {
-        setCartItems([]);
-        updateCartCount(0);
-        setGiftWrapItems({});
-        return;
-      }
-
-      console.log('Local cart items:', localCart);
-
-      // Fetch product details for each item in guest cart
-      const cartItemsWithDetails = await Promise.all(
-        localCart.map(async (cartItem) => {
-          try {
-            console.log(`Fetching product: ${cartItem.productId}, variant: ${cartItem.variantId}`);
-            
-            const response = await axios.get(
-              `${import.meta.env.VITE_BACKEND_LINK}/api/products/${cartItem.productId}`
-            );
-            
-            const product = response.data;
-            
-            // Add comprehensive logging to understand the product structure
-            console.log('Full product data:', product.product);
-            console.log('Product name:', product?.product.variants[cartItem.variantId].variantname);
-            console.log('Product variants:', product?.product.variants);
-            console.log('Variants type:', typeof product?.product.variants);
-            console.log('Variants length:', product?.product.variants?.length);
-            
-            // Validate product data
-            if (!product) {
-              throw new Error('Product data is null or undefined');
-            }
-            
-            if (!product?.product.variants[cartItem.variantId].variantname) {
-              console.warn('Product name is missing:', product);
-            }
-            
-            // Handle variants with proper validation
-            let variant = null;
-
-            
-            // Check if variants exist and is an array
-            if (!product?.product.variants || !Array.isArray(product?.product.variants) || product?.product.variants.length === 0) {
-              console.warn('Product has no variants or variants is not an array:', product);
-              
-              // Fallback: create a default variant from product data
-              variant = {
-                ...variant,
-                salePrice: product.product.salePrice || product.price || 0,
-                costPrice: product.costPrice || product.originalPrice || product.salePrice || product.price || 0,
-                discount: product.discount || 0,
-                _id: '0'
-              };
-              
-              console.log('Using fallback variant:', variant);
-            } else {
-              // Product has variants - find the correct one
-              // if (cartItem.variantId === "0" || cartItem.variantId === 0) {
-              //   // Use the first variant
-              //   variant = product.product.variants[0];
-              //   console.log('Using base variant (index 0):', variant);
-              // } else {
-              //   // Try to find variant by _id first
-              //   variant = product.variants.find(v => v._id === cartItem.variantId);
-                if (product?.product.variants[cartItem.variantId]) {
-              variant = product?.product.variants[cartItem.variantId];
-            }
-            console.log("variant", variant);
-                // If not found by _id, try by index
-                if (!variant) {
-                  const variantIndex = parseInt(cartItem.variantId);
-                  if (!isNaN(variantIndex) && product.product.variants[variantIndex]) {
-                    variant = product.product.variants[variantIndex];
-                    console.log(`Using variant by index ${variantIndex}:`, variant);
-                  }
-                // }
-                
-                // Fallback to first variant if none found
-                if (!variant) {
-                  console.log('No specific variant found, using first variant');
-                  variant = product.product.variants[0];
-                }
-              }
-            }
-            
-            // Final validation of variant
-            if (!variant) {
-              throw new Error('Could not determine product variant');
-            }
-            
-            // Ensure variant has required price fields
-            const salePrice = variant.salePrice || variant.price || 0;
-            const costPrice = variant.costPrice || variant.originalPrice || salePrice;
-            const tax = 0;
-            return {
-              productId: cartItem.productId,
-              variantId: cartItem.variantId,
-              quantity: cartItem.quantity,
-              name: variant.variantname || 'Unknown Product',
-              title: product.product.title || product.product.description || '',
-              price: (
-                  salePrice +
-                  (salePrice * tax) / 100 -
-                  ((salePrice +
-                    (salePrice * tax) / 100) *
-                    variant.discount) /
-                    100
-                ).toFixed(2),
-              originalPrice: (
-                salePrice +
-                (salePrice * tax) / 100
-              ).toFixed(2),
-              image: variant.frontImage || product.image || noImage,
-              discount: variant.discount || 0
-            };
-            
-          } catch (error) {
-            console.error(`Error fetching product details for ${cartItem.productId}:`, error);
-            console.error('Error details:', error.response?.data);
-            console.error('Full error object:', error);
-            
-            // Return a fallback item if API call fails
-            return {
-              productId: cartItem.productId,
-              variantId: cartItem.variantId,
-              quantity: cartItem.quantity,
-              name: 'Product not found',
-              title: 'Please refresh and try again',
-              price: 0,
-              originalPrice: 0,
-              image: 'https://via.placeholder.com/80',
-              discount: 0
-            };
-          }
-        })
-      );
-
-      console.log('Cart items with details:', cartItemsWithDetails);
-
-      setCartItems(cartItemsWithDetails);
-      updateCartCount(cartItemsWithDetails.reduce((total, item) => total + item.quantity, 0));
-
+      setCartItems(localCart);
+      updateCartCount(localCart.reduce((total, item) => total + item.quantity, 0));
       // Initialize gift wrap state for guest users
       const initialGiftWrap = {};
-      cartItemsWithDetails.forEach(item => {
+      localCart.forEach(item => {
         initialGiftWrap[`${item.productId}-${item.variantId}`] = false;
       });
       setGiftWrapItems(initialGiftWrap);
+      return;
     }
 
   } catch (error) {

@@ -12,8 +12,11 @@ import ShopByConcern from "../../ShopByConcern/ShopByConcern";
 import ImageContainer from "../../ImageContainer/ImageContainer";
 import ShopRitual from "../../../../assests/ShopRitual.png";
 import Sacred from "../../../../assests/sacred.png";
+import SacredM from "../../../../assests/mobile_5.png";
+import { useMediaQuery } from "react-responsive";
 
 const SacredRituals = () => {
+    const isMobile = useMediaQuery({maxWidth:500})
     return(
         <>
         <ImageHead Title= "Sacred Rituals"/>
@@ -22,7 +25,7 @@ const SacredRituals = () => {
         {/* <JustIn/> */}
         <NourishBody/>
         <ShopByConcern/>
-        <ImageContainer Image = {Sacred}/>
+        <ImageContainer Image = {isMobile?SacredM:Sacred}/>
         {/* <Bemember/> */}
         {/* <OurCertifications/> */}
         {/* <FollowUs/> */}

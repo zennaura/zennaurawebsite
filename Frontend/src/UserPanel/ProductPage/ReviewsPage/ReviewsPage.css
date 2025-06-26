@@ -33,6 +33,10 @@
 }
 .total-reviews{
     width: 100%;
+    display: flex;
+}
+.total-reviews>p{
+    margin-left: 1rem;
 }
 .reviews-page-stars1,.reviews-page-stars2,.reviews-page-stars3,.reviews-page-stars4,.reviews-page-stars5{
     font-size: 1.4rem;
@@ -56,13 +60,27 @@
 
 
 .reviews-page-processbar {
-    /* flex: 1; */
     width: 20vw;
-    height: 8px;
+    height: 1rem;
     margin: 0 10px;
     background-color: #ccc;
     border-radius: 10px;
-    padding: 10px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+}
+.reviews-page-processbar-fill {
+    display: block;
+    height: 100%;
+    background: #c49a6c;
+    border-radius: 10px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
 }
 
 .reviews-page-add-review {
