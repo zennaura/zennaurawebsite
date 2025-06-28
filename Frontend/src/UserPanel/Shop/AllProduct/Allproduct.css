@@ -174,7 +174,7 @@
 
 .product-grid.grid-3 {
   margin: auto;
-  max-width: 80rem;
+  /* max-width: 80rem; */
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -190,22 +190,516 @@
   border: 1px solid #390611;
 }
 
-@media screen and (max-width: 768px) {
+/* ===== RESPONSIVE MEDIA QUERIES ===== */
+
+/* Large Desktop (1200px and above) */
+@media screen and (min-width: 1200px) {
   .product-listing-page {
-    width: 100%;
+    width: 70vw;
+    /* max-width: 1400px; */
+    margin: 0 auto;
+  }
+  
+  .product-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    /* max-width: 1200px; */
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 800px;
   }
 }
 
-@media screen and (max-width: 500px) {
-
-  .product-grid,
-  .product-grid.grid-3,
-  .product-grid.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
+/* Desktop (1024px - 1199px) */
+@media screen and (max-width: 1199px) and (min-width: 1024px) {
+  .product-listing-page {
+    width: 80%;
   }
+  
+  .product-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 600px;
+  }
+}
 
+/* Tablet Landscape (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+  .product-listing-page {
+    width: 90%;
+    padding: 15px;
+  }
+  
+  .header {
+    padding: 15px;
+    gap: 1.5rem;
+  }
+  
+  .sorting-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .sorting-option-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .product-grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 15px;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 400px;
+  }
+  
+  .breadcrumb {
+    font-size: 14px;
+    padding: 0.8rem;
+  }
+  
+  .pagination {
+    gap: 8px;
+  }
+  
+  .pagination-box {
+    width: 35px;
+    height: 35px;
+    font-size: 13px;
+  }
+}
+
+/* Tablet Portrait (600px - 767px) */
+@media screen and (max-width: 767px) and (min-width: 600px) {
+  .product-listing-page {
+    width: 95vw;
+    padding: 10px;
+  }
+  
+  .header {
+    padding: 10px;
+    gap: 1rem;
+  }
+  
+  .sorting-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .sorting-option-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .view-options {
+    gap: 8px;
+  }
+  
+  .ViewList-option {
+    padding: 15px;
+  }
+  
+  .ViewList-option span {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .ViewGrid-option span {
+    width: 6px;
+  }
+  
+  .product-grid.grid-3 {
+    width: 95vw !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 10px;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 350px;
+  }
+  
+  .breadcrumb {
+    font-size: 13px;
+    padding: 0.6rem;
+  }
+  
+  .pagination {
+    justify-content: center;
+    gap: 6px;
+    padding: 15px 0;
+  }
+  
+  .pagination-box {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile Large (480px - 599px) */
+@media screen and (max-width: 599px) and (min-width: 480px) {
   .product-listing-page {
     width: 100%;
-    padding: 0;
+    padding: 8px;
+  }
+  
+  .header {
+    padding: 8px;
+    gap: 0.8rem;
+  }
+  
+  .sorting-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .sorting-option-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .view-options {
+    gap: 6px;
+  }
+  
+  .ViewList-option {
+    padding: 12px;
+  }
+  
+  .ViewList-option span {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .ViewGrid-option span {
+    width: 5px;
+  }
+  
+  .product-grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 8px;
+  }
+  
+  /* Mobile card size adjustments for 2-product grid */
+  .product-grid.grid-3 .product-card {
+    max-width: 160px;
+    width: 100px;
+  }
+  
+  .product-grid.grid-3 .product-card img {
+    max-width: 140px;
+    width: 50px;
+    height: auto;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 300px;
+  }
+  
+  .breadcrumb {
+    font-size: 12px;
+    padding: 0.5rem;
+  }
+  
+  .pagination {
+    justify-content: center;
+    gap: 5px;
+    padding: 12px 0;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-box {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+}
+
+/* Mobile Medium (375px - 479px) */
+@media screen and (max-width: 479px) and (min-width: 375px) {
+  .product-listing-page {
+    width: 75vw !important;
+    padding: 5px;
+  }
+  
+  .header {
+    padding: 5px;
+    gap: 0.6rem;
+  }
+  
+  .sorting-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .sorting-option-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .view-options {
+    gap: 4px;
+  }
+  
+  .ViewList-option {
+    padding: 10px;
+  }
+  
+  .ViewList-option span {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .ViewGrid-option span {
+    width: 4px;
+  }
+  
+  .product-grid.grid-3 {
+    width: 45vw;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.3rem;
+    padding: 5px;
+  }
+  
+  /* Mobile card size adjustments for 2-product grid */
+  .product-grid.grid-3 .product-card {
+    max-width: 140px;
+    /* min-width: 120px; */
+  }
+  
+  .product-grid.grid-3 .product-card img {
+    /* max-width: 120px; */
+    height: auto;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 280px;
+  }
+  
+  .breadcrumb {
+    font-size: 11px;
+    padding: 0.4rem;
+  }
+  
+  .pagination {
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-box {
+    width: 28px;
+    height: 28px;
+    font-size: 10px;
+  }
+}
+
+/* Mobile Small (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .product-listing-page {
+    width: 100%;
+    padding: 3px;
+  }
+  
+  .header {
+    padding: 3px;
+    gap: 0.5rem;
+  }
+  
+  .sorting-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .sorting-option-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .view-options {
+    gap: 3px;
+  }
+  
+  .ViewList-option {
+    padding: 8px;
+  }
+  
+  .ViewList-option span {
+    width: 3px;
+    height: 3px;
+  }
+  
+  .ViewGrid-option span {
+    width: 3px;
+  }
+  
+  .product-grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 3px;
+  }
+  
+  /* Mobile card size adjustments for 2-product grid */
+  .product-grid.grid-3 .product-card {
+    max-width: 120px;
+    min-width: 100px;
+  }
+  
+  .product-grid.grid-3 .product-card img {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 250px;
+  }
+  
+  .breadcrumb {
+    font-size: 10px;
+    padding: 0.3rem;
+  }
+  
+  .pagination {
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 0;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-box {
+    width: 25px;
+    height: 25px;
+    font-size: 9px;
+  }
+}
+
+/* Extra Small Mobile (below 320px) */
+@media screen and (max-width: 319px) {
+  .product-listing-page {
+    width: 100%;
+    padding: 2px;
+  }
+  
+  .header {
+    padding: 2px;
+    gap: 0.4rem;
+  }
+  
+  .sorting-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .sorting-option-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .view-options {
+    gap: 2px;
+  }
+  
+  .ViewList-option {
+    padding: 6px;
+  }
+  
+  .ViewList-option span {
+    width: 2px;
+    height: 2px;
+  }
+  
+  .ViewGrid-option span {
+    width: 2px;
+  }
+  
+  .product-grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 2px;
+  }
+  
+  /* Mobile card size adjustments for 2-product grid */
+  .product-grid.grid-3 .product-card {
+    max-width: 100px;
+    min-width: 80px;
+  }
+  
+  .product-grid.grid-3 .product-card img {
+    max-width: 80px;
+    height: auto;
+  }
+  
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 220px;
+  }
+  
+  .breadcrumb {
+    font-size: 9px;
+    padding: 0.2rem;
+  }
+  
+  .pagination {
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 0;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-box {
+    width: 22px;
+    height: 22px;
+    font-size: 8px;
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    padding: 5px;
+    gap: 0.5rem;
+  }
+  
+  .product-grid {
+    gap: 10px;
+    padding: 5px;
+  }
+  
+  .pagination {
+    padding: 5px 0;
+  }
+}
+
+/* High DPI displays */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi) {
+  .ViewList-option span,
+  .ViewGrid-option span {
+    border-radius: 1px;
+  }
+  
+  .pagination-box {
+    border-width: 0.5px;
   }
 }

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import "./ProductDetails.css";
 import Carouselimg5 from "../../../assests/Carouselimg5.png";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../../../components/AuthContext/AuthContext";
+import {useMediaQuery} from "react-responsive"
 
 const ProductDetails = ({
   product: initialProduct,
@@ -330,10 +331,18 @@ const ProductDetails = ({
     });
   };
 
+   const isMobileM = useMediaQuery({maxWidth:500})
+
+  const descriptionRef = useRef(null);
+  const handleClickDes = () => {
+    descriptionRef.current?.scrollIntoView({ behaviour: "smooth" });
+  }
+
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
   }
 
+ 
   return (
     <div className="product-page">
       <div className="product-container">
@@ -344,9 +353,7 @@ const ProductDetails = ({
             </p>
             {productData?.title}
           </h1>
-          <div className="rating-container" aria-label="Product rating">
-            <span className="review-count">20 Reviews</span>
-          </div>
+          <div className="rating-container" aria-label="Product rating"></div>
 
           {/* <p aria-label="Product size">
             <strong>Size:</strong>{" "}
@@ -367,6 +374,16 @@ const ProductDetails = ({
               </p>
             ))}
           </div>
+
+            {isMobile?(<p className="price-discount">
+              (
+              {(
+                ((displayVariant?.costPrice - displayVariant?.salePrice) /
+                  displayVariant?.costPrice) *
+                100
+              ).toFixed(1)}
+              % OFF)
+            </p>):(<p></p>)}
           <div className="price-container">
             <p className="price-label">M.R.P:</p>
             <div className="price-mrp-box">
@@ -392,7 +409,7 @@ const ProductDetails = ({
                 (displayVariant?.salePrice * displayVariant?.tax) / 100).toFixed(2) }  */}
               {Number(displayVariant?.costPrice).toFixed(2)}
             </p>
-            <p className="price-discount">
+            {isMobile?(<p></p>):(<p className="price-discount">
               (
               {(
                 ((displayVariant?.costPrice - displayVariant?.salePrice) /
@@ -400,7 +417,7 @@ const ProductDetails = ({
                 100
               ).toFixed(1)}
               % OFF)
-            </p>
+            </p>)}
           </div>
           <div className="quantity-container" aria-label="Quantity selector">
             <p className="quantity-label">Net Quantity:</p>
@@ -447,17 +464,16 @@ const ProductDetails = ({
                 ? productData?.description
                 : truncateDescription(productData?.description, 50)}
             </p>
-            {productData?.description &&
-              productData?.description?.split(/\s+/)?.length > 50 && (
-                <a href="#product-description">
-                  <button
-                    className="description-text-knowmore-btn"
-                    // onClick={toggleDescription}
-                  >
-                    Know More
-                  </button>
-                </a>
-              )}
+            {productData?.description && (
+              <a href="#product-description">
+                <button
+                  className="description-text-knowmore-btn"
+                  // onClick={toggleDescription}
+                >
+                  Know More
+                </button>
+              </a>
+            )}
           </div>
           <div className="Disclaimer-container">
             <div className="Disclaimer-header" onClick={toggleDisclaimer}>
@@ -470,7 +486,42 @@ const ProductDetails = ({
             </div>
             {isExpanded && (
               <div className="Disclaimer-content">
-                {productData.description}
+                <p>
+                  The information provided above is intended solely for general
+                  knowledge and spiritual guidance. Our products and services,
+                  including crystals, Tarot, Reiki, Theta healing, and other
+                  energy-based practices, are not substitutes for professional
+                  medical or psychological treatment. We do not claim that they
+                  diagnose, treat, cure, or prevent any illness. If you have any
+                  medical concerns or conditions, we strongly recommend
+                  consulting a licensed healthcare professional.
+                </p>
+                <p>
+                  Crystals are widely believed to hold metaphysical properties
+                  that may support emotional, spiritual, and physical
+                  well-being. However, individual experiences may vary, and we
+                  do not guarantee specific outcomes. All purchases and usage of
+                  our products and services are at the user’s own discretion and
+                  responsibility. Statements regarding the symbolic or energetic
+                  meanings of crystals should not be interpreted as medical
+                  advice.
+                </p>
+                <p>
+                  Additionally, please note that product images are taken under
+                  bright and direct lighting to highlight their natural beauty.
+                  Variations in color, texture, and appearance may occur under
+                  different lighting conditions. Polished and tumbled crystals
+                  may have natural marks, scratches, or dents, which are
+                  inherent to their formation. We strive to display them as
+                  accurately as possible through images and videos. Before
+                  making a purchase, we encourage customers to carefully review
+                  product videos where available. If an exact selection is not
+                  specified, a similar product to the one shown on the website
+                  will be provided.
+                </p>
+                <p>
+                  Thank you for your understanding and support!
+                </p>
               </div>
             )}
           </div>

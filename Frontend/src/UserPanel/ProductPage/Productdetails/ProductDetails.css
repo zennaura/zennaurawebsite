@@ -2,7 +2,7 @@
 .product-page {
   font-family: "poppins";
   color: #390611;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   padding: 30px 0px 30px 30px;
   box-sizing: border-box;
@@ -34,7 +34,8 @@
   font-family: "Inria Serif";
 }
 .product-name{
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  padding-bottom: 0.5rem;
 }
 .rating-container {
   margin-bottom: 20px;
@@ -74,7 +75,7 @@
   cursor: pointer;
 }
 .specs-p:hover{
-  transform: translateY(-10px);
+  transform: scale(1.05);
 }
 .price-container {
   display: flex;
@@ -91,8 +92,6 @@
   margin-top: 1rem;
   /* word-spacing: 0.2rem; */
   /* letter-spacing: 0.1rem; */
-}
-.price-value {
   font-size: 1.8rem;
 }
 .price-original{
@@ -241,6 +240,9 @@
 .Disclaimer-add-btn{
   cursor: pointer;
 }
+.Disclaimer-content>p{
+  padding-bottom: 1rem;
+}
 /* slider  */
 .gallery-section {
   flex: 1;
@@ -268,6 +270,34 @@
 }
 
 @media (max-width: 480px) {
+  .product-page{
+    padding-left: 2rem;
+  }
+  .info-section{
+    padding-left: 0;
+
+  }
+  .product-title{
+    width: 95vw;
+    margin: auto;
+    padding-right: 1.5rem;
+    
+  }
+  .specs-container{
+    width: 95vw;
+  }
+  .price-container{
+    width: 85vw;
+    margin-top: -1rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .price-discount{
+    font-size: 1rem;
+    margin: auto;
+    text-align: center;
+    width: 115vw;
+  }
   .carousel {
     height: 300px;
   }

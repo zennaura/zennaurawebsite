@@ -56,9 +56,13 @@
   .toggle-content-full strong{
     font-size: 1.1rem;
     color: #333;
+    padding-top: 2rem !important;
     /* margin-bottom: 20px; */
     margin-bottom: 1rem;
 
+  }
+  .toggle-content-full ol{
+    padding-top: 1rem;
   }
   .toggle-content-full ul {
     list-style-type: disc;
@@ -84,3 +88,12 @@
    
   }
   
+
+  @media (max-width:500px){
+    .toggle-content-container{
+      padding: 1rem;
+    }
+    .toggle-content-summary h2{
+      font-size: 1.2rem;
+    }
+  }
