@@ -232,37 +232,44 @@ li a {
 }
 
 .left-section {
-  width: 90%;
+  width: 70%;
   box-sizing: border-box;
   display: flex;
   font-family: "Open Sans","Inria Serif", serif;
-  gap: 3rem;
-  padding-left: 5rem;
+  gap: 1rem;
+  margin-left: 5rem !important;
+  box-sizing: border-box;
 }
 
 .aurajewels-category h3,
 .aurajewels-intent h3,
 .aurajewels-chakra h3 {
-  width: 85%;
+  width: 80%;
   border-bottom: 1px solid #333;
   font-size: 1rem;
   padding-bottom: 5px;
-  margin-left: 3rem;
+  margin-left: 1rem;
   /* margin-right: 1px; */
-  margin-bottom: 1.7rem;
+  margin-bottom: 1rem;
 /* width: 100%; */
 }
-
+.aurajewels-category h3{
+  margin-left: 3rem;
+}
 .aurajewels-category div,
 .aurajewels-intent ul,
 .aurajewels-chakra ul {
   list-style: none;
   padding-left: 0;
-  margin-left: 3rem;
-  padding-bottom: 1px;
+  margin-left: 1rem;
+  padding-bottom: 0.2rem;
   font-size: 0.9rem;
   font-family: "Open Sans","Poppins", sans-serif;
   text-decoration: none;
+}
+
+.aurajewels-category div{
+  margin-left: 3rem;
 }
 .aurajewels-category li,
 .aurajewels-intent li,
@@ -271,19 +278,25 @@ li a {
 }
 .aurajewels-category,.aurajewels-intent,.aurajewels-chakra {
   text-decoration: none;
-  width: 100%;
-
+  width: 100% !important;
+}
+.aurajewels-chakra{
+  margin-left: -2rem;
+  margin-right: -2rem;
 }
 /* .aurajewels-category div{
   margin-left: 3rem;
 } */
 .aurajewels-category div ul {
-  padding-left: 15px;
+  padding-left: 1rem;
+  font-size: 1.3rem;
+  margin-top: 0.2rem !important;
 
-  font-size: 1rem;
   color: #444;
 }
-
+.aurajewels-category div ul a{
+  font-size: 1rem !important;
+}
 .right-section {
   width: 30%;
   flex: 2;
@@ -333,9 +346,9 @@ li a {
  
 } */
 
-.divinecrystals-category {
+/* .divinecrystals-category {
   width: 60%;
-}
+} */
 
 .divinecrystals-coloum {
   display: flex;

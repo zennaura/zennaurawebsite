@@ -507,7 +507,7 @@ const Navbar = () => {
               <div className="dropdown-layout">
                 <div className="left-section">
                   <div className="aurajewels-category">
-                    <h3>Shop by category</h3>
+                    <h3>Shop by Category</h3>
                     {categoryData.map((parent) =>
                       parent.parentCategory === "Skin Care" && (() => {
                         // Build subCategory -> Set of categories map
@@ -530,7 +530,7 @@ const Navbar = () => {
                               <ul style={{ marginTop: "0.3rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
                                 {[...catSet].map((cat) => (
                                   <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
-                                    <li>{`>  ${cat}`}</li>
+                                    <li>{` ${cat}`}</li>
                                   </Link>
                                 ))}
                               </ul>
@@ -585,7 +585,7 @@ const Navbar = () => {
               <div className="dropdown-layout">
                 <div className="left-section">
                   <div className="aurajewels-category">
-                    <h3>Shop by category</h3>
+                    <h3>Shop by Category</h3>
                     {categoryData.map((parent) =>
                       parent.parentCategory === "Aura Jewels" && (() => {
                         const subCategoryMap = {};
@@ -604,10 +604,10 @@ const Navbar = () => {
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
-                              <ul style={{ marginTop: "1rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                              <ul style={{ marginTop: "0.5rem", marginLeft: "-1rem" }}>
                                 {[...catSet].map((cat) => (
                                   <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
-                                    <li>{`>  ${cat}`}</li>
+                                    <li>{`${cat}`}</li>
                                   </Link>
                                 ))}
                               </ul>
@@ -672,7 +672,7 @@ const Navbar = () => {
               <div className="dropdown-layout">
                 <div className="left-section left-section-divinecrystals">
                   <div className="aurajewels-category divinecrystals-category">
-                    <h3>Shop by category</h3>
+                    <h3>Shop by Category</h3>
                     {categoryData.map((parent) =>
                       parent.parentCategory === "Divine Crystals" && (() => {
                         const subCategoryMap = {};
@@ -691,10 +691,10 @@ const Navbar = () => {
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
-                              <ul style={{ marginTop: "1rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                              <ul>
                                 {[...catSet].map((cat) => (
                                   <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
-                                    <li>{`>  ${cat}`}</li>
+                                    <li>{`${cat}`}</li>
                                   </Link>
                                 ))}
                               </ul>
@@ -738,7 +738,7 @@ const Navbar = () => {
               <div className="dropdown-layout">
                 <div className="left-section">
                   <div className="aurajewels-category">
-                    <h3>Shop by category</h3>
+                    <h3>Shop by Category</h3>
                     {categoryData.map((parent) =>
                       parent.parentCategory === "Sacred Rituals" && (() => {
                         const subCategoryMap = {};
@@ -757,10 +757,10 @@ const Navbar = () => {
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
-                              <ul style={{ marginTop: "1rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                              <ul>
                                 {[...catSet].map((cat) => (
                                   <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
-                                    <li>{`>  ${cat}`}</li>
+                                    <li>{`${cat}`}</li>
                                   </Link>
                                 ))}
                               </ul>
