@@ -213,7 +213,7 @@ const ProductCard = ({
 };
 
   return (
-    <div className="product-card-container">
+    <div className="product-card-container" >
       {isBest ||
         (isBestSeller && (
           <>
