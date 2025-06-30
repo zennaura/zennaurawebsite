@@ -64,9 +64,9 @@ function App() {
       >
         <div>
           <FaWhatsapp
-          size={40}
+          size={30}
           color="white"
-          className=" fixed w-14 h-14 right-7 bottom-16 z-50 bg-green-500 rounded-full cursor-pointer"
+          className=" fixed w-14 h-14 right-7 bottom-16 z-50 bg-green-500 rounded-full cursor-pointer !p-1"
         />
         </div>
 

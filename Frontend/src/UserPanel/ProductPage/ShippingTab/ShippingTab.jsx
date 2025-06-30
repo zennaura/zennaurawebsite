@@ -43,7 +43,7 @@ const ShippingTabs = () => {
 
                                 <div className="shipping-costs-row">
                                     <div className="shipping-costs-cell">
-                                        <p>PREPAID SHIPPING</p>
+                                        <p>Prepaid Shipping</p>
                                     </div>
                                     <div className="shipping-costs-cell">
                                         <p>Orders Below ₹999: ₹120</p>
@@ -71,7 +71,7 @@ const ShippingTabs = () => {
                         </div>
 
                         <div className="delivery-time-info">
-                            <h3>Estimated Delivery Time</h3>
+                            <h3>ESTIMATED DELIVERY TIME</h3>
                             <p>Please Allow Up To 1-2 Working Days For Order Processing.</p>
 
                             <ul className="delivery-times">

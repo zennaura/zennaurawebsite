@@ -79,6 +79,9 @@
   align-items: center;
   padding: 1rem 5rem;
 }
+.product-tab-healing>div{
+  width: 60vw;
+}
 .product-tab-healing img{
   width:100%;
   height: 450px;
@@ -102,4 +105,30 @@
     height: auto;
   }
   
+}
+@media (max-width:500px){
+  .tabs-header{
+    width: 95vw;
+  }
+  .tab-button{
+    /* font-size: 0.8rem !important; */
+    font-weight: 500 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .product-tab-description,.productTab-specification,.product-tab-healing{
+    font-size: 0.8rem;
+    padding:0rem 0 !important;
+    
+  }
+  .productTab-specification li{
+    font-size: 1rem;
+
+  }
+  .product-tab-healing > div{
+
+    width: 96vw;
+  }
 }

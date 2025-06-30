@@ -240,7 +240,7 @@
 }
 
 /* Tablet (768px and below) */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .product-card-container {
     width: 280px; /* Slightly smaller */
     border-radius: 1.5rem;

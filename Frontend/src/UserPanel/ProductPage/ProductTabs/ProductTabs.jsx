@@ -73,7 +73,12 @@ const extractBulletPoints = (text, options = {}) => {
   return result;
 };
 
-const ProductTabs = ({ productDescriptions, specifications, healingImage,  healingProperties }) => {
+const ProductTabs = ({
+  productDescriptions,
+  specifications,
+  healingImage,
+  healingProperties,
+}) => {
   const [activeTab, setActiveTab] = useState("description");
   // const title = productDescriptions?.title;
   const bulletPoints = extractBulletPoints(productDescriptions?.title, {
@@ -89,25 +94,25 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
     [productDescriptions]
   );
 
-   const [content, setContent] = useState({
-      topLeft: {
-        icon: '🎭',
-        title: 'Balances emotional energy and calms the nervous system'
-      },
-      topRight: {
-        icon: '✨',
-        title: 'Dispels negative energy and soothes emotional trauma'
-      },
-      bottomLeft: {
-        icon: '🧠',
-        title: 'Promotes clarity of mind and heartfelt communication'
-      },
-      bottomRight: {
-        icon: '👁️',
-        title: 'Enhances intuition and feminine energy flow'
-      }
-    });
-  
+  const [content, setContent] = useState({
+    topLeft: {
+      icon: "🎭",
+      title: "Balances emotional energy and calms the nervous system",
+    },
+    topRight: {
+      icon: "✨",
+      title: "Dispels negative energy and soothes emotional trauma",
+    },
+    bottomLeft: {
+      icon: "🧠",
+      title: "Promotes clarity of mind and heartfelt communication",
+    },
+    bottomRight: {
+      icon: "👁️",
+      title: "Enhances intuition and feminine energy flow",
+    },
+  });
+
   return (
     <div className="product-tabs-container">
       {/* Tab Headers */}
@@ -167,11 +172,11 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
                 <b>SKU:</b> <span>{specifications.color || "N/A"}</span>
               </li>
               <li>
-                <b>Size:</b>{" "}
-                <span>{specifications.size || "N/A"}</span>
+                <b>Size:</b> <span>{specifications.size || "N/A"}</span>
               </li>
               <li>
-                <b>Product Type:</b> <span>{specifications.productType || "N/A"}</span>
+                <b>Product Type:</b>{" "}
+                <span>{specifications.productType || "N/A"}</span>
               </li>
               <li>
                 <b>Material:</b> <span>{specifications.material || "N/A"}</span>
@@ -190,42 +195,53 @@ const ProductTabs = ({ productDescriptions, specifications, healingImage,  heali
         {activeTab === "healing" && (
           <div className="product-tab-healing">
             {/* <img src={healingImage} alt="Healing properties" /> */}
-            <div className="mx-auto" style={{width:"60vw"}}>
-        <div className="grid grid-cols-2 gap-0.5 bg-gray-800 p-1 rounded-lg mb-8">
-          {/* Top Left */}
-          <div className=" p-12 rounded-tl-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
-            {/* <div className="text-6xl mb-6">{content.topLeft.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
-              {healingProperties?.first || " "}
-            </p>
-          </div>
-          
-          {/* Top Right */}
-          <div className=" p-12 rounded-tr-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
-            {/* <div className="text-6xl mb-6">{content.topRight.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
-              {healingProperties?.second || " "}
-            </p>
-          </div>
-          
-          {/* Bottom Left */}
-          <div className=" p-12 rounded-bl-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
-            {/* <div className="text-6xl mb-6">{content.bottomLeft.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
-              {healingProperties?.third || " "}
-            </p>
-          </div>
-          
-          {/* Bottom Right */}
-          <div className=" p-12 rounded-br-lg flex flex-col items-center justify-center text-center min-h-50" style={{backgroundColor:"#f2f1ef"}}>
-            {/* <div className="text-6xl mb-6">{content.bottomRight.icon}</div> */}
-            <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
-              {healingProperties?.fourth || " "}
-            </p>
-          </div>
+            <div className="mx-auto">
+              <div className="grid grid-cols-2 gap-0.5 bg-gray-800 p-1 rounded-lg mb-8">
+                {/* Top Left */}
+                <div
+                  className=" p-12 flex flex-col items-center justify-center text-center min-h-50"
+                  style={{ backgroundColor: "#f2f1ef" }}
+                >
+                  {/* <div className="text-6xl mb-6">{content.topLeft.icon}</div> */}
+                  <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
+                    {healingProperties?.first || " "}
+                  </p>
+                </div>
+
+                {/* Top Right */}
+                <div
+                  className=" p-12 flex flex-col items-center justify-center text-center min-h-50"
+                  style={{ backgroundColor: "#f2f1ef" }}
+                >
+                  {/* <div className="text-6xl mb-6">{content.topRight.icon}</div> */}
+                  <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
+                    {healingProperties?.second || " "}
+                  </p>
+                </div>
+
+                {/* Bottom Left */}
+                <div
+                  className=" p-12 flex flex-col items-center justify-center text-center min-h-50"
+                  style={{ backgroundColor: "#f2f1ef" }}
+                >
+                  {/* <div className="text-6xl mb-6">{content.bottomLeft.icon}</div> */}
+                  <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pr-5">
+                    {healingProperties?.third || " "}
+                  </p>
+                </div>
+
+                {/* Bottom Right */}
+                <div
+                  className=" p-12 flex flex-col items-center justify-center text-center min-h-50"
+                  style={{ backgroundColor: "#f2f1ef" }}
+                >
+                  {/* <div className="text-6xl mb-6">{content.bottomRight.icon}</div> */}
+                  <p className="text-lg text-gray-800 leading-relaxed max-w-xs !pl-5">
+                    {healingProperties?.fourth || " "}
+                  </p>
+                </div>
               </div>
-              </div>
-        
+            </div>
           </div>
         )}
       </div>

@@ -113,7 +113,7 @@
 
 .pagination {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   padding: 20px 0;
@@ -175,13 +175,13 @@
 .product-grid.grid-3 {
   margin: auto;
   /* max-width: 80rem; */
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .product-grid.grid-2{
   max-width: 30rem;
   margin: auto;
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: repeat(1, 1fr) !important;
 }
 
 /* Active view buttons */
@@ -218,12 +218,12 @@
   }
   
   .product-grid.grid-3 {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     max-width: 1000px;
   }
   
   .product-grid.grid-2 {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(1, 1fr) !important;
     max-width: 600px;
   }
 }

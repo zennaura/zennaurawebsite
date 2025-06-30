@@ -39,7 +39,7 @@
     margin-left: 1rem;
 }
 .reviews-page-stars1,.reviews-page-stars2,.reviews-page-stars3,.reviews-page-stars4,.reviews-page-stars5{
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 .reviews-star{
     font-size: 1.5rem;
@@ -234,13 +234,14 @@
     }
 
     .reviews-page-container {
+        width: 95vw;
         flex-direction: column;
         padding: 1rem;
     }
 
     .reviews-page-processbar {
-        width: 100%;
-        margin: 0 0 10px 0;
+        width: 50vw;
+        margin: 10px 10px 10px 10px;
     }
 
     .reviews-page-video-images {
@@ -268,8 +269,19 @@
 }
 
 @media (max-width: 480px) {
+    .reviews-page-stars1,.reviews-page-stars2,.reviews-page-stars3,.reviews-page-stars4,.reviews-page-stars5{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: auto;
+        width: 95vw;
+    }
+    .reviews-page-rating-bars{
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
     .reviews-page-add-review button {
-        /* width: 100%; */
+        
         padding: 0.75rem;
     }
 

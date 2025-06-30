@@ -501,7 +501,7 @@ const ProductDetails = ({
                   that may support emotional, spiritual, and physical
                   well-being. However, individual experiences may vary, and we
                   do not guarantee specific outcomes. All purchases and usage of
-                  our products and services are at the user’s own discretion and
+                  our products and services are at the user's own discretion and
                   responsibility. Statements regarding the symbolic or energetic
                   meanings of crystals should not be interpreted as medical
                   advice.
@@ -528,79 +528,110 @@ const ProductDetails = ({
         </div>
         {/* Carousel Gallery Section */}
         <div className="gallery-section">
-          <div className="vertical">
-            {slides.map((slide, i) => {
-              const distance =
-                (i - carouselIndex + slides.length) % slides.length;
-              let scale, opacity, zIndex, translateY;
-              if (isMobile) {
-                if (distance === 0) {
-                  scale = 1;
-                  opacity = 1;
-                  zIndex = 5;
-                  translateY = 0;
-                } else if (distance === 1 || distance === slides.length - 1) {
-                  scale = 0.7;
-                  opacity = 0.6;
-                  zIndex = 3;
-                  translateY = distance === 1 ? 200 : -200;
-                } else if (distance === 2 || distance === slides.length - 2) {
-                  scale = 0.4;
-                  opacity = 0;
-                  zIndex = 1;
-                  translateY = distance === 2 ? 300 : -300;
-                } else {
-                  scale = 0;
-                  opacity = 0;
-                  zIndex = 1;
-                  translateY = distance < slides.length / 2 ? 1200 : -1200;
-                }
-              } else {
-                if (distance === 0) {
-                  scale = 1.2;
-                  opacity = 1;
-                  zIndex = 5;
-                  translateY = 0;
-                } else if (distance === 1 || distance === slides.length - 1) {
-                  scale = 1;
-                  opacity = 1;
-                  zIndex = 4;
-                  translateY = distance === 1 ? 450 : -450;
-                } else {
-                  scale = 0.5;
-                  opacity = 0;
-                  zIndex = 0;
-                  translateY = distance < slides.length / 2 ? 1000 : -1000;
-                }
-              }
-              return (
-                <motion.div
-                  key={`${slide.image}-${i}`}
-                  className="carousel-item-product"
-                  style={{
-                    transform: `scale(${scale}) translateY(${translateY}px)`,
-                    opacity: opacity,
-                    zIndex: zIndex,
-                  }}
-                  transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                  aria-hidden={distance !== 0}
-                  aria-label={`Product image ${i + 1} of ${slides.length}`}
-                >
-                  <img
-                    src={slide.image}
-                    alt={slide.title}
-                    className="carousel-image-product"
-                    loading="lazy"
-                    onLoad={() => handleImageLoad(i)}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/500";
-                    }}
+          {isMobile ? (
+            <div className="mobile-carousel-wrapper">
+              <div className="carousel-item-product" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <img
+                  src={slides[carouselIndex]?.image}
+                  alt={slides[carouselIndex]?.title}
+                  className="carousel-image-product"
+                  loading="lazy"
+                  onError={e => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/500"; }}
+                />
+              </div>
+              <div className="carousel-dots">
+                {slides.map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`carousel-dot${carouselIndex === idx ? ' active' : ''}`}
+                    onClick={() => setCarouselIndex(idx)}
                   />
-                </motion.div>
-              );
-            })}
-          </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="vertical">
+              {slides.map((slide, i) => {
+                const distance =
+                  (i - carouselIndex + slides.length) % slides.length;
+                let scale, opacity, zIndex, translateY, translateX;
+                if (isMobile) {
+                  if (distance === 0) {
+                    scale = 1;
+                    opacity = 1;
+                    zIndex = 5;
+                    translateX = 0;
+                  } else if (distance === 1 || distance === slides.length - 1) {
+                    scale = 0.7;
+                    opacity = 0.6;
+                    zIndex = 3;
+                    translateX = distance === 1 ? 200 : -200;
+                  } else if (distance === 2 || distance === slides.length - 2) {
+                    scale = 0.4;
+                    opacity = 0;
+                    zIndex = 1;
+                    translateX = distance === 2 ? 300 : -300;
+                  } else {
+                    scale = 0;
+                    opacity = 0;
+                    zIndex = 1;
+                    translateX = distance < slides.length / 2 ? 1200 : -1200;
+                  }
+                } else {
+                  if (distance === 0) {
+                    scale = 1.2;
+                    opacity = 1;
+                    zIndex = 5;
+                    translateY = 0;
+                  } else if (distance === 1 || distance === slides.length - 1) {
+                    scale = 1;
+                    opacity = 1;
+                    zIndex = 4;
+                    translateY = distance === 1 ? 450 : -450;
+                  } else {
+                    scale = 0.5;
+                    opacity = 0;
+                    zIndex = 0;
+                    translateY = distance < slides.length / 2 ? 1000 : -1000;
+                  }
+                }
+                return (
+                  <motion.div
+                    key={`${slide.image}-${i}`}
+                    className="carousel-item-product"
+                    style={
+                      isMobile
+                        ? {
+                            transform: `scale(${scale}) translateX(${translateX}px)`,
+                            opacity: opacity,
+                            zIndex: zIndex,
+                          }
+                        : {
+                            transform: `scale(${scale}) translateY(${translateY}px)`,
+                            opacity: opacity,
+                            zIndex: zIndex,
+                          }
+                    }
+                    transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                    aria-hidden={distance !== 0}
+                    aria-label={`Product image ${i + 1} of ${slides.length}`}
+                  >
+                    <img
+                      src={slide.image}
+                      alt={slide.title}
+                      className="carousel-image-product"
+                      loading="lazy"
+                      onLoad={() => handleImageLoad(i)}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://via.placeholder.com/500";
+                      }}
+                    />
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

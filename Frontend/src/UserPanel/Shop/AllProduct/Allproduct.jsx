@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./Allproduct.css";
 import ProductCard from "../../../components/Productcart/ProductCart";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import SortDropdown from "../Filter/Sort";
 import PopupFilter from "../Filter/SmallFilter";
 
-const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
+const ProductListingPage = ({ products, priceRange = [0, 1000] }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("default");
-  const [viewMode, setViewMode] = useState('grid-3');
+  const [viewMode, setViewMode] = useState("grid-3");
   const productsPerPage = 12;
   const navigate = useNavigate();
 
@@ -24,34 +24,34 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
 
   // Group products by baseId (for display)
   const groupedProducts = useMemo(() => {
-  const productMap = new Map();
+    const productMap = new Map();
     filteredProducts.forEach((variant) => {
-    const baseId = variant.id.split("-")[0];
-    if (!productMap.has(baseId)) {
-      productMap.set(baseId, variant); // Only keep the first variant
-    }
-  });
-  return Array.from(productMap.values());
+      const baseId = variant.id.split("-")[0];
+      if (!productMap.has(baseId)) {
+        productMap.set(baseId, variant); // Only keep the first variant
+      }
+    });
+    return Array.from(productMap.values());
   }, [filteredProducts]);
 
   // Sorting
   const sortedProducts = useMemo(() => {
-  const toSort = [...groupedProducts];
-  switch (sortOption) {
-    case "price-low-high":
-      return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
-    case "price-high-low":
-      return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
-    default:
-      return toSort;
-  }
+    const toSort = [...groupedProducts];
+    switch (sortOption) {
+      case "price-low-high":
+        return toSort.sort((a, b) => a.data.salePrice - b.data.salePrice);
+      case "price-high-low":
+        return toSort.sort((a, b) => b.data.salePrice - a.data.salePrice);
+      default:
+        return toSort;
+    }
   }, [groupedProducts, sortOption]);
 
   // Create a map of product base IDs to all their variants
   const productVariantsMap = useMemo(() => {
     const map = {};
-    products.forEach(variant => {
-      const baseId = variant.id.split('-')[0];
+    products.forEach((variant) => {
+      const baseId = variant.id.split("-")[0];
       if (!map[baseId]) {
         map[baseId] = [];
       }
@@ -65,19 +65,19 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
         discount: variant.data.discount,
         stock: variant.data.stock,
         size: variant.data.size,
-        tax:variant.data.tax
+        tax: variant.data.tax,
       });
     });
     return map;
   }, [products]);
 
   const handleClick = (variant) => {
-    const baseId = variant.id.split('-')[0];
+    const baseId = variant.id.split("-")[0];
     navigate(`/productdetails/${variant.id}`, {
       state: {
         ...variant.data,
-        allVariants: productVariantsMap[baseId] || []
-      }
+        allVariants: productVariantsMap[baseId] || [],
+      },
     });
   };
 
@@ -88,7 +88,10 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = sortedProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -101,7 +104,9 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
         <div className="breadcrumb">Home / Zenn Aura Store</div>
         <div className="sorting-options">
           <p>
-            Showing {indexOfFirstProduct + 1}–{Math.min(indexOfLastProduct, sortedProducts.length)} of {sortedProducts.length} results
+            Showing {indexOfFirstProduct + 1}–
+            {Math.min(indexOfLastProduct, sortedProducts.length)} of{" "}
+            {sortedProducts.length} results
           </p>
           <div className="sorting-option-right">
             <div className="custom-select-wrapper">
@@ -117,8 +122,10 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
             </div>
             <div className="view-options">
               <button
-                className={`ViewList-option ${viewMode === 'grid-3' ? 'active' : ''}`}
-                onClick={() => setViewMode('grid-3')}
+                className={`ViewList-option ${
+                  viewMode === "grid-3" ? "active" : ""
+                }`}
+                onClick={() => setViewMode("grid-3")}
               >
                 <span className="ViewList"></span>
                 <span className="ViewList"></span>
@@ -131,8 +138,10 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
                 <span className="ViewList"></span>
               </button>
               <button
-                className={`ViewGrid-option ${viewMode === 'grid-2' ? 'active' : ''}`}
-                onClick={() => setViewMode('grid-2')}
+                className={`ViewGrid-option ${
+                  viewMode === "grid-2" ? "active" : ""
+                }`}
+                onClick={() => setViewMode("grid-2")}
               >
                 <span></span>
                 <span></span>
@@ -152,14 +161,17 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
             frontimage={variant.data.frontImage}
             backImage={variant.data.backImage}
             price={(
-                  variant.data.salePrice +
-                  (variant.data.salePrice * variant.data.tax) / 100 -
-                  ((variant.data.salePrice +
-                    (variant.data.salePrice * variant.data.tax) / 100) *
-                    variant.data.discount) /
-                    100
-                ).toFixed(2) }
-            originalPrice={(variant.data.salePrice + (variant.data.salePrice * variant.data.tax) / 100).toFixed(2)}
+              variant.data.salePrice +
+              (variant.data.salePrice * variant.data.tax) / 100 -
+              ((variant.data.salePrice +
+                (variant.data.salePrice * variant.data.tax) / 100) *
+                variant.data.discount) /
+                100
+            ).toFixed(2)}
+            originalPrice={(
+              variant.data.salePrice +
+              (variant.data.salePrice * variant.data.tax) / 100
+            ).toFixed(2)}
             rating={variant.data.rating}
             isFeatured={variant.data.featureProduct}
             isBestSeller={variant.data.bestSeller}
@@ -170,19 +182,87 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
       {/* Pagination */}
       {sortedProducts.length > 0 && (
         <footer className="pagination">
-          {[...Array(Math.ceil(sortedProducts.length / productsPerPage))].map((_, index) => (
-            <span
-              key={index + 1}
-              className={`pagination-box ${currentPage === index + 1 ? "active" : ""}`}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </span>
-          ))}
+          <span
+            className="pagination-box pagination-prev"
+            onClick={() => {
+              if (currentPage > 1) {
+                handlePageChange(currentPage - 1);
+              }
+            }}
+          >
+            <FaArrowLeft />
+          </span>
+          {Math.ceil(sortedProducts.length / productsPerPage) > 3 ? (
+            <>
+              <span
+                className={`pagination-box ${
+                  currentPage === 1 ? "active" : ""
+                }`}
+                onClick={() => handlePageChange(1)}
+              >
+                1
+              </span>
+              <span
+                className={`pagination-box ${
+                  currentPage === 2 ? "active" : ""
+                }`}
+                onClick={() => handlePageChange(2)}
+              >
+                2
+              </span>
+              <span className="">...</span>
+              <span
+                className={`pagination-box ${
+                  currentPage ===
+                  Math.ceil(sortedProducts.length / productsPerPage)-1
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handlePageChange(
+                    Math.ceil(sortedProducts.length / productsPerPage)-1
+                  )
+                }
+              >
+                {Math.ceil(sortedProducts.length / productsPerPage)-1}
+              </span>
+              <span
+                className={`pagination-box ${
+                  currentPage ===
+                  Math.ceil(sortedProducts.length / productsPerPage)
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handlePageChange(
+                    Math.ceil(sortedProducts.length / productsPerPage)
+                  )
+                }
+              >
+                {Math.ceil(sortedProducts.length / productsPerPage)}
+              </span>
+            </>
+          ) : (
+            [...Array(Math.ceil(sortedProducts.length / productsPerPage))].map(
+              (_, index) => (
+                <span
+                  key={index + 1}
+                  className={`pagination-box ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </span>
+              )
+            )
+          )}
           <span
             className="pagination-box pagination-next"
             onClick={() => {
-              if (currentPage < Math.ceil(sortedProducts.length / productsPerPage)) {
+              if (
+                currentPage < Math.ceil(sortedProducts.length / productsPerPage)
+              ) {
                 handlePageChange(currentPage + 1);
               }
             }}
@@ -191,12 +271,12 @@ const ProductListingPage = ({ products, priceRange =[0, 1000] }) => {
           </span>
         </footer>
       )}
-      <div className="flex justify-center items-center gap-4 lg:hidden !mb-2">
+      <div className="flex justify-center items-center gap-4 lg:hidden !mb-2 fixed bottom-2 left-28">
         <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
         <PopupFilter />
       </div>
     </div>
-  )
+  );
 };
 
 export default ProductListingPage;

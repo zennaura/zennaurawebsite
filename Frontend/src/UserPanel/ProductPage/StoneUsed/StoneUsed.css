@@ -25,3 +25,15 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+@media (max-width:500px){
+  .StoneUsed-container{
+    padding-left: 1rem;
+  }
+  .StoneUsed-container h1{
+    margin-left: 0;
+  }
+  .StoneUsed-collection{
+    padding-left: 0;
+  }
+}
