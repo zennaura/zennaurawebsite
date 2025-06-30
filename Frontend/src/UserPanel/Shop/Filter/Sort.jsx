@@ -27,14 +27,15 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
         <div className="relative inline-block text-left" ref={dropdownRef}>
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="flex justify-center items-center gap-4 font-bold bg-[#4a001f] text-white !px-4 !py-2 rounded"
+                className="flex justify-center items-center gap-4 bg-[#4a001f] text-white !px-4 !py-2 rounded"
+                style={{width:"45vw"}}
             >
                 <FaSortAmountDown className="text-sm" />
                 Sort
             </button>
 
             {open && (
-                <div className="absolute z-10 mt-2 w-48 bg-white border border-gray-200 rounded shadow-md">
+                <div className="absolute bottom-12 z-10 mt-2 bg-white border border-gray-200 rounded shadow-md" style={{width:"100vw",marginLeft:"-0.6rem"}}>
                     <div className="bg-gray-100 !px-3 !py-2 text-gray-800 font-semibold rounded-t">
                         Sort
                     </div>

@@ -297,4 +297,11 @@
         flex-direction: column;
         gap: 4px;
     }
+    .reviews-page-add-review {
+
+        margin: auto;
+    }
+    .reviews-page-add-review button{
+        padding: 1.5rem;
+    }
 }

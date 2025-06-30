@@ -4,6 +4,7 @@ import axios from "axios";
 import { useUser } from "../../components/AuthContext/AuthContext";
 import "./productCard.css";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const ProductCard = ({
   id,
@@ -26,6 +27,7 @@ const ProductCard = ({
   const productId = id.split("-")[0];
   const variantId = id.split("-")[1];
   const [hovered, setHovered] = useState(false);
+  const isMobile = useMediaQuery({maxWidth:500})
   React.useEffect(() => {
     const fetchWishlist = async () => {
       if (!user) return;
@@ -287,9 +289,9 @@ const ProductCard = ({
         <h3 onClick={onBuyNowClick} className="product-card-title">
           {name}
         </h3>
-        <p onClick={onBuyNowClick} className="product-card-subtitle">
+        {isMobile?(""):(<p onClick={onBuyNowClick} className="product-card-subtitle">
           {title}
-        </p>
+        </p>)}
 
         <div className="product-card-price-container">
           <span className="product-card-price">₹{price}</span>

@@ -271,8 +271,8 @@ const ProductListingPage = ({ products, priceRange = [0, 1000] }) => {
           </span>
         </footer>
       )}
-      <div className="flex justify-center items-center gap-4 lg:hidden !mb-2 fixed bottom-2 left-28">
-        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+      <div className="flex justify-center items-center gap-4 fixed bottom-0 lg:hidden !p-3" style={{width:"100vw",backgroundColor:"#f0f0f0",marginLeft:"-3.5rem"}}>
+        <SortDropdown sortOption={sortOption} setSortOption={setSortOption}  />
         <PopupFilter />
       </div>
     </div>

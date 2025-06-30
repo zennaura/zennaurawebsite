@@ -420,7 +420,7 @@ const ProductDetails = ({
             </p>)}
           </div>
           <div className="quantity-container" aria-label="Quantity selector">
-            <p className="quantity-label">Net Quantity:</p>
+            <p className="quantity-label">Net Quantity :</p>
             <div className="quantity-selector">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -535,7 +535,6 @@ const ProductDetails = ({
                   src={slides[carouselIndex]?.image}
                   alt={slides[carouselIndex]?.title}
                   className="carousel-image-product"
-                  loading="lazy"
                   onError={e => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/500"; }}
                 />
               </div>

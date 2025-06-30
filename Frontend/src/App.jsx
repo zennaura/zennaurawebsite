@@ -62,11 +62,11 @@ function App() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div>
+        <div className=" fixed right-5 bottom-5 z-50 bg-green-500 rounded-full cursor-pointer !p-2">
           <FaWhatsapp
-          size={30}
+          size={35}
           color="white"
-          className=" fixed w-14 h-14 right-7 bottom-16 z-50 bg-green-500 rounded-full cursor-pointer !p-1"
+          
         />
         </div>
 

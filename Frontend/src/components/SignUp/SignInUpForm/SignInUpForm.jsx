@@ -191,20 +191,20 @@ const SignInUpForm = () => {
                 </div>
             </div>
 
-            <div className="bg-white min-h-screen flex flex-col items-center justify-center font-[Poppins] p-4 overflow-hidden relative lg:hidden">
+            <div className={`bg-white ${isSignUp?'h-screen':"h-auto"} flex flex-col items-center justify-center font-[Poppins] p-4 overflow-hidden relative lg:hidden`}>
                 <div className="mb-6">
-                    <button
+                    {/* <button
                         onClick={() => setIsSignUp(!isSignUp)}
                         className="bg-[#390611] pointer absolute right-0 top-0 text-white !px-6 !py-2 shadow hover:bg-[#4d0a15] transition-colors"
                     >
                         {isSignUp ? `Sign In` : `Sign Up`}
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Sign In Form */}
-                <div className={`w-full max-w-md bg-white !p-8 transform transition-transform duration-500 ${isSignUp ? '-translate-x-full opacity-0 absolute' : 'translate-x-0 opacity-100 relative'}`}>
+                <div className={`w-full max-h-screen max-w-md bg-white !p-8 !py-0 transform transition-transform duration-500 ${isSignUp ? '-translate-x-full opacity-0 absolute' : 'translate-x-0 opacity-100 relative'}`}>
                     <form onSubmit={handleLogin} className="flex flex-col">
-                        <h1 className="text-2xl font-bold !mb-4 text-center">Sign In</h1>
+                        <h1 className="text-2xl font-bold !mb-4 text-center !mt-7">Sign In</h1>
                         <div className="flex justify-center space-x-2 !mb-4">
                             <a href="#" className="!p-2 border rounded-full"><FaFacebookF /></a>&nbsp;
                             <a href="#" className="!p-2 border rounded-full"><FcGoogle /></a>
@@ -216,12 +216,17 @@ const SignInUpForm = () => {
                         <a href="#" onClick={handleforgotpassword} className="text-sm text-gray-600 !mb-4">Forgot your password?</a>
                         <button type="submit" className="bg-[#390611] hover:bg-[#4d0a15] text-white !px-6 !py-2 rounded uppercase text-sm">Sign In</button>
                     </form>
+                    <div className="bg-[#390611] text-white !p-3 !mt-5 flex flex-col justify-center items-center"  style={{width:"100vw",marginLeft:"-2rem",height:'40vh'}}>
+                                <h1 className="text-center font-bold text-4xl" style={{marginLeft:"1.5rem"}}>Join Us !!</h1>
+                                <p className="text-center !p-5">Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
+                                <button className="text-[#390611] bg-white !p-3 !px-7 rounded-3xl" onClick={() => setIsSignUp(true)}>CREATE AN ACCOUNT</button>
+                            </div>
                 </div>
 
                 {/* Sign Up Form */}
                 <div className={`w-full max-w-md bg-white !p-8 transform transition-transform duration-500 absolute ${isSignUp ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}>
                     <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
-                        <h1 className="text-2xl font-bold !mb-4 text-center">Create Account</h1>
+                        <h1 className="text-2xl font-bold !mb-4 text-center !mt-7">Create Account</h1>
                         <div className="flex justify-center space-x-2 !mb-4">
                             <a href="#" className="!p-2 border rounded-full"><FaFacebookF /></a>&nbsp;
                             <a href="#" className="!p-2 border rounded-full"><FcGoogle /></a>
@@ -239,6 +244,11 @@ const SignInUpForm = () => {
                         <input type="text" name="referralCode" placeholder="Referral Code (Optional)" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-4" />
                         <button type="button" onClick={handleRegister} className="bg-[#390611] hover:bg-[#4d0a15] text-white !px-6 !py-2 rounded uppercase text-sm">Sign Up</button>
                     </form>
+                    <div className="bg-[#390611] text-white !p-3 !mt-5 flex flex-col justify-center items-center"  style={{width:"100vw",marginLeft:"-2rem",height:'34vh'}}>
+                                <h1 className="text-center font-bold text-4xl" style={{marginLeft:"1.5rem"}}>Welcome Back !!</h1>
+                                <p className="text-center !p-5">Manifest, Cleanse, Heal—The Zenn Aura Way</p>
+                                <button className="text-[#390611] bg-white !p-3 !px-7 rounded-3xl" onClick={() => setIsSignUp(false)}>Sign In</button>
+                            </div>
                 </div>
 
                 <ToastContainer position="top-right" autoClose={3000} />

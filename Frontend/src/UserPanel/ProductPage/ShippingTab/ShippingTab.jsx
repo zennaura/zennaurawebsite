@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./ShippingInfo.css"; // We'll create this CSS file
+import { useMediaQuery } from "react-responsive";
 
 const ShippingTabs = () => {
     const [activeTab, setActiveTab] = useState("domestic");
+    const isMobile = useMediaQuery({maxWidth:500})
 
     return (
         <div className="shipping-tabs-container">
@@ -20,12 +22,17 @@ const ShippingTabs = () => {
                 >
                     International Shipping
                 </button>
-                <button
+                {isMobile?(<button
+                    className={`tab-button ${activeTab === "returns" ? "active" : ""}`}
+                    onClick={() => setActiveTab("returns")}
+                >
+                    Return <br/>Policy
+                </button>):(<button
                     className={`tab-button ${activeTab === "returns" ? "active" : ""}`}
                     onClick={() => setActiveTab("returns")}
                 >
                     Return Policy
-                </button>
+                </button>)}
             </div>
 
             {/* Tab Content */}

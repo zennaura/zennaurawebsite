@@ -138,13 +138,14 @@ const PopupFilter = ({
         <div className="relative">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex justify-center items-center gap-4 font-bold bg-[#4a001f] text-white !px-4 !py-2 rounded"
+                className="flex justify-center items-center gap-4 bg-[#4a001f] text-white !px-4 !py-2 rounded"
+                style={{width:"45vw"}}
             >
                 <FaFilter /> Filters
             </button>
 
             {isOpen && (
-                <div className="absolute top-12 w-72 bg-gray-100 border border-gray-300 rounded shadow-lg z-10 -translate-x-35">
+                <div className="absolute left-0 bottom-12 bg-gray-100 border border-gray-300 rounded shadow-lg z-10 -translate-x-51" style={{width:"100vw"}}>
                     {/* Price Section */}
                     {renderSection(
                         'Price',

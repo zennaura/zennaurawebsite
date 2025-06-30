@@ -86,7 +86,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
         {isMobile ? (
           <div className="reviews-page-rating-bars">
             <div className="reviews-page-stars1">
-              <span className="reviews-star" style={{ color: "black" }}>
+              <span className="reviews-star" style={{ color: "black", fontSize:"1.2rem",marginRight:"1.4rem"}}>
                 Excellent
               </span>
               <span className="reviews-page-processbar">
@@ -101,7 +101,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
               {starCounts[0]}
             </div>
             <div className="reviews-page-stars2">
-              <span className="reviews-star" style={{ color: "black" }}>
+              <span className="reviews-star" style={{ color: "black",fontSize:"1.15rem", }}>
                 Very Good
               </span>
               <span className="reviews-page-processbar">
@@ -116,7 +116,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
               {starCounts[1]}
             </div>
             <div className="reviews-page-stars3">
-              <span className="reviews-star" style={{ color: "black" }}>
+              <span className="reviews-star" style={{ color: "black",fontSize:"1.2rem",marginRight:"2.9rem" }}>
                 Good
               </span>
               <span className="reviews-page-processbar">
@@ -131,7 +131,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
               {starCounts[2]}
             </div>
             <div className="reviews-page-stars4">
-              <span className="reviews-star" style={{ color: "black" }}>
+              <span className="reviews-star" style={{ color: "black",fontSize:"1.2rem",marginRight:"1.5rem" }}>
                 Average
               </span>
               <span className="reviews-page-processbar">
@@ -146,7 +146,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
               {starCounts[3]}
             </div>
             <div className="reviews-page-stars5">
-              <span className="reviews-star" style={{ color: "black" }}>
+              <span className="reviews-star" style={{ color: "black",fontSize:"1.2rem",marginRight:"3.5rem"  }}>
                 Poor
               </span>
               <span className="reviews-page-processbar">
