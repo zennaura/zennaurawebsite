@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SortDropdown from "../Filter/Sort";
 import PopupFilter from "../Filter/SmallFilter";
 
-const ProductListingPage = ({ products, priceRange = [0, 1000] }) => {
+const ProductListingPage = ({ products, priceRange = [0, 1000], productCategories, chakra, intents, onFilterChange, autoCheck }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("default");
   const [viewMode, setViewMode] = useState("grid-3");
@@ -273,7 +273,13 @@ const ProductListingPage = ({ products, priceRange = [0, 1000] }) => {
       )}
       <div className="flex justify-center items-center gap-4 fixed bottom-0 lg:hidden !p-3" style={{width:"100vw",backgroundColor:"#f0f0f0",marginLeft:"-3.5rem"}}>
         <SortDropdown sortOption={sortOption} setSortOption={setSortOption}  />
-        <PopupFilter />
+        <PopupFilter
+          productCategories={productCategories}
+          chakra={chakra}
+          intents={intents}
+          onFilterChange={onFilterChange}
+          autoCheck={autoCheck}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import React from "react";
@@ -47,6 +47,7 @@ const Navbar = () => {
   const [divineChakra, setDivineChakra] = useState([]);
   const [sacredIntents, setSacredIntent] = useState([]);
   const [sacredChakra, setSacredChakra] = useState([]);
+  const dropdownRef = useRef();
 
   // Function to fetch intents
   const fetchAuraJewelIntents = async () => {
@@ -285,6 +286,18 @@ const Navbar = () => {
     };
   }, [isSearchOpen]);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setHoveredMenu(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/aboutus", label: "About Us" },
@@ -305,6 +318,11 @@ const Navbar = () => {
   ];
   console.log("results of search", searchResults);
   console.log("cate data", categoryData);
+
+  const handleDropdownItemClick = () => {
+    setHoveredMenu(null);
+  };
+
   return (
     <>
       <nav className={`navbar-mobile ${isMenuOpen ? `openNav` : ``}`}>
@@ -488,7 +506,6 @@ const Navbar = () => {
               className="nav-item"
               onClick={() => setIsMenuOpen(false)}
               onMouseEnter={() => setHoveredMenu(item.dropdownKey || null)}
-              onMouseLeave={() => setHoveredMenu(null)}
             >
               <Link to={item.path}>{item.label}</Link>
             </li>
@@ -499,8 +516,8 @@ const Navbar = () => {
       {hoveredMenu && (
         <div
           className="dropdown-container"
+          ref={dropdownRef}
           onMouseEnter={() => setHoveredMenu(hoveredMenu)}
-          onMouseLeave={() => setHoveredMenu(null)}
         >
           {hoveredMenu === "skincare" && (
             <div className="dropdown-content skincare-dropdown">
@@ -523,13 +540,13 @@ const Navbar = () => {
                         });
                         return Object.entries(subCategoryMap).map(([subName, catSet]) => (
                           <div key={subName}>
-                            <Link to="/shop" state={{ autoSelects: subName }}>
+                            <Link to="/shop" state={{ autoSelects: { type: "productCategories", value: subName } }} onClick={handleDropdownItemClick}>
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
-                              <ul style={{ marginTop: "0.3rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                              <ul style={{ marginTop: "0.3rem", fontSize: "0.7rem", marginLeft: "1rem" }}>
                                 {[...catSet].map((cat) => (
-                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                  <Link to="/shop" state={{ autoSelects: { type: "categories", value: cat } }} onClick={handleDropdownItemClick}>
                                     <li>{` ${cat}`}</li>
                                   </Link>
                                 ))}
@@ -546,8 +563,9 @@ const Navbar = () => {
                       {skinCareIntents.map((intent) => (
                         <Link
                           to="/shop"
-                          state={{ autoSelects: intent }}
+                          state={{ autoSelects: { type: "intents", value: intent } }}
                           key={intent}
+                          onClick={handleDropdownItemClick}
                         >
                           <li key={intent + "Skin Care"}>{intent}</li>
                         </Link>
@@ -560,8 +578,9 @@ const Navbar = () => {
                       {skinCareChakra.map((chakra) => (
                         <Link
                           to="/shop"
-                          state={{ autoSelects: chakra }}
+                          state={{ autoSelects: { type: "chakra", value: chakra } }}
                           key={chakra}
+                          onClick={handleDropdownItemClick}
                         >
                           <li key={chakra + "Skin Care"}>{chakra}</li>
                         </Link>
@@ -600,13 +619,13 @@ const Navbar = () => {
                         });
                         return Object.entries(subCategoryMap).map(([subName, catSet]) => (
                           <div key={subName}>
-                            <Link to="/shop" state={{ autoSelects: subName }}>
+                            <Link to="/shop" state={{ autoSelects: { type: "productCategories", value: subName } }} onClick={handleDropdownItemClick}>
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
                               <ul style={{ marginTop: "0.5rem", marginLeft: "-1rem" }}>
                                 {[...catSet].map((cat) => (
-                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                  <Link to="/shop" state={{ autoSelects: { type: "categories", value: cat } }} onClick={handleDropdownItemClick}>
                                     <li>{`${cat}`}</li>
                                   </Link>
                                 ))}
@@ -623,8 +642,9 @@ const Navbar = () => {
                       {auraIntents.map((intent) => (
                         <Link
                           to="/shop"
-                          state={{ autoSelects: intent }}
+                          state={{ autoSelects: { type: "intents", value: intent } }}
                           key={intent}
+                          onClick={handleDropdownItemClick}
                         >
                           <li
                             key={intent + "Aura Jewels"}
@@ -642,8 +662,9 @@ const Navbar = () => {
                       {auraChakra.map((chakra) => (
                         <Link
                           to="/shop"
-                          state={{ autoSelects: chakra }}
+                          state={{ autoSelects: { type: "chakra", value: chakra } }}
                           key={chakra}
+                          onClick={handleDropdownItemClick}
                         >
                           <li
                             key={chakra + "Aura Jewels"}
@@ -687,13 +708,13 @@ const Navbar = () => {
                         });
                         return Object.entries(subCategoryMap).map(([subName, catSet]) => (
                           <div key={subName}>
-                            <Link to="/shop" state={{ autoSelects: subName }}>
+                            <Link to="/shop" state={{ autoSelects: { type: "productCategories", value: subName } }} onClick={handleDropdownItemClick}>
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
                               <ul>
                                 {[...catSet].map((cat) => (
-                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                  <Link to="/shop" state={{ autoSelects: { type: "categories", value: cat } }} onClick={handleDropdownItemClick}>
                                     <li>{`${cat}`}</li>
                                   </Link>
                                 ))}
@@ -708,7 +729,7 @@ const Navbar = () => {
                     <h3>Shop by Intent/Concern</h3>
                     <ul>
                       {divineIntents.map((intent) => (
-                        <Link to="/shop" state={{ autoSelects: intent }}>
+                        <Link to="/shop" state={{ autoSelects: { type: "intents", value: intent } }} onClick={handleDropdownItemClick}>
                           <li key={intent + "Divine Crystals"}>{intent}</li>
                         </Link>
                       ))}
@@ -718,7 +739,7 @@ const Navbar = () => {
                     <h3>Shop by Chakra</h3>
                     <ul>
                       {divineChakra.map((chakra) => (
-                        <Link to="/shop" state={{ autoSelects: chakra }}>
+                        <Link to="/shop" state={{ autoSelects: { type: "chakra", value: chakra } }} onClick={handleDropdownItemClick}>
                           <li key={chakra + "Divine Crystals"}>{chakra}</li>
                         </Link>
                       ))}
@@ -753,13 +774,13 @@ const Navbar = () => {
                         });
                         return Object.entries(subCategoryMap).map(([subName, catSet]) => (
                           <div key={subName}>
-                            <Link to="/shop" state={{ autoSelects: subName }}>
+                            <Link to="/shop" state={{ autoSelects: { type: "productCategories", value: subName } }} onClick={handleDropdownItemClick}>
                               <li>{subName}</li>
                             </Link>
                             {catSet.size > 0 && (
                               <ul>
                                 {[...catSet].map((cat) => (
-                                  <Link to="/shop" state={{ autoSelects: [cat] }} key={cat}>
+                                  <Link to="/shop" state={{ autoSelects: { type: "categories", value: cat } }} onClick={handleDropdownItemClick}>
                                     <li>{`${cat}`}</li>
                                   </Link>
                                 ))}
@@ -774,7 +795,7 @@ const Navbar = () => {
                     <h3>Shop by Intent/Concern</h3>
                     <ul>
                       {sacredIntents.map((intent) => (
-                        <Link to="/shop" state={{ autoSelects: intent }}>
+                        <Link to="/shop" state={{ autoSelects: { type: "intents", value: intent } }} onClick={handleDropdownItemClick}>
                           <li key={intent + "Sacred Rituals"}>{intent}</li>
                         </Link>
                       ))}
@@ -784,7 +805,7 @@ const Navbar = () => {
                     <h3>Shop by Chakra</h3>
                     <ul>
                       {sacredChakra.map((chakra) => (
-                        <Link to="/shop" state={{ autoSelects: chakra }}>
+                        <Link to="/shop" state={{ autoSelects: { type: "chakra", value: chakra } }} onClick={handleDropdownItemClick}>
                           <li key={chakra + "Sacred Rituals"}>{chakra}</li>
                         </Link>
                       ))}

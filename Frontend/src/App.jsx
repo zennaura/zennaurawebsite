@@ -63,13 +63,8 @@ function App() {
         rel="noopener noreferrer"
       >
         <div className=" fixed right-5 bottom-5 z-50 bg-green-500 rounded-full cursor-pointer !p-2">
-          <FaWhatsapp
-          size={35}
-          color="white"
-          
-        />
+          <FaWhatsapp size={35} color="white" />
         </div>
-
       </a>
       <Routes>
         {/* Public Routes */}

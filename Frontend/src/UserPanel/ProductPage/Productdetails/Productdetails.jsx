@@ -333,10 +333,7 @@ const ProductDetails = ({
 
    const isMobileM = useMediaQuery({maxWidth:500})
 
-  const descriptionRef = useRef(null);
-  const handleClickDes = () => {
-    descriptionRef.current?.scrollIntoView({ behaviour: "smooth" });
-  }
+  const descriptionSectionRef = useRef(null);
 
   if (isLoading) {
     return <div className="loading-spinner">Loading product details...</div>;
@@ -457,7 +454,7 @@ const ProductDetails = ({
           >
             Buy it now
           </button>
-          <div className="description-container">
+          <div className="description-container" ref={descriptionSectionRef}>
             <h2 className="section-title">Description</h2>
             <p className="description-text">
               {showFullDescription
@@ -465,14 +462,12 @@ const ProductDetails = ({
                 : truncateDescription(productData?.description, 50)}
             </p>
             {productData?.description && (
-              <a href="#product-description">
-                <button
-                  className="description-text-knowmore-btn"
-                  // onClick={toggleDescription}
-                >
-                  Know More
-                </button>
-              </a>
+              <button
+                className="description-text-knowmore-btn"
+                onClick={() => descriptionSectionRef.current?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Know More
+              </button>
             )}
           </div>
           <div className="Disclaimer-container">

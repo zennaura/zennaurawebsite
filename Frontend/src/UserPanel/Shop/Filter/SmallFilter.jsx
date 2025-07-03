@@ -1,46 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import { FaFilter } from "react-icons/fa";
+import { Slider, Box } from "@mui/material";
 
 const PopupFilter = ({
-    productCategories,
-    concerns,
-    intents,
+    productCategories = [],
+    chakra = [],
+    intents = [],
+    priceRange = [0, 1000],
+    rating = '',
     onFilterChange,
     autoCheck = [],
 }) => {
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(100);
-    const [rating, setRating] = useState('');
+    const [minPrice, setMinPrice] = useState(priceRange[0]);
+    const [maxPrice, setMaxPrice] = useState(priceRange[1]);
+    const [localRating, setLocalRating] = useState(rating);
     const [categoryData, setCategoryData] = useState([]);
-    const [availableConcerns, setAvailableConcerns] = useState([]);
+    const [availableChakra, setAvailableChakra] = useState([]);
     const [availableIntents, setAvailableIntents] = useState([]);
-    const [selectedProductCategories, setSelectedProductCategories] = useState([]);
-    const [selectedConcerns, setSelectedConcerns] = useState([]);
-    const [selectedIntents, setSelectedIntents] = useState([]);
+    const [selectedProductCategories, setSelectedProductCategories] = useState(productCategories);
+    const [selectedChakra, setSelectedChakra] = useState(chakra);
+    const [selectedIntents, setSelectedIntents] = useState(intents);
     const [isOpen, setIsOpen] = useState(false);
 
     const prevAutoCheckRef = useRef([]);
 
+    // Normalize autoCheck to always be an array
+    const safeAutoCheck = Array.isArray(autoCheck)
+      ? autoCheck
+      : autoCheck && typeof autoCheck === "object" && autoCheck.type && autoCheck.value
+        ? [autoCheck]
+        : [];
+
+    // Sync with props
+    useEffect(() => { setMinPrice(priceRange[0]); setMaxPrice(priceRange[1]); }, [priceRange]);
+    useEffect(() => { setLocalRating(rating); }, [rating]);
+    useEffect(() => { setSelectedProductCategories(productCategories); }, [productCategories]);
+    useEffect(() => { setSelectedChakra(chakra); }, [chakra]);
+    useEffect(() => { setSelectedIntents(intents); }, [intents]);
+
     useEffect(() => {
         const prev = prevAutoCheckRef.current;
         const changed =
-            autoCheck.length !== prev.length ||
-            autoCheck.some((val) => !prev.includes(val));
+            safeAutoCheck.length !== prev.length ||
+            safeAutoCheck.some((val) => !prev.includes(val));
 
         if (changed) {
             setSelectedProductCategories((prevSelected) => [
-                ...new Set([...prevSelected, ...autoCheck]),
+                ...new Set([...prevSelected, ...safeAutoCheck]),
             ]);
-            setSelectedConcerns((prevSelected) => [
-                ...new Set([...prevSelected, ...autoCheck]),
+            setSelectedChakra((prevSelected) => [
+                ...new Set([...prevSelected, ...safeAutoCheck]),
             ]);
             setSelectedIntents((prevSelected) => [
-                ...new Set([...prevSelected, ...autoCheck]),
+                ...new Set([...prevSelected, ...safeAutoCheck]),
             ]);
-            prevAutoCheckRef.current = autoCheck;
+            prevAutoCheckRef.current = safeAutoCheck;
         }
-    }, [autoCheck]);
+    }, [safeAutoCheck]);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -53,13 +70,13 @@ const PopupFilter = ({
             }
         };
 
-        const fetchConcerns = async () => {
+        const fetchChakra = async () => {
             try {
-                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/concerns`);
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/chakra`);
                 const data = await res.json();
-                setAvailableConcerns(data);
+                setAvailableChakra(data);
             } catch (err) {
-                console.error('Failed to fetch concerns:', err);
+                console.error('Failed to fetch chakra:', err);
             }
         };
 
@@ -74,7 +91,7 @@ const PopupFilter = ({
         };
 
         fetchCategories();
-        fetchConcerns();
+        fetchChakra();
         fetchIntents();
     }, []);
 
@@ -92,8 +109,8 @@ const PopupFilter = ({
 
         if (type === 'productCategories') {
             updateState(selectedProductCategories, setSelectedProductCategories);
-        } else if (type === 'concerns') {
-            updateState(selectedConcerns, setSelectedConcerns);
+        } else if (type === 'chakra') {
+            updateState(selectedChakra, setSelectedChakra);
         } else if (type === 'intents') {
             updateState(selectedIntents, setSelectedIntents);
         }
@@ -101,6 +118,14 @@ const PopupFilter = ({
 
     const handleApply = () => {
         setIsOpen(false);
+        onFilterChange?.('fetchProducts', {
+            productCategories: selectedProductCategories,
+            chakra: selectedChakra,
+            intents: selectedIntents,
+            minPrice,
+            maxPrice,
+            rating: localRating
+        });
     };
 
     const renderSection = (title, content, expanded, toggle) => (
@@ -122,7 +147,7 @@ const PopupFilter = ({
     const [showSections, setShowSections] = useState({
         Price: true,
         Product: false,
-        Concern: false,
+        Chakra: false,
         Intent: false,
         Rating: false,
     });
@@ -149,26 +174,30 @@ const PopupFilter = ({
                     {/* Price Section */}
                     {renderSection(
                         'Price',
-                        <div className="space-y-2 text-sm">
-                            <div className="flex justify-between text-xs text-gray-600">
-                                <span>₹{minPrice}</span>
-                                <span>₹{maxPrice}</span>
-                            </div>
-                            <input
-                                type="range"
-                                min="0"
-                                max="1000"
-                                value={minPrice}
-                                onChange={(e) => setMinPrice(Number(e.target.value))}
-                            />
-                            <input
-                                type="range"
-                                min="0"
-                                max="1000"
-                                value={maxPrice}
-                                onChange={(e) => setMaxPrice(Number(e.target.value))}
-                            />
-                        </div>,
+                        <Box sx={{ px: 2 }}>
+                          <Slider
+                            value={[minPrice, maxPrice]}
+                            onChange={(_, newValue) => {
+                              setMinPrice(newValue[0]);
+                              setMaxPrice(newValue[1]);
+                            }}
+                            valueLabelDisplay="on"
+                            valueLabelFormat={value => `₹${value}`}
+                            min={0}
+                            max={1000}
+                            sx={{
+                              color: "#593039",
+                              "& .MuiSlider-thumb": { backgroundColor: "#593039" },
+                              "& .MuiSlider-track": { backgroundColor: "#593039" },
+                              "& .MuiSlider-rail": { backgroundColor: "#593039" },
+                              "& .MuiSlider-valueLabel": {
+                                backgroundColor: "#593039",
+                                color: "#fff",
+                                "&::before": { backgroundColor: "#593039" },
+                              },
+                            }}
+                          />
+                        </Box>,
                         showSections.Price,
                         () => toggleSection('Price')
                     )}
@@ -176,47 +205,54 @@ const PopupFilter = ({
                     {/* Product Categories */}
                     {renderSection(
                         'Product Categories',
-                        categoryData.map((parent) =>
-                            parent.subCategories.map((sub) =>
-                                (sub.categories || []).map((category) => (
-                                    <div key={`${sub.subCategory}-${category}`} className="flex items-center space-x-2 text-sm">
-                                        <input
-                                            type="checkbox"
-                                            id={`${sub.subCategory}-${category}1`}
-                                            value={sub.subCategory}
-                                            checked={selectedProductCategories.includes(sub.subCategory)}
-                                            onChange={(e) => handleCheckboxChange(e, 'productCategories')}
-                                        />
-                                        <label htmlFor={`${sub.subCategory}-${category}1`}>{sub.subCategory}</label>
-                                    </div>
-                                ))
-                            )
-                        ),
+                        (() => {
+                          // Collect all subcategories in a Set to deduplicate
+                          const subcategorySet = new Set();
+                          categoryData.forEach(parent => {
+                            (parent.subCategories || []).forEach(sub => {
+                              if (sub.subCategory && sub.subCategory.trim() !== '') {
+                                subcategorySet.add(sub.subCategory);
+                              }
+                            });
+                          });
+                          return Array.from(subcategorySet).map(subCategory => (
+                            <div key={subCategory} className="flex items-center space-x-2 text-sm">
+                              <input
+                                type="checkbox"
+                                id={`subcategory-${subCategory}`}
+                                value={subCategory}
+                                checked={selectedProductCategories.includes(subCategory)}
+                                onChange={e => handleCheckboxChange(e, 'productCategories')}
+                              />
+                              <label htmlFor={`subcategory-${subCategory}`}>{subCategory}</label>
+                            </div>
+                          ));
+                        })(),
                         showSections.Product,
                         () => toggleSection('Product')
                     )}
 
-                    {/* Concerns */}
+                    {/* Chakra */}
                     {renderSection(
-                        'Concern',
-                        availableConcerns.length ? (
-                            availableConcerns.map((concern) => (
-                                <div key={concern} className="flex items-center space-x-2 text-sm">
+                        'Chakra',
+                        availableChakra.length ? (
+                            availableChakra.map((chakra) => (
+                                <div key={chakra} className="flex items-center space-x-2 text-sm">
                                     <input
                                         type="checkbox"
-                                        id={`${concern}1`}
-                                        value={concern}
-                                        checked={selectedConcerns.includes(concern)}
-                                        onChange={(e) => handleCheckboxChange(e, 'concerns')}
+                                        id={`${chakra}1`}
+                                        value={chakra}
+                                        checked={selectedChakra.includes(chakra)}
+                                        onChange={(e) => handleCheckboxChange(e, 'chakra')}
                                     />
-                                    <label htmlFor={concern + "1"}>{concern}</label>
+                                    <label htmlFor={chakra + "1"}>{chakra}</label>
                                 </div>
                             ))
                         ) : (
                             <p className="text-sm text-gray-500">Loading...</p>
                         ),
-                        showSections.Concern,
-                        () => toggleSection('Concern')
+                        showSections.Chakra,
+                        () => toggleSection('Chakra')
                     )}
 
                     {/* Intents */}
@@ -248,8 +284,8 @@ const PopupFilter = ({
                         <select
                             name="rating"
                             id="rating"
-                            value={rating}
-                            onChange={(e) => setRating(e.target.value)}
+                            value={localRating}
+                            onChange={(e) => setLocalRating(e.target.value)}
                             className="w-full p-1 border rounded text-sm"
                         >
                             <option value="">Select Rating</option>

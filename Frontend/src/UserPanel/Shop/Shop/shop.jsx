@@ -44,11 +44,47 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false); // Add loading state for products
   const allCategoriesRef = useRef([]); // To store all possible categories for default filtering
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
 
   // Effect to fetch all categories on mount.
   // This populates allCategoriesRef and sets the initial productCategories in currentFilters.
   useEffect(() => {
-    const fetchAllCategoriesForRef = async () => {
+    let initialFilters = {
+      productCategories: [],
+      categories: [],
+      concerns: [],
+      chakra: [],
+      intents: [],
+      minPrice: 0,
+      maxPrice: 1000,
+      rating: ''
+    };
+
+    let selects = [];
+    if (autoSelects) {
+      if (Array.isArray(autoSelects)) {
+        selects = autoSelects;
+      } else if (typeof autoSelects === "object" && autoSelects.type && autoSelects.value) {
+        selects = [autoSelects];
+      }
+    }
+
+    selects.forEach(({ type, value }) => {
+      if (initialFilters[type]) {
+        initialFilters[type].push(value);
+      }
+    });
+
+    setCurrentFilters((prev) => ({
+      ...prev,
+      ...initialFilters,
+    }));
+    setAutoSelectsState(autoSelects || []);
+  }, [location.state, autoSelects]);
+
+  // Effect to fetch all categories for fallback
+  useEffect(() => {
+    const fetchAllCategories = async () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/categories`);
         const data = await res.json();
@@ -56,47 +92,13 @@ const Shop = () => {
           parent.subCategories.flatMap(sub => sub.subCategory)
         );
         allCategoriesRef.current = allSubCategories;
-
-        setCurrentFilters(prevFilters => {
-          const initialProductCategories = autoSelects?.length > 0
-            ? autoSelects
-            : []; // Use autoSelects if available, otherwise all categories
-
-          // Also merge autoSelects into other filter types if they apply to them
-          // This part assumes autoSelects might contain concerns/intents too
-          const initialConcerns = autoSelects?.length > 0
-            ? [...new Set([...prevFilters.concerns, ...autoSelects])]
-            : prevFilters.concerns;
-           const initialChakra = autoSelects?.length > 0
-            ? [...new Set([...prevFilters.chakra, ...autoSelects])]
-            : prevFilters.chakra;
-          const initialIntents = autoSelects?.length > 0
-            ? [...new Set([...prevFilters.intents, ...autoSelects])]
-            : prevFilters.intents;
-
-
-          return {
-            ...prevFilters,
-            productCategories: initialProductCategories,
-            concerns: initialConcerns,
-            chakra:initialChakra,
-            intents: initialIntents,
-            // Price and rating remain their default values unless autoSelects specifically sets them.
-            // If autoSelects can set minPrice/maxPrice/rating, you'd add logic here.
-          };
-        });
-
+        setCategoriesLoaded(true); // Set to true when loaded
       } catch (err) {
         console.error('Shop.jsx: Failed to fetch all categories:', err);
       }
     };
-    fetchAllCategoriesForRef();
-
-    // Set autoSelectsState for Filter component's autoCheck prop
-    // This is useful if Filter component itself needs to manage auto-checking logic separately
-    setAutoSelectsState(autoSelects || []);
-
-  }, [location.state, autoSelects]); // Re-run if location.state (including autoSelects) changes
+    fetchAllCategories();
+  }, []);
 
   // Function to fetch products based on provided filters. Memoized with useCallback.
   const fetchProductsData = useCallback(async (filters) => {
@@ -124,11 +126,11 @@ const Shop = () => {
 
       if (productCategories && productCategories.length)
         params.append("subCategory", JSON.stringify(productCategories));
-      if (categories && categories.length)
+      if (categories && categories.length > 0)
         params.append("category", JSON.stringify(categories));
-      if (concerns.length) params.append("concerns", JSON.stringify(concerns));
-      if (chakra.length) params.append("chakra", JSON.stringify(chakra));
-      if (intents.length) params.append("intents", JSON.stringify(intents));
+      if (concerns && concerns.length > 0) params.append("concerns", JSON.stringify(concerns));
+      if (chakra && chakra.length > 0) params.append("chakra", JSON.stringify(chakra));
+      if (intents && intents.length > 0) params.append("intents", JSON.stringify(intents));
       params.append("minPrice", minPrice);
       params.append("maxPrice", maxPrice);
       if (rating) params.append("rating", rating);
@@ -171,15 +173,11 @@ const Shop = () => {
   }, []); // No dependencies for fetchProductsData itself, as it uses filters from its arguments
 
   // Effect to trigger product fetching whenever currentFilters change
-  // This is the primary mechanism for re-fetching products based on filter updates.
   useEffect(() => {
-    // Ensure allCategoriesRef is populated before attempting an initial product fetch
-    // that might rely on all categories as a default.
-    // This prevents fetching products with an incomplete "all categories" filter.
-    if (allCategoriesRef.current.length > 0) {
+    if (categoriesLoaded) { // Only fetch when categories are loaded
       fetchProductsData(currentFilters);
     }
-  }, [currentFilters, fetchProductsData]); // Depend on currentFilters and the stable fetchProductsData
+  }, [currentFilters, fetchProductsData, categoriesLoaded]);
 
   // Callback for Filter component to notify Shop.jsx about filter changes
   const handleFilterChange = useCallback((type, payload) => {
@@ -212,7 +210,16 @@ const Shop = () => {
         />
 
         {/* Mobile Filter Controls (if this component also needs filters, pass them) */}
-        <MobileFilterControls />
+        <MobileFilterControls
+          productCategories={currentFilters.productCategories}
+          categories={currentFilters.categories}
+          concerns={currentFilters.concerns}
+          chakra={currentFilters.chakra}
+          intents={currentFilters.intents}
+          priceRange={[currentFilters.minPrice, currentFilters.maxPrice]}
+          rating={currentFilters.rating}
+          onFilterChange={handleFilterChange}
+        />
 
         {/* Main Product Listing */}
         {isLoadingProducts ? (
@@ -221,11 +228,19 @@ const Shop = () => {
           Loading Products...
       </div>
         ) : products.length > 0 ? (
-            <Allproduct products={products} priceRange={[currentFilters.minPrice, currentFilters.maxPrice]} />
+            <Allproduct
+              products={products}
+              priceRange={[currentFilters.minPrice, currentFilters.maxPrice]}
+              productCategories={currentFilters.productCategories}
+              chakra={currentFilters.chakra}
+              intents={currentFilters.intents}
+              onFilterChange={handleFilterChange}
+              autoCheck={autoSelectsState}
+            />
           ) : (
               <div className="loading-indicator">
-          <div className="loading-spinner"></div> {/* This is the new spinner element */}
-          Loading Products...
+          {/* <div className="loading-spinner"></div> This is the new spinner element */}
+          No Product to Fetch
       </div>
 
         )}

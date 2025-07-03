@@ -48,26 +48,31 @@ const Filter = ({
 
   // Handle autoCheck prop (initial selection from URL/navigation state)
   useEffect(() => {
+    // Ensure autoCheck is always an array
+    let safeAutoCheck = Array.isArray(autoCheck)
+      ? autoCheck
+      : autoCheck && typeof autoCheck === 'object' && autoCheck.value
+        ? [autoCheck.value]
+        : autoCheck
+          ? [autoCheck]
+          : [];
+
     const prev = prevAutoCheckRef.current;
     const changed =
-      autoCheck.length !== prev.length ||
-      Array.isArray(autoCheck) && autoCheck.some((val) => !prev.includes(val));
+      safeAutoCheck.length !== prev.length ||
+      Array.isArray(safeAutoCheck) && safeAutoCheck.some((val) => !prev.includes(val));
 
     if (changed) {
-      // For productCategories, we need to merge with existing selected ones from prop
-      // For concerns and intents, update their internal states.
-      // This part assumes autoCheck can contain productCategories, concerns, or intents.
-      // If autoCheck specifically applies ONLY to productCategories, adjust logic.
       onFilterChange("fetchProducts", {
-        productCategories: [...new Set([...productCategories, ...autoCheck])],
-        concerns: [...new Set([...selectedConcerns, ...autoCheck])], // This might need refinement based on autoCheck content
-        chakra: [...new Set([...selectedChakra, ...autoCheck])], // This might need refinement based on autoCheck content
-        intents: [...new Set([...selectedIntents, ...autoCheck])], // This might need refinement based on autoCheck content
+        productCategories: [...new Set([...productCategories, ...safeAutoCheck])],
+        concerns: [...new Set([...selectedConcerns, ...safeAutoCheck])],
+        chakra: [...new Set([...selectedChakra, ...safeAutoCheck])],
+        intents: [...new Set([...selectedIntents, ...safeAutoCheck])],
         minPrice: priceRange[0],
         maxPrice: priceRange[1],
         rating: rating,
       });
-      prevAutoCheckRef.current = autoCheck;
+      prevAutoCheckRef.current = safeAutoCheck;
     }
   }, [
     autoCheck,
@@ -78,7 +83,7 @@ const Filter = ({
     selectedIntents,
     priceRange,
     rating,
-  ]); // Added necessary dependencies
+  ]);
 
   // Fetch available filter options (categories, concerns, intents) on mount
   useEffect(() => {

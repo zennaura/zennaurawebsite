@@ -58,24 +58,44 @@ const SkinCareSubMenu = ({ goTo, closeMenu }) => {
 
             <div className="section-sub">
                 <h4 className="section-title-sub">Shop By Category</h4>
-                {categoryData.map((parent) =>
-                    parent.subCategories.map((sub) => (
-                        <ul key={`${parent.parentCategory}-${sub.subCategory}-${(sub.categories || []).join('-')}`}>
-                            {(sub.categories || []).map((category) => (
-                                parent.parentCategory === "Skin Care" && (
-                                    <div key={parent.subCategories + `Hello`}>
+                {categoryData.filter(parent => parent.parentCategory === "Skin Care").map((parent) => {
+                    // Build subCategory -> Set of categories map (deduplicated)
+                    const subCategoryMap = {};
+                    parent.subCategories.forEach((sub) => {
+                        const subName = (sub.subCategory || "").trim();
+                        if (!subName) return;
+                        if (!subCategoryMap[subName]) subCategoryMap[subName] = new Set();
+                        (sub.categories || []).forEach((cat) => {
+                            const catName = (cat || "").trim();
+                            if (catName) subCategoryMap[subName].add(catName);
+                        });
+                    });
+                    return Object.entries(subCategoryMap).map(([subName, catSet]) => (
+                        <div key={subName}>
+                            <Link
+                                to="/shop"
+                                state={{ autoSelects: { type: "productCategories", value: subName } }}
+                                onClick={closeMenu}
+                            >
+                                <li>{subName}</li>
+                            </Link>
+                            {catSet.size > 0 && (
+                                <ul style={{ marginTop: "0.3rem", fontSize: "0.7rem", marginLeft: "-1rem" }}>
+                                    {[...catSet].map((cat) => (
                                         <Link
                                             to="/shop"
-                                            state={{ autoSelects: sub.subCategory }} onClick={closeMenu}>
-                                            <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
-                                        <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
-                                        </ul>
-                                    </div>
-                                )
-                            ))}
-                        </ul>
-                    ))
-                )}
+                                            state={{ autoSelects: { type: "categories", value: cat } }}
+                                            onClick={closeMenu}
+                                            key={cat}
+                                        >
+                                            <li>{cat}</li>
+                                        </Link>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ));
+                })}
             </div>
 
             <div className="section-sub">
@@ -84,8 +104,12 @@ const SkinCareSubMenu = ({ goTo, closeMenu }) => {
                     {skinCareIntents.map((intent) => (
                         <Link
                             to="/shop"
-                            state={{ autoSelects: intent }} onClick={closeMenu}>
-                            <li key={intent + "Skin Care"}>{intent}</li></Link>
+                            state={{ autoSelects: { type: "intents", value: intent } }}
+                            onClick={closeMenu}
+                            key={intent}
+                        >
+                            <li>{intent}</li>
+                        </Link>
                     ))}
                 </ul>
             </div>

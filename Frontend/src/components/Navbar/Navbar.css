@@ -276,6 +276,10 @@ li a {
 .aurajewels-chakra li {
   list-style: none;
 }
+.aurajewels-category ul li{
+  font-size: 0.9rem;
+  margin-left: 0.6rem;
+}
 .aurajewels-category,.aurajewels-intent,.aurajewels-chakra {
   text-decoration: none;
   width: 100% !important;
