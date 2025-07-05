@@ -19,7 +19,7 @@
   left: 2.5rem;
   font-size: 1.125rem;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 9;
 }
 .product-card-best-icon .product-card-icon {
   width: 1.56rem;
@@ -41,7 +41,7 @@
   left: 4.5rem;
   font-size: 1.125rem;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 9;
 
 }
 .product-card-wishlist .product-card-icon,
@@ -67,7 +67,7 @@
   cursor: pointer;
   overflow: hidden;
   transform: rotate(-45deg);
-  z-index: 9999;
+  z-index: 9;
 
 }
 .product-card-featured-icon .product-card-icon {
@@ -90,7 +90,7 @@
   top: 0.7rem;
   right: 0.7rem;
   font-size: 2rem;
-  z-index: 9999;
+  z-index: 9;
 
   cursor: pointer;
 }

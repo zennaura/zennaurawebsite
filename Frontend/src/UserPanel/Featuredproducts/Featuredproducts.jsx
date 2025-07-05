@@ -185,15 +185,9 @@ const FeaturedProducts = () => {
                 backImage={product.data.backImage}
                 price={(
                   product.data.salePrice +
-                  (product.data.salePrice * product.data.tax) / 100 -
-                  ((product.data.salePrice +
-                    (product.data.salePrice * product.data.tax) / 100) *
-                    product.data.discount) /
-                    100
-                ).toFixed(2)}
+                  (product.data.salePrice * product.data.tax) / 100).toFixed(2)}
                 originalPrice={(
-                  product.data.salePrice +
-                  (product.data.salePrice * product.data.tax) / 100
+                  product.data.costPrice
                 ).toFixed(2)}
                 rating={product.data.rating}
                 isFeatured={product.data.featureProduct}

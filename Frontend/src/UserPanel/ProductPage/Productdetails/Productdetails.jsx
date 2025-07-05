@@ -6,6 +6,9 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../../../components/AuthContext/AuthContext";
 import {useMediaQuery} from "react-responsive"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
 const ProductDetails = ({
   product: initialProduct,
@@ -525,23 +528,26 @@ const ProductDetails = ({
         <div className="gallery-section">
           {isMobile ? (
             <div className="mobile-carousel-wrapper">
-              <div className="carousel-item-product" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <img
-                  src={slides[carouselIndex]?.image}
-                  alt={slides[carouselIndex]?.title}
-                  className="carousel-image-product"
-                  onError={e => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/500"; }}
-                />
-              </div>
-              <div className="carousel-dots">
-                {slides.map((_, idx) => (
-                  <span
-                    key={idx}
-                    className={`carousel-dot${carouselIndex === idx ? ' active' : ''}`}
-                    onClick={() => setCarouselIndex(idx)}
-                  />
+              <Swiper
+                spaceBetween={10}
+                slidesPerView={1}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                modules={[Autoplay]}
+                style={{ width: '100%' }}
+              >
+                {slides.map((slide, idx) => (
+                  <SwiperSlide key={idx}>
+                    <div className="carousel-item-product" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <img
+                        src={slide.image}
+                        alt={slide.title}
+                        className="carousel-image-product"
+                        onError={e => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/500"; }}
+                      />
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </div>
+              </Swiper>
             </div>
           ) : (
             <div className="vertical">

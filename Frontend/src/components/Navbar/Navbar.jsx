@@ -235,17 +235,11 @@ const Navbar = () => {
           title: product.title,
           description: product.description,
           image: variant.frontImage || variant.backImage || noImage,
-          price: (
-            variant.salePrice +
-            (variant.salePrice * variant.tax) / 100 -
-            ((variant.salePrice + (variant.salePrice * variant.tax) / 100) *
-              variant.discount) /
-              100
-          ).toFixed(2),
-          originalPrice: (
-            variant.salePrice +
-            (variant.salePrice * variant.tax) / 100
-          ).toFixed(2),
+          price:  (
+                  variant?.salePrice +
+                  (variant?.salePrice * variant?.tax) / 100
+                ).toFixed(2),
+          originalPrice: Number(variant?.costPrice).toFixed(2),
           variantName: variant.variantname,
           variantId: variant._id,
           sku: product.sku,

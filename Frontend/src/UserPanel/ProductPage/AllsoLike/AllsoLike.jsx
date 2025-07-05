@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
-import './AllsoLike.css'
+import "./AllsoLike.css";
 import ProductCart from "../../../components/Productcart/ProductCart";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const AllSoLike = () => {
+const AllSoLike = ({ intentTags = [], productId }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoSlide, setAutoSlide] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Get current product's tags from location state
-  const currentProductTags = location.state?.tags || [];
 
   // Fetch all products
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products`);
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_LINK}/api/products`
+        );
         const productsData = await res.json();
-
+        console.log("products also like:", productsData);
         const flattened = productsData.flatMap((product) =>
           product.variants.map((variant, index) => ({
             id: `${product._id}-${index}`,
@@ -32,9 +30,9 @@ const AllSoLike = () => {
               description: product.description,
               sku: product.sku,
               tags: product.tags,
+              Intenttags: product.Intenttags,
               stoneUsedImage: product.stoneUsedImage,
               rating: product.rating,
-              // frontImage: product.frontImage,
               otherimages: product.otherimages,
               healingImage: product.healingImage,
               benefits: product.benefits,
@@ -47,39 +45,74 @@ const AllSoLike = () => {
             },
           }))
         );
-
+        console.log("products also like flattened:", flattened);
         setAllProducts(flattened);
       } catch (err) {
-        console.error('Error fetching products:', err);
+        console.error("Error fetching products:", err);
       }
     };
 
     fetchAllProducts();
   }, []);
 
-  // Filter similar products based on tags
+  // Filter similar products based on intentTags (or fallback to tags)
   useEffect(() => {
-    if (allProducts.length > 0 && currentProductTags.length > 0) {
-      const similar = allProducts.filter(product => {
-        // Exclude the current product
-        if (product.id === location.state?.id) return false;
-
-        // Check for matching tags
-        return product.data.tags.some(tag =>
-          currentProductTags.includes(tag)
+    if (allProducts.length > 0) {
+      let similar = [];
+      if (intentTags && intentTags.length > 0) {
+        similar = allProducts.filter((product) => {
+          if (product.data._id === productId) return false;
+          return (
+            product.data.Intenttags &&
+            product.data.Intenttags.some((tag) => intentTags.includes(tag))
+          );
+        });
+      }
+      if (similar.length === 0 && intentTags.length === 0) {
+        const currentProduct = allProducts.find(
+          (p) => p.data._id === productId
+        );
+        const currentTags = currentProduct?.data?.tags || [];
+        if (currentTags.length > 0) {
+          similar = allProducts.filter((product) => {
+            if (product.data._id === productId) return false;
+            return (
+              product.data.tags &&
+              product.data.tags.some((tag) => currentTags.includes(tag))
+            );
+          });
+        }
+      }
+      // Only keep the first variant per product (by _id and variant index 0)
+      const seen = new Set();
+      const uniqueByProduct = allProducts.filter((product) => {
+        if (product.data._id === productId) return false;
+        if (seen.has(product.data._id)) return false;
+        seen.add(product.data._id);
+        // Only keep variant index 0
+        return (
+          product.id.endsWith("-0") &&
+          ((intentTags.length > 0 &&
+            product.data.Intenttags &&
+            product.data.Intenttags.some((tag) => intentTags.includes(tag))) ||
+            (intentTags.length === 0 &&
+              product.data.tags &&
+              currentProduct?.data?.tags &&
+              product.data.tags.some((tag) =>
+                currentProduct.data.tags.includes(tag)
+              )))
         );
       });
-
-      setSimilarProducts(similar);
+      setSimilarProducts(uniqueByProduct);
     }
-  }, [allProducts, currentProductTags, location.state?.id]);
+  }, [allProducts, intentTags, productId]);
 
   // Auto-slide effect
   useEffect(() => {
     if (!autoSlide || similarProducts.length <= 4) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide(prev =>
+      setCurrentSlide((prev) =>
         prev + 4 >= similarProducts.length ? 0 : prev + 4
       );
     }, 5000);
@@ -88,27 +121,17 @@ const AllSoLike = () => {
   }, [autoSlide, similarProducts.length]);
 
   const handleClick = (product) => {
-    // Find all variants of this product
-    const productVariants = similarProducts
-      .filter(p => p.data._id === product.data._id)
-      .map(v => ({
-        variantname: v.data.variantname,
-        id: v.id,
-        frontImage: v.data.frontImage,
-        salePrice: v.data.salePrice
-      }));
-    
+    console.log("Navigating to product:", product.data._id, product);
     navigate(`/productdetails/${product.id}`, {
       state: {
         ...product.data,
-        allVariants: productVariants
       },
     });
   };
 
   // Navigation functions
   const nextSlide = () => {
-    setCurrentSlide(prev =>
+    setCurrentSlide((prev) =>
       prev + 4 >= similarProducts.length ? 0 : prev + 4
     );
     setAutoSlide(false);
@@ -116,7 +139,7 @@ const AllSoLike = () => {
   };
 
   const prevSlide = () => {
-    setCurrentSlide(prev =>
+    setCurrentSlide((prev) =>
       prev - 4 < 0 ? Math.max(0, similarProducts.length - 4) : prev - 4
     );
     setAutoSlide(false);
@@ -141,7 +164,12 @@ const AllSoLike = () => {
         <div className="AllSoLike-cards">
           {visibleProducts.length > 0 ? (
             visibleProducts.map((product, index) => (
-              <div key={product.id} className={`AllSoLike-card ${(index === 1 || index === 2) ? "featured-card-center" : ""}`}>
+              <div
+                key={product.id}
+                className={`AllSoLike-card ${
+                  index === 1 || index === 2 ? "featured-card-center" : ""
+                }`}
+              >
                 <ProductCart
                   key={product.id}
                   id={product.id}
@@ -149,8 +177,11 @@ const AllSoLike = () => {
                   title={product.data.title}
                   frontimage={product.data.frontImage}
                   backImage={product.data.backImage}
-                  price={product.data.salePrice}
-                  originalPrice={product.data.costPrice}
+                  price={(
+                    product.data.salePrice +
+                    (product.data.salePrice * product.data.tax) / 100
+                  ).toFixed(2)}
+                  originalPrice={product.data.costPrice.toFixed(2)}
                   rating={product.data.rating}
                   isFeatured={product.data.featureProduct}
                   isBest={product.data.bestSeller}
@@ -162,7 +193,6 @@ const AllSoLike = () => {
             <p className="no-products">No similar products found</p>
           )}
         </div>
-
       </div>
 
       {/* Pagination Dots */}

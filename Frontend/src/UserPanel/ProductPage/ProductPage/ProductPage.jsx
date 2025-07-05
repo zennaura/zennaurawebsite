@@ -38,40 +38,31 @@ const ProductPage = () => {
 
 
   useEffect(() => {
-    // If we have state from navigation, use it
-    if (location.state?.selectedVariant) {
-      setSelectedVariant(location.state.selectedVariant);
-    }
-    
-    // Only fetch if we don't have product data
-    if (!product && !initialProduct) {
-      setIsLoading(true);
-      setError(null);
-      fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${id}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            setProduct(data.product);
-            // Only set default variant if we don't have a selected variant
-            if (!selectedVariant) {
-              setSelectedVariant(data.product.variants?.[0] || null);
-            }
-          } else {
-            setError('Product not found');
-          }
-        })
-        .catch(err => {
-          console.error('Error fetching product:', err);
-          setError('Failed to load product');
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else if (initialProduct) {
-      setIsLoading(false);
-    }
-  }, [id, product, initialProduct, location.state, selectedVariant]);
- const [productId, variantIndex] = id.split("-");
+    // Always fetch product when id changes
+    setIsLoading(true);
+    setError(null);
+    fetch(`${import.meta.env.VITE_BACKEND_LINK}/api/products/${id.split("-")[0]}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setProduct(data.product);
+          // Set variant from URL or default
+          const variantIdx = parseInt(id.split("-")[1]) || 0;
+          setSelectedVariant(data.product.variants?.[variantIdx] || data.product.variants?.[0] || null);
+        } else {
+          setError('Product not found');
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching product:', err);
+        setError('Failed to load product');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [id]);
+
+  const [productId, variantIndex] = id.split("-");
   const handleVariantSelect = (variant) => {
     setSelectedVariant(variant);
     // Update the URL with the new variant ID
@@ -166,7 +157,10 @@ const ProductPage = () => {
         healingProperties={product?.healingProperties}
       />
       {/* All so like this product */}
-      <AllsoLike />
+      <AllsoLike 
+        intentTags={product?.Intenttags || []}
+        productId={product?._id}
+      />
    <div className="productposter-container">
   {/* Benefits Poster */}
   {product?.benefits && product?.benefits?.length > 0 && (

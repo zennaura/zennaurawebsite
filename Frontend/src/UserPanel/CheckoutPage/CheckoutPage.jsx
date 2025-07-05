@@ -60,17 +60,21 @@ const CheckoutPage = () => {
     );
   }
 
+  // price: (
+  //                 variant?.salePrice +
+  //                 (variant?.salePrice * variant?.tax) / 100
+  //               ).toFixed(2),
+  //           originalPrice: Number(variant?.costPrice).toFixed(2),
   // Calculate order totals
   const subtotal = products.reduce((acc, product) => {
     const quantity = quantities[product.productId] || 1;
     const price = Number((
                   product.salePrice +
-                  (product.salePrice * product.tax) / 100 -
-                  ((product.salePrice +
-                    (product.salePrice * product.tax) / 100) *
-                    product.discount) /
-                    100
-                ).toFixed(2)) || product.salePrice;
+                  (product.salePrice * product.tax) / 100 
+                ).toFixed(2)) ||Number((
+                  product.salePrice +
+                  (product.salePrice * 18) / 100 
+                ).toFixed(2));
     return acc + (isNaN(price) ? 0 : price * quantity);
   }, 0);
 
@@ -203,14 +207,10 @@ const CheckoutPage = () => {
             <li>
               ${product.name} (${product.size || "Standard"}) - 
               Quantity: ${quantities[product.productId] || 1} - 
-              Price: ₹${(
+              Price: ₹${Number((
                   product.salePrice +
-                  (product.salePrice * product.tax) / 100 -
-                  ((product.salePrice +
-                    (product.salePrice * product.tax) / 100) *
-                    product.discount) /
-                    100
-                ).toFixed(2)}
+                  (product.salePrice * product.tax) / 100 
+                ).toFixed(2))}
             </li>
           `
             )
@@ -927,11 +927,7 @@ console.log("order items", orderItems);
                 <p className="font-medium text-sm md:text-base whitespace-nowrap">
                   ₹{parseInt((
                   product.salePrice +
-                  (product.salePrice * product.tax) / 100 -
-                  ((product.salePrice +
-                    (product.salePrice * product.tax) / 100) *
-                    product.discount) /
-                    100
+                  (product.salePrice * product.tax) / 100 
                 ).toFixed(2)) || product.salePrice.toFixed(2)}
                 </p>
               </div>

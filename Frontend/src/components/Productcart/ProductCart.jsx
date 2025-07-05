@@ -12,7 +12,7 @@ const ProductCard = ({
   title,
   backImage,
   frontimage,
-  price,
+   price,
   originalPrice,
   isBest,
   isFeatured,

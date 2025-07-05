@@ -59,6 +59,7 @@ const ProductListingPage = ({ products, priceRange = [0, 1000], productCategorie
         variantname: variant.data.variantname,
         id: variant.id,
         salePrice: variant.data.salePrice,
+        costPrice:variant.data.costPrice,
         frontImage: variant.data.frontImage,
         backImage: variant.data.backImage,
         variantsimages: variant.data.variantsimages,
@@ -162,15 +163,10 @@ const ProductListingPage = ({ products, priceRange = [0, 1000], productCategorie
             backImage={variant.data.backImage}
             price={(
               variant.data.salePrice +
-              (variant.data.salePrice * variant.data.tax) / 100 -
-              ((variant.data.salePrice +
-                (variant.data.salePrice * variant.data.tax) / 100) *
-                variant.data.discount) /
-                100
+              (variant.data.salePrice * variant.data.tax) / 100 
             ).toFixed(2)}
             originalPrice={(
-              variant.data.salePrice +
-              (variant.data.salePrice * variant.data.tax) / 100
+              variant.data.costPrice
             ).toFixed(2)}
             rating={variant.data.rating}
             isFeatured={variant.data.featureProduct}
@@ -271,7 +267,7 @@ const ProductListingPage = ({ products, priceRange = [0, 1000], productCategorie
           </span>
         </footer>
       )}
-      <div className="flex justify-center items-center gap-4 fixed bottom-0 lg:hidden !p-3" style={{width:"100vw",backgroundColor:"#f0f0f0",marginLeft:"-3.5rem"}}>
+      <div className="flex justify-center items-center gap-4 fixed bottom-0 lg:hidden !p-3 z-10" style={{width:"100vw",backgroundColor:"#f0f0f0",marginLeft:"-3.5rem"}}>
         <SortDropdown sortOption={sortOption} setSortOption={setSortOption}  />
         <PopupFilter
           productCategories={productCategories}

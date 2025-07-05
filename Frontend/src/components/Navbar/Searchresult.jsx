@@ -27,16 +27,10 @@ const SearchResults = () => {
             description: product.description,
             image: variant.frontImage || variant.backImage,
             price: (
-              variant.salePrice +
-              (variant.salePrice * variant.tax) / 100 -
-              ((variant.salePrice + (variant.salePrice * variant.tax) / 100) *
-                variant.discount) /
-                100
-            ).toFixed(2),
-            originalPrice: (
-              variant.salePrice +
-              (variant.salePrice * variant.tax) / 100
-            ).toFixed(2),
+                  variant?.salePrice +
+                  (variant?.salePrice * variant?.tax) / 100
+                ).toFixed(2),
+            originalPrice: Number(variant?.costPrice).toFixed(2),
             variantName: variant.variantname,
             variantId: variant._id,
             sku: product.sku,
