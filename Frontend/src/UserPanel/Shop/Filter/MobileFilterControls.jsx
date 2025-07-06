@@ -9,7 +9,8 @@ const MobileFilterControls = ({
   intents = [],
   priceRange = [0, 1000],
   rating = '',
-  onFilterChange
+  onFilterChange,
+  autoCheck = []
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [minPrice, setMinPrice] = useState(priceRange[0]);
@@ -46,6 +47,50 @@ const MobileFilterControls = ({
   useEffect(() => {
     setSelectedIntents(intents);
   }, [intents]);
+
+  // Handle autoCheck prop (initial selection from URL/navigation state)
+  useEffect(() => {
+    // Handle autoCheck which can be an array of objects with type and value, or a single object
+    let autoSelects = [];
+    if (autoCheck) {
+      if (Array.isArray(autoCheck)) {
+        autoSelects = autoCheck;
+      } else if (typeof autoCheck === 'object' && autoCheck.type && autoCheck.value) {
+        autoSelects = [autoCheck];
+      }
+    }
+
+    if (autoSelects.length > 0) {
+      // Apply each autoSelect to the appropriate filter type
+      autoSelects.forEach(({ type, value }) => {
+        switch (type) {
+          case 'productCategories':
+            if (!selectedProductCategories.includes(value)) {
+              setSelectedProductCategories(prev => [...prev, value]);
+            }
+            break;
+          case 'categories':
+            // Handle categories if needed
+            break;
+          case 'concerns':
+            if (!selectedConcerns.includes(value)) {
+              setSelectedConcerns(prev => [...prev, value]);
+            }
+            break;
+          case 'chakra':
+            if (!selectedChakra.includes(value)) {
+              setSelectedChakra(prev => [...prev, value]);
+            }
+            break;
+          case 'intents':
+            if (!selectedIntents.includes(value)) {
+              setSelectedIntents(prev => [...prev, value]);
+            }
+            break;
+        }
+      });
+    }
+  }, [autoCheck, selectedProductCategories, selectedConcerns, selectedChakra, selectedIntents]);
 
   useEffect(() => {
     // Fetch filter options (categories, concerns, chakra, intents)

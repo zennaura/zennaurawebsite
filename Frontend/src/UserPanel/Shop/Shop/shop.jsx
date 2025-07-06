@@ -218,6 +218,7 @@ const Shop = () => {
           intents={currentFilters.intents}
           priceRange={[currentFilters.minPrice, currentFilters.maxPrice]}
           rating={currentFilters.rating}
+          autoCheck={autoSelectsState}
           onFilterChange={handleFilterChange}
         />
 

@@ -48,41 +48,89 @@ const Filter = ({
 
   // Handle autoCheck prop (initial selection from URL/navigation state)
   useEffect(() => {
-    // Ensure autoCheck is always an array
-    let safeAutoCheck = Array.isArray(autoCheck)
-      ? autoCheck
-      : autoCheck && typeof autoCheck === 'object' && autoCheck.value
-        ? [autoCheck.value]
-        : autoCheck
-          ? [autoCheck]
-          : [];
+    // Only process autoCheck if categories are loaded
+    if (isLoadingCategories) return;
+
+    // Handle autoCheck which can be an array of objects with type and value, or a single object
+    let autoSelects = [];
+    if (autoCheck) {
+      if (Array.isArray(autoCheck)) {
+        autoSelects = autoCheck;
+      } else if (typeof autoCheck === 'object' && autoCheck.type && autoCheck.value) {
+        autoSelects = [autoCheck];
+      }
+    }
 
     const prev = prevAutoCheckRef.current;
-    const changed =
-      safeAutoCheck.length !== prev.length ||
-      Array.isArray(safeAutoCheck) && safeAutoCheck.some((val) => !prev.includes(val));
+    const changed = autoSelects.length !== prev.length ||
+      autoSelects.some((select, index) => 
+        !prev[index] || 
+        prev[index].type !== select.type || 
+        prev[index].value !== select.value
+      );
 
-    if (changed) {
+    if (changed && autoSelects.length > 0) {
+      // Create new filter state based on current props
+      let newProductCategories = [...productCategories];
+      let newCategories = [...categories];
+      let newConcerns = [...selectedConcerns];
+      let newChakra = [...selectedChakra];
+      let newIntents = [...selectedIntents];
+
+      // Apply each autoSelect to the appropriate filter type
+      autoSelects.forEach(({ type, value }) => {
+        switch (type) {
+          case 'productCategories':
+            if (!newProductCategories.includes(value)) {
+              newProductCategories.push(value);
+            }
+            break;
+          case 'categories':
+            if (!newCategories.includes(value)) {
+              newCategories.push(value);
+            }
+            break;
+          case 'concerns':
+            if (!newConcerns.includes(value)) {
+              newConcerns.push(value);
+            }
+            break;
+          case 'chakra':
+            if (!newChakra.includes(value)) {
+              newChakra.push(value);
+            }
+            break;
+          case 'intents':
+            if (!newIntents.includes(value)) {
+              newIntents.push(value);
+            }
+            break;
+        }
+      });
+
       onFilterChange("fetchProducts", {
-        productCategories: [...new Set([...productCategories, ...safeAutoCheck])],
-        concerns: [...new Set([...selectedConcerns, ...safeAutoCheck])],
-        chakra: [...new Set([...selectedChakra, ...safeAutoCheck])],
-        intents: [...new Set([...selectedIntents, ...safeAutoCheck])],
+        productCategories: newProductCategories,
+        categories: newCategories,
+        concerns: newConcerns,
+        chakra: newChakra,
+        intents: newIntents,
         minPrice: priceRange[0],
         maxPrice: priceRange[1],
         rating: rating,
       });
-      prevAutoCheckRef.current = safeAutoCheck;
+      prevAutoCheckRef.current = autoSelects;
     }
   }, [
     autoCheck,
     onFilterChange,
     productCategories,
+    categories,
     selectedConcerns,
     selectedChakra,
     selectedIntents,
     priceRange,
     rating,
+    isLoadingCategories,
   ]);
 
   // Fetch available filter options (categories, concerns, intents) on mount

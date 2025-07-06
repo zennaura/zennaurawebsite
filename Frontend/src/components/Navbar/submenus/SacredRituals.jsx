@@ -66,7 +66,7 @@ const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
                                     <div key={parent.subCategories + `Hello`}>
                                         <Link
                                             to="/shop"
-                                            state={{ autoSelects: sub.subCategory }} onClick={closeMenu}>
+                                            state={{ autoSelects: { type: "productCategories", value: sub.subCategory } }} onClick={closeMenu}>
                                             <li key={`${sub.subCategories}`}>{sub.subCategory}</li></Link>
                                         <ul key={`${parent.parentCategory}-${sub.subCategory}-${category}`} style={{ marginTop: "1rem" }}>
                                         </ul>
@@ -85,7 +85,7 @@ const SacredRitualsSubMenu = ({ goTo, closeMenu }) => {
                         <Link
                             to="/shop"
                             key={intent}
-                            state={{ autoSelects: intent }} onClick={closeMenu}>
+                            state={{ autoSelects: { type: "intents", value: intent } }} onClick={closeMenu}>
                             <li key={intent + "SacredRituals"}>{intent}</li></Link>
                     ))}
                 </ul>
