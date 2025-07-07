@@ -80,6 +80,17 @@ const orderSchema = new mongoose.Schema({
     default: "Pending" 
   },
 
+  // Payment transaction details
+  transactionId: {
+    type: String,
+    default: null
+  },
+
+  razorpayOrderId: {
+    type: String,
+    default: null
+  },
+
   // Financial information (required)
   totalAmount: { 
     type: Number, 
