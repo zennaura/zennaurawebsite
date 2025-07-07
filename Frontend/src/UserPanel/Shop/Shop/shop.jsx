@@ -192,7 +192,7 @@ const Shop = () => {
   return (
     <div className="shop-page">
       <ImageHead Title="Shop" />
-      <ShopBy />
+      {/* <ShopBy /> */}
       <Featuredproduct /> {/* This component likely fetches its own products */}
 
       <div className="shop-allproduct">

@@ -1,22 +1,22 @@
 import React from "react";
 import "./AuraJewelsRange.css";
 
-import image1 from "../../../../../assests/iso.png";
-import image2 from "../../../../../assests/iso.png";
-import image3 from "../../../../../assests/iso.png";
-import image4 from "../../../../../assests/iso.png";
-import image5 from "../../../../../assests/iso.png";
+import image1 from "../../../../../assests/Pendant.jpeg";
+import image2 from "../../../../../assests/Ring.jpeg";
+import image3 from "../../../../../assests/combo_bracelet.jpeg";
+import image4 from "../../../../../assests/chakra_bracelet.jpeg";
+import image5 from "../../../../../assests/bracelet.jpeg";
 
 
 
 const AuraJewelsRange = () => {
     
     const skinCareProducts = [
-        { title: "Crystal Bracelet", image: image1 },
-        { title: "Zodiac Bracelet", image: image2 },
-        { title: "Chakra Braceket", image: image3 },
-        { title: "Combo Bracelet", image: image4 },
-        { title: "Crystal Jewels", image: image5 },
+        { title: "Pendant", image: image1 },
+        { title: "Ring", image: image2 },
+        { title: "Combo Bracelet", image: image3 },
+        { title: "Chakra Bracelet", image: image4 },
+        { title: "Crystal Bracelet", image: image5 },
     ];
 
     return (

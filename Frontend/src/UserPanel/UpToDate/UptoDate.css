@@ -134,7 +134,8 @@ input[type="checkbox"] {
     accent-color: #c49a6c; /* Match the warm brown color */
     width: 20px;
     height: 20px;
-    margin-top: -1rem;
+    /* margin-top: -1rem; */
+    margin-bottom: 0.2rem;
     margin-right: 0.5rem;
     /* padding-left: 20px; */
     /* margin-right: 10px; */

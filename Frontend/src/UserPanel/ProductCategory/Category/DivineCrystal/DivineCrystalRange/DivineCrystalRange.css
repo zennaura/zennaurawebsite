@@ -58,13 +58,26 @@
 }
 
 .DivineCrystalRange-item-image {
-    width: clamp(60px, 10vw, 100px);
-    height: clamp(60px, 10vw, 100px);
+    /* width: clamp(60px, 10vw, 100px);
+    height: clamp(60px, 10vw, 100px); */
     margin-bottom: 10px;
-    border-radius: 50%;
+    
+    /* border-radius: 50%; */
     overflow: hidden;
+    object-fit: cover;
     background-size: cover;
     background-color: #D9D9D9;
+    border-radius: 20%;
+
+}
+.DivineCrystalRange-item-image img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 20%;
+}
+.DivineCrystalRange-item-title{
+    font-size: 0.9rem;
 }
 
 /* Medium screens (tablets) */

@@ -2,8 +2,8 @@
 
 .imageHead-container {
     font-family: 'Poppins', sans-serif;
-    background-image: url('../../assests/background.png');
-    background-color: #3D0D14;
+    /* background-image: url('../../assests/header_lap.jpg'); */
+    /* background-color: #3D0D14; */
     color: #EAD9D7;
     padding: 40px;
     min-height: 65vh;
@@ -11,10 +11,10 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-size: cover;
-    background-position: center center;
+    background-size: auto;
+    background-position: bottom center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     position: relative;
 }
 

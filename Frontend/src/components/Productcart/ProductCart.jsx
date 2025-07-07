@@ -221,14 +221,14 @@ const ProductCard = ({
           <>
             <div className="product-card-best-icon">
               <div className="product-card-icon">
-                <h6>BEST PRODUCT</h6>
+                <h6>BEST SELLER</h6>
               </div>
             </div>
-            <div className="product-card-sale-icon">
+            {/* <div className="product-card-sale-icon">
               <div className="product-card-icon">
                 <h6>SALE</h6>
               </div>
-            </div>
+            </div> */}
           </>
         ))}
 
@@ -243,7 +243,7 @@ const ProductCard = ({
       <div className="product-card-wishlist" onClick={handleWishlistClick}>
         {liked ? (
           <div className="product-card-icon">
-            <FaHeart className="product-card-wishlist-liked" />
+            <FaHeart className="product-card-wishlist-liked" size={25}/>
           </div>
         ) : (
           <div className="product-card-icon">

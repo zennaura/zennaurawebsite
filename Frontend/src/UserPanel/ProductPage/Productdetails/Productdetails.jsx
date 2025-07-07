@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { motion } from "framer-motion";
 import "./ProductDetails.css";
 import Carouselimg5 from "../../../assests/Carouselimg5.png";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../../../components/AuthContext/AuthContext";
-import {useMediaQuery} from "react-responsive"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import { useMediaQuery } from "react-responsive";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const ProductDetails = ({
   product: initialProduct,
@@ -334,7 +340,7 @@ const ProductDetails = ({
     });
   };
 
-   const isMobileM = useMediaQuery({maxWidth:500})
+  const isMobileM = useMediaQuery({ maxWidth: 500 });
 
   const descriptionSectionRef = useRef(null);
 
@@ -342,7 +348,6 @@ const ProductDetails = ({
     return <div className="loading-spinner">Loading product details...</div>;
   }
 
- 
   return (
     <div className="product-page">
       <div className="product-container">
@@ -375,7 +380,8 @@ const ProductDetails = ({
             ))}
           </div>
 
-            {isMobile?(<p className="price-discount">
+          {isMobile ? (
+            <p className="price-discount">
               (
               {(
                 ((displayVariant?.costPrice - displayVariant?.salePrice) /
@@ -383,7 +389,10 @@ const ProductDetails = ({
                 100
               ).toFixed(1)}
               % OFF)
-            </p>):(<p></p>)}
+            </p>
+          ) : (
+            <p></p>
+          )}
           <div className="price-container">
             <p className="price-label">M.R.P:</p>
             <div className="price-mrp-box">
@@ -396,10 +405,7 @@ const ProductDetails = ({
                     (displayVariant?.salePrice * displayVariant?.tax) / 100) *
                     displayVariant?.discount) /
                   100).toFixed(2)} */}
-                {(
-                  displayVariant?.salePrice +
-                  (displayVariant?.salePrice * displayVariant?.tax) / 100
-                ).toFixed(2)}
+                {(displayVariant?.salePrice).toFixed(2)}
               </p>
               <p className="price-note">Inclusive of all taxes</p>
             </div>
@@ -409,15 +415,19 @@ const ProductDetails = ({
                 (displayVariant?.salePrice * displayVariant?.tax) / 100).toFixed(2) }  */}
               {Number(displayVariant?.costPrice).toFixed(2)}
             </p>
-            {isMobile?(<p></p>):(<p className="price-discount">
-              (
-              {(
-                ((displayVariant?.costPrice - displayVariant?.salePrice) /
-                  displayVariant?.costPrice) *
-                100
-              ).toFixed(1)}
-              % OFF)
-            </p>)}
+            {isMobile ? (
+              <p></p>
+            ) : (
+              <p className="price-discount">
+                (
+                {(
+                  ((displayVariant?.costPrice - displayVariant?.salePrice) /
+                    displayVariant?.costPrice) *
+                  100
+                ).toFixed(1)}
+                % OFF)
+              </p>
+            )}
           </div>
           <div className="quantity-container" aria-label="Quantity selector">
             <p className="quantity-label">Net Quantity :</p>
@@ -467,7 +477,11 @@ const ProductDetails = ({
             {productData?.description && (
               <button
                 className="description-text-knowmore-btn"
-                onClick={() => descriptionSectionRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() =>
+                  descriptionSectionRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                  })
+                }
               >
                 Know More
               </button>
@@ -517,9 +531,7 @@ const ProductDetails = ({
                   specified, a similar product to the one shown on the website
                   will be provided.
                 </p>
-                <p>
-                  Thank you for your understanding and support!
-                </p>
+                <p>Thank you for your understanding and support!</p>
               </div>
             )}
           </div>
@@ -533,16 +545,26 @@ const ProductDetails = ({
                 slidesPerView={1}
                 autoplay={{ delay: 3000, disableOnInteraction: false }}
                 modules={[Autoplay]}
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
               >
                 {slides.map((slide, idx) => (
                   <SwiperSlide key={idx}>
-                    <div className="carousel-item-product" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    <div
+                      className="carousel-item-product"
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
                       <img
                         src={slide.image}
                         alt={slide.title}
                         className="carousel-image-product"
-                        onError={e => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/500"; }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "https://via.placeholder.com/500";
+                        }}
                       />
                     </div>
                   </SwiperSlide>

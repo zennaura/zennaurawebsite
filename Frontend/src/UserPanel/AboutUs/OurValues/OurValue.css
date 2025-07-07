@@ -1,15 +1,17 @@
 /* OurValue.css */
 .OurValue-wrapper {
-  /* background-color: #F2F1EF; */
+  background-color: #F2F1EF;
   min-height: 70vh;
   padding: 30px 0;
   color: #390611;
 }
 
 .OurValue-container {
+
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
+  margin-bottom: 3rem;
 }
 
 .OurValue-title {
@@ -83,6 +85,8 @@
   }
 
   .OurValue-text {
+    color: white !important;
+    /* background-color: rgba(0, 0, 0, 0.302); */
     width: 100%;
     padding: 20px 0;
 
@@ -90,7 +94,7 @@
 
   .OurValue-divider {
     width: 100%;
-    height: 150px; /* Reduced height for mobile */
+    height: 125px; /* Reduced height for mobile */
     margin: 20px 0;
     box-sizing: border-box;
     position: absolute;
@@ -100,19 +104,28 @@
   /* Reset alignment for mobile */
   .OurValue-left,
   .OurValue-right {
+    color: white !important;
+
     text-align: center;
     margin-left: 0;
     margin-right: 0;
     position: relative;
     z-index: 2; /* Ensure text is above the divider */
   }
-  .OurValue-value-title{
-    margin-top: 20px;
+  .OurValue-value-title,.OurValue-value-detail{
+    margin-top: 1.3rem;
+    /* background-color: rgba(0, 0, 0, 0.302); */
+    color: white !important;
+  }
+  .OurValue-divider img{
+    filter: brightness(70%);
   }
 }
 
+
 /* Small mobile devices */
 @media (max-width: 480px) {
+
   .OurValue-title {
     font-size: 1.5rem;
     margin-bottom: 0.1rem;
@@ -124,7 +137,7 @@
 
   .OurValue-divider{
     
-    height: 200px;
+    height: 150px;
   }
   
   

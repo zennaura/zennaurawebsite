@@ -28,7 +28,7 @@ const AboutUs = () => {
     {/* <OurPhilosophy /> */}
     <ImageContainer Image = {isMobile?AboutUsM:AboutUs1}/>
     {/* <WhyWeStarted/> */}
-    <NourishBody/>
+    {/* <NourishBody/> */}
     <OurValues/>
     <ImageContainer Image = {isMobile?AboutShopM:AboutShop}/>
     <HandMadeLove/>

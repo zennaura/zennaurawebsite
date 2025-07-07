@@ -23,6 +23,10 @@ import CrystalBracelets from "./submenus/CrystalBracelets";
 import CrystalWearables from "./submenus/CrystalWearables";
 import DivineCrystalsSubMenu from "./submenus/DivineCrystals";
 import SacredRitualsSubMenu from "./submenus/SacredRituals";
+import launching from "../../assests/launching.jpg";
+import nav_aura from "../../assests/nav_aura.jpg";
+import nav_divine from "../../assests/nav_divine.jpg";
+import nav_sacred from "../../assests/nav_sacred.jpg";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -516,7 +520,8 @@ const Navbar = () => {
           {hoveredMenu === "skincare" && (
             <div className="dropdown-content skincare-dropdown">
               <div className="dropdown-layout">
-                <div className="left-section">
+                <img src={launching} alt="" style={{width:"100vw"}}/>
+                {/* <div className="left-section">
                   <div className="aurajewels-category">
                     <h3>Shop by Category</h3>
                     {categoryData.map((parent) =>
@@ -566,6 +571,11 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
+                  
+                </div>
+
+                <div className="right-section">
+
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
@@ -581,15 +591,10 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                </div>
-
-                <div className="right-section">
-                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
-                  <div className="promo promo2">Crystal Wearables</div>
                   <div className="promo promo3">
                     Check Out Our Wide Range of Crystal Bracelets!!
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           )}
@@ -650,6 +655,12 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
+                  
+                </div>
+
+                <div className="right-section">
+                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
+                  {/* <div className="promo promo2">Crystal Wearables</div> */}
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
@@ -670,13 +681,8 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                </div>
-
-                <div className="right-section">
-                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
-                  <div className="promo promo2">Crystal Wearables</div>
-                  <div className="promo promo3">
-                    Check Out Our Wide Range of Crystal Bracelets!!
+                  <div className="promo promo3" style={{backgroundImage:`url(${nav_aura})`,backgroundPosition:"center center",color:"white"}}>
+                    Check Out Our Wide Range of Aura Jewels!!
                   </div>
                 </div>
               </div>
@@ -729,6 +735,20 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
+                  {/* <div className="aurajewels-chakra">
+                    <h3>Shop by Chakra</h3>
+                    <ul>
+                      {divineChakra.map((chakra) => (
+                        <Link to="/shop" state={{ autoSelects: { type: "chakra", value: chakra } }} onClick={handleDropdownItemClick}>
+                          <li key={chakra + "Divine Crystals"}>{chakra}</li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </div> */}
+                </div>
+
+                <div className="right-section right-section-divinecrystals">
+                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
@@ -739,11 +759,7 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                </div>
-
-                <div className="right-section right-section-divinecrystals">
-                  <div className="promo promo1">Crystal Bracelets</div>
-                  <div className="promo promo2">Crystal Wearables</div>
+                  <div className="promo promo3" style={{backgroundImage:`url(${nav_divine})`,backgroundPosition:"center center",color:"white"}}>Checkout our wide range of Divine Crystals!!</div>
                 </div>
               </div>
             </div>
@@ -795,7 +811,22 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                  <div className="aurajewels-chakra">
+                  {/* <div className="aurajewels-chakra">
+                    <h3>Shop by Chakra</h3>
+                    <ul>
+                      {sacredChakra.map((chakra) => (
+                        <Link to="/shop" state={{ autoSelects: { type: "chakra", value: chakra } }} onClick={handleDropdownItemClick}>
+                          <li key={chakra + "Sacred Rituals"}>{chakra}</li>
+                        </Link>
+                      ))}
+                    </ul>
+                  </div> */}
+                </div>
+
+                <div className="right-section">
+                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
+                  {/* <div className="promo promo2">Crystal Wearables</div> */}
+                   <div className="aurajewels-chakra">
                     <h3>Shop by Chakra</h3>
                     <ul>
                       {sacredChakra.map((chakra) => (
@@ -805,13 +836,8 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                </div>
-
-                <div className="right-section">
-                  {/* <div className="promo promo1">Crystal Bracelets</div> */}
-                  <div className="promo promo2">Crystal Wearables</div>
-                  <div className="promo promo3">
-                    Check Out Our Wide Range of Crystal Bracelets!!
+                  <div className="promo promo3" style={{backgroundImage:`url(${nav_sacred})`,backgroundPosition:"center center",color:"white"}}>
+                    Check Out Our Wide Range of Sacred Rituals!!
                   </div>
                 </div>
               </div>

@@ -23,7 +23,7 @@ const AuraJewels = () => {
         <AuraJewelsRange />
         <BestSeller category="Aura Jewels" />
         {/* <JustIn /> */}
-        <NourishBody />
+        {/* <NourishBody /> */}
         <ShopByConcern />
         <ImageContainer Image={isMobile?JewelsM:Jewels} /> 
         {/* <Bemember /> */}

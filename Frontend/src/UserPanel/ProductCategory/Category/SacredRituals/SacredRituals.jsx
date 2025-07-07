@@ -23,7 +23,7 @@ const SacredRituals = () => {
         <SacredRitualsRange/>
         <BestSeller category="Sacred Rituals"/>
         {/* <JustIn/> */}
-        <NourishBody/>
+        {/* <NourishBody/> */}
         <ShopByConcern/>
         <ImageContainer Image = {isMobile?SacredM:Sacred}/>
         {/* <Bemember/> */}

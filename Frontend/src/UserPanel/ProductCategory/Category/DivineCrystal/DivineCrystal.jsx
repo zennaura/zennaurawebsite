@@ -22,7 +22,7 @@ const DivineCrystal = () => {
         <DivineCrystalRange/>
         <BestSeller category="Divine Crystals"/>
         {/* <JustIn/> */}
-        <NourishBody/>
+        {/* <NourishBody/> */}
         <ShopByConcern/>
         <ImageContainer Image = {isMobile?DivineM:Divine}/>
         {/* <Bemember/> */}

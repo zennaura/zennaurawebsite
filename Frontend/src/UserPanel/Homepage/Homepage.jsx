@@ -49,8 +49,8 @@ const Homepage = () => {
             {/* <LuxuryPage /> */}
            
             {/* <SelfCare /> */}
-            <OurClient2 />
-            <Bemember />
+            {/* <OurClient2 /> */}
+            {/* <Bemember /> */}
             {/* <FollowUs /> */}
             <UptoDate />
         </>

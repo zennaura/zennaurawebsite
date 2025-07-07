@@ -42,7 +42,7 @@
     min-width: 70px;
 }
 
-.SacredRitualsRange-item-image {
+/* .SacredRitualsRange-item-image {
     width: clamp(60px, 10vw, 100px);
     height: clamp(60px, 10vw, 100px);
     margin-bottom: 10px;
@@ -50,7 +50,30 @@
     overflow: hidden;
     background-size: cover;
     background-color: #D9D9D9;
+} */
+ .SacredRitualsRange-item-image {
+    /* width: clamp(60px, 10vw, 100px);
+    height: clamp(60px, 10vw, 100px); */
+    margin-bottom: 10px;
+    
+    /* border-radius: 50%; */
+    overflow: hidden;
+    object-fit: cover;
+    background-size: cover;
+    background-color: #D9D9D9;
+    border-radius: 20%;
+
 }
+.SacredRitualsRange-item-image img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 20%;
+}
+.SacredRitualsRange-item-title{
+    font-size: 0.8rem;
+}
+
 
 /* Medium screens (tablets) */
 @media (max-width: 768px) {
@@ -68,7 +91,7 @@
 }
 
 /* Small screens (phones) */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
     .SacredRitualsRange-container {
         padding: 20px 0px;
     }
@@ -76,7 +99,7 @@
     .SacredRitualsRange-item-title {
         text-align: center;
         font-size: 13px;
-        width: 40px;
+        width: 80px;
         word-break: break-word;
     }
 
@@ -94,7 +117,54 @@
         height: clamp(30px, 12vw, 80px);
     }
 }
+ */
 
+ @media (max-width: 480px) {
+    .SacredRitualsRange-items-container {
+        padding: 20px 0px !important;
+    }
+
+    /* .DivineCrystalRange-item-title {
+        text-align: center;
+        font-size: 13px;
+        width: 40px;
+        word-break: break-word;
+    }
+
+    .DivineCrystalRange-items-container {
+        gap: 1px;
+    }
+
+    .DivineCrystalRange-item {
+        min-width: 60px;
+        flex: 0 0 70px;
+    } */
+
+    /* .DivineCrystalRange-item-image {
+        width: clamp(30px, 12vw, 80px);
+        height: clamp(30px, 12vw, 80px);
+    } */
+
+    .SacredRitualsRange-item-title {
+      text-align: center;
+      font-size: 13px;
+      width: 120% !important;
+  
+    }
+  
+    .SacredRitualsRange-items-container {
+       flex-wrap: wrap !important;
+      width: 100vw !important;
+      /* gap: 2.5rem !important; */
+    }
+  
+    .SacredRitualsRange-item {
+      /* min-width: 60px; */
+      /* flex: 0 0 70px; */
+      /* width: 30% !important; */
+      flex-wrap: wrap !important;
+    }
+}
 
 @media (max-width: 350px) {
     .SacredRitualsRange-items-container {

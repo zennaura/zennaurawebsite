@@ -68,11 +68,12 @@ const AllSoLike = ({ intentTags = [], productId }) => {
           );
         });
       }
+      let currentTags = [];
       if (similar.length === 0 && intentTags.length === 0) {
         const currentProduct = allProducts.find(
           (p) => p.data._id === productId
         );
-        const currentTags = currentProduct?.data?.tags || [];
+        currentTags = currentProduct?.data?.tags || [];
         if (currentTags.length > 0) {
           similar = allProducts.filter((product) => {
             if (product.data._id === productId) return false;
@@ -97,9 +98,9 @@ const AllSoLike = ({ intentTags = [], productId }) => {
             product.data.Intenttags.some((tag) => intentTags.includes(tag))) ||
             (intentTags.length === 0 &&
               product.data.tags &&
-              currentProduct?.data?.tags &&
+              currentTags &&
               product.data.tags.some((tag) =>
-                currentProduct.data.tags.includes(tag)
+                currentTags.includes(tag)
               )))
         );
       });

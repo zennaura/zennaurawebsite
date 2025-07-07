@@ -1,17 +1,24 @@
 // HomepageSlider.jsx
 import React, { useState, useEffect } from 'react';
 import './Slider.css';
+import one from "../../assests/1.jpg";
+import two from "../../assests/2.jpg";
+import three from "../../assests/3.jpg";
+import oneM from "../../assests/1_mobile.jpg";
+import twoM from "../../assests/2_mobile.jpg";
+import threeM from "../../assests/3_mobile.jpg";
+import { useMediaQuery } from 'react-responsive';
 
 const HomepageSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
+  const isMobile = useMediaQuery({ maxWidth: 500 })
   const slides = [
     {
       id: 1,
       title: "Healing Crystals",
       description: "Balance your energy with our handpicked healing stones.",
-      image: "https://static.wixstatic.com/media/e741ea_dd1ffc14fed246278c15261555f636e1~mv2_d_1999_1333_s_2.jpg/v1/fill/w_1999,h_1333,al_c/e741ea_dd1ffc14fed246278c15261555f636e1~mv2_d_1999_1333_s_2.jpgz",
+      image: isMobile?oneM:one,
       cta: "Shop Crystals",
       ctaLink: "/crystals"
     },
@@ -19,7 +26,7 @@ const HomepageSlider = () => {
       id: 2,
       title: "Scented Candles",
       description: "Create a calming space with our aromatherapy candle range.",
-      image: "https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTEyL3Jhd3BpeGVsX29mZmljZV80MV9waG90b19vZl9hX2lyaWRlc2NlbnRfY3J5c3RhbF9vbl93YXRlcl9iYWNrZ19iMTc2MGUzYi00MTI0LTRkOTEtYjMwMi0zODc4YWQyZWVmNTNfMS5qcGc.jpg",
+      image: isMobile?twoM:two,
       cta: "Browse Candles",
       ctaLink: "/candles"
     },
@@ -27,7 +34,7 @@ const HomepageSlider = () => {
       id: 3,
       title: "Spiritual Essentials",
       description: "Smudging kits, incense, and more for mindful living.",
-      image: "https://th.bing.com/th/id/OIP.DQujBzfKMu964y3PQK7F2wHaFj?rs=1&pid=ImgDetMain",
+      image: isMobile?threeM:three,
       cta: "Explore Now",
       ctaLink: "/spiritual-essentials"
     }
@@ -38,7 +45,7 @@ const HomepageSlider = () => {
     if (isAutoPlaying) {
       interval = setInterval(() => {
         setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-      }, 5000);
+      }, 3000);
     }
     return () => clearInterval(interval);
   }, [isAutoPlaying, slides.length]);

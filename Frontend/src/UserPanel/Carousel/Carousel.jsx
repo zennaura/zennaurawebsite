@@ -1,46 +1,89 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./Carousel.css";
-import Carouselimg1 from "../../assests/Carouselimg1.png"
-import Carouselimg2 from "../../assests/Carouselimg2.png"
-import Carouselimg3 from "../../assests/Carouselimg3.png"
-import Carouselimg4 from "../../assests/Carouselimg4.png"
-import Carouselimg5 from "../../assests/Carouselimg5.png"
+import Carouselimg1 from "../../assests/bracelet2.jpeg"
+import Carouselimg2 from "../../assests/soap_carousel.jpeg"
+import Carouselimg3 from "../../assests/candle.jpeg"
+import Carouselimg4 from "../../assests/tumble.jpg"
+import Carouselimg5 from "../../assests/tree.jpg"
+import Carouselimg6 from "../../assests/heart.jpeg"
+import Carouselimg7 from "../../assests/guasha.jpeg"
+import Carouselimg8 from "../../assests/lamp.jpeg"
+import Carouselimg9 from "../../assests/pendant2.jpeg"
+import Carouselimg10 from "../../assests/pendulum.jpeg"
+import Carouselimg11 from "../../assests/Ring.jpeg"
+import Carouselimg12 from "../../assests/ruler.jpeg"
+import Carouselimg13 from "../../assests/sage.jpeg"
 
 const slides = [
   {
     image: Carouselimg1,
-    title: "Crystals Bracelets",
+    title: "Crystal Bracelets",
   },
   {
     image: Carouselimg2,
     title: "Body Soaps",
   },
   {
+    image: Carouselimg4,
+    title: "Crystal Tumbles",
+  },
+  {
+    image: Carouselimg5,
+    title: "Trees",
+  },
+  {
+    image: Carouselimg6,
+    title: "Heart",
+  },
+  {
     image: Carouselimg3,
     title: "Candles",
   },
   {
-    image: Carouselimg1,
-    title: "Crystals Bracelets",
+    image: Carouselimg7,
+    title: "Gua Sha",
   },
   {
-    image: Carouselimg4,
-    title: "Tumbles",
+    image: Carouselimg8,
+    title: "Lamp",
   },
   {
-    image: Carouselimg5,
-    title: "Skincare",
+    image: Carouselimg9,
+    title: "Pendant",
   },
   {
-    image: "https://i0.wp.com/imageamplified.com/wp-content/uploads/2018/05/ELLE-MAGAZINE-Jasmine-Tookes-by-Tom-Schirmacher.-Samira-Nasr-May-2018-www.imageamplified.com-Image-Amplified4_thumb.jpg?resize=662%2C811",
-    title: "Candles",
+    image: Carouselimg10,
+    title: "Pendulum",
   },
   {
-    image: "https://www.harpersbazaararabia.com/cloud/2023/02/20/Qx3j9yYO-Untitled-design-1200x675.jpg",
-    title: "Tumbles",
+    image: Carouselimg11,
+    title: "Ring",
   },
+  {
+    image: Carouselimg12,
+    title: "Roller",
+  },
+  {
+    image: Carouselimg13,
+    title: "Sage",
+  },
+
+  
 ];
+
+//     - Trees
+//     - Hearts
+//     - Malas
+//     - Zibu coins
+//     - Face Roller
+//     - Gua Sha
+//     - Selenite Plate
+//     - Pendant
+//     - Pendulums
+//     - Rings
+//     - Lamp
+//     - Sage
 
 const Carousel = () => {
   const [index, setIndex] = useState(2); // Center image index

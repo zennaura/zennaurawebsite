@@ -25,7 +25,7 @@ const ThankYouPage = () => {
           <p className="text-[#4A001F] !mb-8 leading-relaxed underline-offset-2">
             We are getting started on your order right away, <br />
             and you will receive an order confirmation email <br />
-            shortly to divajhai812@gmail.com. In the <br />
+            shortly to your email. In the <br />
             meantime, explore the latest releases and start <br />
             manifesting, just head over to Zenn Aura New <br />
             Launches.

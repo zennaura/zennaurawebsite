@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import './Redefining.css';
-import Redefiningimg1 from '../../assests/Redefiningimg1.png';
-import Redefiningimg2 from '../../assests/Redefiningimg2.png';
-import Redefiningimg3 from '../../assests/Redefiningimg3.png';
-import Redefiningimg4 from '../../assests/Redefiningimg4.png';
-import Redefiningimg5 from '../../assests/Redefiningimg5.png';
+import c1 from '../../assests/c1.jpg';
+import c2 from '../../assests/c2.jpg';
+import c3 from '../../assests/c3.jpg';
+import c4 from '../../assests/c4.jpg';
+import c5 from '../../assests/c5.jpeg';
+import h1 from '../../assests/h1.jpg';
+import h2 from '../../assests/h2.jpg';
+import h3 from '../../assests/h3.jpg';
+import h4 from '../../assests/h4.jpg';
+import h5 from '../../assests/h5.jpeg';
+import m1 from '../../assests/m1.jpg';
+import m2 from '../../assests/m2.jpg';
+import m3 from '../../assests/m3.jpg';
+import m4 from '../../assests/m4.jpeg';
+import m5 from '../../assests/m5.jpeg';
 
 const Redefining = () => {
     const [hoveredWord, setHoveredWord] = useState('');
     const [images, setImages] = useState([
-        Redefiningimg1,
-        Redefiningimg2,
-        Redefiningimg3,
-        Redefiningimg4,
-        Redefiningimg5
+        m1,
+        m3,
+        m2,
+        m5,
+        m4
     ]);
     const [fade, setFade] = useState(false);
 
     const getImagesForWord = (word) => {
         switch (word) {
             case 'Manifest':
-                return [Redefiningimg1, Redefiningimg2, Redefiningimg3, Redefiningimg4, Redefiningimg5];
+                return [m1, m3, m2, m5, m4];
             case 'Cleanse':
-                return [Redefiningimg2, Redefiningimg3, Redefiningimg4, Redefiningimg5, Redefiningimg1];
+                return [c2, c3, c4, c5, c1];
             case 'Heal':
-                return [Redefiningimg3, Redefiningimg4, Redefiningimg5, Redefiningimg1, Redefiningimg2];
+                return [h3, h4, h5, h1, h2];
             default:
-                return [Redefiningimg1, Redefiningimg2, Redefiningimg3, Redefiningimg4, Redefiningimg5];
+                return [m1, m3, m2, m5, m4];
         }
     };
 

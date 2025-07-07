@@ -216,7 +216,7 @@ const PopupFilter = ({
                             });
                           });
                           return Array.from(subcategorySet).map(subCategory => (
-                            <div key={subCategory} className="flex items-center space-x-2 text-sm">
+                            <div key={subCategory} className="flex items-center space-x-2 text-sm" style={{marginBottom:"0.5rem"}}>
                               <input
                                 type="checkbox"
                                 id={`subcategory-${subCategory}`}

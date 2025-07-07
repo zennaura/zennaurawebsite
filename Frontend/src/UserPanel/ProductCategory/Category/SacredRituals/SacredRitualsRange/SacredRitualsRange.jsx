@@ -1,22 +1,22 @@
 import React from "react";
 import "./SacredRitualsRange.css";
 
-import image1 from "../../../../../assests/iso.png";
-import image2 from "../../../../../assests/iso.png";
-import image3 from "../../../../../assests/iso.png";
-import image4 from "../../../../../assests/iso.png";
-import image5 from "../../../../../assests/iso.png";
+import image1 from "../../../../../assests/c2.jpg";
+import image2 from "../../../../../assests/candle.jpeg";
+import image3 from "../../../../../assests/c4.jpg";
+import image4 from "../../../../../assests/c3.jpg";
+import image5 from "../../../../../assests/c1.jpg";
 
 
 
 const SacredRitualsRange = () => {
     
     const skinCareProducts = [
-        { title: "Clay Soap", image: image1 },
-        { title: "Scrub Soap", image: image2 },
-        { title: "Therapeutic Soap", image: image3 },
-        { title: "Fruit Soap", image: image4 },
-        { title: "Glycerin Soap", image: image5 },
+        { title: "Charging Crystal", image: image1 },
+        { title: "Candle", image: image2 },
+        { title: "Lamp", image: image3 },
+        { title: "Sage", image: image4 },
+        { title: "Palo Santo", image: image5 },
     ];
 
     return (

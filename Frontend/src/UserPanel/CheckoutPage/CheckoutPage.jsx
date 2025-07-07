@@ -68,13 +68,13 @@ const CheckoutPage = () => {
   // Calculate order totals
   const subtotal = products.reduce((acc, product) => {
     const quantity = quantities[product.productId] || 1;
-    const price = Number((
-                  product.salePrice +
-                  (product.salePrice * product.tax) / 100 
-                ).toFixed(2)) ||Number((
-                  product.salePrice +
-                  (product.salePrice * 18) / 100 
-                ).toFixed(2));
+    const price = 
+                  product?.salePrice +
+                  (product?.salePrice * product?.tax) / 100 
+                .toFixed(2) ||(
+                  product?.salePrice +
+                  (product?.salePrice * 18) / 100 
+                ).toFixed(2);
     return acc + (isNaN(price) ? 0 : price * quantity);
   }, 0);
 
@@ -139,7 +139,7 @@ const CheckoutPage = () => {
       }
 
       if (subtotal < coupon.minCartValue) {
-        setCouponMessage(`cart value is less than ${cartValue}`);
+        setCouponMessage(`cart value is less than ${coupon.minCartValue}`);
         return;
       }
 
@@ -271,7 +271,7 @@ const CheckoutPage = () => {
     }
   };
 
-  // Handle order submission
+  // Handle order submission for COD
   const handlePlaceOrder = async () => {
     // Validate all required fields
     const requiredFields = [
@@ -453,64 +453,7 @@ const CheckoutPage = () => {
     setIsSubmitted(true);
     setError(null);
 
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onerror = () => {
-      alert("Failed to load Razorpay SDK. Are you online?");
-    };
-    script.onload = async () => {
-      // try {
-        
-      // } catch (error) {
-      //   console.error("Payment error:", error);
-      //   alert("Payment failed. Please try again.");
-      // }
-    };
-    document.body.appendChild(script);
-    setIsSubmitted(true)
-
     try {
-      const result = await axios.post(
-          `${import.meta.env.VITE_BACKEND_LINK}/api/payment/create-order`,
-          {
-            amount: total, // ₹500
-          }
-        );
-
-        const { amount, id: order_id, currency } = result.data;
-
-        const options = {
-          key: "rzp_test_6Y9I9gygybVQZh", // Replace with your Razorpay Test Key
-          amount: amount.toString(),
-          currency,
-          name: "Test Corp",
-          description: "Test Payment",
-          order_id,
-          handler: function (response) {
-            // alert("Payment successful! ID: " + response.razorpay_payment_id);
-            
-            navigate("/thankyou-page", {
-              state: {
-                paymentId: response.razorpay_payment_id,
-                orderId: order_id,
-                total: total,
-              },
-            });
-            // You can verify payment on backend here
-          },
-          prefill: {
-            name: "Test User",
-            email: "test@example.com",
-            contact: "9999999999",
-          },
-          theme: {
-            color: "#3399cc",
-          },
-          
-        };
-
-        const razor = new window.Razorpay(options);
-        razor.open();
       // Mark coupon as used if applied
       if (appliedCoupon && user?._id) {
         await markCouponAsUsed();
@@ -541,7 +484,7 @@ const CheckoutPage = () => {
           color: product?.color || null
         };
       });
-console.log("order items", orderItems);
+
       // Prepare order data
       const orderData = {
         user: user?._id || null,
@@ -567,64 +510,120 @@ console.log("order items", orderItems);
               maxDiscount: appliedCoupon.maxDiscount,
             }
           : null,
-        
       };
 
-      // Submit order
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_LINK}/api/userorder/placeorder`,
-        orderData,
+      // Create Razorpay order
+      const result = await axios.post(
+        `${import.meta.env.VITE_BACKEND_LINK}/api/payment/create-order`,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          amount: total,
         }
       );
 
-      if (!response.data.success) {
-        throw new Error(response.data.message || "Order failed");
-      }
+      const { amount, id: order_id, currency } = result.data;
 
-      // Send order confirmation email
-      await sendOrderConfirmationEmail();
+      // Load Razorpay script
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onerror = () => {
+        setError("Failed to load payment gateway. Please try again.");
+        setIsSubmitted(false);
+      };
+      
+      script.onload = () => {
+        const options = {
+          key: "rzp_test_6Y9I9gygybVQZh", // Replace with your Razorpay Test Key
+          amount: amount.toString(),
+          currency,
+          name: "ZennAura",
+          description: "Order Payment",
+          order_id,
+          handler: async function (response) {
+            try {
+              // Verify payment and place order
+              const verificationResponse = await axios.post(
+                `${import.meta.env.VITE_BACKEND_LINK}/api/payment/verify-payment`,
+                {
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  orderData
+                }
+              );
 
-      // Navigate to thank you page
-      // navigate("/payment", {
-      //   state: {
-      //     products:products,
-      //     orderId: response.data.order._id,
-      //     total: total,
-      //     couponUsed: appliedCoupon ? couponCode : null,
-      //   },
-      // });
+              if (verificationResponse.data.success) {
+                // Send order confirmation email
+                await sendOrderConfirmationEmail();
+                
+                // Navigate to thank you page
+                navigate("/thankyou-page", {
+                  state: {
+                    paymentId: response.razorpay_payment_id,
+                    orderId: verificationResponse.data.order._id,
+                    total: total,
+                    couponUsed: appliedCoupon ? couponCode : null,
+                  },
+                });
+              } else {
+                setError("Payment verification failed. Please try again.");
+                setIsSubmitted(false);
+              }
+            } catch (verificationError) {
+              console.error("Payment verification error:", verificationError);
+              setError(
+                verificationError.response?.data?.message ||
+                "Payment verification failed. Please try again."
+              );
+              setIsSubmitted(false);
+            }
+          },
+          prefill: {
+            name: `${firstName} ${lastName}`,
+            email: email,
+            contact: phone,
+          },
+          theme: {
+            color: "#45040F",
+          },
+          modal: {
+            ondismiss: function() {
+              setIsSubmitted(false);
+            }
+          }
+        };
+
+        const razor = new window.Razorpay(options);
+        razor.open();
+      };
+      
+      document.body.appendChild(script);
+
     } catch (error) {
-      console.error("Order error:", error);
+      console.error("Payment error:", error);
       setError(
         error.response?.data?.message ||
           error.message ||
-          "Failed to place order. Please try again."
+          "Failed to initiate payment. Please try again."
       );
-    } finally {
       setIsSubmitted(false);
     }
   };
-  console.log("products", products);
 
   return (
     <>
       <ImageHead Title="Checkout" />
-      <div className="checkout-page-container flex flex-col md:flex-row justify-between !p-4 md:!p-8 bg-gray-100 min-h-screen">
+      <div className="checkout-page-container flex flex-col md:flex-row justify-between !p-4 md:!p-8  min-h-screen">
         {/* Left Section - Contact and Shipping Info */}
         <div className="checkout-page-left w-full md:w-2/3 !space-y-6 md:space-y-8">
           {/* Error Display */}
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 !px-4 !py-3 rounded">
+            <div className=" border border-red-400 text-red-700 !px-4 !py-3 rounded">
               {error}
             </div>
           )}
 
           {/* Contact Information Section */}
-          <div className="checkout-page-contact bg-white p-4 md:!p-6 rounded-lg shadow-sm">
+          <div className="checkout-page-contact p-4 md:!p-6 rounded-lg">
             <h2 className="text-xl md:!text-2xl font-semibold !mb-4 md:!mb-6">
               Contact Details
             </h2>
@@ -681,7 +680,7 @@ console.log("order items", orderItems);
           </div>
 
           {/* Shipping Address Section */}
-          <div className="checkout-page-shipping bg-white !p-4 md:!p-6 rounded-lg shadow-sm">
+          <div className="checkout-page-shipping  !p-4 md:!p-6 rounded-lg">
             {user?.Address?.length > 0 ? (
               <>
                 <div className="flex justify-between items-center">
@@ -807,7 +806,7 @@ console.log("order items", orderItems);
             )}
           </div>
 
-          {/* Place Order Button */}
+          {/* Place Order Buttons */}
          <div className="!mt-6 md:!mt-8">
   <button
     onClick={handlePayment}
@@ -817,8 +816,8 @@ console.log("order items", orderItems);
     }`}
   >
     {isSubmitted ? "Processing..." : "Proceed to Payment"}
-            </button>
-            <button
+  </button>
+  <button
     onClick={handlePlaceOrder}
     disabled={isSubmitting}
     className={`w-full border-2 border-[#45040F] text-[#45040F] !py-3 md:!py-4 text-lg font-semibold rounded-md hover:bg-[#45040F] cursor-pointer hover:text-white transition ${
@@ -907,7 +906,7 @@ console.log("order items", orderItems);
                 />
                 <div className="flex flex-col flex-grow">
                   <p className="font-medium text-sm md:text-base">{product?.name || product?.variantname}</p>
-                  <p className="text-xs md:!text-sm text-gray-500">{product.size}</p>
+                  {/* <p className="text-xs md:!text-sm text-gray-500">{product.size}</p> */}
                   <select
                     className="!mt-1 border !p-1 text-xs md:text-sm max-w-[80px]"
                     value={quantities[product.productId]}
@@ -925,10 +924,10 @@ console.log("order items", orderItems);
                   </select>
                 </div>
                 <p className="font-medium text-sm md:text-base whitespace-nowrap">
-                  ₹{parseInt((
+                  ₹{parseInt(
                   product.salePrice +
                   (product.salePrice * product.tax) / 100 
-                ).toFixed(2)) || product.salePrice.toFixed(2)}
+                ).toFixed(2) || product.salePrice.toFixed(2)}
                 </p>
               </div>
             ))}

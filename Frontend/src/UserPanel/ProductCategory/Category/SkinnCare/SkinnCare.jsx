@@ -14,6 +14,7 @@ import Soap from "../../../../assests/soap.png";
 import SoapM from "../../../../assests/mobile_7.png";
 import ImageContainer from "../../ImageContainer/ImageContainer";
 import { useMediaQuery } from "react-responsive";
+import launchingsoon from "../../../../assests/launchingsoon.jpg";
 
 
 const SkinnCare = () => {
@@ -21,18 +22,19 @@ const SkinnCare = () => {
     const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
     return(
         <>
-        <ImageHead Title= "Body Soap"/>
+            <img src={launchingsoon} alt="launch" />
+        {/* <ImageHead Title= "Body Soap"/>
         <DiscoverSkin/>
             <BestSeller category="Skin Care" />
-        {/* <JustIn/> */}
-        <NourishBody/>
+        <JustIn/> not there
+        <NourishBody/> not there
         <ShopByConcern/>
             <ImageContainer Image={isMobile?SoapM:Soap} />
-        {/* <ExploreHandmadeSoap/> */}
-        {/* <Bemember/> */}
-        {/* <OurCertifications/> */}
-        {/* <FollowUs/> */}
-        <UptoDate/>
+        <ExploreHandmadeSoap/> not there
+        <Bemember/> not there
+        <OurCertifications/> not there
+        <FollowUs/> not there
+        <UptoDate/> */}
         </>
     );
 }
