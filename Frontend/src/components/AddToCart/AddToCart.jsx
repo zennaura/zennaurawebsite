@@ -242,7 +242,7 @@ const fetchCartItems = async () => {
 
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
-      return total + (item.price * item.quantity);
+      return total + (item.originalPrice * item.quantity);
     }, 0);
   };
 
@@ -359,7 +359,7 @@ const fetchCartItems = async () => {
                     <Link to="/wishlist" className="empty-cart-button primary">
                       Add Items From Wishlist
                     </Link>
-                    <Link to="/products" className="empty-cart-button secondary">
+                    <Link to="/shop" className="empty-cart-button secondary">
                       Continue shopping
                     </Link>
                   </div>
@@ -412,7 +412,7 @@ const fetchCartItems = async () => {
                           <div className="item-originalPrice">₹{item.originalPrice}</div>
                         )}
                       </div>
-                      <div className="item-variant">Variant: {item.variantId || 'Default'}</div>
+                      {/* <div className="item-variant">Variant: {item.variantId || 'Default'}</div> */}
                       {item.discount > 0 && (
                         <div className="item-discount-badge">{item.discount}% OFF</div>
                       )}

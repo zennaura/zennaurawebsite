@@ -244,7 +244,7 @@ const SignInUpForm = () => {
                         <input type="text" name="referralCode" placeholder="Referral Code (Optional)" onChange={handleChange} className="!p-2 bg-gray-100 rounded !mb-4" />
                         <button type="button" onClick={handleRegister} className="bg-[#390611] hover:bg-[#4d0a15] text-white !px-6 !py-2 rounded uppercase text-sm">Sign Up</button>
                     </form>
-                    <div className="bg-[#390611] text-white !p-3 !mt-5 flex flex-col justify-center items-center"  style={{width:"100vw",marginLeft:"-2rem",height:'34vh'}}>
+                    <div className="bg-[#390611] text-white !p-3 !mt-5 flex flex-col justify-center items-center"  style={{width:"100vw",marginLeft:"-2rem",maxHeight:'50vh'}}>
                                 <h1 className="text-center font-bold text-4xl" style={{marginLeft:"1.5rem"}}>Welcome Back !!</h1>
                                 <p className="text-center !p-5">Manifest, Cleanse, Heal—The Zenn Aura Way</p>
                                 <button className="text-[#390611] bg-white !p-3 !px-7 rounded-3xl" onClick={() => setIsSignUp(false)}>Sign In</button>

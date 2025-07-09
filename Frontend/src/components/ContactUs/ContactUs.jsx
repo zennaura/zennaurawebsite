@@ -59,7 +59,7 @@ const ContactUs = () => {
             <div className="contact-details">
               <div className="contactus-phone">
                 <span className="contactus-phone"><FaPhoneAlt /></span>
-                <span className="contactus-phone">+91 7058183615</span>
+                <span className="contactus-phone">+91 9355 188 066</span>
               </div>
               <div className="contactus-email">
                 <span className="contactus-email"><MdEmail /></span>
@@ -83,7 +83,7 @@ const ContactUs = () => {
             </div>
             <input type="text" placeholder="Your Subject" required />
             <textarea rows="4" placeholder="Write your message here" required></textarea>
-            <button type="submit">SEND MESSAGE</button>
+            <button type="submit">SUBMIT</button>
           </form>
         </div>
 

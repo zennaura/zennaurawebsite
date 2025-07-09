@@ -8,7 +8,7 @@ const menuItems = [
     { label: 'Home', link: '/' },
     { label: 'About Us', link: '/aboutus' },
     { label: 'Shop', link: '/shop' },
-    { label: 'Skin Care', hasArrow: true, link: '/skincare', goTo: 'skinCare' },
+    { label: 'Body Soap', hasArrow: true, link: '/skincare', goTo: 'skinCare' },
     { label: 'Aura Jewels', hasArrow: true, link: '/aurajewels', goTo: 'auraJewel' },
     { label: 'Divine Crystals', hasArrow: true, link: '/divinecrystals', goTo: 'divineCrystal' },
     { label: 'Sacred Rituals', hasArrow: true, link: '/sacredrituals', goTo: 'sacredRituals' },

@@ -93,12 +93,12 @@ const Footer = () => {
               <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
                 <FaInstagram />
               </a>
-              <a href="https://www.linkedin.com/company/zennaura/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/company/zenn-aura/" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />
               </a>
-              <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
-                <FaXTwitter /> {/* X icon instead of Twitter */}
-              </a>
+              {/* <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
+                <FaXTwitter /> 
+              </a> */}
               <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
                 <FaPinterest />
               </a>
@@ -165,12 +165,12 @@ const Footer = () => {
               <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
                 <FaInstagram />
               </a>
-              <a href="https://www.linkedin.com/company/zennaura/" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/company/zenn-aura/" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />
               </a>
-              <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
-                <FaXTwitter /> {/* X icon instead of Twitter */}
-              </a>
+              {/* <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
+                <FaXTwitter />
+              </a> */}
               <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
                 <FaPinterest />
               </a>
