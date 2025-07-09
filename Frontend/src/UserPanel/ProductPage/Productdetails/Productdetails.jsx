@@ -467,7 +467,7 @@ const ProductDetails = ({
           >
             Buy it now
           </button>
-          <div className="description-container" ref={descriptionSectionRef}>
+          <div className="description-container" >
             <h2 className="section-title">Description</h2>
             <p className="description-text">
               {showFullDescription
@@ -487,7 +487,7 @@ const ProductDetails = ({
               </button>
             )}
           </div>
-          <div className="Disclaimer-container">
+          <div className="Disclaimer-container" ref={descriptionSectionRef}>
             <div className="Disclaimer-header" onClick={toggleDisclaimer}>
               <h2 className="Disclaimer-title">Disclaimer</h2>
               <span

@@ -37,12 +37,12 @@ const FollowUs = () => {
                     <a href="https://www.instagram.com/zennaura/" target="_blank" rel="noopener noreferrer">
                         <FaInstagram className="function-icon" color="#390611" />
                     </a>
-                    <a href="https://www.linkedin.com/company/zennaura/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com/company/zenn-aura/" target="_blank" rel="noopener noreferrer">
                         <FaLinkedin className="function-icon" color="#390611" />
                     </a>
-                    <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
-                        <FaXTwitter className="function-icon" color="#390611" /> {/* X icon instead of Twitter */}
-                    </a>
+                    {/* <a href="https://twitter.com/zennaura" target="_blank" rel="noopener noreferrer">
+                        <FaXTwitter className="function-icon" color="#390611" /> 
+                    </a> */}
                     <a href="https://www.youtube.com/channel/zennaura" target="_blank" rel="noopener noreferrer">
                         <FaPinterest className="function-icon" color="#390611"/>
                     </a>

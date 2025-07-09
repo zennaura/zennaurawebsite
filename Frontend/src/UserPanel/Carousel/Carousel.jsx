@@ -86,6 +86,7 @@ const slides = [
 //     - Sage
 
 const Carousel = () => {
+
   const [index, setIndex] = useState(2); // Center image index
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Initial mobile check
 
@@ -211,13 +212,19 @@ const Carousel = () => {
 
       {/* Navigation Dots */}
       <div className="dots-container">
-        {slides.map((_, i) => (
+        {isMobile?(slides.slice(0,5).map((_, i) => (
           <span
             key={i}
             className={`dot ${index === i ? "active" : ""}`}
             onClick={() => goToSlide(i)}
           ></span>
-        ))}
+        ))):(slides.map((_, i) => (
+          <span
+            key={i}
+            className={`dot ${index === i ? "active" : ""}`}
+            onClick={() => goToSlide(i)}
+          ></span>
+        )))}
       </div>
     </div>
   );

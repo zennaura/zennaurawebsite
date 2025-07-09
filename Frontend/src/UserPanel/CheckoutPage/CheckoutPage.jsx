@@ -69,12 +69,11 @@ const CheckoutPage = () => {
   const subtotal = products.reduce((acc, product) => {
     const quantity = quantities[product.productId] || 1;
     const price = 
-                  product?.salePrice +
-                  (product?.salePrice * product?.tax) / 100 
-                .toFixed(2) ||(
-                  product?.salePrice +
-                  (product?.salePrice * 18) / 100 
-                ).toFixed(2);
+      product?.costPrice
+      // || (
+      //             product?.salePrice +
+      //             (product?.salePrice * 18) / 100 
+      //           ).toFixed(2);
     return acc + (isNaN(price) ? 0 : price * quantity);
   }, 0);
 

@@ -95,7 +95,7 @@
   font-size: 1.8rem;
 }
 .price-original{
-  margin-left: -16px;
+  /* margin-left: -16px; */
   /* margin-right: 0.5rem; */
   font-size: 1.4rem;
 }
@@ -309,7 +309,7 @@
     width: 95vw;
   }
   .price-container{
-    width: 85vw;
+    width: 95vw;
     margin-top: -1rem;
     display: flex;
     flex-wrap: wrap;
@@ -319,6 +319,7 @@
     margin: auto;
     text-align: center;
     width: 115vw;
+    margin-left: 3rem;
   }
   .carousel {
     height: 300px;

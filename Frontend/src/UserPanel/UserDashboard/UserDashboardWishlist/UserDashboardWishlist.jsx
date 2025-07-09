@@ -4,13 +4,15 @@ import { useUser } from '../../../components/AuthContext/AuthContext';
 import ProductCard from '../../../components/Productcart/ProductCart';
 import './UserDashboardWishlist.css';
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const UserDashboardWishlist = () => {
   const { user } = useUser();
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
+  console.log("user", user);
   useEffect(() => {
     const fetchWishlist = async () => {
       if (!user) return;
@@ -63,7 +65,7 @@ const UserDashboardWishlist = () => {
       alert("Failed to remove from wishlist");
     }
   };
-
+  console.log("wishlist items:", wishlistItems);
   if (loading) {
     return <div className="wishlist-loading">Loading your wishlist...</div>;
   }
@@ -100,20 +102,20 @@ const UserDashboardWishlist = () => {
       <div className="wishlist-grid">
         {wishlistItems.map((item) => {
           const product = item.productId;
-          const variant = item.variant || {};
+          const variant = product?.variants[item?.variantId] || {};
           const combinedId = `${product._id}-${item.variantId}`;
 
           // Use variant image if available, otherwise product images
-          const mainImage = variant.variantsimages?.[0] ||
-            product.frontImage ||
-            product.healingImage ||
+          const mainImage =  product?.variants[item?.variantId]?.frontImage|| variant?.variantsimages?.[0] ||
+            variant?.frontImage ||
+            variant.healingImage ||
             "https://via.placeholder.com/300";
 
           return (
-            <div key={combinedId} className="wishlist-item-container">
+            <div key={combinedId} className="wishlist-item-container" onClick={()=>navigate(`/productdetails/${combinedId}`)}>
               <ProductCard
                 id={combinedId}
-                name={product.name || "Untitled Product"}
+                name={product?.variants[item?.variantId].variantname || "Untitled Product"}
                 title={product.title || ""}
                 image={mainImage}
                 price={variant.salePrice || variant.price || 0}

@@ -29,7 +29,7 @@
   transition: all 1s;
 }
 .Featuredproducts-card:hover{
-  transform: translateY(-25px);
+  transform: scale(1.05);
 }
 .featured-card-center {
   margin-top: 0rem;
@@ -41,6 +41,9 @@
   align-items: center;
   gap: 2rem;
   margin-top: 30px;
+}
+.pagination-dots .dot{
+  margin-top: 3rem;
 }
 
 @media screen and (max-width: 768px) {

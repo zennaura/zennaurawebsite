@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './FQApage.css';
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 const faqs = [
   "How can we charge our natural stone bracelets?",
@@ -29,7 +30,7 @@ const FQApage = () => {
             <div className="faq-question">
               {question}
               <span className={`faq-icon-circle ${activeIndex === index ? 'open' : ''}`}>
-                {activeIndex === index ? '˄' : '˅'}
+                {activeIndex === index ? <FaChevronUp /> : <FaChevronDown/>}
               </span>
             </div>
             {activeIndex === index && (

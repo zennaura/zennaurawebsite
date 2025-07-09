@@ -199,7 +199,7 @@ const UserDashboard = ({ onNavigate }) => {
                     ) : (
                       <FaUserCircle className="UserDashboard-avatarIcon" size={60} />
                     )}
-                    <span className="edit-icon">✏️ Update Image</span>
+                    <span className="edit-icon">Update Image</span>
                   </>
                 )}
               </label>
@@ -235,13 +235,13 @@ const UserDashboard = ({ onNavigate }) => {
               )}
             </div>
             <h3 className="UserDashboard-username">{user.firstName} {user.lastName}</h3>
-            <div className="UserDashboard-points">
+            {/* <div className="UserDashboard-points">
               <FaStar className="UserDashboard-icon" />
               Points: {user.Points || 0}
             </div>
             <p className="text-[10px] my-1 text-[#48091a] bg-white border border-[#48091a] px-4 py-2 rounded-md max-w-fit shadow-sm font-medium">
               Become a member to start earning points and unlock rewards.
-            </p>
+            </p> */}
           </div>
 
           <div className="UserDashboard-infoList">

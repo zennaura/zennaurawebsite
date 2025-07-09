@@ -22,20 +22,20 @@ const ThankYouPage = () => {
 
           <h2 className="!text-4xl font-bold !mb-6 text-[#4A001F]">THANK YOU!</h2>
 
-          <p className="text-[#4A001F] !mb-8 leading-relaxed underline-offset-2">
-            We are getting started on your order right away, <br />
-            and you will receive an order confirmation email <br />
-            shortly to your email. In the <br />
-            meantime, explore the latest releases and start <br />
-            manifesting, just head over to Zenn Aura New <br />
+          <div className="text-[#4A001F] !mb-8 leading-relaxed underline-offset-2">
+            We are getting started on your order right away, 
+            and you will receive an order confirmation email 
+            shortly to your email. In the 
+            meantime, explore the latest releases and start 
+            manifesting, just head over to Zenn Aura New 
             Launches.
-          </p>
+          </div>
 
           <button className="bg-[#4A001F] text-white !px-8 !py-3 rounded-md font-medium !mb-6 hover:!bg-[#3b001a] transition-colors cursor-pointer" onClick={keepshoping}>
             Keep Shopping
           </button>
 
-          <p className="text-sm !text-[#4A001F] underline cursor-pointer hover:text-[#3b001a]">
+          <p className="text-sm !text-[#4A001F] underline cursor-pointer hover:text-[#3b001a]" onClick={()=>navigate("/policies")}>
             Read about our return & Shipping policy.
           </p>
         </div>

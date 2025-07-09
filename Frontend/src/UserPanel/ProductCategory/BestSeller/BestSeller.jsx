@@ -107,7 +107,7 @@ const BestSeller = ({ category }) => {
       <div className="BestSeller-slider" ref={sliderRef} onScroll={handleScroll}>
         <div className="BestSeller-cards">
           {bestSellerProducts.map((product, index) => (
-            <div className={`Featuredproducts-card ${index == 1 || index == 2 ? 'featured-card-center' : ''}`} key={product.id}>
+            <div className={`Featuredproducts-card ${index == 1 || index == 2 ?'' : ''}`} key={product.id}>
               <ProductCart
                 id={product.id}
                 name={product.data.variantname}

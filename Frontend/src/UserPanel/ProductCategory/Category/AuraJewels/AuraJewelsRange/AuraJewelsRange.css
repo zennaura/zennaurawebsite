@@ -109,6 +109,19 @@
       height: clamp(40px, 12vw, 70px);
     }
   } */
+    @media (max-width: 768px) {
+    .DiscoverSkin-container {
+      padding: 30px 0;
+    }
+  
+    .DiscoverSkin-heading {
+      font-size: 30px;
+    }
+  
+    .DiscoverSkin-items-container {
+      gap: 25px;
+    }
+  }
   
   @media (max-width: 480px) {
     .AuraJewelsRange-heading{
@@ -211,19 +224,11 @@
   }
   
   /* Tablets */
-  @media (max-width: 768px) {
-    .DiscoverSkin-container {
-      padding: 30px 0;
-    }
-  
-    .DiscoverSkin-heading {
-      font-size: 30px;
-    }
-  
-    .DiscoverSkin-items-container {
-      gap: 25px;
-    }
-  }
+ 
   
   /* Phones */
-  
+  @media (max-width:400px){
+    .AuraJewelsRange-heading{
+      font-size:1.3rem;
+    }
+  }

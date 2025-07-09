@@ -257,6 +257,9 @@
 }
 
 @media (max-width: 500px){
+    .concern-products{
+        gap: 0px;
+    }
     .ShopByConcern-slider-item{
         width: 70%;
         /* height: ; */

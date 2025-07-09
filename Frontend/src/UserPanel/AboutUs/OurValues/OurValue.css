@@ -88,13 +88,13 @@
     color: white !important;
     /* background-color: rgba(0, 0, 0, 0.302); */
     width: 100%;
-    padding: 20px 0;
+    /* padding: 20px 0; */
 
   }
 
   .OurValue-divider {
     width: 100%;
-    height: 125px; /* Reduced height for mobile */
+    height: 125px; 
     margin: 20px 0;
     box-sizing: border-box;
     position: absolute;
@@ -118,6 +118,7 @@
     color: white !important;
   }
   .OurValue-divider img{
+
     filter: brightness(70%);
   }
 }
@@ -134,11 +135,11 @@
   .OurValue-value-detail{
     padding: 0 0.3rem;
   }
-
+/* 
   .OurValue-divider{
     
     height: 150px;
-  }
+  } */
   
   
   .OurValue-row {

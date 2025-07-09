@@ -3,6 +3,7 @@ import "./ProductCard.css";
 import ProductCart from "../../components/Productcart/ProductCart";
 import { useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 
 const FeaturedProducts = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -13,7 +14,7 @@ const FeaturedProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const isMobile = useMediaQuery({maxWidth:500})
   // Handle window resize
   useEffect(() => {
     const handleResize = () => {
@@ -206,7 +207,7 @@ const FeaturedProducts = () => {
         )}
       </div>
 
-      {totalSlides > 1 && (
+      {isMobile?(<div></div>):totalSlides > 1 && (
         <div className="pagination-dots">
           {Array.from({ length: totalSlides }).map((_, index) => (
             <button

@@ -188,71 +188,81 @@ const ProductListingPage = ({ products, priceRange = [0, 1000], productCategorie
           >
             <FaArrowLeft />
           </span>
-          {Math.ceil(sortedProducts.length / productsPerPage) > 3 ? (
-            <>
+          {(() => {
+            const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
+            const pageNumbers = [];
+
+            // Always show first page
+            pageNumbers.push(
               <span
-                className={`pagination-box ${
-                  currentPage === 1 ? "active" : ""
-                }`}
+                key={1}
+                className={`pagination-box ${currentPage === 1 ? "active" : ""}`}
                 onClick={() => handlePageChange(1)}
               >
                 1
               </span>
-              <span
-                className={`pagination-box ${
-                  currentPage === 2 ? "active" : ""
-                }`}
-                onClick={() => handlePageChange(2)}
-              >
-                2
-              </span>
-              <span className="">...</span>
-              <span
-                className={`pagination-box ${
-                  currentPage ===
-                  Math.ceil(sortedProducts.length / productsPerPage)-1
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handlePageChange(
-                    Math.ceil(sortedProducts.length / productsPerPage)-1
-                  )
-                }
-              >
-                {Math.ceil(sortedProducts.length / productsPerPage)-1}
-              </span>
-              <span
-                className={`pagination-box ${
-                  currentPage ===
-                  Math.ceil(sortedProducts.length / productsPerPage)
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handlePageChange(
-                    Math.ceil(sortedProducts.length / productsPerPage)
-                  )
-                }
-              >
-                {Math.ceil(sortedProducts.length / productsPerPage)}
-              </span>
-            </>
-          ) : (
-            [...Array(Math.ceil(sortedProducts.length / productsPerPage))].map(
-              (_, index) => (
+            );
+
+            // Determine which pages to show in the middle
+            let middlePages = [];
+            if (totalPages <= 5) {
+              // Show all pages if 5 or fewer
+              for (let i = 2; i <= totalPages; i++) {
+                pageNumbers.push(
+                  <span
+                    key={i}
+                    className={`pagination-box ${currentPage === i ? "active" : ""}`}
+                    onClick={() => handlePageChange(i)}
+                  >
+                    {i}
+                  </span>
+                );
+              }
+              return pageNumbers;
+            }
+
+            // For more than 5 pages
+            // Show ellipsis if currentPage > 3
+            if (currentPage > 3) {
+              pageNumbers.push(<span key="start-ellipsis">...</span>);
+            }
+
+            // Show previous, current, next (if in range and not first/last)
+            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+              if (i > 1 && i < totalPages) {
+                middlePages.push(i);
+              }
+            }
+            middlePages.forEach((i) => {
+              pageNumbers.push(
                 <span
-                  key={index + 1}
-                  className={`pagination-box ${
-                    currentPage === index + 1 ? "active" : ""
-                  }`}
-                  onClick={() => handlePageChange(index + 1)}
+                  key={i}
+                  className={`pagination-box ${currentPage === i ? "active" : ""}`}
+                  onClick={() => handlePageChange(i)}
                 >
-                  {index + 1}
+                  {i}
                 </span>
-              )
-            )
-          )}
+              );
+            });
+
+            // Show ellipsis if currentPage < totalPages - 2
+            if (currentPage < totalPages - 2) {
+              pageNumbers.push(<span key="end-ellipsis">...</span>);
+            }
+
+            // Always show last page
+            pageNumbers.push(
+              <span
+                key={totalPages}
+                className={`pagination-box ${currentPage === totalPages ? "active" : ""}`}
+                onClick={() => handlePageChange(totalPages)}
+              >
+                {totalPages}
+              </span>
+            );
+
+            return pageNumbers;
+          })()}
           <span
             className="pagination-box pagination-next"
             onClick={() => {

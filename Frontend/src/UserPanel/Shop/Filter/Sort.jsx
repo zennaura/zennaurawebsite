@@ -6,10 +6,10 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
     const dropdownRef = useRef(null);
 
     const options = [
-        { label: "price: low to high", value: "price-low-high" },
-        { label: "price: high to low", value: "price-high-low" },
-        { label: "most liked", value: "most-liked" },
-        { label: "most reviewed", value: "most-reviewed" },
+        { label: "Price: Low to High", value: "price-low-high" },
+        { label: "Price: High to Low", value: "price-high-low" },
+        { label: "Most Liked", value: "most-liked" },
+        { label: "Most Reviewed", value: "most-reviewed" },
     ];
 
     // Close dropdown when clicking outside

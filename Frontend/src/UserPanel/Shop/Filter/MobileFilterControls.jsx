@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './MobileFilterControls.css'; // New CSS file for mobile controls
+import { Slider } from '@mui/material';
 
 const MobileFilterControls = ({
   productCategories = [],
@@ -29,7 +30,7 @@ const MobileFilterControls = ({
   useEffect(() => {
     setMinPrice(priceRange[0]);
     setMaxPrice(priceRange[1]);
-  }, [priceRange]);
+  }, [priceRange[0], priceRange[1]]);
 
   useEffect(() => {
     setLocalRating(rating);
@@ -223,13 +224,22 @@ const MobileFilterControls = ({
             {/* Price Filter */}
             <div className="filter-category">
               <span>Price</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <label>
-                  Min: <input type="number" min={0} max={maxPrice} value={minPrice} onChange={e => setMinPrice(Number(e.target.value))} />
-                </label>
-                <label>
-                  Max: <input type="number" min={minPrice} max={10000} value={maxPrice} onChange={e => setMaxPrice(Number(e.target.value))} />
-                </label>
+              <div style={{ padding: '0 8px' }}>
+                <Slider
+                  value={[minPrice, maxPrice]}
+                  min={0}
+                  max={10000}
+                  onChange={(_, newValue) => {
+                    setMinPrice(newValue[0]);
+                    setMaxPrice(newValue[1]);
+                  }}
+                  valueLabelDisplay="auto"
+                  step={10}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14 }}>
+                  <span>Min: ₹{minPrice}</span>
+                  <span>Max: ₹{maxPrice}</span>
+                </div>
               </div>
             </div>
             <hr />

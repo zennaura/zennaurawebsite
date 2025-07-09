@@ -149,7 +149,7 @@ const ProductPage = () => {
         onVariantSelect={handleVariantSelect}
       />
       <ProductIcon />
-      <StoneUsed image={product?.stoneUsedImage} />
+      {/* <StoneUsed image={product?.stoneUsedImage} /> */}
       <ProductTabs
         productDescriptions={product?.productDescriptions}
         specifications={selectedVariant?.specifications ?? product?.specifications}

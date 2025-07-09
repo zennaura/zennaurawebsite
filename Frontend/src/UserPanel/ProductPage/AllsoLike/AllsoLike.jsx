@@ -199,7 +199,7 @@ const AllSoLike = ({ intentTags = [], productId }) => {
       {/* Pagination Dots */}
       {totalSlides > 1 && (
         <div className="pagination-dots">
-          {Array.from({ length: totalSlides }).map((_, index) => (
+          {Array.from({ length: totalSlides }).slice(0,5).map((_, index) => (
             <button
               key={index}
               className={`dot ${currentSlide / 4 === index ? "active" : ""}`}
