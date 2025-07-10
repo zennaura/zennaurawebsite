@@ -2,6 +2,13 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import {useUser} from '../../components/AuthContext/AuthContext'
 
+// Utility to compress Cloudinary images
+function compressCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (!url.includes('cloudinary.com')) return url;
+  return url.replace('/upload/', '/upload/q_auto,f_auto/');
+}
+
 const ProductDetails = () => {
   const { state: product } = useLocation();
   const { user } = useUser();
@@ -29,7 +36,7 @@ const ProductDetails = () => {
   return (
     <div className="p-6 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
       <img
-        src={product.frontImage}
+        src={compressCloudinaryUrl(product.frontImage)}
         alt={product.productName}
         className="w-full max-h-96 object-cover rounded-md mb-6"
       />
@@ -43,7 +50,7 @@ const ProductDetails = () => {
           product.variantsimages.map((img, i) => (
             <img
               key={i}
-              src={img}
+              src={compressCloudinaryUrl(img)}
               alt={`variant-img-${i}`}
               className="w-full h-40 object-cover rounded"
             />
@@ -109,12 +116,12 @@ const ProductDetails = () => {
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">More Visuals</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {product.healingImage && <img src={product.healingImage} alt="Healing" className="rounded" />}
-          {product.benefits && <img src={product.benefits} alt="Benefits" className="rounded" />}
-          {product.whyChoose && <img src={product.whyChoose} alt="Why Choose" className="rounded" />}
-          {product.waysToClean && <img src={product.waysToClean} alt="Ways to Clean" className="rounded" />}
-          {product.whoWear && <img src={product.whoWear} alt="Who Can Wear" className="rounded" />}
-          {product.whereHowWear && <img src={product.whereHowWear} alt="Where/How to Wear" className="rounded" />}
+          {product.healingImage && <img src={compressCloudinaryUrl(product.healingImage)} alt="Healing" className="rounded" />}
+          {product.benefits && <img src={compressCloudinaryUrl(product.benefits)} alt="Benefits" className="rounded" />}
+          {product.whyChoose && <img src={compressCloudinaryUrl(product.whyChoose)} alt="Why Choose" className="rounded" />}
+          {product.waysToClean && <img src={compressCloudinaryUrl(product.waysToClean)} alt="Ways to Clean" className="rounded" />}
+          {product.whoWear && <img src={compressCloudinaryUrl(product.whoWear)} alt="Who Can Wear" className="rounded" />}
+          {product.whereHowWear && <img src={compressCloudinaryUrl(product.whereHowWear)} alt="Where/How to Wear" className="rounded" />}
         </div>
       </div>
     </div>

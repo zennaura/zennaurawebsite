@@ -8,6 +8,13 @@ import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import { useUser } from '../../components/AuthContext/AuthContext';
 import noImage from "../../assests/noImage.png";
 
+// Utility to compress Cloudinary images
+function compressCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (!url.includes('cloudinary.com')) return url;
+  return url.replace('/upload/', '/upload/q_auto,f_auto/');
+}
+
 const ProductsManagement = () => {
   const { user } = useUser();
   const [products, setProducts] = useState([]);
@@ -146,7 +153,7 @@ const ProductsManagement = () => {
                 <div key={product._id || Math.random()} className="admin-product-card">
                   <div className="admin-product-image">
                     <img 
-                      src={product?.variants[0]?.frontImage || noImage} 
+                      src={compressCloudinaryUrl(product?.variants[0]?.frontImage) || noImage} 
                       alt={product.name || 'Product image'} 
                       onError={(e) => {
                         e.target.src = noImage;
