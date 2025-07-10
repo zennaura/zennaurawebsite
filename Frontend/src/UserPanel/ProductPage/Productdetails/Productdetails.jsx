@@ -16,6 +16,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
+// Utility to compress Cloudinary images
+function compressCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (!url.includes('cloudinary.com')) return url;
+  return url.replace('/upload/', '/upload/q_auto,f_auto/');
+}
+
 const ProductDetails = ({
   product: initialProduct,
   selectedVariant: initialVariant,
@@ -112,7 +119,7 @@ const ProductDetails = ({
     const images = [];
     const addImage = (src, title) => {
       if (src) {
-        images.push({ image: src, title, loading: true });
+        images.push({ image: compressCloudinaryUrl(src), title, loading: true });
       }
     };
 
@@ -639,7 +646,7 @@ const ProductDetails = ({
                     aria-label={`Product image ${i + 1} of ${slides.length}`}
                   >
                     <img
-                      src={slide.image}
+                      src={compressCloudinaryUrl(slide.image)}
                       alt={slide.title}
                       className="carousel-image-product"
                       loading="lazy"

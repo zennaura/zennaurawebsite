@@ -6,6 +6,13 @@ import { useParams } from "react-router-dom";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 
+// Utility to compress Cloudinary images
+function compressCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (!url.includes('cloudinary.com')) return url;
+  return url.replace('/upload/', '/upload/q_auto,f_auto/');
+}
+
 const ReviewsPage = ({ ProductId, VarientId, product }) => {
   const isMobile = useMediaQuery({ maxWidth: 1024 });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -294,7 +301,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
             ) : (
               <img
                 key={idx}
-                src={url}
+                src={compressCloudinaryUrl(url)}
                 alt="review media"
                 className="reviews-page-box-video-images"
               />
@@ -343,7 +350,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
                 {review.mediaUrls.map((url, i) => (
                   <img
                     key={i}
-                    src={url}
+                    src={compressCloudinaryUrl(url)}
                     alt="review media"
                     className="reviews-page-review-image"
                   />
