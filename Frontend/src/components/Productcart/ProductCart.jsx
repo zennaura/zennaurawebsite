@@ -6,6 +6,13 @@ import "./productCard.css";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
+// Utility to compress Cloudinary images
+function compressCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (!url.includes('cloudinary.com')) return url;
+  return url.replace('/upload/', '/upload/q_auto,f_auto/');
+}
+
 const ProductCard = ({
   id,
   name,
@@ -262,7 +269,7 @@ const ProductCard = ({
           {/* <div className="product-card-image-front"> */}
           <img
             src={
-              frontimage ||
+              compressCloudinaryUrl(frontimage) ||
               "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"
             }
             alt={title}
@@ -273,8 +280,8 @@ const ProductCard = ({
           <div className="product-card-image-back"> */}
           <img
             src={
-              backImage ||
-              frontimage ||
+              compressCloudinaryUrl(backImage) ||
+              compressCloudinaryUrl(frontimage) ||
               "https://images.pexels.com/photos/3018845/pexels-photo-3018845.jpeg?cs=srgb&dl=cosmetic-products-3018845.jpg&fm=jpg"
             }
             alt={title}
