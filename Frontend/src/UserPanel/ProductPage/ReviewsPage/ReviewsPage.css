@@ -106,6 +106,10 @@
 .reviews-page-media-section {
     padding: 1rem 6rem;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .reviews-page-video-images {

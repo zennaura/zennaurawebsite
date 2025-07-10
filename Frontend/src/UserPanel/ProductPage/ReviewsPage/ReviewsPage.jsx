@@ -312,7 +312,7 @@ const ReviewsPage = ({ ProductId, VarientId, product }) => {
       <div className="reviews-page-card-wrapper">
         {reviews.length === 0 && (
           <div className="reviews-page-card">
-            <div className="reviews-page-text">
+            <div className="reviews-page-text" style={{display:"flex",}}>
               <p>No reviews yet. Be the first to review this product!</p>
             </div>
           </div>

@@ -168,7 +168,7 @@ const AllSoLike = ({ intentTags = [], productId }) => {
               <div
                 key={product.id}
                 className={`AllSoLike-card ${
-                  index === 1 || index === 2 ? "featured-card-center" : ""
+                  index === 1 || index === 2 ? "" : ""
                 }`}
               >
                 <ProductCart

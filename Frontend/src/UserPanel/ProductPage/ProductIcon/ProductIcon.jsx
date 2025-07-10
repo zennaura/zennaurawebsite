@@ -37,4 +37,4 @@ const ProductIcon = () => {
   )
 }
 
-export default ProductIcon
+export default ProductIcon;

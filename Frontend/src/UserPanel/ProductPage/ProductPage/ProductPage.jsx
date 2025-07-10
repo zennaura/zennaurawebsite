@@ -148,7 +148,7 @@ const ProductPage = () => {
         selectedVariant={selectedVariant}
         onVariantSelect={handleVariantSelect}
       />
-      <ProductIcon />
+      {/* <ProductIcon /> */}
       {/* <StoneUsed image={product?.stoneUsedImage} /> */}
       <ProductTabs
         productDescriptions={product?.productDescriptions}

@@ -23,7 +23,12 @@
     }
     .AllSoLike-card{
       margin-top: 2rem;
+      transition: all 0.5s;
+
       
+    }
+    .AllSoLike-card:hover{
+      transform: scale(1.05);
     }
     .featured-card-center{
       margin-top: 0rem;
